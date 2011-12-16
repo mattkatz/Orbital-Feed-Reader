@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Create scaffolding - script to update the site, etc
+desc: copy from upfuckr I imagine
+type: :task
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 01:16:15.265057 Z
+references: []
+
+id: 3f714bc8def5f61b693ca2609f6475a42df2c80d
+log_events: 
+- - 2011-12-16 01:16:15.265517 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
