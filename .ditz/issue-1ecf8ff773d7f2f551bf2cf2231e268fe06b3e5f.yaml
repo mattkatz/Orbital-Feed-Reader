@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: mark feeds private
+desc: |-
+  they shouldn't show up in any PUBLIC opml, just opml files that you export.
+  they shouldn't show up in your blogroll
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:51:23.040206 Z
+references: []
+
+id: 1ecf8ff773d7f2f551bf2cf2231e268fe06b3e5f
+log_events: 
+- - 2011-12-16 00:51:23.040675 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Learn about admin screens for plugins
+desc: Read and google and mock some up.
+type: :task
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:46:26.852334 Z
+references: []
+
+id: 5637bcae52aa1e54c65db0b891d9f3f7419a91d9
+log_events: 
+- - 2011-12-16 00:46:26.852800 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

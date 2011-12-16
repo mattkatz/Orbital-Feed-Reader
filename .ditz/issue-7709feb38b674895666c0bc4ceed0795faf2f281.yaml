@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: import opml
+desc: |-
+  Start with just importing a file
+  later we could add importing from a url, delegating a portion of your opml to someone else's opml, etc.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:49:29.968599 Z
+references: []
+
+id: 7709feb38b674895666c0bc4ceed0795faf2f281
+log_events: 
+- - 2011-12-16 00:49:29.969067 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

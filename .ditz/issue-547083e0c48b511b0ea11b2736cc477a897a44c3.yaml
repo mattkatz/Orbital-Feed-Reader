@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Tag/Categorize feeds
+desc: ""
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:52:47.949906 Z
+references: []
+
+id: 547083e0c48b511b0ea11b2736cc477a897a44c3
+log_events: 
+- - 2011-12-16 00:52:47.950363 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

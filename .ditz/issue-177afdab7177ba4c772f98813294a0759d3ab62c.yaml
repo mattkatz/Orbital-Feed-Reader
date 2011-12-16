@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Display Blogroll
+desc: Should be a widget, generated from your blogroll, divided by categories, hiding anything marked private
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:52:16.780776 Z
+references: []
+
+id: 177afdab7177ba4c772f98813294a0759d3ab62c
+log_events: 
+- - 2011-12-16 00:52:16.781250 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

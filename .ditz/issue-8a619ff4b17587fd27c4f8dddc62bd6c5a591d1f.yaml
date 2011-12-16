@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: wireframe the rest of the features
+desc: |-
+  * Import/Export from OPML
+  * subscribe/edit subscriptions
+  * tagging feeds
+type: :task
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:48:10.529737 Z
+references: []
+
+id: 8a619ff4b17587fd27c4f8dddc62bd6c5a591d1f
+log_events: 
+- - 2011-12-16 00:48:10.530246 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

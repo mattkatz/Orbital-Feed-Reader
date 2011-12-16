@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Database schema
+desc: This should probably learn from TT-RSS as much as possible.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:55:46.842696 Z
+references: []
+
+id: 15ae6393029dae3ebb04ceff460398c7f2cb3bc5
+log_events: 
+- - 2011-12-16 00:55:46.843182 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

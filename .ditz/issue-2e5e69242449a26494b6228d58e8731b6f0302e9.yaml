@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Keyboard shortcuts
+desc: |-
+  I like vim so I'll probably use vimkeys. 
+  H previous feed.
+  L next feed
+  J next item
+  K previous item.
+  gt tagsearch
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:54:02.655896 Z
+references: []
+
+id: 2e5e69242449a26494b6228d58e8731b6f0302e9
+log_events: 
+- - 2011-12-16 00:54:02.656373 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

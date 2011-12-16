@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Export OPML
+desc: produce a view/file of OPML.  .
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-16 00:50:08.520576 Z
+references: []
+
+id: cc2559e18a1b079fcc2480ed20b31ccc67e45edf
+log_events: 
+- - 2011-12-16 00:50:08.521058 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
