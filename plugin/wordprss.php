@@ -18,7 +18,6 @@ $wordprss_db_version = '0.1';
 global $wordprss_db_version_opt_string;
 $wordprss_db_version_opt_string = 'wordprss_db_version';
 
-register_activation_hook(__FILE__,'wprss_install_db');
 
 
 function wprss_plugin_menu(){
@@ -29,6 +28,7 @@ function generate_main_page()
 {
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('wordprss_db_version',"NOTHING"). '</p>';
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('admin_email',"NOTHING"). '</p>';
+  echo __FILE__;
 }
 
 # create the database tables.
@@ -57,4 +57,7 @@ function wprss_install_db()
   //dbDelta($sql);
 }
 add_action('admin_menu', 'wprss_plugin_menu');
+//Turns out you can't just do __FILE__ like it says in the wordpress codex!
+register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_db');
+
 ?>
