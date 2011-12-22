@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: activate plugin should install DB schema
+desc: We should be able to do this via the register_activation_hook
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-22 21:36:30.055392 Z
+references: []
+
+id: e32e95e2c4556e3fdba0503eb50948305bca2e01
+log_events: 
+- - 2011-12-22 21:36:30.055926 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
