@@ -15,7 +15,7 @@ $capability = 'edit_posts';
 $slug = 'wordprss.php';
 
 function wprss_plugin_menu(){
-  $hook = add_menu_page('WordPrss', 'WordPrss','edit_posts','wordprss.php','generate_main_page');
+  $hook = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
 
 }
 function generate_main_page()
