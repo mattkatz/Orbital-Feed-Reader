@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <atom:link href="./" rel="self" type="application/rss+xml" />
+    <title>Latest ditz updates for Wordprss</title>
+    <link>index.html</link>
+    <description>Latest updates to the distributed issue tracker for Wordprss</description>
+    <language>en-us</language>
+    <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created activate plugin should install DB schema</title> 
+      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
+      <description></description>
+      <pubDate>2011-12-22</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Create scaffolding - script to update the site, etc</title> 
+      <link>issue-3f714bc8def5f61b693ca2609f6475a42df2c80d.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Database schema</title> 
+      <link>issue-15ae6393029dae3ebb04ceff460398c7f2cb3bc5.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Use WP Cron to schedule updates.</title> 
+      <link>issue-4062c1a15194aaffba957a640e1e3590f88f72d4.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Keyboard shortcuts</title> 
+      <link>issue-2e5e69242449a26494b6228d58e8731b6f0302e9.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Tag/Categorize feeds</title> 
+      <link>issue-547083e0c48b511b0ea11b2736cc477a897a44c3.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Display Blogroll</title> 
+      <link>issue-177afdab7177ba4c772f98813294a0759d3ab62c.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created mark feeds private</title> 
+      <link>issue-1ecf8ff773d7f2f551bf2cf2231e268fe06b3e5f.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Export OPML</title> 
+      <link>issue-cc2559e18a1b079fcc2480ed20b31ccc67e45edf.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created import opml</title> 
+      <link>issue-7709feb38b674895666c0bc4ceed0795faf2f281.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created wireframe the rest of the features</title> 
+      <link>issue-8a619ff4b17587fd27c4f8dddc62bd6c5a591d1f.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Learn about admin screens for plugins</title> 
+      <link>issue-5637bcae52aa1e54c65db0b891d9f3f7419a91d9.html</link>
+      <description></description>
+      <pubDate>2011-12-16</pubDate>
+    </item>
+  
+  </channel>
+</rss>
