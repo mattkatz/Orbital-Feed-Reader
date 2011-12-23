@@ -5,8 +5,8 @@ type: :task
 component: Wordprss
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-16 00:46:26.852334 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2011-12-23 12:36:17.495835 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - pretty much done

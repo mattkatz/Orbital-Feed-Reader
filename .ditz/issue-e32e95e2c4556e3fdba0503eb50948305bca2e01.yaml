@@ -5,7 +5,7 @@ type: :feature
 component: Wordprss
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2011-12-22 21:36:30.055392 Z
 references: []
@@ -16,3 +16,9 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2011-12-23 12:36:57.153153 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - |-
+    got a db option in, just working on sql execute.
+    seems the wordpress docs aren't accurate
