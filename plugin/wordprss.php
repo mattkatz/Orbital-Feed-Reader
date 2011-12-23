@@ -35,11 +35,13 @@ function generate_main_page()
 # TODO extract this to a sep file
 function wprss_install_db()
 {
-  //global $wpdb;
-  //global $wordprss_db_version;
-  //add_option($wordprss_db_version_opt_string,$wordprss_db_version);
-  add_option('wordprss_db_version','0.1');
-  /*
+  global $wpdb;
+  global $wordprss_db_version;
+  global $wordprss_db_version_opt_string;
+  require_once(ABSPATH. 'wp_admin/includes/upgrade.php');
+  add_option($wordprss_db_version_opt_string,$wordprss_db_version);
+  //add_option('wordprss_db_version','0.1');
+  
 
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
@@ -51,13 +53,19 @@ function wprss_install_db()
     site_url varchar(250) not null default '',
     UNIQUE KEY id (id)
   );";
-   */
+   
 
-  //require_once(ABSPATH. 'wp_admin/includes/upgrade.php');
-  //dbDelta($sql);
+  dbDelta($sql);
+}
+function wprss_uninstall_db()
+{
+  //We should remove the DB option for the db version
+  delete_option('wordprss_db_version');
+  //TODO clean up all the tables
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
 register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_db');
+register_deactivation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_uninstall_db');
 
 ?>
