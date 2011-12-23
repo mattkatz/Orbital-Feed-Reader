@@ -18,6 +18,10 @@ $wordprss_db_version = '0.1';
 global $wordprss_db_version_opt_string;
 $wordprss_db_version_opt_string = 'wordprss_db_version';
 
+if ( !function_exists( 'add_action' ) ) {
+    echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
+      exit;
+}
 
 
 function wprss_plugin_menu(){
