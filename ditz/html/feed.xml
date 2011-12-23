@@ -9,6 +9,28 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Create scaffolding - script to update the site, etc</title> 
+      <link>issue-3f714bc8def5f61b693ca2609f6475a42df2c80d.html</link>
+      <description>done with copying publish.sh from upfuckr</description>
+      <pubDate>2011-12-23</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress activate plugin should install DB schema</title> 
+      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
+      <description>got a db option in, just working on sql execute.
+seems the wordpress docs aren't accurate</description>
+      <pubDate>2011-12-23</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Learn about admin screens for plugins</title> 
+      <link>issue-5637bcae52aa1e54c65db0b891d9f3f7419a91d9.html</link>
+      <description>pretty much done</description>
+      <pubDate>2011-12-23</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created activate plugin should install DB schema</title> 
       <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
       <description></description>
