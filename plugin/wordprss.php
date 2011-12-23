@@ -42,7 +42,7 @@ function wprss_install_db()
   global $wpdb;
   global $wordprss_db_version;
   global $wordprss_db_version_opt_string;
-  require_once(ABSPATH. 'wp_admin/includes/upgrade.php');
+  require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
   add_option($wordprss_db_version_opt_string,$wordprss_db_version);
   //add_option('wordprss_db_version','0.1');
   
