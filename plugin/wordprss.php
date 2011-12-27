@@ -17,6 +17,8 @@ global $wordprss_db_version;
 $wordprss_db_version = '0.1';
 global $wordprss_db_version_opt_string;
 $wordprss_db_version_opt_string = 'wordprss_db_version';
+global $tbl_prefix;
+$tbl_prefix = 'wprss_';
 
 if ( !function_exists( 'add_action' ) ) {
     echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
@@ -26,6 +28,7 @@ if ( !function_exists( 'add_action' ) ) {
 
 function wprss_plugin_menu(){
   $hook = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
+  wp_register_script( 'wordprss_script', plugins_url('wordprss/wprss.javascript', dir(__FILE__)) );
 
 }
 function generate_main_page()
@@ -33,6 +36,12 @@ function generate_main_page()
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('wordprss_db_version',"NOTHING"). '</p>';
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('admin_email',"NOTHING"). '</p>';
   echo __FILE__;
+  wp_enqueue_script('wordprss_script');
+  
+  //$script = "<script type='text/javascript' href='". plugins_url('wordprss/wprss.javascript', dir(__FILE__)). "'> </script>";
+
+  //echo $script;
+ 
 }
 
 # create the database tables.
@@ -42,10 +51,9 @@ function wprss_install_db()
   global $wpdb;
   global $wordprss_db_version;
   global $wordprss_db_version_opt_string;
+  global $tbl_prefix;
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
   add_option($wordprss_db_version_opt_string,$wordprss_db_version);
-  //add_option('wordprss_db_version','0.1');
-  
 
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
@@ -61,15 +69,31 @@ function wprss_install_db()
 
   dbDelta($sql);
 }
+# load all the first installation data in.
+function wprss_install_data(){
+  global $wpdb;
+  global $tbl_prefix;
+  $table_name = $wpdb->prefix.$tbl_prefix."feeds";
+  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com'));
+
+
+
+}
 function wprss_uninstall_db()
 {
   //We should remove the DB option for the db version
   delete_option('wordprss_db_version');
   //TODO clean up all the tables
+  global $wpdb;
+  $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
+  $wpdb->query($sql);
+
+
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
 register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_db');
+register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_data');
 register_deactivation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_uninstall_db');
 
 ?>
