@@ -28,7 +28,7 @@ if ( !function_exists( 'add_action' ) ) {
 
 function wprss_plugin_menu(){
   $hook = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
-  wp_register_script( 'wordprss_script', plugins_url('wordprss/wprss.javascript', dir(__FILE__)) );
+  wp_register_script( 'wordprss_script', plugins_url('Wordprss/wprss.javascript', dir(__FILE__)) );
 
 }
 function generate_main_page()
@@ -37,8 +37,9 @@ function generate_main_page()
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('admin_email',"NOTHING"). '</p>';
   echo __FILE__;
   wp_enqueue_script('wordprss_script');
-  require_once("backend/index.php");
-  wprss_list_feeds();
+  wp_localize_script( 'wordprss_script', 'get_url', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+  #require_once("backend/index.php");
+  //wprss_list_feeds();
   
   //$script = "<script type='text/javascript' href='". plugins_url('wordprss/wprss.javascript', dir(__FILE__)). "'> </script>";
 
@@ -92,7 +93,19 @@ function wprss_uninstall_db()
 
 
 }
+function wprss_list_feeds(){
+  global $wpdb;
+  $sql = "Select * from wp_wprss_feeds";
+  $myrows = $wpdb->get_results($sql);
+  
+  
+  echo json_encode($myrows);
+  die();
+  
+
+}
 add_action('admin_menu', 'wprss_plugin_menu');
+add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds');
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
 register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_db');
 register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_data');

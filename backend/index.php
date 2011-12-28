@@ -1,18 +1,12 @@
 <?php
 //Wordpress deprecated
 
-ini_set('display_errors','off');
+//ini_set('display_errors','off');
 
 //Global WordPress
 
 global $wpdb;
 
-if(!isset($wpdb))
-{
-    require_once('../../../../wp-config.php');
-    require_once('../../../../wp-load.php');
-    require_once('../../../../wp-includes/wp-db.php');
-}
 
 require 'Slim/Slim.php';
 $app = new Slim( array(
@@ -24,11 +18,28 @@ $app = new Slim( array(
 
 );
 
+$app->get('/',function(){
+  echo 'GET <a href="./feeds">feeds</a>';
+});
+
+
+
 //GET a list of feeds
 $app->get('/feeds',function(){
+
   echo 'A LIST OF FEEDS';
 
 });
+
+function prepdb(){
+
+  if(!isset($wpdb))
+  {
+      require_once('../../../wp-config.php');
+      require_once('../../../wp-load.php');
+      require_once('../../../wp-includes/wp-db.php');
+  }
+}
 
 function wprss_list_feeds(){
   global $wpdb;
