@@ -37,7 +37,7 @@ function generate_main_page()
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('admin_email',"NOTHING"). '</p>';
   echo __FILE__;
   wp_enqueue_script('wordprss_script');
-  require_once("backend.php");
+  require_once("backend/index.php");
   wprss_list_feeds();
   
   //$script = "<script type='text/javascript' href='". plugins_url('wordprss/wprss.javascript', dir(__FILE__)). "'> </script>";
