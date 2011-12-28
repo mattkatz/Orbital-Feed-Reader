@@ -1,3 +1,4 @@
 jQuery(document).ready(function(){
-  alert('BLART');
+  jQuery.get('/wp/wp-content/plugins/wordprss/wprss.javascript', function(response){alert(response);});
+  //alert('BLART');
 });

@@ -37,6 +37,8 @@ function generate_main_page()
   echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('admin_email',"NOTHING"). '</p>';
   echo __FILE__;
   wp_enqueue_script('wordprss_script');
+  require_once("backend.php");
+  wprss_list_feeds();
   
   //$script = "<script type='text/javascript' href='". plugins_url('wordprss/wprss.javascript', dir(__FILE__)). "'> </script>";
 
@@ -75,7 +77,7 @@ function wprss_install_data(){
   global $tbl_prefix;
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
   $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com'));
-
+  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net'));
 
 
 }
