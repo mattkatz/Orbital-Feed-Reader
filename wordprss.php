@@ -39,7 +39,7 @@ function generate_main_page()
   wp_enqueue_script('wordprss_script');
   wp_localize_script( 'wordprss_script', 'get_url', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
   #require_once("backend/index.php");
-  //wprss_list_feeds();
+  wprss_list_feeds();
   
   //$script = "<script type='text/javascript' href='". plugins_url('wordprss/wprss.javascript', dir(__FILE__)). "'> </script>";
 
@@ -95,20 +95,22 @@ function wprss_uninstall_db()
 }
 function wprss_list_feeds(){
   global $wpdb;
-  $sql = "Select * from wp_wprss_feeds";
-  $myrows = $wpdb->get_results($sql);
+  $sql = "select * from wp_wprss_feeds";
+  $myrows = $wpdb->get_results($sql );
+  echo $myrows;
   
   
   echo json_encode($myrows);
-  die();
+  //die();
   
 
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds');
+add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds');
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
-register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_db');
-register_activation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_install_data');
-register_deactivation_hook(WP_PLUGIN_DIR.'/wordprss/wordprss.php','wprss_uninstall_db');
+register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_install_db');
+register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_install_data');
+register_deactivation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_uninstall_db');
 
 ?>

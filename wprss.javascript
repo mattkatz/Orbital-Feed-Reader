@@ -1,10 +1,10 @@
 jQuery(document).ready(function(){
   alert('begin');
   var data = {
-    action: 'wprss_list_feeds',
-    stuff: 'things'
+    action: 'wprss_list_feeds'
   };
-  jQuery.get('/wp/wp-content/plugins/wordprss/wprss.javascript', function(response){alert(response);});
+  alert(get_url.ajaxurl);
+  jQuery.get('/wp/wp-content/plugins/Wordprss/wprss.javascript', function(response){alert(response);});
   jQuery.get(get_url.ajaxurl, data, function(response){alert(response);});
   
   alert('BLART');
