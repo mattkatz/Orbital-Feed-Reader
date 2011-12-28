@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Ajax request feed list, display on page
+desc: ""
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-28 17:17:37.931883 Z
+references: []
+
+id: b00431ee3d11c82e5b77b763ec5bb0983977d1f4
+log_events: 
+- - 2011-12-28 17:17:37.932344 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

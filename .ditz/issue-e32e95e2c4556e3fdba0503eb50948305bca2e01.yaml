@@ -5,7 +5,7 @@ type: :feature
 component: Wordprss
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
+status: :paused
 disposition: 
 creation_time: 2011-12-22 21:36:30.055392 Z
 references: []
@@ -22,3 +22,9 @@ log_events:
   - |-
     got a db option in, just working on sql execute.
     seems the wordpress docs aren't accurate
+- - 2011-12-28 17:16:41.427098 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from in_progress to paused
+  - |-
+    installed one table, installe one set of sample data.
+    now let's switch to getting the data back out and into the page
