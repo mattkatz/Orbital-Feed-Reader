@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: exctract db install uninstall to sep file
+desc: ""
+type: :task
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-29 18:01:05.722039 Z
+references: []
+
+id: 9448fdb122dcd41b499fa73c99cdc73de6ba3bd3
+log_events: 
+- - 2011-12-29 18:01:05.745456 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
