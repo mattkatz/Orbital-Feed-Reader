@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Startup experience
+desc: |-
+  When someone installs the plugin, it should start up with some sample feeds included.
+  Every user who has access to the dashboard should have feeds available
+  When new dashboard users get created or users are given access to the dash, they should get sample feeds.
+  Maybe install feeds should happen on first view of the feed window or the settings window.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-29 13:26:44.590461 Z
+references: []
+
+id: 183e74d90040d64b91a2cbd5abeb715a8b4bdfe2
+log_events: 
+- - 2011-12-29 13:26:44.590949 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
