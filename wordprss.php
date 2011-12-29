@@ -28,23 +28,18 @@ if ( !function_exists( 'add_action' ) ) {
 
 function wprss_plugin_menu(){
   $hook = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
-  wp_register_script( 'wordprss_script', plugins_url('Wordprss/wprss.javascript', dir(__FILE__)) );
+  wp_register_script( 'emberjs_script', plugins_url('Wordprss/ember-0.9.3.min.js', dir(__FILE__)) ,array('jquery'));
+  wp_register_script( 'wordprss_script', plugins_url('Wordprss/wprss.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script'));
 
 }
 function generate_main_page()
 {
-  echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('wordprss_db_version',"NOTHING"). '</p>';
-  echo '<p>IT WORKS</p>' . '<p> wordprss version ' . get_option('admin_email',"NOTHING"). '</p>';
-  echo __FILE__;
+
+  wp_enqueue_script( 'json2' );
+  wp_enqueue_script('emberjs_script');
   wp_enqueue_script('wordprss_script');
   wp_localize_script( 'wordprss_script', 'get_url', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-  #require_once("backend/index.php");
-  wprss_list_feeds();
-  
-  //$script = "<script type='text/javascript' href='". plugins_url('wordprss/wprss.javascript', dir(__FILE__)). "'> </script>";
-
-  //echo $script;
- 
+  require_once('mainwindow.php');
 }
 
 # create the database tables.
@@ -97,13 +92,8 @@ function wprss_list_feeds(){
   global $wpdb;
   $sql = "select * from wp_wprss_feeds";
   $myrows = $wpdb->get_results($sql );
-  echo $myrows;
-  
-  
   echo json_encode($myrows);
-  //die();
-  
-
+  exit;
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds');
