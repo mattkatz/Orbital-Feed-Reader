@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Extract backend hooks to a single backend file
+desc: that way all hooks get added from one file
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-29 13:29:47.660419 Z
+references: []
+
+id: 0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d
+log_events: 
+- - 2011-12-29 13:29:47.660776 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

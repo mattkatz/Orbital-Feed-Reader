@@ -5,7 +5,7 @@ type: :feature
 component: Wordprss
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2011-12-28 17:17:37.931883 Z
 references: []
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2011-12-29 13:28:43.966072 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - using emberjs to do auto synching etc. lets see how it works
