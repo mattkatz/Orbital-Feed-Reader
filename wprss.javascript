@@ -1,7 +1,9 @@
 jQuery(document).ready(function($){
  // alert('begin');
   var data = {
-    action: 'wprss_get_feeds'
+    action: 'wprss_get_feeds',
+    nonce_a_donce:get_url.nonce_a_donce 
+    
   };
 //  alert(get_url.ajaxurl);
 //  $.get('/wp/wp-content/plugins/Wordprss/wprss.javascript', function(response){alert(response);});

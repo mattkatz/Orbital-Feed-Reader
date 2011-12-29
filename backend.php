@@ -1,8 +1,16 @@
 <?php
 
 function wprss_list_feeds(){
+
   global $wpdb;
   global $tbl_prefix;
+  $nonce = $_GET['nonce_a_donce'];
+  // check to see if the submitted nonce matches with the
+  // generated nonce we created earlier
+  if ( ! wp_verify_nonce( $nonce, 'nonce_a_donce' ) ){
+      die ( 'Busted!');
+  }
+  
   $table_name = $tbl_prefix. "feeds";
   $sql = "select * from ".$table_name ;
   $myrows = $wpdb->get_results($sql );

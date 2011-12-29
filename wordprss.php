@@ -39,7 +39,12 @@ function generate_main_page()
   wp_enqueue_script( 'json2' );
   wp_enqueue_script('emberjs_script');
   wp_enqueue_script('wordprss_script');
-  wp_localize_script( 'wordprss_script', 'get_url', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+  wp_localize_script( 'wordprss_script', 'get_url', array( 
+    'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
+    // generate a nonce with a unique ID "myajax-post-comment-nonce"
+    // so that you can check it later when an AJAX request is sent
+    'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
+  ) );
   require_once('mainwindow.php');
 }
 
