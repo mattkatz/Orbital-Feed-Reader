@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add NONCE and Permission valdation to ajax calls
+desc: insecurity is lame yall.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-29 16:25:02.978164 Z
+references: []
+
+id: 49272b7fe2ff532b38f748d1809f910937c663d4
+log_events: 
+- - 2011-12-29 16:25:02.978641 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
