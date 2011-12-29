@@ -1,6 +1,8 @@
 <style type="text/css">
   #wprss-feedlist{
     float:right;
+    border-left: 1px solid #dddddd;
+    padding: 10px;
   }
     
 </style>
