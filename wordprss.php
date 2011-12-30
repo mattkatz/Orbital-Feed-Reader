@@ -18,7 +18,7 @@ $wordprss_db_version = '0.1';
 global $wordprss_db_version_opt_string;
 $wordprss_db_version_opt_string = 'wordprss_db_version';
 global $tbl_prefix;
-$tbl_prefix = $wpdb->prefix.'wprss_' ;
+$tbl_prefix = 'wprss_' ;
 
 if ( !function_exists( 'add_action' ) ) {
     echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
@@ -59,12 +59,13 @@ function wprss_install_db()
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
   add_option($wordprss_db_version_opt_string,$wordprss_db_version);
 
-  $table_name = $tbl_prefix."feeds";
+  $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
     owner BIGINT NOT NULL,
     feed_url text NOT NULL,
+    feed_name text NOT NULL,
     icon_url varchar(250) not null default '',
     site_url varchar(250) not null default '',
     UNIQUE KEY id (id)
@@ -77,9 +78,9 @@ function wprss_install_db()
 function wprss_install_data(){
   global $wpdb;
   global $tbl_prefix;
-  $table_name = $tbl_prefix."feeds";
-  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com'));
-  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net'));
+  $table_name = $wpdb->prefix.$tbl_prefix."feeds";
+  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com', 'feed_name' =>'More Light! More Light!'));
+  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'Boing Boing'));
 
 
 }
@@ -89,7 +90,7 @@ function wprss_uninstall_db()
   delete_option('wordprss_db_version');
   //TODO clean up all the tables
   global $wpdb;
-  $sql = "DROP TABLE ". $tbl_prefix."feeds;";
+  $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
   $wpdb->query($sql);
 
 

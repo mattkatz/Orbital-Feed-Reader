@@ -13,7 +13,7 @@
     <script type="text/x-handlebars">
     <ul class="feeds">
     {{#each Wprss.feedsController}}
-      <li class="feed"><a {{bindAttr href="site_url"}}>{{feed_url}}</a></li>
+      <li class="feed"><a {{bindAttr href="site_url"}}>{{feed_name}}</a></li>
     {{/each}}
 
     </ul>

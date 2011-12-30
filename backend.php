@@ -4,6 +4,7 @@ function wprss_list_feeds(){
 
   global $wpdb;
   global $tbl_prefix;
+  //echo $tbl_prefix . " WAHEY";
   $nonce = $_GET['nonce_a_donce'];
   // check to see if the submitted nonce matches with the
   // generated nonce we created earlier
@@ -11,7 +12,7 @@ function wprss_list_feeds(){
       die ( 'Busted!');
   }
   
-  $table_name = $tbl_prefix. "feeds";
+  $table_name = $wpdb->prefix.$tbl_prefix. "feeds";
   $sql = "select * from ".$table_name ;
   $myrows = $wpdb->get_results($sql );
   echo json_encode($myrows);
