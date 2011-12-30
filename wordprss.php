@@ -47,43 +47,6 @@ function generate_main_page()
   ) );
   require_once('mainwindow.php');
 }
-
-# create the database tables.
-# TODO extract this to a sep file
-function wprss_install_db()
-{
-  global $wpdb;
-  global $wordprss_db_version;
-  global $wordprss_db_version_opt_string;
-  global $tbl_prefix;
-  require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
-  add_option($wordprss_db_version_opt_string,$wordprss_db_version);
-
-  $table_name = $wpdb->prefix.$tbl_prefix."feeds";
-
-  $sql = "CREATE TABLE " . $table_name ." (
-    id integer NOT NULL AUTO_INCREMENT,
-    owner BIGINT NOT NULL,
-    feed_url text NOT NULL,
-    feed_name text NOT NULL,
-    icon_url varchar(250) not null default '',
-    site_url varchar(250) not null default '',
-    UNIQUE KEY id (id)
-  );";
-   
-
-  dbDelta($sql);
-}
-# load all the first installation data in.
-function wprss_install_data(){
-  global $wpdb;
-  global $tbl_prefix;
-  $table_name = $wpdb->prefix.$tbl_prefix."feeds";
-  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com', 'feed_name' =>'More Light! More Light!'));
-  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'Boing Boing'));
-
-
-}
 function wprss_uninstall_db()
 {
   //We should remove the DB option for the db version
@@ -93,12 +56,17 @@ function wprss_uninstall_db()
   $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
   $wpdb->query($sql);
 
+}
+
+function wprss_install_db_and_data(){
+  require_once 'install_upgrade.php';
+  wprss_install_db();
+  wprss_install_data();
 
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
-register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_install_db');
-register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_install_data');
+register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_install_db_and_data');
 register_deactivation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_uninstall_db');
 
 ?>
