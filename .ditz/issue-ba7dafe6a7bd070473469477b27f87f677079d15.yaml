@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: DB uninstall doesn't work.
+desc: deactivation hook doesn't work
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2011-12-31 17:57:29.485734 Z
+references: []
+
+id: ba7dafe6a7bd070473469477b27f87f677079d15
+log_events: 
+- - 2011-12-31 17:57:29.486265 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -1,5 +1,5 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: exctract db install uninstall to sep file
+title: extract db install uninstall to sep file
 desc: ""
 type: :task
 component: Wordprss
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2011-12-31 17:56:42.791527 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - edited title
+  - fixed spelling of extract
