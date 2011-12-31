@@ -58,8 +58,6 @@ function wprss_uninstall_db()
   //$wpdb->insert($wpdb->prefix.$tbl_prefix, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'NARF NARF'));
   $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
   $wpdb->query($sql);
-  
-  
 
 }
 
@@ -67,7 +65,6 @@ function wprss_install_db_and_data(){
   require_once 'install_upgrade.php';
   wprss_install_db();
   wprss_install_data();
-
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
