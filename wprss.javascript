@@ -8,7 +8,8 @@ jQuery(document).ready(function($){
   //alert(get_url.ajaxurl + data.action);
 //  $.get('/wp/wp-content/plugins/Wordprss/wprss.javascript', function(response){alert(response);});
   $.get(get_url.ajaxurl, data, function(response){
-    $('#wprss-content').html('OH SNAP');
+    //$('#wprss-content').html('OH SNAP');
+    //TODO: put in error checks for bad responses, errors,etc.
     var feeds = JSON.parse(response);
     //alert(response);
     $.each(feeds,function(index,value){
