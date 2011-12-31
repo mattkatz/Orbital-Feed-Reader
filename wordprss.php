@@ -47,14 +47,19 @@ function generate_main_page()
   ) );
   require_once('mainwindow.php');
 }
+//Something is wrong.  this thing never fires.
 function wprss_uninstall_db()
 {
   //We should remove the DB option for the db version
   delete_option('wordprss_db_version');
   //TODO clean up all the tables
   global $wpdb;
+  
+  //$wpdb->insert($wpdb->prefix.$tbl_prefix, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'NARF NARF'));
   $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
   $wpdb->query($sql);
+  
+  
 
 }
 

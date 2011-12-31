@@ -14,7 +14,6 @@ jQuery(document).ready(function($){
     $.each(feeds,function(index,value){
      // alert(value.feed_url + " " + value.site_url + " " + value.feed_name);
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name);
-
     });
   });
 

@@ -6,6 +6,8 @@ function wprss_list_feeds(){
   global $tbl_prefix;
   //echo $tbl_prefix . " WAHEY";
   $nonce = $_GET['nonce_a_donce'];
+  //TODO check to see what current user is 
+
   // check to see if the submitted nonce matches with the
   // generated nonce we created earlier
   if ( ! wp_verify_nonce( $nonce, 'nonce_a_donce' ) ){

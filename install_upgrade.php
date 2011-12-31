@@ -9,7 +9,7 @@ function wprss_install_db()
   global $tbl_prefix;
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
   add_option($wordprss_db_version_opt_string,$wordprss_db_version);
-
+  //feeds
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
   $sql = "CREATE TABLE " . $table_name ." (
@@ -21,9 +21,14 @@ function wprss_install_db()
     site_url varchar(250) not null default '',
     UNIQUE KEY id (id)
   );";
-   
-
   dbDelta($sql);
+
+  //entries
+  //tags
+  
+  
+
+  
 }
 # load all the first installation data in.
 function wprss_install_data(){
