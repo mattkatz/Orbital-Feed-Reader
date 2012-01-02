@@ -22,8 +22,19 @@
     </script>
   </div>
   <div id="wprss-content">
-
   No feeds displayed
+    <script type="text/x-handlebars">
+    <ul class="entries">
+      {{#each Wprss.entriesController}}
+        <li class="entry">
+          <a {{bindAttr href="link"}}><h2>{{title}}</h2></a>
+          {{description}}
+        </li>
+      {{/each}}
+    </ul>
+    </script>
+
+
   </div>
 </div>
 <?php

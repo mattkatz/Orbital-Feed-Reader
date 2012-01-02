@@ -29,6 +29,22 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  //user entries
+  //TODO add the foreign key refs from ref id to entries id and feed id
+  //TODO add starred
+  $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
+
+  $sql = "CREATE TABLE " . $table_name ." (
+    id integer not null AUTO_INCREMENT,
+    ref_id integer not null,
+    feed_id integer,
+    orig_feed_id integer,
+    owner_uid integer not null,
+    marked bool not null default false,
+    unread bool not null default true,
+    UNIQUE KEY id (id)
+  );";
+  dbDelta($sql);
   //entries
   $table_name = $wpdb->prefix.$tbl_prefix."entries";
 
@@ -73,12 +89,44 @@ function wprss_install_data(){
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
   $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com', 'feed_name' =>'More Light! More Light!'));
   $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'Boing Boing'));
-  //$wpdb->insert($table_name, array('owner' => 1, 'feed_url', => 'http://mattkatz.github.com/Wordprss/ditz/feed.xml', 'site_url' => 'http://mattkatz.github.com/Wordprss/', 'feed_name' => 'Wordprss Changes'));
+  $wpdb->insert($table_name, array(
+    'owner' => 1, 
+    'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/feed.xml',
+    'site_url' => 'http://mattkatz.github.com/Wordprss/', 
+    'feed_name' => 'Wordprss Changes'
+));
+
 
 
   //Insert a sample entry
-  //$table_name = $wpdb->prefix.$tbl_prefix."entries";
-  //$wpdb->insert($
+  $table_name = $wpdb->prefix.$tbl_prefix."entries";
+  $wpdb->insert($table_name, array(
+    'title'=>'Welcome to Wordprss!',
+    'guid'=>'FAKEGUID',
+    'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO
+    'updated'=>date ("Y-m-d H:m:s"),
+    'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
+    'entered' =>date ("Y-m-d H:m:s"), 
+    'author' => 'Matt Katz'
+  ));
+  //Insert a connection
+  $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
+  $wpdb->insert($table_name, array(
+    'ref_id' => 1,
+    'feed_id' => 3,
+    'orig_feed_id' => 3,
+    'owner_uid' =>1
+  ));
+ /* 
+    id integer not null AUTO_INCREMENT,
+    ref_id integer not null,
+    feed_id integer,
+    orig_feed_id integer,
+    owner_uid integer not null,
+    marked bool not null default false,
+    unread bool not null default true,
+    UNIQUE KEY id (id)
+*/
 
 
 
