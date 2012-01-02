@@ -9,6 +9,92 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created DB uninstall doesn't work.</title> 
+      <link>issue-ba7dafe6a7bd070473469477b27f87f677079d15.html</link>
+      <description></description>
+      <pubDate>2011-12-31</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; edited title extract db install uninstall to sep file</title> 
+      <link>issue-9448fdb122dcd41b499fa73c99cdc73de6ba3bd3.html</link>
+      <description>fixed spelling of extract</description>
+      <pubDate>2011-12-31</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; edited description Startup experience</title> 
+      <link>issue-183e74d90040d64b91a2cbd5abeb715a8b4bdfe2.html</link>
+      <description></description>
+      <pubDate>2011-12-31</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Ajax request feed list, display on page</title> 
+      <link>issue-b00431ee3d11c82e5b77b763ec5bb0983977d1f4.html</link>
+      <description>ok the feed list displays on the pag
+e</description>
+      <pubDate>2011-12-31</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created extract db install uninstall to sep file</title> 
+      <link>issue-9448fdb122dcd41b499fa73c99cdc73de6ba3bd3.html</link>
+      <description></description>
+      <pubDate>2011-12-29</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Extract backend hooks to a single backend file</title> 
+      <link>issue-0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d.html</link>
+      <description></description>
+      <pubDate>2011-12-29</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Add NONCE and Permission valdation to ajax calls</title> 
+      <link>issue-49272b7fe2ff532b38f748d1809f910937c663d4.html</link>
+      <description></description>
+      <pubDate>2011-12-29</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Extract backend hooks to a single backend file</title> 
+      <link>issue-0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d.html</link>
+      <description></description>
+      <pubDate>2011-12-29</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress Ajax request feed list, display on page</title> 
+      <link>issue-b00431ee3d11c82e5b77b763ec5bb0983977d1f4.html</link>
+      <description>using emberjs to do auto synching etc. lets see how it works</description>
+      <pubDate>2011-12-29</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Startup experience</title> 
+      <link>issue-183e74d90040d64b91a2cbd5abeb715a8b4bdfe2.html</link>
+      <description></description>
+      <pubDate>2011-12-29</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Ajax request feed list, display on page</title> 
+      <link>issue-b00431ee3d11c82e5b77b763ec5bb0983977d1f4.html</link>
+      <description></description>
+      <pubDate>2011-12-28</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from in_progress to paused activate plugin should install DB schema</title> 
+      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
+      <description>installed one table, installe one set of sample data.
+now let's switch to getting the data back out and into the page</description>
+      <pubDate>2011-12-28</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Create scaffolding - script to update the site, etc</title> 
       <link>issue-3f714bc8def5f61b693ca2609f6475a42df2c80d.html</link>
       <description>done with copying publish.sh from upfuckr</description>
@@ -96,20 +182,6 @@ seems the wordpress docs aren't accurate</description>
     <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created import opml</title> 
       <link>issue-7709feb38b674895666c0bc4ceed0795faf2f281.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created wireframe the rest of the features</title> 
-      <link>issue-8a619ff4b17587fd27c4f8dddc62bd6c5a591d1f.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Learn about admin screens for plugins</title> 
-      <link>issue-5637bcae52aa1e54c65db0b891d9f3f7419a91d9.html</link>
       <description></description>
       <pubDate>2011-12-16</pubDate>
     </item>
