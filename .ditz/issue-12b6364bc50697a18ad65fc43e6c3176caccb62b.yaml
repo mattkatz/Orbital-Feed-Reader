@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Better noncing
+desc: |-
+  Each js payload should return a new nonce to use
+  Each js call should update the nonce when it gets a JS return.
+  What about multiple calls at once?  
+  Maybe each function should have its own nonce that it keeps updating
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-04 13:14:09.520773 Z
+references: []
+
+id: 12b6364bc50697a18ad65fc43e6c3176caccb62b
+log_events: 
+- - 2012-01-04 13:14:09.521263 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
