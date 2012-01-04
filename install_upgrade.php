@@ -66,7 +66,7 @@ function wprss_install_db()
   //user entries
   //TODO add the foreign key refs from ref id to entries id and feed id
   //TODO add starred
-  $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
+  /*$table_name = $wpdb->prefix.$tbl_prefix."user_entries";
 
   $sql = "CREATE TABLE " . $table_name ." (
     int_id integer not null AUTO_INCREMENT,
@@ -79,6 +79,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+*/
   //tags
   
 }
