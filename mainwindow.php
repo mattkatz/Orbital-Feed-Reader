@@ -9,6 +9,11 @@
 
 <div id='wprss-container'>
   <div id="wprss-feedlist">
+  <div>CURRENT USER: <?php 
+  $curusr = wp_get_current_user();
+  echo $curusr->ID; 
+
+ ?></div>
   <h2>The Feeds</h2>
     <script type="text/x-handlebars">
     <ul class="feeds">

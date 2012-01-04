@@ -110,13 +110,14 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
+  //TODO insert a connection for each user that can hit dashboard
   //Insert a connection
   $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
   $wpdb->insert($table_name, array(
     'ref_id' => 1,
     'feed_id' => 3,
     'orig_feed_id' => 3,
-    'owner_uid' =>1
+    'owner_uid' =>2
   ));
  /* 
     id integer not null AUTO_INCREMENT,

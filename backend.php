@@ -34,9 +34,26 @@ add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds');
 function wprss_get_feed_entries(){
   global $wpdb;
   global $tbl_prefix;
+  global $current_user;
+  $current_user = wp_get_current_user();
   nonce_dance();
-  $table_name = $wpdb->prefix.$tbl_prefix. "entries";
-  $sql = "select * from ".$table_name;
+  $prefix = $wpdb->prefix.$tbl_prefix; 
+  //TODO change get feed entries to support non logged in use
+  $sql = "select entries.id as entry_id,
+      entries.title as title,
+      entries.guid as guid,
+      entries.link as link,
+      entries.content as content,
+      entries.author as author,
+      ue.feed_id as feed_id
+      from " . $prefix . "entries as entries
+      inner join " . $prefix . "user_entries as ue
+      on ue.ref_id=entries.id
+      where ue.owner_uid = ". $current_user->ID."
+;";
+
+
+      
   $myrows = $wpdb->get_results($sql);
   echo json_encode($myrows);
   exit;
