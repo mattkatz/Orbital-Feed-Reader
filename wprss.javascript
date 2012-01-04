@@ -7,7 +7,6 @@ jQuery(document).ready(function($){
   };
   //alert(get_url.ajaxurl + data.action);
 //  $.get('/wp/wp-content/plugins/Wordprss/wprss.javascript', function(response){alert(response);});
-/*
   $.get(get_url.ajaxurl, data, function(response){
     //$('#wprss-content').html('OH SNAP');
     //TODO: put in error checks for bad responses, errors,etc.
@@ -18,7 +17,6 @@ jQuery(document).ready(function($){
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name);
     });
   });
-*/
 
   data.action='wprss_get_entries';
   $.get(get_url.ajaxurl, data, function(response){
@@ -26,9 +24,8 @@ jQuery(document).ready(function($){
     var entries = JSON.parse(response);
     $.each(entries,function(index,entry){
       //alert(entry.title + " links to " + entry.link + " and has " + entry.content);
-      Wprss.entriesController.createEntry('blah',entry.title, entry.link,entry.content);
+      Wprss.entriesController.createEntry(entry.title, entry.link,entry.content);
     });
-
   });
   
 
@@ -53,17 +50,20 @@ jQuery(document).ready(function($){
 
   });
   Wprss.Entry = Em.Object.extend({
-    feed_url: null,
+    //feed_url: null,
     title: null,
     link: null,
     description: null
   });
   Wprss.entriesController = Em.ArrayProxy.create({
     content: [],
-    createEntry: function(feed, head, url,des){
+    createEntry: function(head, url,des){
       var entry = Wprss.Entry.create({
-      feed_url: feed, title:head, link:url, description:des});
-      this.pushObject(feed);
+     // feed_url: feed, 
+      title:head,
+      link:url,
+      description:des});
+      this.pushObject(entry);
     }
 
   });

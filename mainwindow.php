@@ -33,8 +33,6 @@
       {{/each}}
     </ul>
     </script>
-
-
   </div>
 </div>
 <?php
