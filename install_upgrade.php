@@ -83,15 +83,16 @@ function wprss_install_db()
   //tags
   
 }
+//TODO load in everything with admin as owner, 
 # load all the first installation data in.
 function wprss_install_data(){
   global $wpdb;
   global $tbl_prefix;
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
-  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com', 'feed_name' =>'More Light! More Light!'));
+  $wpdb->insert($table_name, array('owner'=> 2,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com', 'feed_name' =>'More Light! More Light!'));
   $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'Boing Boing'));
   $wpdb->insert($table_name, array(
-    'owner' => 1, 
+    'owner' => 2, 
     'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/feed.xml',
     'site_url' => 'http://mattkatz.github.com/Wordprss/', 
     'feed_name' => 'Wordprss Changes'
@@ -104,7 +105,7 @@ function wprss_install_data(){
   $wpdb->insert($table_name, array(
     'title'=>'Welcome to Wordprss!',
     'guid'=>'FAKEGUID',
-    'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO
+    'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
     'updated'=>date ("Y-m-d H:m:s"),
     'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
     'entered' =>date ("Y-m-d H:m:s"), 
@@ -119,18 +120,6 @@ function wprss_install_data(){
     'orig_feed_id' => 3,
     'owner_uid' =>2
   ));
- /* 
-    id integer not null AUTO_INCREMENT,
-    ref_id integer not null,
-    feed_id integer,
-    orig_feed_id integer,
-    owner_uid integer not null,
-    marked bool not null default false,
-    unread bool not null default true,
-    UNIQUE KEY id (id)
-*/
-
-
 
 }
 /*
