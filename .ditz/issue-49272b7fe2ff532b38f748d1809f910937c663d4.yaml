@@ -3,7 +3,7 @@ title: Add NONCE and Permission valdation to ajax calls
 desc: insecurity is lame yall.
 type: :feature
 component: Wordprss
-release: 
+release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2011-12-29 16:25:02.978641 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2012-01-05 22:13:35.970372 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1 - Feeds, Subscribed from unassigned
   - ""

@@ -4,6 +4,25 @@ version: "0.5"
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Wordprss
-releases: []
-
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1 - Feeds, Subscribed
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2012-01-05 22:11:51.560274 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - |-
+      This should be a minimal feed reader.  Pull updates, display them
+      per feed browsing
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.2 Wordpress integration
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2012-01-05 22:16:55.910933 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - ""
 css: style.css

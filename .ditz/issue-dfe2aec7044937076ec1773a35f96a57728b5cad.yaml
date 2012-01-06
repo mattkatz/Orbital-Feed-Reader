@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: PubSubHubBub
+desc: |-
+  It's public, there should be a good way to sub out to that and 
+  whatever the RSS push thing is that Dave Winer made
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-05 22:10:36.890862 Z
+references: []
+
+id: dfe2aec7044937076ec1773a35f96a57728b5cad
+log_events: 
+- - 2012-01-05 22:10:36.891330 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

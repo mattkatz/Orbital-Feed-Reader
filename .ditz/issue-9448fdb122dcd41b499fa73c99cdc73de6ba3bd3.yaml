@@ -3,7 +3,7 @@ title: extract db install uninstall to sep file
 desc: ""
 type: :task
 component: Wordprss
-release: 
+release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -20,3 +20,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - edited title
   - fixed spelling of extract
+- - 2012-01-05 22:14:46.091920 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1 - Feeds, Subscribed from unassigned
+  - ""
