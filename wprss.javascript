@@ -19,12 +19,6 @@ jQuery(document).ready(function($){
   $.get(get_url.ajaxurl, data, function(response){
     //alert(response);
     Wprss.entriesController.createEntries(response);
-    /*var entries = JSON.parse(response);
-    $.each(entries,function(index,entry){
-      //alert(entry.title + " links to " + entry.link + " and has " + entry.content);
-      Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.content);
-    });
-    */
   });
   
 
@@ -48,6 +42,7 @@ jQuery(document).ready(function($){
       var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name});
       this.pushObject(feed);
     }
+    
 
   });
   Wprss.Entry = Em.Object.extend({
@@ -77,23 +72,11 @@ jQuery(document).ready(function($){
   Wprss.selectedFeedController = Em.Object.create({
     content: null
   });
-  function propertyList(obj){
-    var plist = '';
-    for (var key in obj){
-      if(obj.hasOwnProperty(key)){
-        plist = plist + key + ', ';
-      }
-    }
-    return plist;
-  }
 
   Wprss.FeedsView = Em.View.extend({
     //templateName: feedsView,
     click: function(evt){
-      //alert("CLICKED!");
       var content = this.get('content');
-      //alert('content is' +content);
-      //alert(propertyList(evt));
       alert(content.feed_id);
       Wprss.selectedFeedController.set('content', content);
     },
