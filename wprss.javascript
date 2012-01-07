@@ -11,18 +11,20 @@ jQuery(document).ready(function($){
     //alert(response);
     $.each(feeds,function(index,value){
      // alert(value.feed_url + " " + value.site_url + " " + value.feed_name);
-      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name);
+      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id);
     });
   });
 
   data.action='wprss_get_entries';
   $.get(get_url.ajaxurl, data, function(response){
-    alert(response);
-    var entries = JSON.parse(response);
+    //alert(response);
+    Wprss.entriesController.createEntries(response);
+    /*var entries = JSON.parse(response);
     $.each(entries,function(index,entry){
       //alert(entry.title + " links to " + entry.link + " and has " + entry.content);
       Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.content);
     });
+    */
   });
   
 
@@ -34,14 +36,16 @@ jQuery(document).ready(function($){
   Wprss.Feed = Em.Object.extend({
     feed_url : null,
     feed_name: null,
+    feed_id:null,
     site_url: null
+    
 
   });
 
   Wprss.feedsController = Em.ArrayProxy.create({
     content: [],
-    createFeed: function(feed,domain,name){
-      var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_name:name});
+    createFeed: function(feed,domain,name,id){
+      var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name});
       this.pushObject(feed);
     }
 
@@ -61,8 +65,46 @@ jQuery(document).ready(function($){
       link:url,
       description:des});
       this.pushObject(entry);
+    },
+    createEntries: function(jsonEntries){
+      var entries = JSON.parse(jsonEntries);
+      entries.forEach(function(entry){
+        Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.content);
+      });
     }
 
   });
+  Wprss.selectedFeedController = Em.Object.create({
+    content: null
+  });
+  function propertyList(obj){
+    var plist = '';
+    for (var key in obj){
+      if(obj.hasOwnProperty(key)){
+        plist = plist + key + ', ';
+      }
+    }
+    return plist;
+  }
+
+  Wprss.FeedsView = Em.View.extend({
+    //templateName: feedsView,
+    click: function(evt){
+      //alert("CLICKED!");
+      var content = this.get('content');
+      //alert('content is' +content);
+      //alert(propertyList(evt));
+      alert(content.feed_id);
+      Wprss.selectedFeedController.set('content', content);
+    },
+    isSelected: function(){
+      var selectedItem = Wprss.selectedFeedController.get('content'),
+        content = this.get('content');
+      if(content === selectedItem){return true;}
+    
+    }.property('Wprss.selectedFeedController.content'),
+    classNameBindings:['isSelected']
+  });
+
 
 

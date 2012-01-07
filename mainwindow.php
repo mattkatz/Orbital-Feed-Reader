@@ -4,6 +4,10 @@
     border-left: 1px solid #dddddd;
     padding: 10px;
   }
+
+  .is-selected{
+    text-shadow: 1px 1px 2px #666;
+  }
     
 </style>
 
@@ -15,10 +19,14 @@
 
  ?></div>
   <h2>The Feeds</h2>
-    <script type="text/x-handlebars">
+    <script type="text/x-handlebars" >
     <ul class="feeds">
     {{#each Wprss.feedsController}}
-      <li class="feed"><a {{bindAttr href="site_url"}}>{{feed_name}}</a></li>
+      {{#view Wprss.FeedsView contentBinding="this"}}
+      {{#with content}}
+        <li class="feed">{{feed_name}}</li>
+      {{/with }}
+      {{/view}}
     {{/each}}
 
     </ul>
@@ -27,16 +35,19 @@
     </script>
   </div>
   <div id="wprss-content">
-  No feeds displayed
     <script type="text/x-handlebars">
-    <ul class="entries">
-      {{#each Wprss.entriesController}}
-        <li class="entry">
-          <a {{bindAttr href="link"}}><h2>{{title}}</h2></a>
-          {{description}}
-        </li>
-      {{/each}}
-    </ul>
+    {{#if Wprss.selectedFeedController.content}}
+      <ul class="entries">
+        {{#each Wprss.entriesController}}
+          <li class="entry">
+            <a {{bindAttr href="link"}}><h2>{{title}}</h2></a>
+            {{description}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="no-feed-displayed">No feeds displayed</div>
+    {{/if}}
     </script>
   </div>
 </div>
