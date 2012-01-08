@@ -111,6 +111,16 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
+
+  $wpdb->insert($table_name, array(
+    'title'=>'Look at this fake post about a banana',
+    'guid'=>'FAKEGUID2',
+    'link'=>'http://boingboing.net/',//TODO 
+    'updated'=>date ("Y-m-d H:m:s"),
+    'content'=>"just LOOK AT IT.<br/>Amazing, really how this meme caught on.",//TODO
+    'entered' =>date ("Y-m-d H:m:s"), 
+    'author' => 'Cory Doctorow'
+  ));
   //TODO insert a connection for each user that can hit dashboard
   //Insert a connection
   $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
@@ -121,6 +131,15 @@ function wprss_install_data(){
     'owner_uid' =>2
   ));
 
+  //TODO insert a connection for each user that can hit dashboard
+  //Insert a connection
+  $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
+  $wpdb->insert($table_name, array(
+    'ref_id' => 2,
+    'feed_id' => 2,
+    'orig_feed_id' => 2,
+    'owner_uid' =>2
+  ));
 }
 /*
 function wprss_uninstall_db()
