@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :paused
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-22 21:36:30.055392 Z
 references: []
 
@@ -31,4 +31,8 @@ log_events:
 - - 2012-01-05 22:12:39.762211 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1 - Feeds, Subscribed from unassigned
+  - ""
+- - 2012-01-08 02:48:55.216191 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""
