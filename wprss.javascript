@@ -10,14 +10,12 @@ jQuery(document).ready(function($){
     Wprss.feedsController.createFeeds(response);
   });
 
+  //TODO this should just be fed into the page on initial load
   data.action='wprss_get_entries';
   $.get(get_url.ajaxurl, data, function(response){
     //alert(response);
     Wprss.entriesController.createEntries(response);
   });
-  
-
-
   
 });
 
@@ -43,8 +41,6 @@ jQuery(document).ready(function($){
         Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id);
       });
     }
-    
-
   });
   Wprss.Entry = Em.Object.extend({
     feed_id: null,
@@ -67,8 +63,22 @@ jQuery(document).ready(function($){
       entries.forEach(function(entry){
         Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.content);
       });
+    },
+    clearEntries: function(){
+      this.set('content', []);
+    },
+    selectFeed: function(id){
+      var data = {
+        action: 'wprss_get_entries',
+        feed_id: id,
+        nonce_a_donce:get_url.nonce_a_donce 
+      };
+      jQuery.get(get_url.ajaxurl, data, function(response){
+        //alert(response);
+        Wprss.entriesController.clearEntries();
+        Wprss.entriesController.createEntries(response);
+      });
     }
-
   });
   Wprss.selectedFeedController = Em.Object.create({
     content: null
@@ -80,6 +90,8 @@ jQuery(document).ready(function($){
       var content = this.get('content');
       //alert(content.feed_id);
       Wprss.selectedFeedController.set('content', content);
+      Wprss.entriesController.selectFeed(content.feed_id);
+      
     },
     isSelected: function(){
       var selectedItem = Wprss.selectedFeedController.get('content'),

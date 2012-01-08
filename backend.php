@@ -1,7 +1,7 @@
 <?php
 
 function nonce_dance(){
-  $nonce = $_GET['nonce_a_donce'];
+  $nonce = filter_input(INPUT_GET, 'nonce_a_donce',FILTER_SANITIZE_STRING);
 
   // check to see if the submitted nonce matches with 
   // the generated nonce we created earlier
@@ -37,7 +37,17 @@ function wprss_get_feed_entries(){
   global $current_user;
   $current_user = wp_get_current_user();
   nonce_dance();
+  
   $prefix = $wpdb->prefix.$tbl_prefix; 
+  $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $feed_qualifier ="";
+  if($feed_id == ""){
+    //TODO "" should mean return latest entries
+   }else{
+     $feed_qualifier = " and ue.feed_id = ".$feed_id;
+   }
+
+  
   //TODO change get feed entries to support non logged in use
   $sql = "select entries.id as entry_id,
       entries.title as title,
@@ -50,7 +60,9 @@ function wprss_get_feed_entries(){
       inner join " . $prefix . "user_entries as ue
       on ue.ref_id=entries.id
       where ue.owner_uid = ". $current_user->ID."
-;";
+      ".$feed_qualifier."
+      limit 30
+  ;";
 
 
       
