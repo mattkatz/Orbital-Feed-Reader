@@ -9,6 +9,76 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.2 Wordpress integration from unassigned Display Blogroll</title> 
+      <link>issue-177afdab7177ba4c772f98813294a0759d3ab62c.html</link>
+      <description></description>
+      <pubDate>2012-01-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created blog from feed</title> 
+      <link>issue-4153644aa7b0517054d77d03a2caa8efb295795c.html</link>
+      <description></description>
+      <pubDate>2012-01-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.1 - Feeds, Subscribed from unassigned Use WP Cron to schedule updates.</title> 
+      <link>issue-4062c1a15194aaffba957a640e1e3590f88f72d4.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.1 - Feeds, Subscribed from unassigned extract db install uninstall to sep file</title> 
+      <link>issue-9448fdb122dcd41b499fa73c99cdc73de6ba3bd3.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.1 - Feeds, Subscribed from unassigned Keyboard shortcuts</title> 
+      <link>issue-2e5e69242449a26494b6228d58e8731b6f0302e9.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.1 - Feeds, Subscribed from unassigned Add NONCE and Permission valdation to ajax calls</title> 
+      <link>issue-49272b7fe2ff532b38f748d1809f910937c663d4.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.1 - Feeds, Subscribed from unassigned Database schema</title> 
+      <link>issue-15ae6393029dae3ebb04ceff460398c7f2cb3bc5.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.1 - Feeds, Subscribed from unassigned activate plugin should install DB schema</title> 
+      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created PubSubHubBub</title> 
+      <link>issue-dfe2aec7044937076ec1773a35f96a57728b5cad.html</link>
+      <description></description>
+      <pubDate>2012-01-05</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Better noncing</title> 
+      <link>issue-12b6364bc50697a18ad65fc43e6c3176caccb62b.html</link>
+      <description></description>
+      <pubDate>2012-01-04</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created DB uninstall doesn't work.</title> 
       <link>issue-ba7dafe6a7bd070473469477b27f87f677079d15.html</link>
       <description></description>
@@ -114,76 +184,6 @@ seems the wordpress docs aren't accurate</description>
       <link>issue-5637bcae52aa1e54c65db0b891d9f3f7419a91d9.html</link>
       <description>pretty much done</description>
       <pubDate>2011-12-23</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created activate plugin should install DB schema</title> 
-      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
-      <description></description>
-      <pubDate>2011-12-22</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Create scaffolding - script to update the site, etc</title> 
-      <link>issue-3f714bc8def5f61b693ca2609f6475a42df2c80d.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Database schema</title> 
-      <link>issue-15ae6393029dae3ebb04ceff460398c7f2cb3bc5.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Use WP Cron to schedule updates.</title> 
-      <link>issue-4062c1a15194aaffba957a640e1e3590f88f72d4.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Keyboard shortcuts</title> 
-      <link>issue-2e5e69242449a26494b6228d58e8731b6f0302e9.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Tag/Categorize feeds</title> 
-      <link>issue-547083e0c48b511b0ea11b2736cc477a897a44c3.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Display Blogroll</title> 
-      <link>issue-177afdab7177ba4c772f98813294a0759d3ab62c.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created mark feeds private</title> 
-      <link>issue-1ecf8ff773d7f2f551bf2cf2231e268fe06b3e5f.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Export OPML</title> 
-      <link>issue-cc2559e18a1b079fcc2480ed20b31ccc67e45edf.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created import opml</title> 
-      <link>issue-7709feb38b674895666c0bc4ceed0795faf2f281.html</link>
-      <description></description>
-      <pubDate>2011-12-16</pubDate>
     </item>
   
   </channel>
