@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: blog from feed
+desc: Click to blog an entry.
+type: :feature
+component: Wordprss
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-08 02:44:08.432378 Z
+references: []
+
+id: 4153644aa7b0517054d77d03a2caa8efb295795c
+log_events: 
+- - 2012-01-08 02:44:08.432779 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
