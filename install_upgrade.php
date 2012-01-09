@@ -89,11 +89,22 @@ function wprss_install_data(){
   global $wpdb;
   global $tbl_prefix;
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
-  $wpdb->insert($table_name, array('owner'=> 2,'feed_url'=>'http://www.morelightmorelight.com/feed/','site_url'=> 'http://www.morelightmorelight.com', 'feed_name' =>'More Light! More Light!'));
-  $wpdb->insert($table_name, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'Boing Boing'));
+  $wpdb->insert($table_name, array(
+    'owner'=> 2,
+    //'feed_url'=>'http://www.morelightmorelight.com/feed/',
+    'feed_url'=>'http://localhost/morelightmorelight/feed',
+    'site_url'=> 'http://www.morelightmorelight.com',
+    'feed_name' =>'More Light! More Light!'));
+  $wpdb->insert($table_name, array(
+    'owner'=> 1,
+    //'feed_url'=>'http://boingboing.net/feed/',
+    'feed_url'=>'http://localhost/boingboing/iBag',
+    'site_url'=> 'http://boingboing.net',
+    'feed_name' => 'Boing Boing'));
   $wpdb->insert($table_name, array(
     'owner' => 2, 
-    'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/feed.xml',
+    //'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/html/feed.xml',
+    'feed_url' => 'http://localhost/Wordprss/ditz/html/feed.xml',
     'site_url' => 'http://mattkatz.github.com/Wordprss/', 
     'feed_name' => 'Wordprss Changes'
 ));
