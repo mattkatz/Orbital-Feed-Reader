@@ -73,9 +73,77 @@ function wprss_get_feed_entries(){
 add_action('wp_ajax_wprss_get_entries','wprss_get_feed_entries');
 add_action('wp_ajax_nopriv_wprss_get_entries','wprss_get_feed_entries');
 
+//update multiple feeds
 function wprss_update_feeds(){
+  //get the list of feeds to update that haven't been updated recently
+  //TODO Limit it to a reasonable number of feeds in a batch
+  //for each feed call update_feed
+  
 
 }
+add_action('wp_ajax_wprss_update_feeds','wprss_update_feeds');
+add_action('wp_ajax_nopriv_wprss_update_feeds','wprss_get_update_feeds');
+
+
+//update single feed
+function wprss_update_feed($feed_id="",$feed_url=""){
+  //if we didn't get passed a feed, check to see if it is in the url
+  if("" == $feed_id){
+    $feed_id = filter_input(INPUT_GET, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
+    if("" == $feed_id){return;}
+  }
+
+  //TODO update the feeds last updated time
+  require_once('simplepie.inc');
+  global $wpdb;
+  global $tbl_prefix;
+  global $current_user;
+  //echo $feed_id;
+  $prefix = $wpdb->prefix.$tbl_prefix; 
+  $sql = "select *
+    from ". $prefix . "feeds
+    where id=".$feed_id."
+    ;";
+  $feedrow = $wpdb->get_row($sql);
+
+  $feed = new SimplePie();
+  $feed->set_feed_url($feedrow->feed_url);
+  //Here is where the feed parsing/fetching/etc. happens
+  $feed->init();
+  //echo json_encode($feed->get_items());
+  $entries_table = $prefix."entries"; 
+  $user_entries_table = $prefix."user_entries";
+  foreach($feed->get_items() as $item)
+  {
+    echo $item->get_description();
+    $wpdb->insert($entries_table, array(
+      'title'=>$item->get_title(),
+      'guid'=>$item->get_id(),
+      'link'=>$item->get_link(),//TODO 
+      'updated'=>date ("Y-m-d H:m:s"),
+      'content'=>$item->get_content(),//TODO
+      'entered' =>date ("Y-m-d H:m:s"), 
+      'author' => $item->get_author()
+    ));
+    $entry_id = $wpdb->insert_id;
+
+
+    //TODO - this needs to be generalized for multiple users
+    $wpdb->insert($user_entries_table, array(
+      'ref_id' => $entry_id,
+      'feed_id' => $feed_id,
+      'orig_feed_id' => $feed_id,
+      'owner_uid' =>$current_user->ID
+    ));
+  }
+
+  //echo $feedrow->feed_url;
+  exit;
+}
+add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
+add_action('wp_ajax_nopriv_wprss_update_feed','wprss_get_update_feed');
+
+
 
 
 ?>
