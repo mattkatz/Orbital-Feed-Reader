@@ -46,22 +46,24 @@ jQuery(document).ready(function($){
     feed_id: null,
     title: null,
     link: null,
+    author:null,
     description: null
   });
   Wprss.entriesController = Em.ArrayProxy.create({
     content: [],
-    createEntry: function(feed,head, url,des){
+    createEntry: function(feed,head, url,by,des){
       var entry = Wprss.Entry.create({
       feed_id: feed, 
       title:head,
       link:url,
+      author:by,
       description:des});
       this.pushObject(entry);
     },
     createEntries: function(jsonEntries){
       var entries = JSON.parse(jsonEntries);
       entries.forEach(function(entry){
-        Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.content);
+        Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.author,entry.content);
       });
     },
     clearEntries: function(){

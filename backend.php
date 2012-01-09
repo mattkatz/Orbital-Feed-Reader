@@ -36,7 +36,7 @@ function wprss_get_feed_entries(){
   global $tbl_prefix;
   global $current_user;
   $current_user = wp_get_current_user();
-  nonce_dance();
+  //nonce_dance();
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);

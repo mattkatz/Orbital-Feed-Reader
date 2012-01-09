@@ -41,7 +41,7 @@
       <ul class="entries">
         {{#each Wprss.entriesController}}
           <li class="entry">
-            <a {{bindAttr href="link"}}><h2>{{title}}</h2></a>
+            <a {{bindAttr href="link"}}><h2>{{title}}</h2></a> {{#if author}}<span class="attribution">by {{author}}</span>{{/if}}
             {{description}}
           </li>
         {{/each}}
