@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Extract CSS
+desc: don't put it inline
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-11 23:13:32.652173 Z
+references: []
+
+id: c6a53fd27113a557c34e06595fc6e41363427a1b
+log_events: 
+- - 2012-01-11 23:13:32.652677 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
