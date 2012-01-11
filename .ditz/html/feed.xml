@@ -9,6 +9,13 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Extract CSS</title> 
+      <link>issue-c6a53fd27113a557c34e06595fc6e41363427a1b.html</link>
+      <description>that was easy</description>
+      <pubDate>2012-01-11</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress Extract CSS</title> 
       <link>issue-c6a53fd27113a557c34e06595fc6e41363427a1b.html</link>
       <description>this should be quick</description>
@@ -175,13 +182,6 @@ e</description>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Extract backend hooks to a single backend file</title> 
       <link>issue-0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d.html</link>
       <description></description>
-      <pubDate>2011-12-29</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress Ajax request feed list, display on page</title> 
-      <link>issue-b00431ee3d11c82e5b77b763ec5bb0983977d1f4.html</link>
-      <description>using emberjs to do auto synching etc. lets see how it works</description>
       <pubDate>2011-12-29</pubDate>
     </item>
   
