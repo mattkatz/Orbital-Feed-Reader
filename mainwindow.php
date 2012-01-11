@@ -1,29 +1,3 @@
-<style type="text/css">
-  #wprss-feedlist{
-    float:right;
-    border-left: 1px solid #dddddd;
-    padding: 10px;
-  }
-
-  .is-selected{
-    text-shadow: 1px 1px 2px #666;
-  }
-  #commandbar {
-    background: #dddddd;
-    display:inline-block; 
-  }
-  #commandbar ul{
-    display:inline; 
-  
-  }
-  #commandbar li{
-    float:left;
-    padding-left:5px;
-    padding-right:5px;
-  
-  }
-    
-</style>
 
 <div id='wprss-container'>
   <div id="commandbar" class="quicklinks">
