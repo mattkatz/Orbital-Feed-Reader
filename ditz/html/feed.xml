@@ -9,6 +9,56 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Extract CSS</title> 
+      <link>issue-c6a53fd27113a557c34e06595fc6e41363427a1b.html</link>
+      <description>that was easy</description>
+      <pubDate>2012-01-11</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress Extract CSS</title> 
+      <link>issue-c6a53fd27113a557c34e06595fc6e41363427a1b.html</link>
+      <description>this should be quick</description>
+      <pubDate>2012-01-11</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from in_progress to paused Use WP Cron to schedule updates.</title> 
+      <link>issue-4062c1a15194aaffba957a640e1e3590f88f72d4.html</link>
+      <description></description>
+      <pubDate>2012-01-11</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Extract CSS</title> 
+      <link>issue-c6a53fd27113a557c34e06595fc6e41363427a1b.html</link>
+      <description></description>
+      <pubDate>2012-01-11</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Allow secret key url for triggering feed update</title> 
+      <link>issue-f4247282b343a00ace2bc32a31e990feaa839244.html</link>
+      <description></description>
+      <pubDate>2012-01-09</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress Use WP Cron to schedule updates.</title> 
+      <link>issue-4062c1a15194aaffba957a640e1e3590f88f72d4.html</link>
+      <description>We should also have a secret key method to allow for cron updates, etc.
+What does tt-rss do? How does the update_daemon alex made work?</description>
+      <pubDate>2012-01-09</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed activate plugin should install DB schema</title> 
+      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
+      <description></description>
+      <pubDate>2012-01-08</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; assigned to release 0.2 Wordpress integration from unassigned Display Blogroll</title> 
       <link>issue-177afdab7177ba4c772f98813294a0759d3ab62c.html</link>
       <description></description>
@@ -133,57 +183,6 @@ e</description>
       <link>issue-0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d.html</link>
       <description></description>
       <pubDate>2011-12-29</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress Ajax request feed list, display on page</title> 
-      <link>issue-b00431ee3d11c82e5b77b763ec5bb0983977d1f4.html</link>
-      <description>using emberjs to do auto synching etc. lets see how it works</description>
-      <pubDate>2011-12-29</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Startup experience</title> 
-      <link>issue-183e74d90040d64b91a2cbd5abeb715a8b4bdfe2.html</link>
-      <description></description>
-      <pubDate>2011-12-29</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Ajax request feed list, display on page</title> 
-      <link>issue-b00431ee3d11c82e5b77b763ec5bb0983977d1f4.html</link>
-      <description></description>
-      <pubDate>2011-12-28</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from in_progress to paused activate plugin should install DB schema</title> 
-      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
-      <description>installed one table, installe one set of sample data.
-now let's switch to getting the data back out and into the page</description>
-      <pubDate>2011-12-28</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Create scaffolding - script to update the site, etc</title> 
-      <link>issue-3f714bc8def5f61b693ca2609f6475a42df2c80d.html</link>
-      <description>done with copying publish.sh from upfuckr</description>
-      <pubDate>2011-12-23</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; changed status from unstarted to in_progress activate plugin should install DB schema</title> 
-      <link>issue-e32e95e2c4556e3fdba0503eb50948305bca2e01.html</link>
-      <description>got a db option in, just working on sql execute.
-seems the wordpress docs aren't accurate</description>
-      <pubDate>2011-12-23</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Learn about admin screens for plugins</title> 
-      <link>issue-5637bcae52aa1e54c65db0b891d9f3f7419a91d9.html</link>
-      <description>pretty much done</description>
-      <pubDate>2011-12-23</pubDate>
     </item>
   
   </channel>
