@@ -133,7 +133,6 @@ function wprss_install_data(){
     'author' => 'Cory Doctorow'
   ));
   //TODO insert a connection for each user that can hit dashboard
-  //TODO get the insert id using $wpdb->insert_id above
   //Insert a connection
   $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
   $wpdb->insert($table_name, array(
