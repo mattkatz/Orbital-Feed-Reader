@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Show selected item
+desc: highlight the item selected or clicked on.  Scroll to the top
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-12 00:01:16.744695 Z
+references: []
+
+id: 49581ddffb51cc4b5746765227fcb51e36d61443
+log_events: 
+- - 2012-01-12 00:01:16.745209 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

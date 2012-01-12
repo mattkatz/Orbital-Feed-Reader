@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fixed feedlist, scrollable feeds
+desc: the items should scroll, the feedlist should be stuck
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-12 00:03:04.713390 Z
+references: []
+
+id: f25a08321e6b3141b7fc75fa976499d41ea33141
+log_events: 
+- - 2012-01-12 00:03:04.735429 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
