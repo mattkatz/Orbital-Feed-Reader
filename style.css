@@ -2,10 +2,32 @@
   float:right;
   border-left: 1px solid #dddddd;
   padding: 10px;
+  background-color: #ECECEC;
+  border-color: #CCCCCC;
+  
+}
+.entries {
+  background-color: #ECECEC;
+}
+
+.entries .current{
+background-color: #ffffff;
+}
+
+
+.feeds div
+{
+  border-bottom: 1px solid #DFDFDF;
+  border-top: 1px solid #F9F9F9;
 }
 
 .is-selected{
   text-shadow: 1px 1px 2px #666;
+  box-shadow: 1px 1px 3px #666666 inset;
+  background-color: #777777;
+  background-image: -moz-linear-gradient(center bottom , #6D6D6D, #808080);
+  color: #FFFFFF;
+  text-shadow: 0 -1px 0 #333333;
 }
 #commandbar {
   background: #dddddd;
