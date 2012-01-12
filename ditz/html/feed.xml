@@ -9,6 +9,20 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Fixed feedlist, scrollable feeds</title> 
+      <link>issue-f25a08321e6b3141b7fc75fa976499d41ea33141.html</link>
+      <description></description>
+      <pubDate>2012-01-12</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Show selected item</title> 
+      <link>issue-49581ddffb51cc4b5746765227fcb51e36d61443.html</link>
+      <description></description>
+      <pubDate>2012-01-12</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Extract CSS</title> 
       <link>issue-c6a53fd27113a557c34e06595fc6e41363427a1b.html</link>
       <description>that was easy</description>
@@ -166,20 +180,6 @@ e</description>
   
     <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Extract backend hooks to a single backend file</title> 
-      <link>issue-0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d.html</link>
-      <description></description>
-      <pubDate>2011-12-29</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Add NONCE and Permission valdation to ajax calls</title> 
-      <link>issue-49272b7fe2ff532b38f748d1809f910937c663d4.html</link>
-      <description></description>
-      <pubDate>2011-12-29</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Extract backend hooks to a single backend file</title> 
       <link>issue-0b6bbc83f4c3fc1861c113c8c4d23bb4be4d0e2d.html</link>
       <description></description>
       <pubDate>2011-12-29</pubDate>
