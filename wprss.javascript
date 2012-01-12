@@ -103,6 +103,29 @@ jQuery(document).ready(function($){
     }.property('Wprss.selectedFeedController.content'),
     classNameBindings:['isSelected']
   });
+  Wprss.selectedEntryController = Em.Object.create({
+    content: null
+  });
+
+  Wprss.EntriesView = Em.View.extend({
+    //templateName: feedsView,
+    click: function(evt){
+      var content = this.get('content');
+      //alert(content.feed_id);
+      Wprss.selectedEntryController.set('content', content);
+      //Wprss.entriesController.selectFeed(content.feed_id);
+      
+    },
+    isCurrent: function(){
+      var selectedItem = Wprss.selectedEntryController.get('content'),
+        content = this.get('content');
+      if(content === selectedItem){return true;}
+    
+    }.property('Wprss.selectedEntryController.content'),
+    classNameBindings:['isCurrent']
+  });
+
+
 
 
 

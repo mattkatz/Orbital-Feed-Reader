@@ -13,6 +13,9 @@
 .entries .current{
 background-color: #ffffff;
 }
+.entries .is-current{
+background-color: #ffffff;
+}
 
 
 .feeds div

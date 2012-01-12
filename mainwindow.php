@@ -35,10 +35,14 @@
     {{#if Wprss.selectedFeedController.content}}
       <ul class="entries">
         {{#each Wprss.entriesController}}
-          <li class="entry">
-            <a {{bindAttr href="link"}}><h2>{{title}}</h2></a> {{#if author}}<span class="attribution">by {{author}}</span>{{/if}}
-            {{description}}
-          </li>
+          {{#view Wprss.EntriesView contentBinding="this"}}
+          {{#with content}}
+            <li class="entry">
+              <a {{bindAttr href="link"}}><h2>{{title}}</h2></a> {{#if author}}<span class="attribution">by {{author}}</span>{{/if}}
+              {{description}}
+            </li>
+          {{/with }}
+          {{/view}}
         {{/each}}
       </ul>
     {{else}}
