@@ -41,7 +41,7 @@ function wprss_install_db()
     orig_feed_id integer,
     owner_uid integer not null,
     marked bool not null default false,
-    unread bool not null default true,
+    isRead bool not null default false,
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);

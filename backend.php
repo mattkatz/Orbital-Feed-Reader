@@ -40,12 +40,20 @@ function wprss_get_feed_entries(){
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $show_read =filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT); 
   $feed_qualifier ="";
   if($feed_id == ""){
     //TODO "" should mean return latest entries
    }else{
      $feed_qualifier = " and ue.feed_id = ".$feed_id;
    }
+  if($show_read){
+    //do nothing
+  }
+  else{
+    //only show unread entries
+    $feed_qualifer += " and ue.unread = TRUE";
+  }
 
   
   //TODO change get feed entries to support non logged in use
@@ -55,6 +63,8 @@ function wprss_get_feed_entries(){
       entries.link as link,
       entries.content as content,
       entries.author as author,
+      ue.isRead as isRead,
+      ue.marked as marked,
       ue.feed_id as feed_id
       from " . $prefix . "entries as entries
       inner join " . $prefix . "user_entries as ue
@@ -142,6 +152,29 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 }
 add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
 add_action('wp_ajax_nopriv_wprss_update_feed','wprss_get_update_feed');
+
+//TODO:Mark items as read
+//Mark item as read
+function wprss_mark_item_read($entry_id,$unread_status=true){
+  global $wpdb;
+  global $tbl_prefix;
+  global $current_user;
+  $prefix = $wpdb->prefix.$tbl_prefix; 
+  $wpdb->update(
+    $prefix.'user_entries',//the table
+    array('unread' =>$unread_status),//columns to update
+    array(
+      'ref_id' =>$entry_id, //current entry
+      'owner_uid'=>$current_user->ID //logged in user
+    )//where filters
+  );
+  
+  
+}
+add_action('wp_ajax_wprss_mark_item_read','wprss_mark_item_read');
+//No non logged in way to mark an item read for me yet
+
+
 
 
 

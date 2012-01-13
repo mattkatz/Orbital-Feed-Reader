@@ -47,23 +47,27 @@ jQuery(document).ready(function($){
     title: null,
     link: null,
     author:null,
+    isRead:null,
+    marked:null,
     description: null
   });
   Wprss.entriesController = Em.ArrayProxy.create({
     content: [],
-    createEntry: function(feed,head, url,by,des){
+    createEntry: function(feed,head, url,by,read,mark,des){
       var entry = Wprss.Entry.create({
       feed_id: feed, 
       title:head,
       link:url,
       author:by,
+      isRead:read!='0',
+      marked:mark!='0',
       description:des});
       this.pushObject(entry);
     },
     createEntries: function(jsonEntries){
       var entries = JSON.parse(jsonEntries);
       entries.forEach(function(entry){
-        Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.author,entry.content);
+        Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.author,entry.isRead,entry.marked,entry.content);
       });
     },
     clearEntries: function(){

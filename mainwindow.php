@@ -40,6 +40,10 @@
             <li class="entry">
               <a {{bindAttr href="link"}}><h2>{{title}}</h2></a> {{#if author}}<span class="attribution">by {{author}}</span>{{/if}}
               {{description}}
+              <div class="attributes">
+                {{view Em.Checkbox title="Read" valueBinding="isRead" }}
+
+              </div>
             </li>
           {{/with }}
           {{/view}}
