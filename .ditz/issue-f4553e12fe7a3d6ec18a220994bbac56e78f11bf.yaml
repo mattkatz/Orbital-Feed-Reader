@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Pull JS enqueue out of main function.
+desc: Should only be enqueued when on the page or subpages
+type: :bugfix
+component: Wordprss
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-01-17 23:34:15.509671 Z
+references: []
+
+id: f4553e12fe7a3d6ec18a220994bbac56e78f11bf
+log_events: 
+- - 2012-01-17 23:34:15.510168 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
