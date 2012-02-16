@@ -108,7 +108,17 @@ jQuery(document).ready(function($){
     classNameBindings:['isSelected']
   });
   Wprss.selectedEntryController = Em.Object.create({
-    content: null
+    content: null/*,
+    toggleRead: function(){
+                  console.log('selectedEntry toggleRead');
+                  return true;
+
+                },*/
+    //Should we put in an isread function and go from that?
+/*
+    isRead: function(){
+
+    } */
   });
 
   Wprss.EntriesView = Em.View.extend({
@@ -117,6 +127,16 @@ jQuery(document).ready(function($){
       var content = this.get('content');
       //alert(content.feed_id);
       Wprss.selectedEntryController.set('content', content);
+      console.log('trying to set the check');
+      content.set('isRead',true);
+      Wprss.selectedEntryController.content.set('isRead',true);
+      this.toggleRead();
+      console.log(Wprss.selectedEntryController.content.get('isRead'));
+      
+      console.log('tried to set the check');
+      //console.log('check is ' + Wprss.selectedEntryController.content.value);
+      //set as read
+      
       //Wprss.entriesController.selectFeed(content.feed_id);
       
     },
@@ -126,7 +146,28 @@ jQuery(document).ready(function($){
       if(content === selectedItem){return true;}
     
     }.property('Wprss.selectedEntryController.content'),
+    toggleRead: function(){
+                  console.log('entriesview toggleRead');
+                  return false;
+
+                },
     classNameBindings:['isCurrent']
+  });
+
+  Wprss.ReadView = Em.View.extend({
+    content:null,
+    templateName:'read-check',
+    click: function(evt){
+      console.log('in read-check');
+      console.log(evt);
+      console.log(this.content);
+      return false;
+    }
+
+  });
+  Em.Handlebars.registerHelper('checkable', function(path,options){
+    options.hash.valueBinding = path;
+    return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
   });
 
 

@@ -36,16 +36,20 @@
       <ul class="entries">
         {{#each Wprss.entriesController}}
           {{#view Wprss.EntriesView contentBinding="this"}}
-          {{#with content}}
             <li class="entry">
-              <a {{bindAttr href="link"}}><h2>{{title}}</h2></a> {{#if author}}<span class="attribution">by {{author}}</span>{{/if}}
-              {{description}}
+              <a {{bindAttr href="content.link"}}><h2>{{content.title}}</h2></a> {{#if content.author}}<span class="attribution">by {{content.author}}</span>{{/if}}
+              {{content.description}}
               <div class="attributes">
-                {{view Em.Checkbox title="Read" valueBinding="isRead" }}
+              Actually: {{#if content.isRead }}
+                Read
+              {{else}}
+                unRead
+              {{/if}}
+              {{checkable  "content" contentBinding="content"}}
+              
 
               </div>
             </li>
-          {{/with }}
           {{/view}}
         {{/each}}
       </ul>
@@ -55,6 +59,18 @@
     </script>
   </div>
 </div>
+  <script type="text/x-handlebars" data-template-name="read-check">
+    {{author}}
+              {{#if content.isRead}}
+                Read  
+                
+              {{else }}
+                unRead  
+
+              {{/if}}
+
+    
+  </script>
 <?php
 
 ?>
