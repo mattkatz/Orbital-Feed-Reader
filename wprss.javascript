@@ -137,26 +137,34 @@ jQuery(document).ready(function($){
       jQuery.post(get_url.ajaxurl,data, function(data){
         content.set('isRead',true);
       });
-      
       return false;
-
     },
     classNameBindings:['isCurrent']
   });
 
   Wprss.ReadView = Em.View.extend({
-    content:null,
     readStatus: function(){
       if(content.isRead){
         return "Read";
       }else{
         return "Unread";
       }
+      console.log(content);
     }.property(),
     templateName:'read-check',
     click: function(evt){
+      console.log("content is "+content);
+      var data = {
+        action: 'wprss_mark_item_read',
+        entry_id: this.content.id,
+        unread_status: ! content.isRead,
+        nonce_a_donce:get_url.nonce_a_donce 
+      };
+      jQuery.post(get_url.ajaxurl,data, function(data){
+        content.set('isRead',!content.isRead);
+      });
     
-      return true;
+      return false;
     }
 
   });

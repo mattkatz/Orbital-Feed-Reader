@@ -162,6 +162,7 @@ function wprss_mark_item_read($entry_id,$unread_status=true){
   global $tbl_prefix;
   global $current_user;
   $entry_id = $_POST['entry_id'];
+  $unread_status = $_POST['unread_status'];
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $ret = $wpdb->update(
     $prefix.'user_entries',//the table
@@ -171,7 +172,7 @@ function wprss_mark_item_read($entry_id,$unread_status=true){
       'owner_uid'=>$current_user->ID //logged in user
     )//where filters
   );
-  echo "hey buddy " . $entry_id. " updated ". $ret. "ok?" ;
+  echo "hey buddy " . $entry_id. " updated ". $ret. " as ". $unread_status. " ok?" ;
 
   exit;
   
