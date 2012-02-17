@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: unmark read
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-02-17 01:48:44.638309 Z
+references: []
+
+id: 8f13f1921149b1adecd745774a719a08c471dfad
+log_events: 
+- - 2012-02-17 01:48:44.638724 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
