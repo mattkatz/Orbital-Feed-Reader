@@ -65,6 +65,8 @@ function wprss_get_feed_entries(){
       entries.author as author,
       ue.isRead as isRead,
       ue.marked as marked,
+      ue.id as id,
+      ue.ref_id as ref_id,
       ue.feed_id as feed_id
       from " . $prefix . "entries as entries
       inner join " . $prefix . "user_entries as ue
@@ -159,15 +161,19 @@ function wprss_mark_item_read($entry_id,$unread_status=true){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
+  $entry_id = $_POST['entry_id'];
   $prefix = $wpdb->prefix.$tbl_prefix; 
-  $wpdb->update(
+  $ret = $wpdb->update(
     $prefix.'user_entries',//the table
-    array('unread' =>$unread_status),//columns to update
+    array('isRead' =>$unread_status),//columns to update
     array(
       'ref_id' =>$entry_id, //current entry
       'owner_uid'=>$current_user->ID //logged in user
     )//where filters
   );
+  echo "hey buddy " . $entry_id. " updated ". $ret. "ok?" ;
+
+  exit;
   
   
 }

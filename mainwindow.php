@@ -40,11 +40,6 @@
               <a {{bindAttr href="content.link"}}><h2>{{content.title}}</h2></a> {{#if content.author}}<span class="attribution">by {{content.author}}</span>{{/if}}
               {{content.description}}
               <div class="attributes">
-              Actually: {{#if content.isRead }}
-                Read
-              {{else}}
-                unRead
-              {{/if}}
               {{checkable  "content" contentBinding="content"}}
               
 
@@ -60,16 +55,13 @@
   </div>
 </div>
   <script type="text/x-handlebars" data-template-name="read-check">
-    {{author}}
               {{#if content.isRead}}
                 Read  
                 
               {{else }}
-                unRead  
+                Unread  
 
               {{/if}}
-
-    
   </script>
 <?php
 

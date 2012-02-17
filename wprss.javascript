@@ -1,5 +1,5 @@
+//Set everything up after page load
 jQuery(document).ready(function($){
- // alert('begin');
   var data = {
     action: 'wprss_get_feeds',
     nonce_a_donce:get_url.nonce_a_donce 
@@ -44,6 +44,7 @@ jQuery(document).ready(function($){
   });
   Wprss.Entry = Em.Object.extend({
     feed_id: null,
+    id: null,
     title: null,
     link: null,
     author:null,
@@ -53,9 +54,10 @@ jQuery(document).ready(function($){
   });
   Wprss.entriesController = Em.ArrayProxy.create({
     content: [],
-    createEntry: function(feed,head, url,by,read,mark,des){
+    createEntry: function(feed,ref_id,head, url,by,read,mark,des){
       var entry = Wprss.Entry.create({
       feed_id: feed, 
+      id: ref_id,
       title:head,
       link:url,
       author:by,
@@ -67,7 +69,7 @@ jQuery(document).ready(function($){
     createEntries: function(jsonEntries){
       var entries = JSON.parse(jsonEntries);
       entries.forEach(function(entry){
-        Wprss.entriesController.createEntry(entry.feed_id,entry.title, entry.link,entry.author,entry.isRead,entry.marked,entry.content);
+        Wprss.entriesController.createEntry(entry.feed_id,entry.id,entry.title, entry.link,entry.author,entry.isRead,entry.marked,entry.content);
       });
     },
     clearEntries: function(){
@@ -108,36 +110,15 @@ jQuery(document).ready(function($){
     classNameBindings:['isSelected']
   });
   Wprss.selectedEntryController = Em.Object.create({
-    content: null/*,
-    toggleRead: function(){
-                  console.log('selectedEntry toggleRead');
-                  return true;
-
-                },*/
-    //Should we put in an isread function and go from that?
-/*
-    isRead: function(){
-
-    } */
+    content: null
   });
 
   Wprss.EntriesView = Em.View.extend({
     //templateName: feedsView,
     click: function(evt){
       var content = this.get('content');
-      //alert(content.feed_id);
       Wprss.selectedEntryController.set('content', content);
-      console.log('trying to set the check');
-      content.set('isRead',true);
-      Wprss.selectedEntryController.content.set('isRead',true);
       this.toggleRead();
-      console.log(Wprss.selectedEntryController.content.get('isRead'));
-      
-      console.log('tried to set the check');
-      //console.log('check is ' + Wprss.selectedEntryController.content.value);
-      //set as read
-      
-      //Wprss.entriesController.selectFeed(content.feed_id);
       
     },
     isCurrent: function(){
@@ -147,21 +128,35 @@ jQuery(document).ready(function($){
     
     }.property('Wprss.selectedEntryController.content'),
     toggleRead: function(){
-                  console.log('entriesview toggleRead');
-                  return false;
+      content = this.content;
+      var data = {
+        action: 'wprss_mark_item_read',
+        entry_id: this.content.id,
+        nonce_a_donce:get_url.nonce_a_donce 
+      };
+      jQuery.post(get_url.ajaxurl,data, function(data){
+        content.set('isRead',true);
+      });
+      
+      return false;
 
-                },
+    },
     classNameBindings:['isCurrent']
   });
 
   Wprss.ReadView = Em.View.extend({
     content:null,
+    readStatus: function(){
+      if(content.isRead){
+        return "Read";
+      }else{
+        return "Unread";
+      }
+    }.property(),
     templateName:'read-check',
     click: function(evt){
-      console.log('in read-check');
-      console.log(evt);
-      console.log(this.content);
-      return false;
+    
+      return true;
     }
 
   });
