@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Mark an item unread
+desc: clicking on the read/unread indicator should toggle the status
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-02-17 01:54:51.424090 Z
+references: []
+
+id: 67ad23da5cd651c9b32f8efb93922dfffe8b96a1
+log_events: 
+- - 2012-02-17 01:54:51.424646 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
