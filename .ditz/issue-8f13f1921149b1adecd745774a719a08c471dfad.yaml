@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-02-17 01:48:44.638309 Z
 references: []
 
@@ -16,3 +16,10 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-03-02 13:27:40.505863 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - |-
+    ditz close {issue 67ad23da5cd651c9b32f8efb93922dfffe8b96a1}
+    doh!  finally did it.  Have to JSON.parse the response. DUH
+    have to check that the true/false I'm passing to backend gets interpreted properly DUH

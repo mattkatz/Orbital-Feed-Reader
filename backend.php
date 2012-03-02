@@ -161,18 +161,24 @@ function wprss_mark_item_read($entry_id,$unread_status=true){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
+  //$entry_id = $_POST['entry_id'];
+  //$unread_status = $_POST['unread_status'];
   $entry_id = $_POST['entry_id'];
   $unread_status = $_POST['unread_status'];
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $ret = $wpdb->update(
     $prefix.'user_entries',//the table
-    array('isRead' =>$unread_status),//columns to update
+    array('isRead' =>($unread_status=="true"?1:0)),//columns to update
     array(
       'ref_id' =>$entry_id, //current entry
       'owner_uid'=>$current_user->ID //logged in user
     )//where filters
   );
-  echo "hey buddy " . $entry_id. " updated ". $ret. " as ". $unread_status. " ok?" ;
+  $returnval;
+  $returnval->updated = $ret;
+  $returnval->id = $entry_id;
+  $returnval->unread_status = $unread_status;
+  echo json_encode($returnval);
 
   exit;
   

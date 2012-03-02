@@ -55,15 +55,10 @@
   </div>
 </div>
   <script type="text/x-handlebars" data-template-name="read-check">
-    {{author}}
-              {{view Em.Checkbox titleBinding="readStatus" valueBinding="content.isRead" }}
-              {{ readStatus}}
               {{#if content.isRead}}
                 Read  
-                
               {{else }}
-                unRead  
-
+                Unread  
               {{/if}}
 
     

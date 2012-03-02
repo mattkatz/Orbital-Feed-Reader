@@ -75,6 +75,35 @@ jQuery(document).ready(function($){
     clearEntries: function(){
       this.set('content', []);
     },
+    toggleEntryRead: function(id){
+      var entry = this.content.findProperty('id',id);
+      var unreadStatus = entry.get('isRead');
+      this.setEntryIsRead(id,!unreadStatus);
+
+    },
+    setEntryIsRead: function(id,isRead){
+      var entry = this.content.findProperty('id',id);
+      
+      var data = {
+        action: 'wprss_mark_item_read',
+        unread_status: isRead,
+        entry_id: id,
+        nonce_a_donce:get_url.nonce_a_donce 
+      };
+      //TODO change this back to a post
+      jQuery.post(get_url.ajaxurl,data, function(response){
+        response = JSON.parse(response);
+        if(response.updated >0){
+          console.log("updating");
+          entry.set('isRead', isRead);
+        }
+        else{
+          console.log("update of " + response.updated);
+          //TODO: alert the user?
+        }
+      });
+
+    },
     selectFeed: function(id){
       var data = {
         action: 'wprss_get_entries',
@@ -118,7 +147,7 @@ jQuery(document).ready(function($){
     click: function(evt){
       var content = this.get('content');
       Wprss.selectedEntryController.set('content', content);
-      this.toggleRead();
+      this.toggleRead(content.id);
       
     },
     isCurrent: function(){
@@ -127,16 +156,20 @@ jQuery(document).ready(function($){
       if(content === selectedItem){return true;}
     
     }.property('Wprss.selectedEntryController.content'),
-    toggleRead: function(){
-      content = this.content;
+    toggleRead: function(contentId){
+      Wprss.entriesController.toggleEntryRead(contentId);
+/*
       var data = {
         action: 'wprss_mark_item_read',
-        entry_id: this.content.id,
+        unread_status: 
+        entry_id: contentId,
         nonce_a_donce:get_url.nonce_a_donce 
       };
       jQuery.post(get_url.ajaxurl,data, function(data){
-        content.set('isRead',true);
+        var entry = Wprss.entriesController.setRead(data.id, .content.findProperty('id',data.id);
+        entry.set('isRead',true);
       });
+*/
       return false;
     },
     classNameBindings:['isCurrent']
