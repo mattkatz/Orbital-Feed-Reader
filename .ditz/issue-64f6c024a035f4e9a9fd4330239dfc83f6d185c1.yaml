@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: hateoas for backend and frontend
+desc: |-
+  there should be one initial backend method that loads the backend API URLS
+  those should include what the nonces are to get feeds, prefs, etc.
+  for marking feeds read, the nonce should be preloaded for each of those 
+  from the initial load
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-03-02 12:49:49.548147 Z
+references: []
+
+id: 64f6c024a035f4e9a9fd4330239dfc83f6d185c1
+log_events: 
+- - 2012-03-02 12:49:49.548676 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
