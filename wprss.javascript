@@ -16,6 +16,8 @@ jQuery(document).ready(function($){
     //alert(response);
     Wprss.entriesController.createEntries(response);
   });
+
+  setupKeys();
   
 });
 
@@ -158,18 +160,6 @@ jQuery(document).ready(function($){
     }.property('Wprss.selectedEntryController.content'),
     toggleRead: function(contentId){
       Wprss.entriesController.toggleEntryRead(contentId);
-/*
-      var data = {
-        action: 'wprss_mark_item_read',
-        unread_status: 
-        entry_id: contentId,
-        nonce_a_donce:get_url.nonce_a_donce 
-      };
-      jQuery.post(get_url.ajaxurl,data, function(data){
-        var entry = Wprss.entriesController.setRead(data.id, .content.findProperty('id',data.id);
-        entry.set('isRead',true);
-      });
-*/
       return false;
     },
     classNameBindings:['isCurrent']
@@ -206,7 +196,21 @@ jQuery(document).ready(function($){
     return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
   });
 
+setupKeys(){
+  //TODO handle the down arrow keys and j to scroll the next item to top of scren
+  key('j,down',function(event,handler){
 
+  });
+  //TODO up and k should scroll the previous item to the top of the screen
+  key('k,up',function(event,handler){
+
+  });
+  //TODO u should toggle the current item's read status
+  key('u',function(event,handler){
+
+  });
+
+}
 
 
 
