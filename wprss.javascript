@@ -196,7 +196,7 @@ jQuery(document).ready(function($){
     return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
   });
 
-setupKeys(){
+function setupKeys(){
   //TODO handle the down arrow keys and j to scroll the next item to top of scren
   key('j,down',function(event,handler){
 
