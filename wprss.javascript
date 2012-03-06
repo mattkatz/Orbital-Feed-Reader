@@ -199,19 +199,19 @@ jQuery(document).ready(function($){
 function setupKeys(){
   //TODO handle the down arrow keys and j to scroll the next item to top of scren
   key('j,down',function(event,handler){
+    var currentItem = Wprss.selectedEntryController.content;
     //if there is no item selected, select the first one.
-    var currentItem;
-    if (null == Wprss.selectedEntryController.content){
+    if (null == currentItem ){
       console.log('no current item');
       currentItem = Wprss.entriesController.get('firstObject');
-      Wprss.selectedEntryController.set('content', currentItem);
 
     }else{
+      //if there is an item selected, select the next one.
       console.log('current item');
-
+      var idx = Wprss.entriesController.content.indexOf(currentItem);
+      currentItem = Wprss.entriesController.content.get(++idx);
     }
-
-    //if there is an item selected, select the next one.
+      Wprss.selectedEntryController.set('content', currentItem);
 
   });
   //TODO up and k should scroll the previous item to the top of the screen
