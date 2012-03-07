@@ -52,7 +52,11 @@ jQuery(document).ready(function($){
     author:null,
     isRead:null,
     marked:null,
-    description: null
+    description: null,
+    entryID: function(){
+      return this.get('feed_id')+"_"+this.get('id');
+
+    }.property(),
   });
   Wprss.entriesController = Em.ArrayProxy.create({
     content: [],
@@ -211,7 +215,21 @@ function setupKeys(){
       var idx = Wprss.entriesController.content.indexOf(currentItem);
       currentItem = Wprss.entriesController.content.get(++idx);
     }
-      Wprss.selectedEntryController.set('content', currentItem);
+    Wprss.selectedEntryController.set('content',currentItem);
+    //scroll to this element.
+    //var body = document.getElementById('wpwrap');
+    var body = jQuery('html');
+    console.log(body.scrollTop());
+    //console.log(window.scrollTop());
+    //TODO why is entryID coming up undefined in this context?
+    //var row = jQuery('#'+currentItem.entryID);
+    console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
+    var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
+    console.log('current row: ' + row.offset().top);
+    body.scrollTop(row.offset().top);
+    
+    //jQuery(window).animate({
+      //scrollTop: row.offset().top}, 500);
 
   });
   //TODO up and k should scroll the previous item to the top of the screen

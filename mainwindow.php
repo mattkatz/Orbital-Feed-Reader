@@ -20,7 +20,7 @@
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
       {{#with content}}
-        <li class="feed">{{feed_name}}</li>
+        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}}</li>
       {{/with }}
       {{/view}}
     {{/each}}
@@ -36,7 +36,7 @@
       <ul class="entries">
         {{#each Wprss.entriesController}}
           {{#view Wprss.EntriesView contentBinding="this"}}
-            <li class="entry">
+            <li class="entry" {{bindAttr id="content.entryID"}} >
               <a {{bindAttr href="content.link"}}><h2>{{content.title}}</h2></a> {{#if content.author}}<span class="attribution">by {{content.author}}</span>{{/if}}
               {{content.description}}
               <div class="attributes">
