@@ -220,13 +220,14 @@ function setupKeys(){
     //var body = document.getElementById('wpwrap');
     var body = jQuery('html');
     console.log(body.scrollTop());
+    var adminbar = jQuery('#wpadminbar');
     //console.log(window.scrollTop());
     //TODO why is entryID coming up undefined in this context?
     //var row = jQuery('#'+currentItem.entryID);
     console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
     var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
     console.log('current row: ' + row.offset().top);
-    body.scrollTop(row.offset().top);
+    body.scrollTop(row.offset().top - adminbar.height());
     
     //jQuery(window).animate({
       //scrollTop: row.offset().top}, 500);
