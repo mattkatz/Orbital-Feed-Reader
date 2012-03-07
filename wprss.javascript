@@ -200,6 +200,23 @@ jQuery(document).ready(function($){
     return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
   });
 
+function scrollToEntry(currentItem){
+
+    var body = jQuery('html');
+    var adminbar = jQuery('#wpadminbar');
+    //console.log(window.scrollTop());
+    //TODO why is entryID coming up undefined in this context?
+    //var row = jQuery('#'+currentItem.entryID);
+    console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
+    var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
+    console.log('current row: ' + row.offset().top);
+    //body.scrollTop(row.offset().top - adminbar.height());
+    
+    jQuery('html').animate({
+      scrollTop: row.offset().top - adminbar.height()}, 200);
+
+}
+
 function setupKeys(){
   //TODO handle the down arrow keys and j to scroll the next item to top of scren
   key('j,down',function(event,handler){
@@ -217,24 +234,25 @@ function setupKeys(){
     }
     Wprss.selectedEntryController.set('content',currentItem);
     //scroll to this element.
-    //var body = document.getElementById('wpwrap');
-    var body = jQuery('html');
-    console.log(body.scrollTop());
-    var adminbar = jQuery('#wpadminbar');
-    //console.log(window.scrollTop());
-    //TODO why is entryID coming up undefined in this context?
-    //var row = jQuery('#'+currentItem.entryID);
-    console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
-    var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
-    console.log('current row: ' + row.offset().top);
-    body.scrollTop(row.offset().top - adminbar.height());
-    
-    //jQuery(window).animate({
-      //scrollTop: row.offset().top}, 500);
-
+    scrollToEntry(currentItem);
   });
   //TODO up and k should scroll the previous item to the top of the screen
   key('k,up',function(event,handler){
+      
+    var currentItem = Wprss.selectedEntryController.content;
+    //if there is no item selected, select the first one.
+    if (null == currentItem ){
+      console.log('no current item');
+      currentItem = Wprss.entriesController.get('firstObject');
+
+    }else{
+      //if there is an item selected, select the next one.
+      console.log('current item');
+      var idx = Wprss.entriesController.content.indexOf(currentItem);
+      currentItem = Wprss.entriesController.content.get(--idx);
+    }
+    Wprss.selectedEntryController.set('content',currentItem);
+    scrollToEntry(currentItem);
 
   });
   //TODO u should toggle the current item's read status
