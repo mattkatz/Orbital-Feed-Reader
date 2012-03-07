@@ -218,7 +218,7 @@ function scrollToEntry(currentItem){
 }
 
 function setupKeys(){
-  //TODO handle the down arrow keys and j to scroll the next item to top of scren
+  //handle the down arrow keys and j to scroll the next item to top of scren
   key('j,down',function(event,handler){
     var currentItem = Wprss.selectedEntryController.content;
     //if there is no item selected, select the first one.
@@ -236,7 +236,7 @@ function setupKeys(){
     //scroll to this element.
     scrollToEntry(currentItem);
   });
-  //TODO up and k should scroll the previous item to the top of the screen
+  //up and k should scroll the previous item to the top of the screen
   key('k,up',function(event,handler){
       
     var currentItem = Wprss.selectedEntryController.content;
