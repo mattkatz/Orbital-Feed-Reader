@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Subscribe to a feed
+desc: |-
+  you should be able to enter a rss/atom feed link and get the details populated into a new feed item.
+  you should also be able to put in a site url and autodiscover feeds that are available.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-03-08 02:55:42.393228 Z
+references: []
+
+id: c5203e35010e628db861a560b0b2786017040f6c
+log_events: 
+- - 2012-03-08 02:55:42.393760 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
