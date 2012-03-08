@@ -255,6 +255,39 @@ function setupKeys(){
     scrollToEntry(currentItem);
 
   });
+  //h should go to previous feed
+  key('h',function(event,handler){
+    var currentFeed = Wprss.selectedFeedController.content;
+    if(null == currentFeed){
+      currentFeed = Wprss.feedsController.get('firstObject');
+    }else{
+      var idx = Wprss.feedsController.content.indexOf(currentFeed);
+      currentFeed = Wprss.feedsController.content.get(--idx);
+      //TODO make this loop instead
+      if(null==currentFeed)
+        return;
+
+    }
+    Wprss.selectedFeedController.set('content',currentFeed);
+    Wprss.entriesController.selectFeed(currentFeed.feed_id);
+    
+  });
+  //l should go to next feed
+  key('l',function(event,handler){
+    var currentFeed = Wprss.selectedFeedController.content;
+    if(null == currentFeed){
+      currentFeed = Wprss.feedsController.get('firstObject');
+    }else{
+      var idx = Wprss.feedsController.content.indexOf(currentFeed);
+      currentFeed = Wprss.feedsController.content.get(++idx);
+      //TODO make this loop instead
+      if(null==currentFeed)
+        return;
+    }
+    Wprss.selectedFeedController.set('content',currentFeed);
+    Wprss.entriesController.selectFeed(currentFeed.feed_id);
+    
+  });
   //u should toggle the current item's read status
   key('u',function(event,handler){
     var currentItem = Wprss.selectedEntryController.content;
