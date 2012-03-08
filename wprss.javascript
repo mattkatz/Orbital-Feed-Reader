@@ -236,6 +236,7 @@ function setupKeys(){
     Wprss.selectedEntryController.set('content',currentItem);
     //scroll to this element.
     scrollToEntry(currentItem);
+    Wprss.entriesController.setEntryIsRead(currentItem.id,true);
   });
   //up and k should scroll the previous item to the top of the screen
   key('k,up',function(event,handler){
@@ -254,6 +255,7 @@ function setupKeys(){
     }
     Wprss.selectedEntryController.set('content',currentItem);
     scrollToEntry(currentItem);
+    Wprss.entriesController.setEntryIsRead(currentItem.id,true);
 
   });
   //h should go to previous feed
