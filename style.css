@@ -35,9 +35,17 @@ background-color: #ffffff;
   color: #FFFFFF;
   text-shadow: 0 -1px 0 #333333;
 }
+#wprss-content{
+  width:80%;
+
+}
 #commandbar {
   background: #dddddd;
   display:inline-block; 
+  position:fixed;
+  /*this is the height of the admin bar.*/
+  
+  top:28px;
 }
 #commandbar ul{
   display:inline; 

@@ -204,6 +204,7 @@ function scrollToEntry(currentItem){
 
     var body = jQuery('html');
     var adminbar = jQuery('#wpadminbar');
+    var commandbar = jQuery('#commandbar');
     //console.log(window.scrollTop());
     //TODO why is entryID coming up undefined in this context?
     //var row = jQuery('#'+currentItem.entryID);
@@ -213,7 +214,7 @@ function scrollToEntry(currentItem){
     //body.scrollTop(row.offset().top - adminbar.height());
     
     jQuery('html').animate({
-      scrollTop: row.offset().top - adminbar.height()}, 200);
+      scrollTop: row.offset().top - adminbar.height() - commandbar.height()}, 200);
 
 }
 
