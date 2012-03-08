@@ -255,8 +255,12 @@ function setupKeys(){
     scrollToEntry(currentItem);
 
   });
-  //TODO u should toggle the current item's read status
+  //u should toggle the current item's read status
   key('u',function(event,handler){
+    var currentItem = Wprss.selectedEntryController.content;
+    if(null == currentItem)
+      return;
+    Wprss.entriesController.toggleEntryRead(currentItem.id);
 
   });
 
