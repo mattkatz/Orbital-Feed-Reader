@@ -259,7 +259,7 @@ function setupKeys(){
 
   });
   //h should go to previous feed
-  key('h',function(event,handler){
+  key('h,left',function(event,handler){
     var currentFeed = Wprss.selectedFeedController.content;
     if(null == currentFeed){
       currentFeed = Wprss.feedsController.get('firstObject');
@@ -276,7 +276,7 @@ function setupKeys(){
     
   });
   //l should go to next feed
-  key('l',function(event,handler){
+  key('l,right',function(event,handler){
     var currentFeed = Wprss.selectedFeedController.content;
     if(null == currentFeed){
       currentFeed = Wprss.feedsController.get('firstObject');
