@@ -325,6 +325,17 @@ Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
   return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
 });
+Wprss.CommandView = Em.View.extend({
+  templateName:'commandItem',
+  //can we set click after creating a view?
+
+});
+Wprss.SubscribeView = Em.View.extend({
+  //we need a url input, an add button.
+  urlField: null,
+  //later we will need things like tags and privacy and such
+
+});
 
 function scrollToEntry(currentItem){
 

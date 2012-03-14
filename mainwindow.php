@@ -80,6 +80,9 @@
 
     
   </script>
+  <script type="text/x-handlebars" data-template-name="command-item">
+    {{commandName}}
+  </script>
 <?php
 
 ?>
