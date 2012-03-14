@@ -40,7 +40,7 @@ function wprss_get_feed_entries(){
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $show_read =filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT); 
+  $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
   $feed_qualifier ="";
   if($feed_id == ""){
     //TODO "" should mean return latest entries
