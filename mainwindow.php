@@ -4,7 +4,9 @@
   <ul>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Update Feed</a></li>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Mark all as Read</a></li>
-    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a></li>
+    <li class="command">
+      <a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a>
+    </li>
   </ul>
   </div>
   <div id="wprss-feedlist">
@@ -62,6 +64,9 @@
               {{/if}}
 
     
+  </script>
+  <script type="text/x-handlebars" data-template-name="command-item">
+    {{commandName}}
   </script>
 <?php
 
