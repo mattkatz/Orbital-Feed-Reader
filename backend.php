@@ -42,17 +42,18 @@ function wprss_get_feed_entries(){
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
   $feed_qualifier ="";
+  $read_qualifer = "";
   if($feed_id == ""){
     //TODO "" should mean return latest entries
    }else{
      $feed_qualifier = " and ue.feed_id = ".$feed_id;
    }
-  if($show_read){
+  if($show_read=="1"){
     //do nothing
   }
   else{
     //only show unread entries
-    $feed_qualifer += " and ue.unread = TRUE";
+    $read_qualifer =" and  ue.isRead = 0  " ;
   }
 
   
@@ -73,6 +74,7 @@ function wprss_get_feed_entries(){
       on ue.ref_id=entries.id
       where ue.owner_uid = ". $current_user->ID."
       ".$feed_qualifier."
+      ".$read_qualifer."
       limit 30
   ;";
 
