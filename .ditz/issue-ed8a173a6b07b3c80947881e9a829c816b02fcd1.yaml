@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "feedController should control feeds: next,first,last, unread"
+desc: |-
+  keyboard shortcuuts should call these methods instead of having their own.
+  select feed should trigger the entriescontroller selectfeed
+type: :task
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-03-15 23:51:54.101213 Z
+references: []
+
+id: ed8a173a6b07b3c80947881e9a829c816b02fcd1
+log_events: 
+- - 2012-03-15 23:51:54.101625 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

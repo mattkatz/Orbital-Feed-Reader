@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Mark Read should take you to next unread feed
+desc: this has a few dependencies
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-03-15 23:50:05.487397 Z
+references: []
+
+id: b0d7d4a15a244d10736ff74f8b369d9209aed194
+log_events: 
+- - 2012-03-15 23:50:05.487786 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
