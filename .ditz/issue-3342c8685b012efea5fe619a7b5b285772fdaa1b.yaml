@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Give a mechanism to show read items
+desc: Maybe a command to show the read items in the current feed.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-03-14 21:56:41.173761 Z
+references: []
+
+id: 3342c8685b012efea5fe619a7b5b285772fdaa1b
+log_events: 
+- - 2012-03-14 21:56:41.216749 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
