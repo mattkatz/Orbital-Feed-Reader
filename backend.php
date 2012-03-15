@@ -17,7 +17,6 @@ function wprss_list_feeds(){
 
   global $wpdb;
   global $tbl_prefix;
-  //echo $tbl_prefix . " WAHEY";
   //nonce_dance();
   //TODO check to see what current user is 
   //TODO qualify this to just a user  
@@ -157,7 +156,31 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
 add_action('wp_ajax_nopriv_wprss_update_feed','wprss_get_update_feed');
 
-//TODO:Mark items as read
+//Mark items as read
+function wprss_mark_items_read($feed_id){
+  global $wpdb;
+  global $tbl_prefix;
+  global $current_user;
+  //what do we update? 
+  $feed_id = $_POST['feed_id'];
+  
+  $prefix = $wpdb->prefix.$tbl_prefix;
+  $ret = $wpdb->update(
+    $prefix.'user_entries',//the table
+    array('isRead' =>1),//columns to update
+    array(//where filters
+      'feed_id' =>$feed_id, //current feed
+      'owner_uid'=>$current_user->ID //logged in user
+    )
+  );
+  $returnval;
+  $returnval->updated = $ret;
+  $returnval->feed_id = $feed_id;
+  echo json_encode($returnval);
+  
+}
+add_action('wp_ajax_wprss_mark_items_read','wprss_mark_items_read');
+
 //Mark item as read
 function wprss_mark_item_read($entry_id,$unread_status=true){
   global $wpdb;
@@ -183,8 +206,6 @@ function wprss_mark_item_read($entry_id,$unread_status=true){
   echo json_encode($returnval);
 
   exit;
-  
-  
 }
 add_action('wp_ajax_wprss_mark_item_read','wprss_mark_item_read');
 //No non logged in way to mark an item read for me yet

@@ -1,21 +1,29 @@
 
 <div id='wprss-container'>
   <div id="commandbar" class="quicklinks">
+    <script type="text/x-handlebars" >
   <ul>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Update Feed</a></li>
-    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Mark all as Read</a></li>
+    <li class="command">
+      {{#view Em.Button classBinding="isActive"
+        tagName="span"
+        target="Wprss.selectedFeedController"
+        action="markAsRead" }}
+        Mark all as Read
+      {{/view}}
+    
+<a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Mark all as Read</a></li>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a></li>
     <li class="command">
-    <script type="text/x-handlebars" >
       {{#view Em.Button classBinding="isActive"
         tagName="span"
         target="Wprss.selectedFeedController"
         action="showRead" }}
         Show Read Items
       {{/view}}
-    </script>
     </li>
   </ul>
+    </script>
   </div>
   <div id="wprss-feedlist">
   <div>CURRENT USER: <?php 

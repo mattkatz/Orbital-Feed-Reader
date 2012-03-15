@@ -42,7 +42,23 @@ jQuery(document).ready(function($){
       feeds.forEach(function(value){
         Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id);
       });
-    }
+    },
+    markAsRead: function(id){
+      //call the markfeedread backend
+      var data = {
+        action: 'wprss_mark_items_read',
+        nonce_a_donce:get_url.nonce_a_donce ,
+        feed_id: id,
+        
+      };
+      jQuery.post(get_url.ajaxurl, data, function(response){
+        //TODO: put in error checks for bad responses, errors,etc.
+        //callback to do what when done?
+        //update the fiedview to show this item has no read count?
+        //move onto next feed?
+      });
+
+    },
   });
   Wprss.Entry = Em.Object.extend({
     feed_id: null,
@@ -133,6 +149,12 @@ jQuery(document).ready(function($){
       Wprss.entriesController.selectFeed(this.get('content').feed_id,1);
       
 
+    },
+    markAsRead: function(){
+      id = this.get('content').feed_id;
+      Wprss.feedsController.markAsRead(id);
+      //should change this to show next available feed with unread items
+      Wprss.entriesController.selectFeed(id);
     },
     
   });
