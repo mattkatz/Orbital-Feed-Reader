@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Mark feed read
+desc: |-
+  lame to create after the work is done,
+  but nice to see things marked done!
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-03-15 23:55:58.788144 Z
+references: []
+
+id: f9b3d1e815ee4e14c5349b729ad0a25f53ea203b
+log_events: 
+- - 2012-03-15 23:55:58.788662 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-03-15 23:56:25.988964 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - YAY

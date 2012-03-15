@@ -11,8 +11,7 @@
         action="markAsRead" }}
         Mark all as Read
       {{/view}}
-    
-<a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Mark all as Read</a></li>
+    </li>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a></li>
     <li class="command">
       {{#view Em.Button classBinding="isActive"
