@@ -5,6 +5,16 @@
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Update Feed</a></li>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Mark all as Read</a></li>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a></li>
+    <li class="command">
+    <script type="text/x-handlebars" >
+      {{#view Em.Button classBinding="isActive"
+        tagName="span"
+        target="Wprss.selectedFeedController"
+        action="showRead" }}
+        Show Read Items
+      {{/view}}
+    </script>
+    </li>
   </ul>
   </div>
   <div id="wprss-feedlist">

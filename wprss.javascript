@@ -110,10 +110,14 @@ jQuery(document).ready(function($){
       });
 
     },
-    selectFeed: function(id){
+    
+    selectFeed: function(id,show_read){
+      show_read = show_read || 0;
+      
       var data = {
         action: 'wprss_get_entries',
         feed_id: id,
+        show_read: show_read,
         nonce_a_donce:get_url.nonce_a_donce 
       };
       jQuery.get(get_url.ajaxurl, data, function(response){
@@ -124,7 +128,13 @@ jQuery(document).ready(function($){
     }
   });
   Wprss.selectedFeedController = Em.Object.create({
-    content: null
+    content: null,
+    showRead: function(){
+      Wprss.entriesController.selectFeed(this.get('content').feed_id,1);
+      
+
+    },
+    
   });
 
   Wprss.FeedsView = Em.View.extend({

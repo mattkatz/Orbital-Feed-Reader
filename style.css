@@ -20,6 +20,10 @@ background-color: #ffffff;
 background-color: #ffffff;
 }
 
+.ember-button{
+  border-bottom: 1px dotted;
+}
+
 
 .feeds div
 {
