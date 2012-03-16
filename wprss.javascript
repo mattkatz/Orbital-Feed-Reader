@@ -26,22 +26,31 @@ jQuery(document).ready(function($){
     feed_url : null,
     feed_name: null,
     feed_id:null,
-    site_url: null
-    
-
+    site_url: null,
+    unread_count:null,
   });
 
   Wprss.feedsController = Em.ArrayProxy.create({
     content: [],
-    createFeed: function(feed,domain,name,id){
-      var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name});
+    createFeed: function(feed,domain,name,id,unread){
+      var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread});
       this.pushObject(feed);
     },
     createFeeds: function(jsonFeeds){
       var feeds = JSON.parse(jsonFeeds);
       feeds.forEach(function(value){
-        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id);
+        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
       });
+    },
+    //select a feed
+    selectFeed: function(id){
+
+    },
+    nextUnreadFeed: function(id){
+      var unreads = this.content.filter(function(item,index,self){
+        if(item.unreadCount > 0){return true;}
+      });
+
     },
     markAsRead: function(id){
       //call the markfeedread backend
@@ -112,7 +121,6 @@ jQuery(document).ready(function($){
         entry_id: id,
         nonce_a_donce:get_url.nonce_a_donce 
       };
-      //TODO change this back to a post
       jQuery.post(get_url.ajaxurl,data, function(response){
         response = JSON.parse(response);
         if(response.updated >0){

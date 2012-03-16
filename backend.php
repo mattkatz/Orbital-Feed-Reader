@@ -17,11 +17,36 @@ function wprss_list_feeds(){
 
   global $wpdb;
   global $tbl_prefix;
+  global $current_user;
   //nonce_dance();
-  //TODO check to see what current user is 
-  //TODO qualify this to just a user  
-  $table_name = $wpdb->prefix.$tbl_prefix. "feeds";
-  $sql = "select * from ".$table_name ;
+  $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
+  $sql = "select feeds.id,
+      feeds.owner,
+      feeds.feed_url,
+      feeds.feed_name,
+      feeds.icon_url,
+      feeds.site_url,
+      feeds.last_updated,
+      feeds.last_error,
+      feeds.private
+      from ".$table_name ." as feeds
+      inner join " . $prefix . "user_entries as ue
+      on ue.feed_id=feeds.id
+
+      where ue.owner_uid = ". $current_user->ID."
+      group by feeds.id,
+      feeds.owner,
+      feeds.feed_url,
+      feeds.feed_name,
+      feeds.icon_url,
+      feeds.site_url,
+      feeds.last_updated,
+      feeds.last_error,
+      feeds.private
+      
+      ";
+      //sum( if ue.isRead then 0 else 1 end) as unread_count,
+// AND feeds.owner = " . $current_user->ID."
   $myrows = $wpdb->get_results($sql );
   echo json_encode($myrows);
   exit;
