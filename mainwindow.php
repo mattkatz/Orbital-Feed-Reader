@@ -37,7 +37,7 @@
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
       {{#with content}}
-        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}}</li>
+        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
       {{/with }}
       {{/view}}
     {{/each}}

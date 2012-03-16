@@ -19,18 +19,39 @@ function wprss_list_feeds(){
   global $tbl_prefix;
   global $current_user;
   //nonce_dance();
+/* THIS WORKS IN THE PHPMYSQL SO LETS SEE WHAT IS UP
+select 
+  feeds.id,
+  feeds.feed_name,
+  feeds.owner, 
+  feeds.feed_url, 
+  feeds.icon_url, 
+  feeds.site_url, 
+  feeds.last_updated,
+  feeds.last_error,
+  feeds.private,
+  sum(ue.isRead =0) as unRead
+from wp_wprss_feeds as feeds
+inner join 
+ wp_wprss_user_entries as ue
+ on ue.feed_id = feeds.id
+group by feeds.id, feeds.feed_name,feeds.owner,feeds.feed_url,feeds.icon_url,feeds.site_url, feeds.last_updated,feeds.last_error,feeds.private
+*/
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  $sql = "select feeds.id,
-      feeds.owner,
-      feeds.feed_url,
+  $sql = "
+      select 
+      feeds.id,
       feeds.feed_name,
-      feeds.icon_url,
-      feeds.site_url,
+      feeds.owner, 
+      feeds.feed_url, 
+      feeds.icon_url, 
+      feeds.site_url, 
       feeds.last_updated,
       feeds.last_error,
-      feeds.private
+      feeds.private,
+      sum(ue.isRead =0) as unread_count
       from ".$table_name ." as feeds
-      inner join " . $prefix . "user_entries as ue
+      inner join " . $wpdb->prefix. $tbl_prefix . "user_entries as ue
       on ue.feed_id=feeds.id
 
       where ue.owner_uid = ". $current_user->ID."
