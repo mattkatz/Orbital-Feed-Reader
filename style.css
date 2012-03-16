@@ -18,6 +18,7 @@ background-color: #ffffff;
 }
 .entries .is-current{
 background-color: #ffffff;
+box-shadow: 2px 2px 4px #666;
 }
 
 .ember-button{
@@ -29,6 +30,16 @@ background-color: #ffffff;
 {
   border-bottom: 1px solid #DFDFDF;
   border-top: 1px solid #F9F9F9;
+}
+.feedcounter{
+  font-size:xx-small;
+  vertical-align:top;
+}
+.feedcounter:before{
+  content:"(";
+}
+.feedcounter:after{
+  content:")";
 }
 
 .is-selected{
