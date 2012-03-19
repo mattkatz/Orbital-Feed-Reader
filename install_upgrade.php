@@ -63,26 +63,6 @@ function wprss_install_db()
   );";
   dbDelta($sql);
 
-  //user entries
-  //TODO add the foreign key refs from ref id to entries id and feed id
-  //TODO add starred
-  /*$table_name = $wpdb->prefix.$tbl_prefix."user_entries";
-
-  $sql = "CREATE TABLE " . $table_name ." (
-    int_id integer not null AUTO_INCREMENT,
-    ref_id integer not null,
-    feed_id integer,
-    orig_feed_id integer,
-    owner_uid integer not null,
-    marked bool not null default false,
-    unread bool not null default true,
-    UNIQUE KEY id (id)
-  );";
-  dbDelta($sql);
-*/
-  //tags
-  
-}
 //TODO load in everything with admin as owner, 
 # load all the first installation data in.
 function wprss_install_data(){
