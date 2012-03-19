@@ -42,14 +42,39 @@ jQuery(document).ready(function($){
         Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
       });
     },
+    //a list of all unread feeds
+    unreadFeeds: function(){
+      return this.content.filter(function(item,index,self){
+        if(item.unread_count > 0){ return true;}
+      });
+    },
     //select a feed
-    selectFeed: function(id){
+    selectFeed: function(feed){
+      Wprss.selectedFeedController.select(feed);
+    },
+    previousUnreadFeed:function(id){
 
     },
-    nextUnreadFeed: function(id){
-      var unreads = this.content.filter(function(item,index,self){
-        if(item.unreadCount > 0){return true;}
+    //TODO We should push the index into this function.
+    nextUnreadFeed: function(){
+      var current_feed = Wprss.selectedFeedController.content;
+      if(null == current_feed){
+        //no feed selected?  Let's choose the first unread feed.
+        var uf =  Wprss.feedsController.unreadFeeds();
+        this.selectFeed(uf.get('firstObject'));
+        return;
+      }
+      var id = current_feed.id;
+      var current_index;
+      var next_feed = this.content.find(function(item,index,self){
+        if(item.id== id ){
+          current_index = index;
+        }
+        if(current_index < index && item.unreadCount > 0){
+          return true;
+        }
       });
+      this.selectFeed(next_feed);
 
     },
     markAsRead: function(id){
@@ -155,14 +180,16 @@ jQuery(document).ready(function($){
     content: null,
     showRead: function(){
       Wprss.entriesController.selectFeed(this.get('content').feed_id,1);
-      
-
     },
     markAsRead: function(){
       id = this.get('content').feed_id;
       Wprss.feedsController.markAsRead(id);
       //should change this to show next available feed with unread items
       Wprss.entriesController.selectFeed(id);
+    },
+    select:function(feed){
+      this.set('content',feed);
+      Wprss.entriesController.selectFeed(feed.id);
     },
     
   });
@@ -317,6 +344,9 @@ function setupKeys(){
   });
   //l should go to next feed
   key('l,right',function(event,handler){
+    Wprss.feedsController.nextUnreadFeed();
+    
+    /*
     var currentFeed = Wprss.selectedFeedController.content;
     if(null == currentFeed){
       currentFeed = Wprss.feedsController.get('firstObject');
@@ -329,6 +359,7 @@ function setupKeys(){
     }
     Wprss.selectedFeedController.set('content',currentFeed);
     Wprss.entriesController.selectFeed(currentFeed.feed_id);
+    */
     
   });
   //u should toggle the current item's read status
