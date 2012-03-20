@@ -96,6 +96,8 @@ Wprss.feedsController = Em.ArrayProxy.create({
   },
   //We should push the index into this function.
   nextUnreadFeed: function(){
+    this.unreadFeedNextSelect(this.get('content'));
+    /*
     var current_feed = Wprss.selectedFeedController.content;
     if(null == current_feed){
       //no feed selected?  Let's choose the first unread feed.
@@ -117,6 +119,7 @@ Wprss.feedsController = Em.ArrayProxy.create({
       next_feed= this.firstUnreadFeed();
     }
     this.selectFeed(next_feed);
+  */
   },
   //this ugly function is the guts of the previous nice ones
   unreadFeedNextSelect: function(array){
@@ -128,7 +131,7 @@ Wprss.feedsController = Em.ArrayProxy.create({
       return;
     }
     var current_index;
-    var next_feed = array.content.find(function(item,index,self){
+    var next_feed = array.find(function(item,index,self){
       if(item.feed_id== current_feed.feed_id ){
         current_index = index;
       }
