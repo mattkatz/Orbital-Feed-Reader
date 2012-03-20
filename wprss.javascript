@@ -56,7 +56,7 @@ jQuery(document).ready(function($){
       });
     },
     lastUnreadFeed: function(){
-      return Wprss.feedsController.get('content').reverse().find(function(item,index,self){
+      return Wprss.feedsController.get('content').toArray().reverse().find(function(item,index,self){
         if(item.unread_count > 0){return true;}
       });
 
@@ -78,7 +78,7 @@ jQuery(document).ready(function($){
         return;
       }
       var current_index;
-      var next_feed = this.get('content').reverse().find(function(item,index,self){
+      var next_feed = this.get('content').toArray().reverse().find(function(item,index,self){
         console.log(item.feed_name);
         if(item.feed_id== current_feed.feed_id ){
           current_index = index;
