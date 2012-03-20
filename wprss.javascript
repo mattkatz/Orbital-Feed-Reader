@@ -118,6 +118,30 @@ Wprss.feedsController = Em.ArrayProxy.create({
     }
     this.selectFeed(next_feed);
   },
+  //this ugly function is the guts of the previous nice ones
+  unreadFeedNextSelect: function(array){
+    var current_feed = Wprss.selectedFeedController.content;
+    if(null == current_feed){
+      //no feed selected?  Let's choose the first unread feed.
+      console.log('no feed selected');
+      this.selectFeed(this.findUnreadFeed(array));
+      return;
+    }
+    var current_index;
+    var next_feed = array.content.find(function(item,index,self){
+      if(item.feed_id== current_feed.feed_id ){
+        current_index = index;
+      }
+      if(current_index < index && item.unread_count > 0){
+        return true;
+      }
+    }, current_feed);
+    if(null == next_feed){
+      //we should just cycle back around to the first unread
+      next_feed= findUnreadFeed(array);
+    }
+    this.selectFeed(next_feed);
+  },
   markAsRead: function(id){
     //call the markfeedread backend
     var data = {
