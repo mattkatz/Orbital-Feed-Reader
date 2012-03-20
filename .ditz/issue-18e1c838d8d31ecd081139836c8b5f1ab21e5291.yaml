@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: feed marked read should decrement the unread count
+desc: |-
+  entry marked read should decrement the unread count in the feedlist
+  entry marked unread should increment the unread count in the feedlist
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-03-20 22:42:27.528799 Z
+references: []
+
+id: 18e1c838d8d31ecd081139836c8b5f1ab21e5291
+log_events: 
+- - 2012-03-20 22:42:27.529303 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
