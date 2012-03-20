@@ -70,56 +70,13 @@ Wprss.feedsController = Em.ArrayProxy.create({
     if(null == feed){return;}
     Wprss.selectedFeedController.select(feed);
   },
-  //TODO this and nextunreadfeed should be made DRY
+  //Select the previous unread feed
   previousUnreadFeed:function(id){
-    var current_feed = Wprss.selectedFeedController.content;
-    if(null == current_feed){
-      //no feed selected?  Let's choose the last unread feed.
-      this.selectFeed(this.lastUnreadFeed());
-      return;
-    }
-    var current_index;
-    var next_feed = this.get('content').toArray().reverse().find(function(item,index,self){
-      console.log(item.feed_name);
-      if(item.feed_id== current_feed.feed_id ){
-        current_index = index;
-      }
-      if(current_index < index && item.unread_count > 0){
-        return true;
-      }
-    }, current_feed);
-    if(null == next_feed){
-      //we should just cycle back around to the last unread
-      next_feed= this.lastUnreadFeed();
-    }
-    this.selectFeed(next_feed);
+    this.unreadFeedNextSelect(this.get('content').toArray().reverse());
   },
-  //We should push the index into this function.
+  //Select the next  unread feed
   nextUnreadFeed: function(){
     this.unreadFeedNextSelect(this.get('content'));
-    /*
-    var current_feed = Wprss.selectedFeedController.content;
-    if(null == current_feed){
-      //no feed selected?  Let's choose the first unread feed.
-      console.log('no feed selected');
-      this.selectFeed(this.firstUnreadFeed());
-      return;
-    }
-    var current_index;
-    var next_feed = this.content.find(function(item,index,self){
-      if(item.feed_id== current_feed.feed_id ){
-        current_index = index;
-      }
-      if(current_index < index && item.unread_count > 0){
-        return true;
-      }
-    }, current_feed);
-    if(null == next_feed){
-      //we should just cycle back around to the first unread
-      next_feed= this.firstUnreadFeed();
-    }
-    this.selectFeed(next_feed);
-  */
   },
   //this ugly function is the guts of the previous nice ones
   unreadFeedNextSelect: function(array){
