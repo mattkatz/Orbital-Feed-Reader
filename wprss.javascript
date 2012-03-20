@@ -48,34 +48,45 @@ jQuery(document).ready(function($){
         if(item.unread_count > 0){ return true;}
       });
     },
+    //for convenience, a function for the fist unread feed;
+    firstUnreadFeed: function(){
+      //TODO: convert this to use findproperty - should be faster
+      return Wprss.feedsController.unreadFeeds().get('firstObject');
+    },
+
+
     //select a feed
+    //expects the feed to not be null!
     selectFeed: function(feed){
       Wprss.selectedFeedController.select(feed);
     },
     previousUnreadFeed:function(id){
 
     },
-    //TODO We should push the index into this function.
+    //We should push the index into this function.
     nextUnreadFeed: function(){
       var current_feed = Wprss.selectedFeedController.content;
       if(null == current_feed){
         //no feed selected?  Let's choose the first unread feed.
-        var uf =  Wprss.feedsController.unreadFeeds();
-        this.selectFeed(uf.get('firstObject'));
+        console.log('no feed selected');
+        this.selectFeed(this.firstUnreadFeed());
         return;
       }
-      var id = current_feed.id;
       var current_index;
       var next_feed = this.content.find(function(item,index,self){
-        if(item.id== id ){
+        console.log(current_feed);
+        if(item.feed_id== current_feed.feed_id ){
           current_index = index;
         }
-        if(current_index < index && item.unreadCount > 0){
+        if(current_index < index && item.unread_count > 0){
           return true;
         }
-      });
+      }, current_feed);
+      if(null == next_feed){
+        //we should just cycle back around to the first unread
+        next_feed= this.firstUnreadFeed();
+      }
       this.selectFeed(next_feed);
-
     },
     markAsRead: function(id){
       //call the markfeedread backend
@@ -189,7 +200,7 @@ jQuery(document).ready(function($){
     },
     select:function(feed){
       this.set('content',feed);
-      Wprss.entriesController.selectFeed(feed.id);
+      Wprss.entriesController.selectFeed(feed.feed_id);
     },
     
   });
