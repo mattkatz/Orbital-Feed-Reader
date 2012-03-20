@@ -162,6 +162,32 @@ Wprss.entriesController = Em.ArrayProxy.create({
     this.setEntryIsRead(id,!unreadStatus);
 
   },
+  //this is the ugly function for the two pretty ones below
+  selectNextEntry: function(array){
+    var currentItem = Wprss.selectedEntryController.get('content');
+    //if there is no item selected, select the first one.
+    if (null == currentItem ){
+      console.log('no current item');
+      currentItem = array.get('firstObject');
+
+    }else{
+      //if there is an item selected, select the next one.
+      console.log('current item');
+      var idx = array.indexOf(currentItem);
+      currentItem = array.get(++idx);
+    }
+    Wprss.selectedEntryController.set('content',currentItem);
+    //scroll to this element.
+    scrollToEntry(currentItem);
+    Wprss.entriesController.setEntryIsRead(currentItem.id,true);
+
+  },
+  nextEntry: function(){
+    this.selectNextEntry(Wprss.entriesController.get('content'));
+  },
+  previousEntry: function(){
+    this.selectNextEntry(Wprss.entriesController.get('content').toArray().reverse());
+  },
   setEntryIsRead: function(id,isRead){
     var entry = this.content.findProperty('id',id);
     
@@ -313,82 +339,19 @@ function scrollToEntry(currentItem){
 function setupKeys(){
   //handle the down arrow keys and j to scroll the next item to top of scren
   key('j,down',function(event,handler){
-    var currentItem = Wprss.selectedEntryController.content;
-    //if there is no item selected, select the first one.
-    if (null == currentItem ){
-      console.log('no current item');
-      currentItem = Wprss.entriesController.get('firstObject');
-
-    }else{
-      //if there is an item selected, select the next one.
-      console.log('current item');
-      var idx = Wprss.entriesController.content.indexOf(currentItem);
-      currentItem = Wprss.entriesController.content.get(++idx);
-    }
-    Wprss.selectedEntryController.set('content',currentItem);
-    //scroll to this element.
-    scrollToEntry(currentItem);
-    Wprss.entriesController.setEntryIsRead(currentItem.id,true);
+    Wprss.entriesController.nextEntry();
   });
   //up and k should scroll the previous item to the top of the screen
   key('k,up',function(event,handler){
-      
-    var currentItem = Wprss.selectedEntryController.content;
-    //if there is no item selected, select the first one.
-    if (null == currentItem ){
-      console.log('no current item');
-      currentItem = Wprss.entriesController.get('firstObject');
-
-    }else{
-      //if there is an item selected, select the next one.
-      console.log('current item');
-      var idx = Wprss.entriesController.content.indexOf(currentItem);
-      currentItem = Wprss.entriesController.content.get(--idx);
-    }
-    Wprss.selectedEntryController.set('content',currentItem);
-    scrollToEntry(currentItem);
-    Wprss.entriesController.setEntryIsRead(currentItem.id,true);
-
+    Wprss.entriesController.previousEntry();
   });
   //h should go to previous feed
   key('h,left',function(event,handler){
     Wprss.feedsController.previousUnreadFeed();
-/*
-    var currentFeed = Wprss.selectedFeedController.content;
-    if(null == currentFeed){
-      currentFeed = Wprss.feedsController.get('firstObject');
-    }else{
-      var idx = Wprss.feedsController.content.indexOf(currentFeed);
-      currentFeed = Wprss.feedsController.content.get(--idx);
-      //TODO make this loop instead
-      if(null==currentFeed)
-        return;
-
-    }
-    Wprss.selectedFeedController.set('content',currentFeed);
-    Wprss.entriesController.selectFeed(currentFeed.feed_id);
-*/
-    
   });
   //l should go to next feed
   key('l,right',function(event,handler){
     Wprss.feedsController.nextUnreadFeed();
-    
-    /*
-    var currentFeed = Wprss.selectedFeedController.content;
-    if(null == currentFeed){
-      currentFeed = Wprss.feedsController.get('firstObject');
-    }else{
-      var idx = Wprss.feedsController.content.indexOf(currentFeed);
-      currentFeed = Wprss.feedsController.content.get(++idx);
-      //TODO make this loop instead
-      if(null==currentFeed)
-        return;
-    }
-    Wprss.selectedFeedController.set('content',currentFeed);
-    Wprss.entriesController.selectFeed(currentFeed.feed_id);
-    */
-    
   });
   //u should toggle the current item's read status
   key('u',function(event,handler){
@@ -396,9 +359,7 @@ function setupKeys(){
     if(null == currentItem)
       return;
     Wprss.entriesController.toggleEntryRead(currentItem.id);
-
   });
-
 }
 
 
