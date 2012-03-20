@@ -50,18 +50,48 @@ jQuery(document).ready(function($){
     },
     //for convenience, a function for the fist unread feed;
     firstUnreadFeed: function(){
-      //TODO: convert this to use findproperty - should be faster
-      return Wprss.feedsController.unreadFeeds().get('firstObject');
+      //return Wprss.feedsController.unreadFeeds().get('firstObject');
+      return Wprss.feedsController.get('content').find(function(item,index,self){
+        if(item.unread_count > 0){return true;}
+      });
     },
+    lastUnreadFeed: function(){
+      return Wprss.feedsController.get('content').reverse().find(function(item,index,self){
+        if(item.unread_count > 0){return true;}
+      });
 
+
+    },
 
     //select a feed
     //expects the feed to not be null!
     selectFeed: function(feed){
+      if(null == feed){return;}
       Wprss.selectedFeedController.select(feed);
     },
+    //TODO this and nextunreadfeed should be made DRY
     previousUnreadFeed:function(id){
-
+      var current_feed = Wprss.selectedFeedController.content;
+      if(null == current_feed){
+        //no feed selected?  Let's choose the last unread feed.
+        this.selectFeed(this.lastUnreadFeed());
+        return;
+      }
+      var current_index;
+      var next_feed = this.get('content').reverse().find(function(item,index,self){
+        console.log(item.feed_name);
+        if(item.feed_id== current_feed.feed_id ){
+          current_index = index;
+        }
+        if(current_index < index && item.unread_count > 0){
+          return true;
+        }
+      }, current_feed);
+      if(null == next_feed){
+        //we should just cycle back around to the last unread
+        next_feed= this.lastUnreadFeed();
+      }
+      this.selectFeed(next_feed);
     },
     //We should push the index into this function.
     nextUnreadFeed: function(){
@@ -74,7 +104,6 @@ jQuery(document).ready(function($){
       }
       var current_index;
       var next_feed = this.content.find(function(item,index,self){
-        console.log(current_feed);
         if(item.feed_id== current_feed.feed_id ){
           current_index = index;
         }
@@ -338,6 +367,8 @@ function setupKeys(){
   });
   //h should go to previous feed
   key('h,left',function(event,handler){
+    Wprss.feedsController.previousUnreadFeed();
+/*
     var currentFeed = Wprss.selectedFeedController.content;
     if(null == currentFeed){
       currentFeed = Wprss.feedsController.get('firstObject');
@@ -351,6 +382,7 @@ function setupKeys(){
     }
     Wprss.selectedFeedController.set('content',currentFeed);
     Wprss.entriesController.selectFeed(currentFeed.feed_id);
+*/
     
   });
   //l should go to next feed
