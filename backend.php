@@ -205,6 +205,7 @@ function wprss_mark_items_read($feed_id){
   $returnval->updated = $ret;
   $returnval->feed_id = $feed_id;
   echo json_encode($returnval);
+  exit;
   
 }
 add_action('wp_ajax_wprss_mark_items_read','wprss_mark_items_read');
