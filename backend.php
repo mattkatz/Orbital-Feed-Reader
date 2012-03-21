@@ -157,7 +157,6 @@ function wprss_update_feed($feed_id="",$feed_url=""){
    
   $feed->strip_htmltags($strip_htmltags);
 
-  $feed->strip
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
   //echo json_encode($feed->get_items());
