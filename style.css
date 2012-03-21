@@ -50,9 +50,20 @@ box-shadow: 2px 2px 4px #666;
   color: #FFFFFF;
   text-shadow: 0 -1px 0 #333333;
 }
+.modal-window{
+  padding:20px;
+  width:80%;
+  height:50px;
+  color:#dddddd;
+  background-color: #343434;
+  background-color:rgba(20,20,20,.8);
+  position:fixed;
+  top:50px;
+  right:40px;
+  border-radius:20px;
+}
 #wprss-content{
   width:80%;
-
 }
 #commandbar {
   background: #dddddd;
