@@ -131,8 +131,15 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   //if we didn't get passed a feed, check to see if it is in the url
   if("" == $feed_id){
     $feed_id = filter_input(INPUT_GET, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
-    if("" == $feed_id){return;}
+    if("" == $feed_id){
+      $resp;
+      $resp->updated = 0;
+      $resp->reason = "No feed_id passed";
+      echo json_encode($resp);
+      exit;
+    }
   }
+  echo $feed_id;
 
   //TODO update the feeds last updated time
   require_once('simplepie.inc');
@@ -146,12 +153,13 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     where id=".$feed_id."
     ;";
   $feedrow = $wpdb->get_row($sql);
+  echo $feedrow->feed_url;
 
   $feed = new SimplePie();
   $feed->set_feed_url($feedrow->feed_url);
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
-  //echo json_encode($feed->get_items());
+  echo json_encode($feed->get_items());
   $entries_table = $prefix."entries"; 
   $user_entries_table = $prefix."user_entries";
   foreach($feed->get_items() as $item)
