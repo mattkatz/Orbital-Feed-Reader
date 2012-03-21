@@ -24,6 +24,9 @@ box-shadow: 2px 2px 4px #666;
 .ember-button{
   border-bottom: 1px dotted;
 }
+.entry{
+  display:inline-block;
+}
 
 
 .feeds div
