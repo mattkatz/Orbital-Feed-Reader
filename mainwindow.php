@@ -12,7 +12,14 @@
         Mark all as Read
       {{/view}}
     </li>
-    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a></li>
+    <li class="command">
+      {{#view Em.Button classBinding="isActive"
+        tagName="span"
+        target="Wprss.feedController"
+        action="addFeed" }}
+        Subscribe +
+      {{/view}}
+    </li>
     <li class="command">
       {{#view Em.Button classBinding="isActive"
         tagName="span"
@@ -70,6 +77,9 @@
     {{/if}}
     </script>
   </div>
+</div>
+<div id="subscribe-window" class="modal-window">
+Subscribe window goes here!
 </div>
   <script type="text/x-handlebars" data-template-name="read-check">
               {{#if content.isRead}}
