@@ -15,7 +15,7 @@
     <li class="command">
       {{#view Em.Button classBinding="isActive"
         tagName="span"
-        target="Wprss.feedController"
+        target="Wprss.commandController"
         action="addFeed" }}
         Subscribe +
       {{/view}}
