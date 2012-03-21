@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <atom:link href="./" rel="self" type="application/rss+xml" />
+    <title>Latest ditz updates for Wordprss</title>
+    <link>index.html</link>
+    <description>Latest updates to the distributed issue tracker for Wordprss</description>
+    <language>en-us</language>
+    <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed feed marked read should decrement the unread count</title> 
+      <link>issue-18e1c838d8d31ecd081139836c8b5f1ab21e5291.html</link>
+      <description></description>
+      <pubDate>2012-03-21</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created feed marked read should decrement the unread count</title> 
+      <link>issue-18e1c838d8d31ecd081139836c8b5f1ab21e5291.html</link>
+      <description></description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed feedController should control feeds: next,first,last, unread</title> 
+      <link>issue-ed8a173a6b07b3c80947881e9a829c816b02fcd1.html</link>
+      <description></description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed previousUnreadFeed doesn't iterate properly</title> 
+      <link>issue-ada3e39e4f7f5459cf3500aaf461e548a0d330d7.html</link>
+      <description>using toArray() first fixes it.</description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created previousUnreadFeed doesn't iterate properly</title> 
+      <link>issue-ada3e39e4f7f5459cf3500aaf461e548a0d330d7.html</link>
+      <description></description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Mark feed read</title> 
+      <link>issue-f9b3d1e815ee4e14c5349b729ad0a25f53ea203b.html</link>
+      <description>YAY</description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Mark feed read</title> 
+      <link>issue-f9b3d1e815ee4e14c5349b729ad0a25f53ea203b.html</link>
+      <description></description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Create a helper for commands</title> 
+      <link>issue-6d0d51bbea653f782f172aa0bfddf97f45f1c2d7.html</link>
+      <description></description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created feedController should control feeds: next,first,last, unread</title> 
+      <link>issue-ed8a173a6b07b3c80947881e9a829c816b02fcd1.html</link>
+      <description></description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Mark Read should take you to next unread feed</title> 
+      <link>issue-b0d7d4a15a244d10736ff74f8b369d9209aed194.html</link>
+      <description></description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Give a mechanism to show read items</title> 
+      <link>issue-3342c8685b012efea5fe619a7b5b285772fdaa1b.html</link>
+      <description>now there is a button to show read items</description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed By default, show only unread items</title> 
+      <link>issue-d7e93397113cba77ebd21a5bbd8f1b27cbe05a0f.html</link>
+      <description></description>
+      <pubDate>2012-03-15</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Give a mechanism to show read items</title> 
+      <link>issue-3342c8685b012efea5fe619a7b5b285772fdaa1b.html</link>
+      <description></description>
+      <pubDate>2012-03-14</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Subscribe to a feed</title> 
+      <link>issue-c5203e35010e628db861a560b0b2786017040f6c.html</link>
+      <description></description>
+      <pubDate>2012-03-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Feed Management</title> 
+      <link>issue-24af02584d9b1a258f16822de734209cb209e3e4.html</link>
+      <description></description>
+      <pubDate>2012-03-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created By default, show only unread items</title> 
+      <link>issue-d7e93397113cba77ebd21a5bbd8f1b27cbe05a0f.html</link>
+      <description></description>
+      <pubDate>2012-03-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Fixed feedlist, scrollable feeds</title> 
+      <link>issue-f25a08321e6b3141b7fc75fa976499d41ea33141.html</link>
+      <description>ok the command bar is stable, the feedlist is stable, only content scrolls.</description>
+      <pubDate>2012-03-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Keyboard shortcuts</title> 
+      <link>issue-2e5e69242449a26494b6228d58e8731b6f0302e9.html</link>
+      <description>Still haven't implemented tagsearch because tags aren't in yet.</description>
+      <pubDate>2012-03-08</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Clicking read toggle doesn't always work right</title> 
+      <link>issue-c064bafac07e64d44485a364b8dfa6c223569973.html</link>
+      <description>now it does!</description>
+      <pubDate>2012-03-02</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Mark an item unread</title> 
+      <link>issue-67ad23da5cd651c9b32f8efb93922dfffe8b96a1.html</link>
+      <description></description>
+      <pubDate>2012-03-02</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed unmark read</title> 
+      <link>issue-8f13f1921149b1adecd745774a719a08c471dfad.html</link>
+      <description>ditz close wordprss-30
+doh!  finally did it.  Have to JSON.parse the response. DUH
+have to check that the true/false I'm passing to backend gets interpreted properly DUH</description>
+      <pubDate>2012-03-02</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created hateoas for backend and frontend</title> 
+      <link>issue-64f6c024a035f4e9a9fd4330239dfc83f6d185c1.html</link>
+      <description></description>
+      <pubDate>2012-03-02</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; commented Add NONCE and Permission valdation to ajax calls</title> 
+      <link>issue-49272b7fe2ff532b38f748d1809f910937c663d4.html</link>
+      <description>Ok - so looks like we should add a nonce per ACTION. That way we can be sure user is performing the action they intend.  
+Also hearing that wordpress lets you use nonce more than once, which is confusing.</description>
+      <pubDate>2012-02-17</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Clicking read toggle doesn't always work right</title> 
+      <link>issue-c064bafac07e64d44485a364b8dfa6c223569973.html</link>
+      <description></description>
+      <pubDate>2012-02-17</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Mark an item unread</title> 
+      <link>issue-67ad23da5cd651c9b32f8efb93922dfffe8b96a1.html</link>
+      <description></description>
+      <pubDate>2012-02-17</pubDate>
+    </item>
+  
+  </channel>
+</rss>
