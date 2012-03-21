@@ -43,6 +43,12 @@ Wprss.feedsController = Em.ArrayProxy.create({
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
     });
   },
+  changeUnreadCount:function(id,delta){
+    var feed = this.get('content').findProperty('feed_id',id);
+    console.log(feed.feed_name + "("+feed.unread_count+")");
+    feed.set('unread_count', +feed.unread_count + delta);
+    console.log(feed.unread_count);
+  },
   //a list of all unread feeds
   unreadFeeds: function(){
     return this.content.filter(function(item,index,self){
@@ -98,7 +104,7 @@ Wprss.feedsController = Em.ArrayProxy.create({
     }, current_feed);
     if(null == next_feed){
       //we should just cycle back around to the first unread
-      next_feed= findUnreadFeed(array);
+      next_feed= this.findUnreadFeed(array);
     }
     this.selectFeed(next_feed);
   },
@@ -112,8 +118,9 @@ Wprss.feedsController = Em.ArrayProxy.create({
     };
     jQuery.post(get_url.ajaxurl, data, function(response){
       //TODO: put in error checks for bad responses, errors,etc.
-      //callback to do what when done?
-      //update the fiedview to show this item has no read count?
+      //update the fiedview to show this item has no read count
+      var resp = JSON.parse(response);
+      Wprss.feedsController.changeUnreadCount(resp.feed_id,-1* resp.updated);
       //move onto next feed?
     });
 
@@ -202,6 +209,7 @@ Wprss.entriesController = Em.ArrayProxy.create({
       if(response.updated >0){
         console.log("updating");
         entry.set('isRead', isRead);
+        Wprss.feedsController.changeUnreadCount(entry.feed_id,isRead?-1:1);
       }
       else{
         console.log("update of " + response.updated);
