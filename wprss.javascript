@@ -31,7 +31,7 @@ Wprss.Feed = Em.Object.extend({
   unread_count:null,
 });
 
-Wprss.feedsController = Em.ArrayProxy.create({
+Wprss.feedsController = Em.ArrayController.create({
   content: [],
   createFeed: function(feed,domain,name,id,unread){
     var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread});
@@ -145,7 +145,7 @@ Wprss.Entry = Em.Object.extend({
 
   }.property(),
 });
-Wprss.entriesController = Em.ArrayProxy.create({
+Wprss.entriesController = Em.ArrayController.create({
   content: [],
   createEntry: function(feed,ref_id,head, url,by,read,mark,des){
     var entry = Wprss.Entry.create({
@@ -300,8 +300,8 @@ Wprss.EntriesView = Em.View.extend({
   classNameBindings:['isCurrent']
 });
 
-Wprss.commandController = Em.Object.create({
-  content: null;
+Wprss.commandController = Em.ArrayController.create({
+  content: null,
   addFeed: function(){
     console.log("we should be showing the feed view");
   },
