@@ -17,12 +17,39 @@ function wprss_list_feeds(){
 
   global $wpdb;
   global $tbl_prefix;
-  //echo $tbl_prefix . " WAHEY";
+  global $current_user;
   //nonce_dance();
-  //TODO check to see what current user is 
-  //TODO qualify this to just a user  
-  $table_name = $wpdb->prefix.$tbl_prefix. "feeds";
-  $sql = "select * from ".$table_name ;
+  $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
+  $sql = "
+      select 
+      feeds.id,
+      feeds.feed_name,
+      feeds.owner, 
+      feeds.feed_url, 
+      feeds.icon_url, 
+      feeds.site_url, 
+      feeds.last_updated,
+      feeds.last_error,
+      feeds.private,
+      sum(ue.isRead =0) as unread_count
+      from ".$table_name ." as feeds
+      inner join " . $wpdb->prefix. $tbl_prefix . "user_entries as ue
+      on ue.feed_id=feeds.id
+
+      where ue.owner_uid = ". $current_user->ID."
+      group by feeds.id,
+      feeds.owner,
+      feeds.feed_url,
+      feeds.feed_name,
+      feeds.icon_url,
+      feeds.site_url,
+      feeds.last_updated,
+      feeds.last_error,
+      feeds.private
+      
+      ";
+      //sum( if ue.isRead then 0 else 1 end) as unread_count,
+// AND feeds.owner = " . $current_user->ID."
   $myrows = $wpdb->get_results($sql );
   echo json_encode($myrows);
   exit;
@@ -40,19 +67,20 @@ function wprss_get_feed_entries(){
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $show_read =filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT); 
+  $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
   $feed_qualifier ="";
+  $read_qualifer = "";
   if($feed_id == ""){
     //TODO "" should mean return latest entries
    }else{
      $feed_qualifier = " and ue.feed_id = ".$feed_id;
    }
-  if($show_read){
+  if($show_read=="1"){
     //do nothing
   }
   else{
     //only show unread entries
-    $feed_qualifer += " and ue.unread = TRUE";
+    $read_qualifer =" and  ue.isRead = 0  " ;
   }
 
   
@@ -73,6 +101,7 @@ function wprss_get_feed_entries(){
       on ue.ref_id=entries.id
       where ue.owner_uid = ". $current_user->ID."
       ".$feed_qualifier."
+      ".$read_qualifer."
       limit 30
   ;";
 
@@ -155,7 +184,32 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
 add_action('wp_ajax_nopriv_wprss_update_feed','wprss_get_update_feed');
 
-//TODO:Mark items as read
+//Mark items as read
+function wprss_mark_items_read($feed_id){
+  global $wpdb;
+  global $tbl_prefix;
+  global $current_user;
+  //what do we update? 
+  $feed_id = $_POST['feed_id'];
+  
+  $prefix = $wpdb->prefix.$tbl_prefix;
+  $ret = $wpdb->update(
+    $prefix.'user_entries',//the table
+    array('isRead' =>1),//columns to update
+    array(//where filters
+      'feed_id' =>$feed_id, //current feed
+      'owner_uid'=>$current_user->ID //logged in user
+    )
+  );
+  $returnval;
+  $returnval->updated = $ret;
+  $returnval->feed_id = $feed_id;
+  echo json_encode($returnval);
+  exit;
+  
+}
+add_action('wp_ajax_wprss_mark_items_read','wprss_mark_items_read');
+
 //Mark item as read
 function wprss_mark_item_read($entry_id,$unread_status=true){
   global $wpdb;
@@ -181,8 +235,6 @@ function wprss_mark_item_read($entry_id,$unread_status=true){
   echo json_encode($returnval);
 
   exit;
-  
-  
 }
 add_action('wp_ajax_wprss_mark_item_read','wprss_mark_item_read');
 //No non logged in way to mark an item read for me yet

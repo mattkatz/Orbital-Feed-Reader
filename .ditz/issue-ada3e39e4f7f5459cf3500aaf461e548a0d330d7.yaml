@@ -1,0 +1,30 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: previousUnreadFeed doesn't iterate properly
+desc: |-
+  Start with nothing selected.
+  hit h to go to previous unread feed.
+  Correctly hits the last feed.
+  hit h again to go back - doesn't go back.  Keeps finding the last item.
+  
+  click on first item.
+  hit h to go previous.  Correctly cycles.
+  hit h again, correctly goes backwards.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-03-20 03:57:24.014178 Z
+references: []
+
+id: ada3e39e4f7f5459cf3500aaf461e548a0d330d7
+log_events: 
+- - 2012-03-20 03:57:24.014686 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-03-20 04:16:16.750728 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - using toArray() first fixes it.

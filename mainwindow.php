@@ -1,13 +1,28 @@
 
 <div id='wprss-container'>
   <div id="commandbar" class="quicklinks">
+    <script type="text/x-handlebars" >
   <ul>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Update Feed</a></li>
-    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Mark all as Read</a></li>
     <li class="command">
-      <a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a>
+      {{#view Em.Button classBinding="isActive"
+        tagName="span"
+        target="Wprss.selectedFeedController"
+        action="markAsRead" }}
+        Mark all as Read
+      {{/view}}
+    </li>
+    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Subscribe +</a></li>
+    <li class="command">
+      {{#view Em.Button classBinding="isActive"
+        tagName="span"
+        target="Wprss.selectedFeedController"
+        action="showRead" }}
+        Show Read Items
+      {{/view}}
     </li>
   </ul>
+    </script>
   </div>
   <div id="wprss-feedlist">
   <div>CURRENT USER: <?php 
@@ -22,7 +37,7 @@
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
       {{#with content}}
-        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}}</li>
+        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
       {{/with }}
       {{/view}}
     {{/each}}
