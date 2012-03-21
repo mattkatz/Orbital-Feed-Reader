@@ -9,6 +9,41 @@
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   
     <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed feed marked read should decrement the unread count</title> 
+      <link>issue-18e1c838d8d31ecd081139836c8b5f1ab21e5291.html</link>
+      <description></description>
+      <pubDate>2012-03-21</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created feed marked read should decrement the unread count</title> 
+      <link>issue-18e1c838d8d31ecd081139836c8b5f1ab21e5291.html</link>
+      <description></description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed feedController should control feeds: next,first,last, unread</title> 
+      <link>issue-ed8a173a6b07b3c80947881e9a829c816b02fcd1.html</link>
+      <description></description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed previousUnreadFeed doesn't iterate properly</title> 
+      <link>issue-ada3e39e4f7f5459cf3500aaf461e548a0d330d7.html</link>
+      <description>using toArray() first fixes it.</description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
+      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created previousUnreadFeed doesn't iterate properly</title> 
+      <link>issue-ada3e39e4f7f5459cf3500aaf461e548a0d330d7.html</link>
+      <description></description>
+      <pubDate>2012-03-20</pubDate>
+    </item>
+  
+    <item>
       <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Mark feed read</title> 
       <link>issue-f9b3d1e815ee4e14c5349b729ad0a25f53ea203b.html</link>
       <description>YAY</description>
@@ -149,42 +184,6 @@ Also hearing that wordpress lets you use nonce more than once, which is confusin
       <link>issue-67ad23da5cd651c9b32f8efb93922dfffe8b96a1.html</link>
       <description></description>
       <pubDate>2012-02-17</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Mark item read</title> 
-      <link>issue-f6471b42d3859f737d50c9a59c7e7746c934a614.html</link>
-      <description>works!</description>
-      <pubDate>2012-02-17</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created unmark read</title> 
-      <link>issue-8f13f1921149b1adecd745774a719a08c471dfad.html</link>
-      <description></description>
-      <pubDate>2012-02-17</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; closed with disposition fixed Add ability to see read items</title> 
-      <link>issue-7b73a73933ddafef3f33b8e4f41bbb0226e7ddfd.html</link>
-      <description>still not passing content correctly into read-view
-I thought this worked at one point</description>
-      <pubDate>2012-02-17</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Pull JS enqueue out of main function.</title> 
-      <link>issue-f4553e12fe7a3d6ec18a220994bbac56e78f11bf.html</link>
-      <description></description>
-      <pubDate>2012-01-17</pubDate>
-    </item>
-  
-    <item>
-      <title>Matt Katz &lt;ditz@morelightmorelight.com&gt; created Mark item read</title> 
-      <link>issue-f6471b42d3859f737d50c9a59c7e7746c934a614.html</link>
-      <description></description>
-      <pubDate>2012-01-12</pubDate>
     </item>
   
   </channel>
