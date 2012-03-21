@@ -37,11 +37,16 @@ Wprss.feedsController = Em.ArrayProxy.create({
     var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread});
     this.pushObject(feed);
   },
+  
   createFeeds: function(jsonFeeds){
     var feeds = JSON.parse(jsonFeeds);
     feeds.forEach(function(value){
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
     });
+  },
+  addFeed:function(){
+    //post a feed 
+
   },
   changeUnreadCount:function(id,delta){
     var feed = this.get('content').findProperty('feed_id',id);
@@ -295,6 +300,14 @@ Wprss.EntriesView = Em.View.extend({
   classNameBindings:['isCurrent']
 });
 
+Wprss.commandController = Em.Object.create({
+  content: null;
+  addFeed: function(){
+    console.log("we should be showing the feed view");
+  },
+
+});
+
 Wprss.ReadView = Em.View.extend({
   readStatus: function(){
     if(content.isRead){
@@ -336,6 +349,8 @@ Wprss.SubscribeView = Em.View.extend({
   //later we will need things like tags and privacy and such
 
 });
+
+
 
 function scrollToEntry(currentItem){
 
