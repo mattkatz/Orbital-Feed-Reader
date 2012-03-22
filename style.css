@@ -10,7 +10,8 @@
   
 }
 .entries {
-  background-color: #ECECEC;
+  /*background-color: #ECECEC;*/
+  
 }
 
 .entries .current{
@@ -21,13 +22,16 @@ background-color: #ffffff;
 box-shadow: 2px 2px 4px #666;
 }
 
+.entry{
+  border-top: 2px ridge;
+  display:inline-block;
+  padding-bottom: 10px;
+  width:100%;
+}
+
 .ember-button{
   border-bottom: 1px dotted;
 }
-.entry{
-  display:inline-block;
-}
-
 
 .feeds div
 {
