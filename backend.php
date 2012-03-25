@@ -150,12 +150,14 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   $feed = new SimplePie();
   $feed->set_feed_url($feedrow->feed_url);
   // Remove these tags from the list
+/*
   $strip_htmltags = $feed->strip_htmltags;
   array_splice($strip_htmltags, array_search('object', $strip_htmltags), 1);
   array_splice($strip_htmltags, array_search('param', $strip_htmltags), 1);
   array_splice($strip_htmltags, array_search('embed', $strip_htmltags), 1);
    
   $feed->strip_htmltags($strip_htmltags);
+*/
 
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
@@ -165,6 +167,12 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   foreach($feed->get_items() as $item)
   {
     echo $item->get_description();
+    $name = "";
+    $author = $item->get_author();
+    if(null != $author){
+      $name =$author->get_name(); 
+    }
+    echo  $name;
     $wpdb->insert($entries_table, array(
       'title'=>$item->get_title(),
       'guid'=>$item->get_id(),
@@ -172,7 +180,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
       'updated'=>date ("Y-m-d H:m:s"),
       'content'=>$item->get_content(),//TODO
       'entered' =>date ("Y-m-d H:m:s"), 
-      'author' => $item->get_author()
+      'author' => $name
     ));
     $entry_id = $wpdb->insert_id;
 

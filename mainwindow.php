@@ -54,7 +54,7 @@
         {{#each Wprss.entriesController}}
           {{#view Wprss.EntriesView contentBinding="this"}}
             <li class="entry" {{bindAttr id="content.entryID"}} >
-              <a {{bindAttr href="content.link"}}><h2>{{content.title}}</h2></a> {{#if content.author}}<span class="attribution">by {{content.author}}</span>{{/if}}
+              <a {{bindAttr href="content.link"}}><h2>{{content.title}}</h2></a> {{#if content.author}}<span class="attribution">by {{{content.author}}}</span>{{/if}}
               {{{content.description}}}
               <div class="attributes">
               {{checkable  "content" contentBinding="content"}}
