@@ -31,6 +31,7 @@ function wprss_plugin_menu(){
   //We add the hook for our menu item on the main menu
   $hook = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
   //TODO add hook for feed management page
+  $subhook = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','generate_main_page','feed_management');
   
   //Register the js that we need
   wp_register_script( 'emberjs_script', plugins_url('Wordprss/ember-0.9.3.min.js', dir(__FILE__)) ,array('jquery'));
