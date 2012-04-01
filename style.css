@@ -62,6 +62,9 @@ box-shadow: 2px 2px 4px #666;
   right:40px;
   border-radius:20px;
 }
+.invisible{
+  display:none;
+}
 #wprss-content{
   width:80%;
 }
