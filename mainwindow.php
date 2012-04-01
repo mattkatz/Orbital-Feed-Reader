@@ -4,6 +4,7 @@
     <script type="text/x-handlebars" >
   <ul>
     <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Update Feed</a></li>
+    
     <li class="command">
       {{#view Em.Button classBinding="isActive"
         tagName="span"
@@ -15,8 +16,8 @@
     <li class="command">
       {{#view Em.Button classBinding="isActive"
         tagName="span"
-        target="Wprss.commandController"
-        action="addFeed" }}
+        target="Wprss.feedsController"
+        action="showFeed" }}
         Subscribe +
       {{/view}}
     </li>
@@ -78,9 +79,20 @@
     </script>
   </div>
 </div>
-<div id="subscribe-window" class="modal-window">
-Subscribe window goes here!
-</div>
+
+  <div id="subscribe-window" class="modal-window invisible">
+  <script type="text/x-handlebars">
+  {{view Wprss.AddFeedView name="addFeedView" placeholder="Drag or copy paste a feed here" }}
+
+      {{#view Em.Button classBinding="isActive"
+        target="Wprss.feedsController"
+        action="addFeed" }}
+        Add Feed
+      {{/view}}
+  </script>
+
+  Subscribe window goes here!
+  </div>
   <script type="text/x-handlebars" data-template-name="read-check">
               {{#if content.isRead}}
                 Read  

@@ -44,6 +44,24 @@ Wprss.feedsController = Em.ArrayController.create({
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
     });
   },
+  showFeed:function(){
+    console.log('in showfeed');
+    //show the add feed window
+    var dlg = jQuery('#subscribe-window');
+    console.log(dlg);
+    
+    dlg.toggleClass('invisible');
+    
+
+  },
+  subscribeFeedCommit: function(){
+    //get the feed url 
+    //validate it
+    //add the feed
+    //close the dialog
+    
+
+  },
   addFeed:function(){
     //post a feed 
 
@@ -333,6 +351,14 @@ Wprss.ReadView = Em.View.extend({
     return false;
   }
 
+});
+Wprss.AddFeedView = Em.TextField.extend({
+  focusOut: function(){
+    console.log('out');
+  },
+  insertNewLine: function(){
+    console.log('rah');
+  }
 });
 Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
