@@ -12,7 +12,10 @@ function nonce_dance(){
 }  
 
 //TODO return a nonce or something. Nonce dancing should work better
-
+function wprss_list_feeds_die(){
+  wprss_list_feeds();
+  exit;
+}
 function wprss_list_feeds(){
 
   global $wpdb;
@@ -52,10 +55,9 @@ function wprss_list_feeds(){
 // AND feeds.owner = " . $current_user->ID."
   $myrows = $wpdb->get_results($sql );
   echo json_encode($myrows);
-  exit;
 }
-add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds');
-add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds');
+add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds_die');
+add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds_die');
 
 //get feed entries
 function wprss_get_feed_entries(){
