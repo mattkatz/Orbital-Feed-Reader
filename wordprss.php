@@ -66,6 +66,8 @@ function feed_management(){
   wp_enqueue_style('wprsscss');
   wp_enqueue_script( 'json2' );
   wp_enqueue_script('emberjs_script');
+  //add our stylesheet
+  wp_enqueue_style('wprsscss');
   require_once('feed_management.php');
 }
 //Something is wrong.  this thing never fires.
