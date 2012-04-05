@@ -4,7 +4,7 @@
   padding: 10px;
   background-color: #ECECEC;
   border-color: #CCCCCC;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 30px;
   
