@@ -44,6 +44,6 @@ Wprss.selectedFeedController = Em.Object.create({
     //Wprss.entriesController.selectFeed(feed.feed_id);
   },
 });
-Wprss.FeedView = Em.View.exted({
+Wprss.FeedView = Em.View.extend({
   contentBinding: 'Wprss.selectedFeedController.content',
 });
