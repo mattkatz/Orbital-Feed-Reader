@@ -86,3 +86,15 @@ box-shadow: 2px 2px 4px #666;
   padding-right: 5px;
 
 }
+
+.horizontal-form input {
+   display: block;
+   padding:5px;
+}
+.horizontal-form input[type='checkbox'] {
+   display: inline-block;
+}
+.heading {
+  font-size: large;
+}
+
