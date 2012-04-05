@@ -4,9 +4,9 @@
   padding: 10px;
   background-color: #ECECEC;
   border-color: #CCCCCC;
-  position:fixed;
-  right:0;
-  top:30px;
+  position: absolute;
+  right: 0;
+  top: 30px;
   
 }
 .entries {
@@ -39,14 +39,14 @@ box-shadow: 2px 2px 4px #666;
   border-top: 1px solid #F9F9F9;
 }
 .feedcounter{
-  font-size:xx-small;
-  vertical-align:top;
+  font-size: xx-small;
+  vertical-align: top;
 }
 .feedcounter:before{
-  content:"(";
+  content: "(";
 }
 .feedcounter:after{
-  content:")";
+  content: ")";
 }
 
 .is-selected{
@@ -58,38 +58,38 @@ box-shadow: 2px 2px 4px #666;
   text-shadow: 0 -1px 0 #333333;
 }
 .modal-window{
-  padding:20px;
-  width:80%;
-  height:50px;
-  color:#dddddd;
+  padding: 20px;
+  width: 80%;
+  height: 50px;
+  color: #dddddd;
   background-color: #343434;
-  background-color:rgba(20,20,20,.8);
-  position:fixed;
-  top:50px;
-  right:40px;
-  border-radius:20px;
+  background-color: rgba(20,20,20,.8);
+  position: fixed;
+  top: 50px;
+  right: 40px;
+  border-radius: 20px;
 }
 .invisible{
-  display:none;
+  display: none;
 }
 #wprss-content{
-  width:80%;
+  width: 80%;
 }
 #commandbar {
   background: #dddddd;
-  display:inline-block; 
-  position:fixed;
+  display: inline-block; 
+  position: fixed;
   /*this is the height of the admin bar.*/
   
-  top:28px;
+  top: 28px;
 }
 #commandbar ul{
-  display:inline; 
+  display: inline; 
 
 }
 #commandbar li{
-  float:left;
-  padding-left:5px;
-  padding-right:5px;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
 
 }
