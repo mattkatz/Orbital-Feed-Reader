@@ -62,6 +62,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+}
 
 //TODO load in everything with admin as owner, 
 # load all the first installation data in.
