@@ -6,18 +6,19 @@ Wprss.Feed = Em.Object.extend({
   feed_id:null,
   site_url: null,
   unread_count:null,
+  is_private:false,
 });
 Wprss.feedsController = Em.ArrayController.create({
   content: [],
-  createFeed: function(feed,domain,name,id,unread){
-    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread});
+  createFeed: function(feed,domain,name,id,unread,priv){
+    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
   
   createFeeds: function(jsonFeeds){
     var feeds = JSON.parse(jsonFeeds);
     feeds.forEach(function(value){
-      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
+      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
 });

@@ -93,13 +93,24 @@ box-shadow: 2px 2px 4px #666;
   padding-right: 5px;
 
 }
+.horizontal-form label{
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+.horizontal-form label input{
+  font-weight:normal;
+}
 
 .horizontal-form input {
    display: block;
-   padding:5px;
+   padding: 5px;
 }
 .horizontal-form input[type='checkbox'] {
    display: inline-block;
+}
+.horizontal-form input[type='text'] {
+  width: 40%;
 }
 .heading {
   font-size: large;
