@@ -1,26 +1,3 @@
-//Set everything up after page load
-jQuery(document).ready(function($){
-  var data = {
-    action: 'wprss_get_feeds',
-    nonce_a_donce:get_url.nonce_a_donce 
-    
-  };
-  $.get(get_url.ajaxurl, data, function(response){
-    //TODO: put in error checks for bad responses, errors,etc.
-    Wprss.feedsController.createFeeds(response);
-  });
-
-  //TODO this should just be fed into the page on initial load
-  data.action='wprss_get_entries';
-  $.get(get_url.ajaxurl, data, function(response){
-    //alert(response);
-    Wprss.entriesController.createEntries(response);
-  });
-
-  setupKeys();
-  
-});
-
 
 Wprss = Ember.Application.create();
 Wprss.Feed = Em.Object.extend({
@@ -33,15 +10,15 @@ Wprss.Feed = Em.Object.extend({
 
 Wprss.feedsController = Em.ArrayController.create({
   content: [],
-  createFeed: function(feed,domain,name,id,unread){
-    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread});
+  createFeed: function(feed,domain,name,id,unread,priv){
+    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
   
   createFeeds: function(jsonFeeds){
     var feeds = JSON.parse(jsonFeeds);
     feeds.forEach(function(value){
-      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
+      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
   showFeed:function(){
@@ -148,6 +125,27 @@ Wprss.feedsController = Em.ArrayController.create({
     });
 
   },
+  unsubscribe: function(feed_id){
+    var data = {
+      action: 'wprss_unsubscribe_feed',
+      feed_id: feed_id,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    jQuery.post(get_url.ajaxurl,data, function(data){
+      if(true)//test to see if the feed actually got deleted
+      {
+         //remove the feed from the list
+         console.log(data);
+         var feed = Wprss.feedsController.filterProperty('feed_id',data.feed_id)
+      //.forEach(Wprss.feedsController.removeObject);
+      console.log(feed);
+
+      }
+      Wprss.selectedFeedController.set('content',null);
+    },'json');
+      
+
+ },
 });
 Wprss.Entry = Em.Object.extend({
   feed_id: null,
@@ -269,10 +267,19 @@ Wprss.selectedFeedController = Em.Object.create({
     //should change this to show next available feed with unread items
     Wprss.entriesController.selectFeed(id);
   },
+  unsubscribe: function(){
+    Wprss.feedsController.unsubscribe(this.get('content').feed_id);
+  },
   select:function(feed){
     this.set('content',feed);
-    Wprss.entriesController.selectFeed(feed.feed_id);
+    this.onSelect(feed.feed_id);
   },
+  onSelect:function(feed_id){
+   //null
+   return;
+  }
+
+
   
 });
 
@@ -281,8 +288,9 @@ Wprss.FeedsView = Em.View.extend({
   click: function(evt){
     var content = this.get('content');
     //alert(content.feed_id);
-    Wprss.selectedFeedController.set('content', content);
-    Wprss.entriesController.selectFeed(content.feed_id);
+    //Wprss.selectedFeedController.set('content', content);
+    //Wprss.entriesController.selectFeed(content.feed_id);
+    Wprss.selectedFeedController.select(content);
     
   },
   isSelected: function(){
@@ -295,6 +303,10 @@ Wprss.FeedsView = Em.View.extend({
 });
 Wprss.selectedEntryController = Em.Object.create({
   content: null
+});
+
+Wprss.FeedView = Em.View.extend({
+  contentBinding: 'Wprss.selectedFeedController.content',
 });
 
 Wprss.EntriesView = Em.View.extend({
@@ -394,32 +406,6 @@ function scrollToEntry(currentItem){
     jQuery('html').animate({
       scrollTop: row.offset().top - adminbar.height() - commandbar.height()}, 200);
 
-}
-
-function setupKeys(){
-  //handle the down arrow keys and j to scroll the next item to top of scren
-  key('j,down',function(event,handler){
-    Wprss.entriesController.nextEntry();
-  });
-  //up and k should scroll the previous item to the top of the screen
-  key('k,up',function(event,handler){
-    Wprss.entriesController.previousEntry();
-  });
-  //h should go to previous feed
-  key('h,left',function(event,handler){
-    Wprss.feedsController.previousUnreadFeed();
-  });
-  //l should go to next feed
-  key('l,right',function(event,handler){
-    Wprss.feedsController.nextUnreadFeed();
-  });
-  //u should toggle the current item's read status
-  key('u',function(event,handler){
-    var currentItem = Wprss.selectedEntryController.content;
-    if(null == currentItem)
-      return;
-    Wprss.entriesController.toggleEntryRead(currentItem.id);
-  });
 }
 
 

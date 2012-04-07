@@ -36,6 +36,7 @@ function wprss_plugin_menu(){
   //Register the js that we need
   wp_register_script( 'emberjs_script', plugins_url('Wordprss/ember-0.9.3.min.js', dir(__FILE__)) ,array('jquery'));
   wp_register_script( 'wordprss_script', plugins_url('Wordprss/wprss.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script'));
+  wp_register_script( 'mainwindow_script', plugins_url('Wordprss/mainwindow.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script','wordprss_script'));
   wp_register_script( 'feedmgmt_script', plugins_url('Wordprss/feed_management.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script'));
   //keyboard shortcut handling
   wp_register_script( 'keymaster_script', plugins_url('Wordprss/js/keymaster.min.js', dir(__FILE__)),array('jquery', 'emberjs_script'));
@@ -57,6 +58,7 @@ function generate_main_page()
     'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
   ) );
   wp_enqueue_script('keymaster_script');
+  wp_enqueue_script('mainwindow_script');
   //add our stylesheet
   wp_enqueue_style('wprsscss');
   require_once('mainwindow.php');
@@ -67,6 +69,13 @@ function feed_management(){
   wp_enqueue_style('wprsscss');
   wp_enqueue_script( 'json2' );
   wp_enqueue_script('emberjs_script');
+  wp_enqueue_script('wordprss_script');
+  wp_localize_script( 'wordprss_script', 'get_url', array( 
+    'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
+    // generate a nonce with a unique ID "myajax-post-comment-nonce"
+    // so that you can check it later when an AJAX request is sent
+    'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
+  ) );
   wp_enqueue_script('feedmgmt_script');
   require_once('feed_management.php');
 }
