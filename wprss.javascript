@@ -390,6 +390,8 @@ Wprss.SubscribeView = Em.View.extend({
 
 
 
+
+
 function scrollToEntry(currentItem){
 
     var body = jQuery('html');

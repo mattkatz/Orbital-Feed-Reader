@@ -92,7 +92,10 @@ box-shadow: 2px 2px 4px #666;
   padding-left: 5px;
   padding-right: 5px;
 
+.horizontal-form label input{
+  font-weight:normal;
 }
+<<<<<<< HEAD
 .horizontal-form label{
   font-weight: bold;
   padding-top: 10px;
