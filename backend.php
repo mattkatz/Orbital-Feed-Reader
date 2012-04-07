@@ -59,6 +59,23 @@ function wprss_list_feeds(){
 add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds_die');
 add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds_die');
 
+//remove feed 
+function wprss_unsubscribe_feed(){
+  global $wpdb;
+  global $tbl_prefix;
+  global $current_user;
+  $current_user = wp_get_current_user();
+  //nonce_dance();
+  
+  $prefix = $wpdb->prefix.$tbl_prefix; 
+  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $resp->user = $current_user->ID;
+  $resp->feed_id = $feed_id;
+  echo json_encode($resp);
+  exit;
+}
+add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
+
 //get feed entries
 function wprss_get_feed_entries(){
   global $wpdb;
