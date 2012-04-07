@@ -36,14 +36,14 @@
           {{view Em.TextField valueBinding="site_url" }}
         </label>
         <label>
-          {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it."}}
+          {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it to other people."}}
         </label>
         <label>
           Get rid of this feed! Seriously! 
-          {{#view Em.Button target="Wprss.feedsController" action="unsubscribe"}} Unsubscribe {{/view}}
+          {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
         </label>
           <div>
-          {{#view Em.Button target="Wprss.feedsController" action="saveFeed" }}Save{{/view}}
+          {{#view Em.Button target="Wprss.selectedFeedController" action="saveFeed" }}Save{{/view}}
           </div>
     {{/with }}
     {{/view}}
