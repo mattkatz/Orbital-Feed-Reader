@@ -7,6 +7,7 @@
   position: fixed;
   right: 0;
   top: 30px;
+  height:100%
   
 }
 .entries {
@@ -118,4 +119,10 @@ box-shadow: 2px 2px 4px #666;
 .heading {
   font-size: large;
 }
-
+/*hey it doesn't really work for this */
+#footer {
+  display:none;
+}
+.update-nag {
+  display:none;
+}
