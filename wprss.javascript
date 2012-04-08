@@ -125,6 +125,10 @@ Wprss.feedsController = Em.ArrayController.create({
     });
 
   },
+  removeFeed: function(feed_id){
+    var feed = this.findProperty('feed_id',feed_id);
+    this.removeObject(feed);
+  },
   unsubscribe: function(feed_id){
     var data = {
       action: 'wprss_unsubscribe_feed',
@@ -132,19 +136,13 @@ Wprss.feedsController = Em.ArrayController.create({
       nonce_a_donce:get_url.nonce_a_donce 
     };
     jQuery.post(get_url.ajaxurl,data, function(data){
-      if(true)//test to see if the feed actually got deleted
+      if(true)//TODO: test to see if the feed actually got deleted
       {
-         //remove the feed from the list
-         console.log(data);
-         var feed = Wprss.feedsController.filterProperty('feed_id',data.feed_id)
-      //.forEach(Wprss.feedsController.removeObject);
-      console.log(feed);
-
+        //remove the feed from the list
+        Wprss.feedsController.removeFeed(data.feed_id);
+        Wprss.selectedFeedController.set('content',null);
       }
-      Wprss.selectedFeedController.set('content',null);
     },'json');
-      
-
  },
 });
 Wprss.Entry = Em.Object.extend({
