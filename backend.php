@@ -67,14 +67,44 @@ function wprss_unsubscribe_feed(){
   $current_user = wp_get_current_user();
   //nonce_dance();
   
-  $prefix = $wpdb->prefix.$tbl_prefix; 
+  //$prefix = $wpdb->prefix.$tbl_prefix; 
+  $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $resp->user = $current_user->ID;
+  //TODO actually unsubscribe
+  $sql = '
+    DELETE 
+    FROM ' . $table_name . '
+    WHERE id = %d';
+  $res = $wpdb->query(
+      $wpdb->prepare($sql,$feed_id)
+    );
+  $resp->result = $res;
+  $resp->error = $wpdb->print_error();
   $resp->feed_id = $feed_id;
   echo json_encode($resp);
   exit;
 }
 add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
+
+//edit feed
+function wprss_edit_feed(){
+  global $wpdb;
+  global $tbl_prefix;
+  global $current_user;
+  $current_user = wp_get_current_user();
+  //nonce_dance();
+  
+  $prefix = $wpdb->prefix.$tbl_prefix; 
+  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $feed = filter_input(INPUT_POST, 'feed', FILTER_SANITIZE_NUMBER_INT);
+  $resp->feed = $feed;
+  $resp->user = $current_user->ID;
+  $resp->feed_id = $feed_id;
+  echo json_encode($resp);
+  exit;
+}
+add_action('wp_ajax_wprss_edit_feed','wprss_edit_feed');
 
 //get feed entries
 function wprss_get_feed_entries(){
