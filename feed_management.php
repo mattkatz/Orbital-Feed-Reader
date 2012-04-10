@@ -42,9 +42,9 @@
           Get rid of this feed! Seriously! 
           {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
         </label>
-          <div>
-          {{#view Em.Button target="Wprss.selectedFeedController" action="saveFeed" }}Save{{/view}}
-          </div>
+        <div>
+        {{#view Em.Button target="Wprss.selectedFeedController" action="saveFeed" }}Save{{/view}}
+        </div>
     {{/with }}
     {{/view}}
     
