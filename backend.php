@@ -88,7 +88,7 @@ function wprss_unsubscribe_feed(){
 add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
 
 //edit feed
-function wprss_edit_feed(){
+function wprss_save_feed(){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
@@ -97,14 +97,32 @@ function wprss_edit_feed(){
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $feed = filter_input(INPUT_POST, 'feed', FILTER_SANITIZE_NUMBER_INT);
-  $resp->feed = $feed;
+  $feed_url = filter_input(INPUT_post, 'feed_url',FILTER_SANITIZE_STRING);
+  $site_url = filter_input(INPUT_post, 'site_url',FILTER_SANITIZE_STRING);
+  $feed_name = filter_input(INPUT_post, 'feed_name',FILTER_SANITIZE_STRING);
+  $is_private = $_POST['is_private']=="true"?1:0;
+
+  $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
+  $ret = $wpdb->update(
+    $table_name,//the table
+    array(
+      'feed_url' => $feed_url,
+      'feed_name' => $feed_name,
+      'site_url' => $site_url,
+      'is_private' => $is_private,
+    ),//columns to update
+    array(//where filters
+      'feed_id' =>$feed_id, //current feed
+      'owner_uid'=>$current_user->ID //logged in user
+    )
+  );
+  $resp->updated = $ret;
   $resp->user = $current_user->ID;
   $resp->feed_id = $feed_id;
   echo json_encode($resp);
   exit;
 }
-add_action('wp_ajax_wprss_edit_feed','wprss_edit_feed');
+add_action('wp_ajax_wprss_save_feed','wprss_save_feed');
 
 //get feed entries
 function wprss_get_feed_entries(){
@@ -276,27 +294,33 @@ function wprss_mark_items_read($feed_id){
 add_action('wp_ajax_wprss_mark_items_read','wprss_mark_items_read');
 
 //Mark item as read
-function wprss_mark_item_read($entry_id,$unread_status=true){
+function wprss_mark_item_read($entry_id,$read_status=true){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
   //$entry_id = $_POST['entry_id'];
   //$unread_status = $_POST['unread_status'];
   $entry_id = $_POST['entry_id'];
-  $unread_status = $_POST['unread_status'];
+  if($entry_id == null){
+    $entry_id = $_GET['entry_id'];
+  }
+  $read_status = $_POST['read_status'];
+  if($read_status == null){
+    $read_status = $_GET['read_status'];
+  }
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $ret = $wpdb->update(
     $prefix.'user_entries',//the table
-    array('isRead' =>($unread_status=="true"?1:0)),//columns to update
+    array('isRead' =>($read_status=="true"?1:0)),//columns to update
     array(
-      'ref_id' =>$entry_id, //current entry
+      'id' =>$entry_id, //current entry
       'owner_uid'=>$current_user->ID //logged in user
     )//where filters
   );
   $returnval;
   $returnval->updated = $ret;
   $returnval->id = $entry_id;
-  $returnval->unread_status = $unread_status;
+  $returnval->read_status = $read_status;
   echo json_encode($returnval);
 
   exit;
