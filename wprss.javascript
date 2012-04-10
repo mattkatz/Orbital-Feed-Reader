@@ -6,6 +6,7 @@ Wprss.Feed = Em.Object.extend({
   feed_id:null,
   site_url: null,
   unread_count:null,
+  is_private: null,
 });
 
 Wprss.feedsController = Em.ArrayController.create({
@@ -136,14 +137,34 @@ Wprss.feedsController = Em.ArrayController.create({
       nonce_a_donce:get_url.nonce_a_donce 
     };
     jQuery.post(get_url.ajaxurl,data, function(data){
-      if(true)//TODO: test to see if the feed actually got deleted
+      if(data.result)//TODO: test to see if the feed actually got deleted
       {
         //remove the feed from the list
         Wprss.feedsController.removeFeed(data.feed_id);
         Wprss.selectedFeedController.set('content',null);
       }
     },'json');
- },
+  },
+  saveFeed: function(feed){
+    var data = {
+      action: 'wprss_save_feed',
+      feed_id: feed.feed_id,
+      feed_url : feed.feed_url,
+      feed_name: feed.feed_name,
+      site_url: feed.site_url,
+      is_private: feed.is_private,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+              console.log('at least we got here');
+    jQuery.post(get_url.ajaxurl,data, function(data){
+      if(true)//TODO: test to see if the feed actually got saved
+      {
+        //indicate somehow?
+      }
+    });
+              console.log('ant then we got here');
+
+  },
 });
 Wprss.Entry = Em.Object.extend({
   feed_id: null,
@@ -219,7 +240,7 @@ Wprss.entriesController = Em.ArrayController.create({
     
     var data = {
       action: 'wprss_mark_item_read',
-      unread_status: isRead,
+      read_status: isRead,
       entry_id: id,
       nonce_a_donce:get_url.nonce_a_donce 
     };
@@ -267,6 +288,9 @@ Wprss.selectedFeedController = Em.Object.create({
   },
   unsubscribe: function(){
     Wprss.feedsController.unsubscribe(this.get('content').feed_id);
+  },
+  saveFeed: function(){
+    Wprss.feedsController.saveFeed(this.get('content'));
   },
   select:function(feed){
     this.set('content',feed);
