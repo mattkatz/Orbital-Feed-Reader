@@ -8,7 +8,6 @@
     Wprss.feedsController.createFeeds(feeds);
   });
 </script>
-<h1>Here there should be a list of your feeds</h1>
 <div id="wprss-feedlist">
   <h2>Feeds</h2>
   <script type="text/x-handlebars" >
@@ -49,7 +48,7 @@
     {{/view}}
     
   {{else}}
-    <div class="no-feed-displayed">No feeds displayed</div>
+    <div class="no-feed-displayed">Choose a feed on the right to edit</div>
   {{/if}}
   </script>
 </div>
