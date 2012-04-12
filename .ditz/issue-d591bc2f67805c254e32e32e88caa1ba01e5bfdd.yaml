@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make uninstall work better
+desc: tables don't disappear when we uninstall.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-12 12:23:59.548208 Z
+references: []
+
+id: d591bc2f67805c254e32e32e88caa1ba01e5bfdd
+log_events: 
+- - 2012-04-12 12:23:59.548755 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

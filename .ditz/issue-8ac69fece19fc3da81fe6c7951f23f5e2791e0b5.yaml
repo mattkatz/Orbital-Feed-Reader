@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Save on edit feed should enable only when dirty
+desc: |-
+  Right now there is no feedback that the form has saved.
+  need to copy the feed into form, then copy back to feed list.
+  save button should enable only when form is dirty, disable after save.
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-12 12:27:23.017811 Z
+references: []
+
+id: 8ac69fece19fc3da81fe6c7951f23f5e2791e0b5
+log_events: 
+- - 2012-04-12 12:27:23.018305 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
