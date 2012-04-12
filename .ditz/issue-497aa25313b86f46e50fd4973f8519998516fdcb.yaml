@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: go from manual update on feed edit to wpdb->update
+desc: |-
+  no idea why, but wpdb->update just doesn't work.
+  hacked in a manual update statement, but it would be nice to use the 
+  standard tools.
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-12 12:37:04.933088 Z
+references: []
+
+id: 497aa25313b86f46e50fd4973f8519998516fdcb
+log_events: 
+- - 2012-04-12 12:37:04.933594 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
