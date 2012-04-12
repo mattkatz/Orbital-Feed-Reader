@@ -398,17 +398,18 @@ Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
   return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
 });
-Wprss.CommandView = Em.View.extend({
-  templateName:'commandItem',
-  //can we set click after creating a view?
+
+Wprss.FeedFinder = Em.Object.extend({
+  findFeed: function(){
+              //TODO: First get the feed url or site url from the link
+              //TODO: then ask the backend to validate the feed details
+              //TODO: Allow the user to edit the feed details
+
+            }
 
 });
-Wprss.SubscribeView = Em.View.extend({
-  //we need a url input, an add button.
-  urlField: null,
-  //later we will need things like tags and privacy and such
 
-});
+
 
 
 

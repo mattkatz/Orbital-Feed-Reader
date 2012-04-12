@@ -85,8 +85,8 @@
   {{view Wprss.AddFeedView name="addFeedView" placeholder="Drag or copy paste a feed here" }}
 
       {{#view Em.Button classBinding="isActive"
-        target="Wprss.feedsController"
-        action="addFeed" }}
+        target="Wprss.feedFinder"
+        action="findFeed" }}
         Add Feed
       {{/view}}
   </script>
