@@ -10,6 +10,12 @@
   height:100%
   
 }
+.no-feed-displayed{
+  font-weight: lighter;
+  font-size: large;
+  padding:20px;
+
+}
 .entries {
   /*background-color: #ECECEC;*/
   
