@@ -97,28 +97,48 @@ function wprss_save_feed(){
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $feed_url = filter_input(INPUT_post, 'feed_url',FILTER_SANITIZE_STRING);
-  $site_url = filter_input(INPUT_post, 'site_url',FILTER_SANITIZE_STRING);
-  $feed_name = filter_input(INPUT_post, 'feed_name',FILTER_SANITIZE_STRING);
+  $feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
+  $site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
+  $feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
   $is_private = $_POST['is_private']=="true"?1:0;
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
+  /*
+   //TODO NO IDEA WHY THIS DOESN'T WORK!
   $ret = $wpdb->update(
     $table_name,//the table
     array(
       'feed_url' => $feed_url,
       'feed_name' => $feed_name,
       'site_url' => $site_url,
-      'is_private' => $is_private,
+      'private' => $is_private,
     ),//columns to update
     array(//where filters
-      'feed_id' =>$feed_id, //current feed
-      'owner_uid'=>$current_user->ID //logged in user
+      'id' =>$feed_id, //current feed
+      'owner'=>$current_user->ID //logged in user
     )
-  );
+  );*/
+  $sql = 'UPDATE '. $table_name .'
+          SET feed_name = %s
+          , site_url = %s
+          , feed_url = %s
+          , private = %d
+          WHERE id = %d
+          AND owner = %d';
+  $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
+  $ret = $wpdb->query($sql
+    );
+          
   $resp->updated = $ret;
+  $resp->sql = $sql;
   $resp->user = $current_user->ID;
   $resp->feed_id = $feed_id;
+  $resp->feed_url = $feed_url;
+  $resp->site_url = $site_url;
+  $resp->feed_name = $feed_name;
+  $resp->is_private = $is_private;
+  $resp->error = $wpdb->print_error();
+
   echo json_encode($resp);
   exit;
 }
