@@ -82,7 +82,10 @@
 
   <div id="subscribe-window" class="modal-window invisible">
   <script type="text/x-handlebars">
-  {{view Wprss.AddFeedView name="addFeedView" placeholder="Drag or copy paste a feed here" }}
+    {{view Wprss.AddFeedView 
+      name="addFeedView" 
+      placeholder="Drag or copy paste a feed here" 
+      valueBinding="Wprss.feedFinder.value" }}
 
       {{#view Em.Button classBinding="isActive"
         target="Wprss.feedFinder"

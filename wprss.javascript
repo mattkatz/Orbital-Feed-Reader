@@ -22,14 +22,10 @@ Wprss.feedsController = Em.ArrayController.create({
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
-  showFeed:function(){
-    console.log('in showfeed');
+  showFeed: function(){
     //show the add feed window
     var dlg = jQuery('#subscribe-window');
-    console.log(dlg);
-    
     dlg.toggleClass('invisible');
-    
 
   },
   subscribeFeedCommit: function(){
@@ -360,6 +356,7 @@ Wprss.commandController = Em.ArrayController.create({
 
 });
 
+
 Wprss.ReadView = Em.View.extend({
   readStatus: function(){
     if(content.isRead){
@@ -386,28 +383,33 @@ Wprss.ReadView = Em.View.extend({
   }
 
 });
+Wprss.feedFinder= Em.Object.create({
+  value: null,
+  findFeed: function(){
+    console.log('in findFeed');
+    // First get the feed url or site url from the link
+    console.log(this.value);
+    //TODO: then ask the backend to validate the feed details
+    //TODO: Allow the user to edit the feed details
+
+
+  },
+
+});
 Wprss.AddFeedView = Em.TextField.extend({
   focusOut: function(){
     console.log('out');
   },
   insertNewLine: function(){
     console.log('rah');
-  }
+  },
+
 });
 Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
   return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
 });
 
-Wprss.FeedFinder = Em.Object.extend({
-  findFeed: function(){
-              //TODO: First get the feed url or site url from the link
-              //TODO: then ask the backend to validate the feed details
-              //TODO: Allow the user to edit the feed details
-
-            }
-
-});
 
 
 
