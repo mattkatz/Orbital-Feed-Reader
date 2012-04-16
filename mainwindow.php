@@ -74,7 +74,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <div class="no-feed-displayed">No feeds displayed</div>
+      <div class="no-feed-displayed"><p>Whoa - there's nothing to show right now.</p> <p>Try clicking on one of the feeds on the right.</p></div>
     {{/if}}
     </script>
   </div>
@@ -85,7 +85,7 @@
     {{view Wprss.AddFeedView 
       name="addFeedView" 
       placeholder="Drag or copy paste a feed here" 
-      valueBinding="Wprss.feedFinder.value" }}
+      valueBinding="Wprss.feedFinder.url" }}
 
       {{#view Em.Button classBinding="isActive"
         target="Wprss.feedFinder"

@@ -87,6 +87,35 @@ function wprss_unsubscribe_feed(){
 }
 add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
 
+//find the details of the feed.
+function wprss_find_feed(){
+  $orig_url = filter_input(INPUT_POST, 'url',FILTER_SANITIZE_STRING);
+  /* I thought I would need this.
+  require_once('simplepie.inc');
+  $feed = new SimplePie();
+  $feed->set_feed_url($orig_url);
+   */
+  $resp->orig_url = $orig_url;
+  //TODO go curl that url.
+  //TODO check to see if the url is an html file.
+  //TODO if this is an html file, let's see what feeds lurk within.
+  $resp->url_type = "html";
+  //TODO add those feeds to the array of feeds
+  $resp->feeds =array('ATOM' =>"http://localhost/boingboing/ibag",'OTHER'=>"BLAH");
+  //TODO set the site_url to this url.
+  //TODO set the feed name to the title element.
+  //TODO return!
+  //TODO if this is a feed, great!
+  //TODO set the site_url to the site_url element on this feed
+  //TODO set the feed_name
+  //TODO return!
+
+  echo json_encode($resp);
+  exit;
+
+}
+add_action('wp_ajax_wprss_find_feed','wprss_find_feed');
+
 //edit feed
 function wprss_save_feed(){
   global $wpdb;
