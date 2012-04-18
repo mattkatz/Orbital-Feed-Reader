@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add a sanity check for installation
+desc: we need to check things like curl_init and allow_url_fopen
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-17 00:20:22.583101 Z
+references: []
+
+id: b970e81a507ba6c309c01c133cd47b6ad26bcc7a
+log_events: 
+- - 2012-04-17 00:20:22.583588 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

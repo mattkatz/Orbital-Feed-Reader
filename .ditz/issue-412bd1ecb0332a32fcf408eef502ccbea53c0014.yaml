@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: simplify simplepie feed detection logic
+desc: |-
+  why should we do it with curl etc? simplepie detects feeds
+  simplepie should tell us if a url is a feed or not.  
+  but the get_type bit seems broken.  If we fix that, the whole thing should
+  be much simpler.  To do later I guess.
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-18 21:31:17.407712 Z
+references: []
+
+id: 412bd1ecb0332a32fcf408eef502ccbea53c0014
+log_events: 
+- - 2012-04-18 21:31:17.408420 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
