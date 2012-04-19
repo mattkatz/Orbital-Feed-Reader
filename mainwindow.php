@@ -92,6 +92,28 @@
         action="findFeed" }}
         Add Feed
       {{/view}}
+      <div class="horizontal-form">
+        
+        {{#if Wprss.feedFinder.feedCandidate}}
+          {{#view Wprss.FeedView }}
+          {{#with Wprss.feedFinder.feedCandidate}}
+              {{view Em.TextField valueBinding="feed_name" class="heading" }}
+              <label>Feed Url
+              {{view Em.TextField valueBinding="feed_url" }}
+              </label>
+              <label>Site Url
+                {{view Em.TextField valueBinding="site_url" }}
+              </label>
+              <label>
+                {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it to other people."}}
+              </label>
+              <div>
+              {{#view Em.Button target="Wprss.selectedFeedController" action="saveFeed" }}Save{{/view}}
+              </div>
+          {{/with }}
+          {{/view}}
+        {{/if}}
+      </div>
   </script>
 
   Subscribe window goes here!

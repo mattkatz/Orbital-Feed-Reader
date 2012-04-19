@@ -386,6 +386,7 @@ Wprss.ReadView = Em.View.extend({
 Wprss.feedFinder= Em.Object.create({
   url: null,
   possibleFeeds: null,
+  feedCandidate: null,
   findFeed: function(){
     console.log('in findFeed');
     // First get the feed url or site url from the link
@@ -398,8 +399,30 @@ Wprss.feedFinder= Em.Object.create({
     };
     jQuery.get(get_url.ajaxurl, data, function(response){
       //alert(response);
-      console.log(response);
-      console.log(response.feeds.ATOM);
+      //TODO if this was a feed, let's make it save!
+      if("feed" == response.url_type){
+        console.log('a feed!');
+        console.log(response.orig_url);
+        console.log(response.site_url);
+        console.log(response.feed_name);
+        var feed  =  Wprss.Feed.create(
+          { feed_url: response.orig_url, 
+            site_url: response.site_url, 
+            feed_id:-1, 
+            feed_name: response.feed_name,
+            unread_count:0,
+            is_private:false
+          });
+        console.log("feed " + feed);
+        Wprss.feedFinder.set('feedCandidate',feed);
+        console.log( "candidate " + Wprss.feedFinder.feedCandidate);
+
+
+      }
+      else{
+        //TODO if this was a page, let the user choose feeds and then save them.
+        possibleFeeds = response.feeds;
+      }
     },"json");
     
     //TODO: Allow the user to edit the feed details
