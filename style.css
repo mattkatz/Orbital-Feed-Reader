@@ -66,14 +66,12 @@ box-shadow: 2px 2px 4px #666;
 }
 .modal-window{
   padding: 20px;
-  width: 80%;
-  height: 50px;
   color: #dddddd;
   background-color: #343434;
   background-color: rgba(20,20,20,.8);
   position: fixed;
   top: 50px;
-  right: 40px;
+  left: 200px;
   border-radius: 20px;
 }
 .invisible{
