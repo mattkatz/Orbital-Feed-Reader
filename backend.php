@@ -89,27 +89,99 @@ add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
 
 //find the details of the feed.
 function wprss_find_feed(){
-  $orig_url = filter_input(INPUT_POST, 'url',FILTER_SANITIZE_STRING);
-  /* I thought I would need this.
-  require_once('simplepie.inc');
-  $feed = new SimplePie();
-  $feed->set_feed_url($orig_url);
-   */
+  $orig_url = filter_input(INPUT_GET, 'url',FILTER_SANITIZE_URL);
+  $contents = "";
   $resp->orig_url = $orig_url;
-  //TODO go curl that url.
-  //TODO check to see if the url is an html file.
-  //TODO if this is an html file, let's see what feeds lurk within.
-  $resp->url_type = "html";
-  //TODO add those feeds to the array of feeds
-  $resp->feeds =array('ATOM' =>"http://localhost/boingboing/ibag",'OTHER'=>"BLAH");
-  //TODO set the site_url to this url.
-  //TODO set the feed name to the title element.
-  //TODO return!
-  //TODO if this is a feed, great!
-  //TODO set the site_url to the site_url element on this feed
-  //TODO set the feed_name
-  //TODO return!
+  //go curl that url.
+  if(function_exists('curl_init')){
+    $ch = curl_init($orig_url);
+    //TODO set any needed curl options
+    $contents = @curl_exec($ch);
+    curl_close($ch);
 
+
+  }
+  else{
+    $contents = file_get_contents($orig_url);
+
+  }
+    require_once('simplepie.inc');
+    $feed = new SimplePie();
+    $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);
+    /*
+    //TODO: LOOK, I know this is dumb.
+    //Simplepie doesn't seem to do a proper $feed->get_type unless we pass in contents
+    //feed autodiscovery doesn't work if you do pass in contents.
+    //So I'm doing 2 requests to figure out the goddamn feed contents
+    //WE'LL DO IT LATER
+    //http://knowyourmeme.com/memes/bill-oreilly-rant
+
+    $resp->ofeed_type = $feed->get_type() ;
+    $resp->feed_none = SIMPLEPIE_TYPE_NONE;
+  
+    if(($feed->get_type() & SIMPLEPIE_TYPE_NONE) == SIMPLEPIE_TYPE_NONE){
+      $resp->feed_type = "NONE";
+
+    }
+
+    if(($feed->get_type() && SIMPLEPIE_TYPE_ALL)>0  ){
+      $rest->feed_type= "ALL";
+    } */
+    
+
+  //check to see if the url is an html file.
+  if(stripos($contents, '<html>') === false && stripos($contents,'<html') === false){ //TODO Why check both? don't know, grabbed this from  ttrss, need to research
+    $resp->url_type ='feed';
+    //$feed->set_feed_url($orig_url);
+    $feed->set_raw_data($contents);
+    $feed->init();
+    //set the feed_name
+    $resp->feed_name = $feed->get_title();
+    //set the site_url to the site_url element on this feed
+    $resp->site_url = $feed->get_link();
+    $resp->favicon = $feed->get_favicon();
+
+
+    //TODO return!
+
+  }else{
+    //TODO if this is an html file, let's see what feeds lurk within.
+    $feed->set_feed_url($orig_url);
+    $feed->init();
+    $resp->url_type = "html";
+    //TODO add those feeds to the array of feed
+    $feeds = $feed->get_all_discovered_feeds();
+    $resp->feeds = $feeds;
+    //TODO set the site_url to this url.
+    $resp->site_url=$orig_url;
+    //TODO set the feed name to the title element.
+
+    $doc = new DOMDocument();
+    $doc->loadHTML($content);
+    $xpath = new DOMXPath($doc);
+    $entries = $xpath->query('/html/head/title');
+    $resp->feed_name = $entries;
+    /* 
+    //this is how tt-rss gets the discovery feeds
+    $entries = $xpath->query('/html/head/link[@rel="alternate"]');
+    $feedUrls = array();
+    foreach ($entries as $entry) {
+      if ($entry->hasAttribute('href')) {
+        $title = $entry->getAttribute('title');
+        if ($title == '') {
+          $title = $entry->getAttribute('type');
+        }    
+        $feedUrl = rewrite_relative_url(
+          $baseUrl, $entry->getAttribute('href')
+        );   
+        $feedUrls[$feedUrl] = $title;
+      }    
+    }    
+    */
+    //$resp->feeds =array('ATOM' =>"http://localhost/boingboing/ibag",'OTHER'=>"BLAH");
+    //TODO return!
+
+  }
   echo json_encode($resp);
   exit;
 
