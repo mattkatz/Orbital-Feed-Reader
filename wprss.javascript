@@ -387,6 +387,9 @@ Wprss.feedFinder= Em.Object.create({
   url: null,
   possibleFeeds: null,
   feedCandidate: null,
+  saveFeed: function(){
+    Wprss.feedsController.saveFeed(feedCandidate);
+  },
   findFeed: function(){
     console.log('in findFeed');
     // First get the feed url or site url from the link
@@ -408,7 +411,7 @@ Wprss.feedFinder= Em.Object.create({
         var feed  =  Wprss.Feed.create(
           { feed_url: response.orig_url, 
             site_url: response.site_url, 
-            feed_id:-1, 
+            feed_id: null, 
             feed_name: response.feed_name,
             unread_count:0,
             is_private:false

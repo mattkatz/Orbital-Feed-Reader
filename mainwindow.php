@@ -107,8 +107,14 @@
               <label>
                 {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it to other people."}}
               </label>
+              {{#if  feed_id}}
+                <label>
+                  Get rid of this feed! Seriously! 
+                  {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
+                </label>
+              {{/if}}
               <div>
-              {{#view Em.Button target="Wprss.selectedFeedController" action="saveFeed" }}Save{{/view}}
+              {{#view Em.Button target="Wprss.feedFinder" action="saveFeed" }}Save{{/view}}
               </div>
           {{/with }}
           {{/view}}
