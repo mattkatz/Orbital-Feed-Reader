@@ -219,16 +219,28 @@ function wprss_save_feed(){
       'owner'=>$current_user->ID //logged in user
     )
   );*/
-  $sql = 'UPDATE '. $table_name .'
-          SET feed_name = %s
-          , site_url = %s
-          , feed_url = %s
-          , private = %d
-          WHERE id = %d
-          AND owner = %d';
-  $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
-  $ret = $wpdb->query($sql
-    );
+  $sql = '';
+  //We are inserting
+  if(null == $feed_id){
+    $sql = 'INSERT INTO ' . $table_name .'
+              ( `owner`, `feed_url`, `feed_name`,  `site_url`, `private`)
+              VALUES
+              ( %d, %s, %s, %s, %d)
+      ';
+    $sql = $wpdb->prepare($sql, $current_user->ID, $feed_url, $feed_name,$site_url,$is_private);
+
+  }
+  else{
+    $sql = 'UPDATE '. $table_name .'
+            SET feed_name = %s
+            , site_url = %s
+            , feed_url = %s
+            , private = %d
+            WHERE id = %d
+            AND owner = %d';
+    $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
+  }
+  $ret = $wpdb->query($sql);
           
   $resp->updated = $ret;
   $resp->sql = $sql;
