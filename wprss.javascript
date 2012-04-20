@@ -388,7 +388,7 @@ Wprss.feedFinder= Em.Object.create({
   possibleFeeds: null,
   feedCandidate: null,
   saveFeed: function(){
-    Wprss.feedsController.saveFeed(feedCandidate);
+    Wprss.feedsController.saveFeed(this.get('feedCandidate'));
   },
   findFeed: function(){
     console.log('in findFeed');
