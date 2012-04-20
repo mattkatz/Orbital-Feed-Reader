@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: If there is only one feed at a site, just return that.
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-20 12:08:46.810689 Z
+references: []
+
+id: 7a71cd592ba41b0f3140e94ce20dd1e54450ad8a
+log_events: 
+- - 2012-04-20 12:08:46.811115 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
