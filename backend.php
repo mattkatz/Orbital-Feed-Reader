@@ -145,25 +145,25 @@ function wprss_find_feed(){
     //TODO return!
 
   }else{
-    //TODO if this is an html file, let's see what feeds lurk within.
+    $resp->url_type = "html";
+    //if this is an html file, let's see what feeds lurk within.
     $feed->set_feed_url($orig_url);
     $feed->init();
-    $resp->url_type = "html";
-    //TODO add those feeds to the array of feed
+    //add those feeds to the array of feed
     $feeds = $feed->get_all_discovered_feeds();
     $resp->feeds = $feeds;
-    //TODO set the site_url to this url.
+    //set the site_url to this url.
     $resp->site_url=$orig_url;
     //TODO set the feed name to the title element.
-
+/*
     $doc = new DOMDocument();
     $doc->loadHTML($content);
     $xpath = new DOMXPath($doc);
-    $entries = $xpath->query('/html/head/title');
-    $resp->feed_name = $entries;
-    /* 
+    //$entries = $xpath->query('/html/head/title');
+    //$resp->feed_name = $entries;
     //this is how tt-rss gets the discovery feeds
     $entries = $xpath->query('/html/head/link[@rel="alternate"]');
+    $resp->feedEntries = $entries;
     $feedUrls = array();
     foreach ($entries as $entry) {
       if ($entry->hasAttribute('href')) {
@@ -171,14 +171,15 @@ function wprss_find_feed(){
         if ($title == '') {
           $title = $entry->getAttribute('type');
         }    
-        $feedUrl = rewrite_relative_url(
-          $baseUrl, $entry->getAttribute('href')
-        );   
+        $feedUrl = $entry->getAttribute('href');
+        //$feedUrl = rewrite_relative_url(
+          //$baseUrl, $entry->getAttribute('href')
+        //);   
         $feedUrls[$feedUrl] = $title;
       }    
     }    
-    */
-    //$resp->feeds =array('ATOM' =>"http://localhost/boingboing/ibag",'OTHER'=>"BLAH");
+    $resp->feeds = $feedUrls;
+ */
     //TODO return!
 
   }

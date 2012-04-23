@@ -119,10 +119,19 @@
           {{/with }}
           {{/view}}
         {{/if}}
+        {{#if Wprss.feedFinder.possibleFeeds }}
+          <div>
+            We found {{Wprss.feedFinder.possibleFeeds.length }} feeds:
+          </div>
+          {{#each Wprss.feedFinder.possibleFeeds}}
+            <div class="possibleFeed">
+            {{url}}
+            </div>
+          {{/each}}
+        {{/if}}
       </div>
   </script>
 
-  Subscribe window goes here!
   </div>
   <script type="text/x-handlebars" data-template-name="read-check">
               {{#if content.isRead}}
