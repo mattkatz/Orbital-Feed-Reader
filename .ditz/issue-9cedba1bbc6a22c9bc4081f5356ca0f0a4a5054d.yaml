@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "Add feed Title discovery to simplepie "
+desc: Not sure why it isn't in there already, but let's make it work.
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-22 11:06:12.623551 Z
+references: []
+
+id: 9cedba1bbc6a22c9bc4081f5356ca0f0a4a5054d
+log_events: 
+- - 2012-04-22 11:06:12.624035 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
