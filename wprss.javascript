@@ -305,9 +305,6 @@ Wprss.FeedsView = Em.View.extend({
   //templateName: feedsView,
   click: function(evt){
     var content = this.get('content');
-    //alert(content.feed_id);
-    //Wprss.selectedFeedController.set('content', content);
-    //Wprss.entriesController.selectFeed(content.feed_id);
     Wprss.selectedFeedController.select(content);
     
   },
@@ -424,7 +421,8 @@ Wprss.feedFinder= Em.Object.create({
       }
       else{
         //TODO if this was a page, let the user choose feeds and then save them.
-        possibleFeeds = response.feeds;
+        Wprss.feedFinder.set('feedCandidate', null);
+        Wprss.feedFinder.set('possibleFeeds', response.feeds);
       }
     },"json");
     
