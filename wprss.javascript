@@ -445,8 +445,10 @@ Wprss.PossibleFeedView  = Em.View.extend({
     //TODO now we pull the feed here and smack it into the feed url etc.
     console.log(content);
     //TODO it would be best if we were pulling the actual feed info bc we could create a feed...  
-    //TODO instead we will pull the feed url and then call the click handler on it.
+    //instead we will pull the feed url and then call the click handler on it.
     Wprss.feedFinder.set('url',content.url);
+    Wprss.feedFinder.findFeed();
+
 
     //clean up the form by erasing the old feedlist
     Wprss.feedFinder.set('possibleFeeds',null);

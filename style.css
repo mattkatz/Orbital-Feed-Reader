@@ -118,7 +118,7 @@ box-shadow: 2px 2px 4px #666;
    display: inline-block;
 }
 .horizontal-form input[type='text'] {
-  width: 40%;
+  width: 80%;
 }
 .heading {
   font-size: large;
