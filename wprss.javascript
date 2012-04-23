@@ -439,6 +439,13 @@ Wprss.AddFeedView = Em.TextField.extend({
   },
 
 });
+Wprss.PossibleFeedView  = Em.View.extend({
+  click: function(evt){
+    var content = this.get('content');
+    console.log(content);
+    
+  },
+});
 Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
   return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);

@@ -124,9 +124,13 @@
             We found {{Wprss.feedFinder.possibleFeeds.length }} feeds:
           </div>
           {{#each Wprss.feedFinder.possibleFeeds}}
-            <div class="possibleFeed">
-            {{url}}
-            </div>
+            {{#view Wprss.PossibleFeedView contentBinding="this"}}
+              {{#with content}}
+                <div class="possibleFeed">
+                {{url}}
+                </div>
+              {{/with}}
+            {{/view}}
           {{/each}}
         {{/if}}
       </div>
