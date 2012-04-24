@@ -41,6 +41,14 @@ function setupKeys(){
   key('l,right',function(event,handler){
     Wprss.feedsController.nextUnreadFeed();
   });
+  //o should open the original article
+  key('o',function(event,handler){
+    var entry = Wprss.selectedEntryController.get('content');
+    //TODO get a canonical link - or maybe we should only store canonical links when we do inserts
+    if(entry){
+      window.open(entry.link);
+    }
+  });
   //u should toggle the current item's read status
   key('u',function(event,handler){
     var currentItem = Wprss.selectedEntryController.content;
