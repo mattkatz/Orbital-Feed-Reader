@@ -1,4 +1,137 @@
 <?php
+/* Users subscribe to feeds through user_feeds.
+ * Feeds get updated to contain entries, and users see these through user_entries
+ * Feeds get updated in a batch and each time a feed is update with entries, users get a bunch of user entries.
+ * When users look at user feeds, the only thing feeds have in common is the underlying feed_url and site_url.  What if someone wants to change that?
+ * Everything but the underlying url belongs to the user_feeds. Those are the presentation.
+ * 
+ * If a feed already exists, changing anything but the name is no good.
+ *
+ * CLASSES
+ * TODO facade all this logic behind discrete classes
+ * Then the install data logic can just use these classes.
+ * Feeds Class
+ * Method to update a feed
+ *   - just update user_feeds
+ * Method to unsubscribe a feed
+ *   - Should delete a feed from user_feeds for current user
+ *   - Should delete all user_entries for current user
+ *   - Should delete the feed from feeds if there are no more user_feeds entries
+ *   - then delete all entries for the feed.
+ * Method to list all feeds
+ *   - Just return all feeds from user_feeds
+ */
+class WprssFeeds {
+
+/* Method to insert a feed
+ *   - Check to see if the feed_url exists in feeds.
+ *   - Then insert a link or insert into feed_url and then insert a link.
+ */
+  static function insert($feed){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
+    $sql = 'SELECT id 
+          FROM ' .$feeds.'
+          WHERE feed_url = %s';
+    $sql = $wpdb->prepare($sql, $feed['feed_url']);
+    $feed_id = $wpdb->get_var($sql);
+    if (! $feed_id){//we will insert the feed id and then link
+      //insert the feed and get the feed_id.
+      $sql = 'INSERT INTO ' . $feeds.'
+              ( `feed_url`, `feed_name`,  `site_url`)
+              VALUES
+              ( %s, %s, %s )
+      ';
+      $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
+      //TODO we should have some sane error checking here
+      $ret = $wpdb->query($sql);
+      $feed_id = $wpdb->insert_id;
+    }
+    //Now let's link in the feed to user_feeds
+    $sql = 'INSERT INTO ' .$user_feeds.'
+      (feed_id, feed_name, site_url, private)
+       VALUES
+       (%d,%s,%s,%d)';
+    $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$feed['is_private']);
+    $ret = $wpdb->query($sql);
+
+    $resp->updated = $ret;
+    //TODO this should be eliminated
+    //$resp->sql = $sql;
+    $resp->user = $current_user->ID;
+    $resp->feed_id = $feed_id;
+    $resp->feed_url = $feed_url;
+    $resp->site_url = $site_url;
+    $resp->feed_name = $feed_name;
+    $resp->is_private = $is_private;
+    $resp->error = $wpdb->print_error();
+    return $resp;
+  }
+  function get(){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $sql = "
+        select 
+        feeds.id,
+        COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
+        feeds.feed_url, 
+        COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
+        COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
+        feeds.last_updated,
+        feeds.last_error,
+        u_feeds.private,
+        sum(ue.isRead =0) as unread_count
+        from ".$user_feeds." as u_feeds
+        inner join ".$feeds." as feeds
+        on u_feeds.feed_id = feeds.id
+        left outer join ".$user_entries." as ue
+        on ue.feed_id=feeds.id
+
+        where ue.owner_uid = ". $current_user->ID."
+        and u_feeds.owner = ". $current_user->ID."
+        group by feeds.id,
+        feeds.feed_url,
+        feeds.feed_name,
+        feeds.icon_url,
+        feeds.site_url,
+        feeds.last_updated,
+        feeds.last_error,
+        u_feeds.private
+        
+        ";
+        //sum( if ue.isRead then 0 else 1 end) as unread_count,
+    // AND feeds.owner = " . $current_user->ID."
+    $myrows = $wpdb->get_results($sql );
+    return $myrows;
+
+  }
+
+
+}
+/*
+ * Entries Class
+ * Methods 
+ * Insert an entry for a feed
+ *    - check to see if entry exists, using entry hash?
+ *    - insert entry, then link for each user subscribed to the feed.
+ * Get entries for a feed
+ *    - for a user, filter by a condition - unread = true..
+ * Update an entry underlying
+ *    - update the content etc, then update the read flag on every user
+ * Mark an entry read
+ * unsubscribe feed from user
+ *   - delete all user_entries for a user_feed
+ *   - if no user has the feed, delete the entries as well. 
+ *
+ *
+ * */
 
 function nonce_dance(){
   $nonce = filter_input(INPUT_GET, 'nonce_a_donce',FILTER_SANITIZE_STRING);
@@ -17,43 +150,9 @@ function wprss_list_feeds_die(){
   exit;
 }
 function wprss_list_feeds(){
-
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
   //nonce_dance();
-  $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  $sql = "
-      select 
-      feeds.id,
-      feeds.feed_name,
-      feeds.owner, 
-      feeds.feed_url, 
-      feeds.icon_url, 
-      feeds.site_url, 
-      feeds.last_updated,
-      feeds.last_error,
-      feeds.private,
-      sum(ue.isRead =0) as unread_count
-      from ".$table_name ." as feeds
-      inner join " . $wpdb->prefix. $tbl_prefix . "user_entries as ue
-      on ue.feed_id=feeds.id
+  $myrows = WprssFeeds::get();
 
-      where ue.owner_uid = ". $current_user->ID."
-      group by feeds.id,
-      feeds.owner,
-      feeds.feed_url,
-      feeds.feed_name,
-      feeds.icon_url,
-      feeds.site_url,
-      feeds.last_updated,
-      feeds.last_error,
-      feeds.private
-      
-      ";
-      //sum( if ue.isRead then 0 else 1 end) as unread_count,
-// AND feeds.owner = " . $current_user->ID."
-  $myrows = $wpdb->get_results($sql );
   echo json_encode($myrows);
 }
 add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds_die');
@@ -221,14 +320,12 @@ function wprss_save_feed(){
     )
   );*/
   $sql = '';
+  $resp = '';
   //We are inserting
   if(null == $feed_id){
-    $sql = 'INSERT INTO ' . $table_name .'
-              ( `owner`, `feed_url`, `feed_name`,  `site_url`, `private`)
-              VALUES
-              ( %d, %s, %s, %s, %d)
-      ';
-    $sql = $wpdb->prepare($sql, $current_user->ID, $feed_url, $feed_name,$site_url,$is_private);
+    
+    $resp = WprssFeeds::insert(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'private'=>$is_private));
+
 
   }
   else{
@@ -241,17 +338,17 @@ function wprss_save_feed(){
             AND owner = %d';
     $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
   }
-  $ret = $wpdb->query($sql);
+  /*
+  if(null == $feed_id){
+    $sql = 'INSERT INTO ' .  $prefix .'user_feeds 
+      ("owner", "feed_id", "unread_count" )
+      VALUES
+      ( %d, %d, %d)';
+    $sql = $wpdb->prepare($sql, $current_user->ID, $wpdb->insert_id, 0);
+    $wpdb->query($sql);
+
+  }*/
           
-  $resp->updated = $ret;
-  $resp->sql = $sql;
-  $resp->user = $current_user->ID;
-  $resp->feed_id = $feed_id;
-  $resp->feed_url = $feed_url;
-  $resp->site_url = $site_url;
-  $resp->feed_name = $feed_name;
-  $resp->is_private = $is_private;
-  $resp->error = $wpdb->print_error();
 
   echo json_encode($resp);
   exit;

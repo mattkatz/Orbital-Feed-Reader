@@ -15,9 +15,21 @@ Wprss.feedsController = Em.ArrayController.create({
     var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
+
+  refreshFeeds: function(unreadOnly){
+    var data = {
+      action: 'wprss_get_feeds',
+      nonce_a_donce:get_url.nonce_a_donce 
+      
+    };
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //TODO: put in error checks for bad responses, errors,etc.
+      Wprss.feedsController.createFeeds(response);
+    },'json');
+  },
   
-  createFeeds: function(jsonFeeds){
-    var feeds = JSON.parse(jsonFeeds);
+  createFeeds: function(feeds){
+    //var feeds = JSON.parse(jsonFeeds);
     feeds.forEach(function(value){
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
@@ -152,12 +164,22 @@ Wprss.feedsController = Em.ArrayController.create({
       nonce_a_donce:get_url.nonce_a_donce 
     };
               console.log('at least we got here');
-    jQuery.post(get_url.ajaxurl,data, function(data){
-      if(true)//TODO: test to see if the feed actually got saved
+    jQuery.post(get_url.ajaxurl,data, function(response){
+      if(response.updated)//TODO: test to see if the feed actually got saved
       {
         //indicate somehow?
+        //TODO this should be agnostic per screen.
+        //the main window should update the list of feeds.
+        //and close the subscribe window
+        //the feed management window should also update the feed list
+        jQuery('#subscribe-window').toggleClass('invisible');
+        
       }
-    });
+      else{
+        //TODO Alert the user?
+        console.log(response.updated);
+      }
+    },'json');
               console.log('ant then we got here');
 
   },

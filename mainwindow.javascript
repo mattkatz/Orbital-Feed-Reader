@@ -1,17 +1,14 @@
 //Set everything up after page load
 jQuery(document).ready(function($){
+  //TODO This should be just fed in on page load
+  Wprss.feedsController.refreshFeeds(true);
+
+  //TODO this should just be fed into the page on initial load
   var data = {
-    action: 'wprss_get_feeds',
+    action: 'wprss_get_entries',
     nonce_a_donce:get_url.nonce_a_donce 
     
   };
-  $.get(get_url.ajaxurl, data, function(response){
-    //TODO: put in error checks for bad responses, errors,etc.
-    Wprss.feedsController.createFeeds(response);
-  });
-
-  //TODO this should just be fed into the page on initial load
-  data.action='wprss_get_entries';
   $.get(get_url.ajaxurl, data, function(response){
     //alert(response);
     Wprss.entriesController.createEntries(response);
