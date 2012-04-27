@@ -70,7 +70,7 @@ class WprssFeeds {
     $resp->error = $wpdb->print_error();
     return $resp;
   }
-  function get(){
+  static function get(){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
@@ -114,6 +114,7 @@ class WprssFeeds {
   }
 
 
+
 }
 /*
  * Entries Class
@@ -149,6 +150,7 @@ function wprss_list_feeds_die(){
   wprss_list_feeds();
   exit;
 }
+
 function wprss_list_feeds(){
   //nonce_dance();
   $myrows = WprssFeeds::get();
@@ -459,6 +461,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
+
   //echo json_encode($feed->get_items());
   $entries_table = $prefix."entries"; 
   $user_entries_table = $prefix."user_entries";
