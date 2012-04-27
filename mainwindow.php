@@ -3,7 +3,7 @@
   <div id="commandbar" class="quicklinks">
     <script type="text/x-handlebars" >
   <ul>
-    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feedid=1">Update Feed</a></li>
+    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feed_id=1">Update Feed</a></li>
     
     <li class="command">
       {{#view Em.Button classBinding="isActive"
