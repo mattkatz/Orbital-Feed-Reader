@@ -1,6 +1,6 @@
 <?php
 
-
+require_once 'backend.php';
 
 # create the database tables.
 function wprss_install_db()
@@ -88,54 +88,32 @@ function wprss_install_data(){
   global $current_user;
   $user_id = $current_user->ID;
   //install some sample feeds
-  //TODO shouldn't all of this just use our standard entry stuff?
-  $table_name = $wpdb->prefix.$tbl_prefix."feeds";
-  $feed_table_name = $wpdb->prefix.$tbl_prefix."user_feeds";
-  $wpdb->insert($table_name, array(
-    //'feed_url'=>'http://www.morelightmorelight.com/feed/',
-    'feed_url'=>'http://localhost/morelightmorelight/feed',
-    'site_url'=> 'http://www.morelightmorelight.com',
-    //'owner' => $current_user->ID,
-    'feed_name' =>'More Light! More Light!'));
-  //TODO insert a subscription from to these feeds for all users.
-  //insert a subscription for the current user
-  $feed_id = $wpdb->insert_id;
-  $wpdb->insert($feed_table_name, array(
-    'owner' => $user_id,
-    'feed_id' => $feed_id,
-    'site_url'=> 'http://www.morelightmorelight.com',
-    'feed_name' =>'More Light! More Light!',
-    'unread_count' => 0));
-  $wpdb->insert($table_name, array(
+  //shouldn't all of this just use our standard entry stuff?
+  $feed = WprssFeeds::insert(
+  array(
+  //'feed_url'=>'http://www.morelightmorelight.com/feed/',
+  'feed_url'=>'http://localhost/morelightmorelight/feed',
+  'site_url'=> 'http://www.morelightmorelight.com',
+  'private'=>0,
+  //'owner' => $current_user->ID,
+  'feed_name' =>'More Light! More Light!'));
+  
+  $bb = WprssFeeds::insert(
+  array(
     //'feed_url'=>'http://boingboing.net/feed/',
     'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://boingboing.net',
+    'private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
-  //insert a subscription for the current user
-  $feed_id = $wpdb->insert_id;
-  $wpdb->insert($feed_table_name, array(
-    'owner' => $user_id,
-    'site_url'=> 'http://boingboing.net',
-    'feed_id' => $feed_id,
-    'feed_name' => 'Boing Boing',
-    'unread_count' => 0));
-  $wpdb->insert($table_name, array(
+  $wprssfeed = WprssFeeds::insert(
+  array(
     //'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/html/feed.xml',
     'feed_url' => 'http://localhost/Wordprss/ditz/html/feed.xml',
     'site_url' => 'http://mattkatz.github.com/Wordprss/', 
+    'private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Wordprss Changes'));
-  //insert a subscription for the current user
-  $feed_id = $wpdb->insert_id;
-  $wpdb->insert($feed_table_name, array(
-    'owner' => $user_id,
-    'site_url' => 'http://mattkatz.github.com/Wordprss/', 
-    'feed_id' => $feed_id,
-    'feed_name' => 'Wordprss Changes',
-    'unread_count' => 0));
-
-
 
   //Insert a sample entry
   $table_name = $wpdb->prefix.$tbl_prefix."entries";

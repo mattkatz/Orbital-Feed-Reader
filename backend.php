@@ -52,10 +52,10 @@ class WprssFeeds {
     }
     //Now let's link in the feed to user_feeds
     $sql = 'INSERT INTO ' .$user_feeds.'
-      (feed_id, feed_name, site_url, private)
+      (feed_id, feed_name, site_url,owner, private)
        VALUES
-       (%d,%s,%s,%d)';
-    $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$feed['is_private']);
+       (%d,%s,%s,%d,%d)';
+    $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
     $ret = $wpdb->query($sql);
 
     $resp->updated = $ret;
