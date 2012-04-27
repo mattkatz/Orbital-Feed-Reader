@@ -1,8 +1,8 @@
 <script type="text/javascript">
-  var feeds= '<?php
+  var feeds= <?php
     require_once('backend.php');
     wprss_list_feeds();
-  ?>';
+  ?>;
   //Set everything up after page load
   jQuery(document).ready(function($){
     Wprss.feedsController.createFeeds(feeds);
