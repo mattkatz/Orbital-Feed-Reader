@@ -86,6 +86,7 @@ function wprss_uninstall_db()
   delete_option('wordprss_db_version');
   //TODO clean up all the tables
   global $wpdb;
+  global $tbl_prefix;
   
   //$wpdb->insert($wpdb->prefix.$tbl_prefix, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'NARF NARF'));
   $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
