@@ -63,10 +63,10 @@ class WprssFeeds {
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
     $resp->feed_id = $feed_id;
-    $resp->feed_url = $feed_url;
-    $resp->site_url = $site_url;
-    $resp->feed_name = $feed_name;
-    $resp->is_private = $is_private;
+    $resp->feed_url = $feed['feed_url'];
+    $resp->site_url = $feed['site_url'];
+    $resp->feed_name = $feed['feed_name'];
+    $resp->is_private = $feed['is_private'];
     $resp->error = $wpdb->print_error();
     return $resp;
   }
@@ -133,6 +133,53 @@ class WprssFeeds {
  *
  *
  * */
+class WprssEntries{
+  static function insert($entry){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $resp = '';
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
+
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    //TODO see if the entry exists using entry hash or guid?
+    //insert the entry, get the ID for the feed
+    $wpdb->insert($entries, array(
+      'title'=>$entry['title'],
+      'guid'=>$entry['guid'],
+      'link'=>$entry['link'],//TODO 
+      'updated'=>date ("Y-m-d H:m:s"),
+      'content'=>$entry['content'],//TODO
+      'entered' =>date ("Y-m-d H:m:s"), 
+      'author' => $entry['author']
+    ));
+    $entry_id = $wpdb->insert_id;
+    //insert the link to user_entries
+    $sql = "INSERT INTO ".$user_entries."
+            (ref_id, feed_id, orig_feed_id, owner_uid, marked, isRead)
+            SELECT
+            %d,%d,%d,owner,0,0
+            FROM ".$user_feeds." 
+            WHERE feed_id = %d" ;
+    $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
+    $resp->inserted = $wpdb->query($sql);
+    
+    //update the last updated time for the feed
+    $resp->last_update = $wpdb->update(
+      $feeds,//the table
+      array('last_updated' => date ("Y-m-d H:m:s")),//columns to update
+      array(//where filters
+        'id' =>$entry['feed_id'] //current feed
+      )
+    );
+   return $resp; 
+
+  }
+
+
+}
 
 function nonce_dance(){
   $nonce = filter_input(INPUT_GET, 'nonce_a_donce',FILTER_SANITIZE_STRING);

@@ -94,7 +94,7 @@ function wprss_install_data(){
   //'feed_url'=>'http://www.morelightmorelight.com/feed/',
   'feed_url'=>'http://localhost/morelightmorelight/feed',
   'site_url'=> 'http://www.morelightmorelight.com',
-  'private'=>0,
+  'is_private'=>0,
   //'owner' => $current_user->ID,
   'feed_name' =>'More Light! More Light!'));
   
@@ -103,7 +103,7 @@ function wprss_install_data(){
     //'feed_url'=>'http://boingboing.net/feed/',
     'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://boingboing.net',
-    'private'=>0,
+    'is_private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
   $wprssfeed = WprssFeeds::insert(
@@ -111,11 +111,22 @@ function wprss_install_data(){
     //'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/html/feed.xml',
     'feed_url' => 'http://localhost/Wordprss/ditz/html/feed.xml',
     'site_url' => 'http://mattkatz.github.com/Wordprss/', 
-    'private'=>0,
+    'is_private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Wordprss Changes'));
 
   //Insert a sample entry
+  WprssEntries::insert(array(
+    'feed_id'=> $wprssfeed->feed_id,
+    'title'=>'Welcome to Wordprss!',
+    'guid'=>'FAKEGUID',
+    'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
+    'updated'=>date ("Y-m-d H:m:s"),
+    'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
+    'entered' =>date ("Y-m-d H:m:s"), 
+    'author' => 'Matt Katz'
+  ));
+  /*
   $table_name = $wpdb->prefix.$tbl_prefix."entries";
   $wpdb->insert($table_name, array(
     'title'=>'Welcome to Wordprss!',
@@ -126,8 +137,10 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
-
-  $wpdb->insert($table_name, array(
+   */
+  WprssEntries::insert(array(
+  //$wpdb->insert($table_name, array(
+    'feed_id'=> $wprssfeed->feed_id,
     'title'=>'Look at this fake post about a banana',
     'guid'=>'FAKEGUID2',
     'link'=>'http://boingboing.net/',//TODO 
@@ -136,7 +149,7 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Cory Doctorow'
   ));
-  //TODO insert a connection for each user that can hit dashboard
+  /*
   //Insert a connection
   $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
   $wpdb->insert($table_name, array(
@@ -155,6 +168,7 @@ function wprss_install_data(){
     'orig_feed_id' => 2,
     'owner_uid' =>$user_id
   ));
+   */
 }
 /*
 function wprss_uninstall_db()
