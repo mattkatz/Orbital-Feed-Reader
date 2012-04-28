@@ -87,10 +87,14 @@ function wprss_uninstall_db()
   //TODO clean up all the tables
   global $wpdb;
   global $tbl_prefix;
+  $tables =array('feeds','user_feeds','entries','user_entries');
+  foreach($tables as $table){
+    $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix.$table.";";
+    $wpdb->query($sql);
+
+  }
   
   //$wpdb->insert($wpdb->prefix.$tbl_prefix, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'NARF NARF'));
-  $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
-  $wpdb->query($sql);
 
 }
 
