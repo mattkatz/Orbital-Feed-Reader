@@ -127,7 +127,7 @@ function wprss_install_data(){
   ));
   WprssEntries::insert(array(
   //$wpdb->insert($table_name, array(
-    'feed_id'=> $wprssfeed->feed_id,
+    'feed_id'=> $bb->feed_id,
     'title'=>'Look at this fake post about a banana',
     'guid'=>'FAKEGUID2',
     'link'=>'http://boingboing.net/',//TODO 
