@@ -17,11 +17,11 @@ function wprss_install_db()
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
     feed_url text NOT NULL,
-    feed_name text not null,
-    icon_url varchar(250) not null default '',
-    site_url varchar(250) not null default '',
-    last_updated datetime default 0,
-    last_error varchar(250) not null default '',
+    feed_name text NOT NULL,
+    icon_url varchar(250) NOT NULL DEFAULT '',
+    site_url varchar(250) NOT NULL DEFAULT '',
+    last_updated datetime DEFAULT 0,
+    last_error varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
@@ -38,9 +38,9 @@ function wprss_install_db()
     icon_url varchar(250) ,
     site_url varchar(250) ,
     unread_count integer NOT NULL,
-    private bool not null default false,
-    auth_login varchar(250) not null default '',
-    auth_pass varchar(250) not null default '',
+    private bool NOT NULL DEFAULT false,
+    auth_login varchar(250) NOT NULL DEFAULT '',
+    auth_pass varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
@@ -51,13 +51,13 @@ function wprss_install_db()
   $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
 
   $sql = "CREATE TABLE " . $table_name ." (
-    id integer not null AUTO_INCREMENT,
-    ref_id integer not null,
+    id integer NOT NULL AUTO_INCREMENT,
+    ref_id integer NOT NULL,
     feed_id integer,
     orig_feed_id integer,
-    owner_uid integer not null,
-    marked bool not null default false,
-    isRead bool not null default false,
+    owner_uid integer NOT NULL,
+    marked bool NOT NULL DEFAULT false,
+    isRead bool NOT NULL DEFAULT false,
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
@@ -66,15 +66,15 @@ function wprss_install_db()
 
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
-    title text not null,
-    guid varchar(255) not null unique,
-    link text not null,
-    updated datetime not null,
-    content longtext not null,
-    content_hash varchar(250) not null,
-    no_orig_date bool not null default 0,
-    entered datetime not null,
-    author varchar(250) not null default '',
+    title text NOT NULL,
+    guid varchar(255) NOT NULL UNIQUE,
+    link text NOT NULL,
+    updated datetime NOT NULL,
+    content longtext NOT NULL,
+    content_hash varchar(250) NOT NULL,
+    no_orig_date bool NOT NULL DEFAULT 0,
+    entered datetime NOT NULL,
+    author varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
