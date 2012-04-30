@@ -88,7 +88,6 @@ function wprss_install_data(){
   global $current_user;
   $user_id = $current_user->ID;
   //install some sample feeds
-  //shouldn't all of this just use our standard entry stuff?
   $feed = WprssFeeds::insert(
   array(
   //'feed_url'=>'http://www.morelightmorelight.com/feed/',
@@ -126,18 +125,6 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
-  /*
-  $table_name = $wpdb->prefix.$tbl_prefix."entries";
-  $wpdb->insert($table_name, array(
-    'title'=>'Welcome to Wordprss!',
-    'guid'=>'FAKEGUID',
-    'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
-    'updated'=>date ("Y-m-d H:m:s"),
-    'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
-    'entered' =>date ("Y-m-d H:m:s"), 
-    'author' => 'Matt Katz'
-  ));
-   */
   WprssEntries::insert(array(
   //$wpdb->insert($table_name, array(
     'feed_id'=> $wprssfeed->feed_id,
@@ -149,26 +136,6 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Cory Doctorow'
   ));
-  /*
-  //Insert a connection
-  $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
-  $wpdb->insert($table_name, array(
-    'ref_id' => 1,
-    'feed_id' => 3,
-    'orig_feed_id' => 3,
-    'owner_uid' => $user_id
-  ));
-
-  //TODO insert a connection for each user that can hit dashboard
-  //Insert a connection
-  $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
-  $wpdb->insert($table_name, array(
-    'ref_id' => 2,
-    'feed_id' => 2,
-    'orig_feed_id' => 2,
-    'owner_uid' =>$user_id
-  ));
-   */
 }
 /*
 function wprss_uninstall_db()

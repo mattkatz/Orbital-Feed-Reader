@@ -94,7 +94,6 @@ function wprss_uninstall_db()
 
   }
   
-  //$wpdb->insert($wpdb->prefix.$tbl_prefix, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'NARF NARF'));
 
 }
 
