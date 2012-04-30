@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fresh unread count in menu item!
+desc: |-
+  we need to have an unread count in the menu item
+  maybe as the icon, maybe in txt
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-30 22:21:24.702520 Z
+references: []
+
+id: 43f04b9f893c157025be800903f3e82facf4278b
+log_events: 
+- - 2012-04-30 22:21:24.703014 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
