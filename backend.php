@@ -52,9 +52,9 @@ class WprssFeeds {
     }
     //Now let's link in the feed to user_feeds
     $sql = 'INSERT INTO ' .$user_feeds.'
-      (feed_id, feed_name, site_url,owner, private)
+      (feed_id, feed_name, site_url,owner, private,unread_count)
        VALUES
-       (%d,%s,%s,%d,%d)';
+       (%d,%s,%s,%d,%d,0)';
     $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
     $ret = $wpdb->query($sql);
 
@@ -119,9 +119,6 @@ class WprssFeeds {
 /*
  * Entries Class
  * Methods 
- * Insert an entry for a feed
- *    - check to see if entry exists, using entry hash?
- *    - insert entry, then link for each user subscribed to the feed.
  * Get entries for a feed
  *    - for a user, filter by a condition - unread = true..
  * Update an entry underlying
@@ -134,6 +131,11 @@ class WprssFeeds {
  *
  * */
 class WprssEntries{
+/*
+ * Insert an entry for a feed
+ *    - TODO check to see if entry exists, using entry hash?
+ *    - insert entry, then link for each user subscribed to the feed.
+ */
   static function insert($entry){
     global $wpdb;
     global $tbl_prefix;
@@ -156,6 +158,7 @@ class WprssEntries{
       'author' => $entry['author']
     ));
     $entry_id = $wpdb->insert_id;
+    $resp->insert_id = $entry_id;
     //insert the link to user_entries
     $sql = "INSERT INTO ".$user_entries."
             (ref_id, feed_id, orig_feed_id, owner_uid, marked, isRead)
@@ -520,7 +523,18 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     if(null != $author){
       $name =$author->get_name(); 
     }
+    WprssEntries::insert(array(
+      'feed_id'=>$feed_id,
+      'title'=>$item->get_title(),
+      'guid'=>$item->get_id(),
+      'link'=>$item->get_link(),//TODO 
+      'updated'=>date ("Y-m-d H:m:s"),
+      'content'=>$item->get_content(),//TODO
+      'entered' =>date ("Y-m-d H:m:s"), 
+      'author' => $name
+    ));
     echo  $name;
+    /*
     $wpdb->insert($entries_table, array(
       'title'=>$item->get_title(),
       'guid'=>$item->get_id(),
@@ -540,6 +554,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
       'orig_feed_id' => $feed_id,
       'owner_uid' =>$current_user->ID
     ));
+     */
   }
 
   //echo $feedrow->feed_url;
