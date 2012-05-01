@@ -119,8 +119,6 @@ class WprssFeeds {
 /*
  * Entries Class
  * Methods 
- * Get entries for a feed
- *    - for a user, filter by a condition - unread = true..
  * Update an entry underlying
  *    - update the content etc, then update the read flag on every user
  * Mark an entry read
@@ -178,6 +176,51 @@ class WprssEntries{
       )
     );
    return $resp; 
+
+  }
+  /* Get entries for a feed
+   *    - for a user, filter by a condition - unread = true..
+   */
+  static function get($filters){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $current_user = wp_get_current_user();
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    //We can't let people just put random filters in
+    //could be a sql injection vulnerability.
+    //TODO allow like queries
+    $filter_whitelist = array('entry_id','title','guid', 'link','content','author','isRead','marked','id','ref_id','feed_id');
+    $filter = "";
+    foreach ($filters as $filter_name => $value){
+      if(in_array($filter_name,$filter_whitelist)){
+        $filter = $filter . 
+          $wpdb->prepare( " AND $filter_name  = %s ", $value);
+      }
+    }
+
+    //TODO change get feed entries to support non logged in use
+    $sql = "select entries.id as entry_id,
+        entries.title as title,
+        entries.guid as guid,
+        entries.link as link,
+        entries.content as content,
+        entries.author as author,
+        ue.isRead as isRead,
+        ue.marked as marked,
+        ue.id as id,
+        ue.ref_id as ref_id,
+        ue.feed_id as feed_id
+        from  $entries  as entries
+        inner join  $user_entries  as ue
+        on ue.ref_id=entries.id
+        where ue.owner_uid = ". $current_user->ID."
+        ". $filter . " 
+        limit 30
+    ;";
+    $myrows = $wpdb->get_results($sql);
+    return $myrows;
 
   }
 
@@ -409,55 +452,23 @@ add_action('wp_ajax_wprss_save_feed','wprss_save_feed');
 
 //get feed entries
 function wprss_get_feed_entries(){
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
-  $current_user = wp_get_current_user();
-  //nonce_dance();
-  
-  $prefix = $wpdb->prefix.$tbl_prefix; 
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
-  $feed_qualifier ="";
-  $read_qualifer = "";
+  $filters = array();
   if($feed_id == ""){
     //TODO "" should mean return latest entries
    }else{
-     $feed_qualifier = " and ue.feed_id = ".$feed_id;
+     $filters['feed_id'] = $feed_id;
    }
   if($show_read=="1"){
     //do nothing
   }
   else{
     //only show unread entries
-    $read_qualifer =" and  ue.isRead = 0  " ;
+    $filters['isRead']=$show_read;
   }
 
-  
-  //TODO change get feed entries to support non logged in use
-  $sql = "select entries.id as entry_id,
-      entries.title as title,
-      entries.guid as guid,
-      entries.link as link,
-      entries.content as content,
-      entries.author as author,
-      ue.isRead as isRead,
-      ue.marked as marked,
-      ue.id as id,
-      ue.ref_id as ref_id,
-      ue.feed_id as feed_id
-      from " . $prefix . "entries as entries
-      inner join " . $prefix . "user_entries as ue
-      on ue.ref_id=entries.id
-      where ue.owner_uid = ". $current_user->ID."
-      ".$feed_qualifier."
-      ".$read_qualifer."
-      limit 30
-  ;";
-
-
-      
-  $myrows = $wpdb->get_results($sql);
+  $myrows = WprssEntries::get($filters);
   echo json_encode($myrows);
   exit;
 }
@@ -534,27 +545,6 @@ function wprss_update_feed($feed_id="",$feed_url=""){
       'author' => $name
     ));
     echo  $name;
-    /*
-    $wpdb->insert($entries_table, array(
-      'title'=>$item->get_title(),
-      'guid'=>$item->get_id(),
-      'link'=>$item->get_link(),//TODO 
-      'updated'=>date ("Y-m-d H:m:s"),
-      'content'=>$item->get_content(),//TODO
-      'entered' =>date ("Y-m-d H:m:s"), 
-      'author' => $name
-    ));
-    $entry_id = $wpdb->insert_id;
-
-
-    //TODO - this needs to be generalized for multiple users
-    $wpdb->insert($user_entries_table, array(
-      'ref_id' => $entry_id,
-      'feed_id' => $feed_id,
-      'orig_feed_id' => $feed_id,
-      'owner_uid' =>$current_user->ID
-    ));
-     */
   }
 
   //echo $feedrow->feed_url;
