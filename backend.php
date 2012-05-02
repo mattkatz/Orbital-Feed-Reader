@@ -13,11 +13,6 @@
  * Feeds Class
  * Method to update a feed
  *   - just update user_feeds
- * Method to unsubscribe a feed
- *   - Should delete a feed from user_feeds for current user
- *   - Should delete all user_entries for current user
- *   - Should delete the feed from feeds if there are no more user_feeds entries
- *   - then delete all entries for the feed.
  * Method to list all feeds
  *   - Just return all feeds from user_feeds
  */
@@ -112,6 +107,80 @@ class WprssFeeds {
     return $myrows;
 
   }
+/* Method to unsubscribe a feed
+ *   - Should delete a feed from user_feeds for current user
+ *   - Should delete all user_entries for current user
+ *   - Should delete the feed from feeds if there are no more user_feeds entries
+ *   - then delete all entries for the feed.
+ */
+  static function remove($feed_id){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $current_user = wp_get_current_user();
+    
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+
+    $resp->user = $current_user->ID;
+    //User feeds
+    $sql = "
+      DELETE 
+      FROM $user_feeds 
+      WHERE owner = $current_user->ID 
+      AND feed_id = %d;";
+    $sql = $wpdb->prepare($sql,$feed_id);
+    if($wpdb->query($sql)){
+      $resp->uf_error = $wpdb->print_error();
+    }
+    //delete all user_entries for current user
+    $sql = "
+      DELETE 
+      FROM $user_entries 
+      WHERE owner_uid = $current_user->ID 
+      AND feed_id = %d;";
+    $sql = $wpdb->prepare($sql,$feed_id);
+    if($wpdb->query($sql)){
+      $resp->ue_error = $wpdb->print_error();
+    }
+
+    //was that the last person subscribed to the feed?
+    //if so, we should remove the feed and all entries
+    $sql = "
+      SELECT COUNT(*)
+      FROM $user_feeds
+      WHERE feed_id = %d";
+    $subscribers = $wpdb->get_var($wpdb->prepare($sql,$feed_id));
+
+    if(0<= $subscribers){
+      $sql = "
+        DELETE
+        FROM $entries
+        WHERE feed_id = %d;";
+      $sql = $wpdb->prepare($sql,$feed_id);
+      if($wpdb->query($sql)){
+        $resp->entries_error = $wpdb->print_error();
+      }
+
+      //TODO we are getting a weird blank error on delete for this
+      //hence, the ignore keyword. 
+      //Is that valid for postgres?  How can we just eliminate that error?
+      $sql = "
+        DELETE IGNORE
+        FROM $feeds
+        WHERE id = %d;";
+      $sql = $wpdb->prepare($sql,$feed_id);
+      if(!$wpdb->query($sql)){
+        $resp->feeds_error = $wpdb->print_error();
+      }
+    }
+
+    //$resp->result = $res;
+    $resp->feed_id = $feed_id;
+    return $resp;
+  }
 
 
 
@@ -147,6 +216,7 @@ class WprssEntries{
     //TODO see if the entry exists using entry hash or guid?
     //insert the entry, get the ID for the feed
     $wpdb->insert($entries, array(
+      'feed_id'=>$entry['feed_id'],
       'title'=>$entry['title'],
       'guid'=>$entry['guid'],
       'link'=>$entry['link'],//TODO 
@@ -255,27 +325,10 @@ add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds_die');
 
 //remove feed 
 function wprss_unsubscribe_feed(){
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
-  $current_user = wp_get_current_user();
   //nonce_dance();
   
-  //$prefix = $wpdb->prefix.$tbl_prefix; 
-  $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $resp->user = $current_user->ID;
-  //TODO actually unsubscribe
-  $sql = '
-    DELETE 
-    FROM ' . $table_name . '
-    WHERE id = %d';
-  $res = $wpdb->query(
-      $wpdb->prepare($sql,$feed_id)
-    );
-  $resp->result = $res;
-  $resp->error = $wpdb->print_error();
-  $resp->feed_id = $feed_id;
+  $resp = WprssFeeds::remove($feed_id);
   echo json_encode($resp);
   exit;
 }
@@ -524,8 +577,6 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   $feed->init();
 
   //echo json_encode($feed->get_items());
-  $entries_table = $prefix."entries"; 
-  $user_entries_table = $prefix."user_entries";
   foreach($feed->get_items() as $item)
   {
     echo $item->get_description();
