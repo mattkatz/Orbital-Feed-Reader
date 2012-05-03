@@ -11,47 +11,84 @@
  * TODO facade all this logic behind discrete classes
  * Then the install data logic can just use these classes.
  * Feeds Class
- * Method to update a feed
- *   - just update user_feeds
- * Method to list all feeds
- *   - Just return all feeds from user_feeds
  */
 class WprssFeeds {
 
-/* Method to insert a feed
- *   - Check to see if the feed_url exists in feeds.
- *   - Then insert a link or insert into feed_url and then insert a link.
+/* Method to save a feed
+ *   - check to see if there is a feed_id. 
+ *     - Yes means we are updating
+ *       - Just update user_feeds
+ *     - No means we are inserting
+ *       - Check to see if the feed_url exists in feeds.
+ *       - Then insert a link or insert into feed_url and then insert a link.
  */
-  static function insert($feed){
+  static function save($feed){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
-    $sql = 'SELECT id 
-          FROM ' .$feeds.'
-          WHERE feed_url = %s';
-    $sql = $wpdb->prepare($sql, $feed['feed_url']);
-    $feed_id = $wpdb->get_var($sql);
-    if (! $feed_id){//we will insert the feed id and then link
-      //insert the feed and get the feed_id.
-      $sql = 'INSERT INTO ' . $feeds.'
-              ( `feed_url`, `feed_name`,  `site_url`)
-              VALUES
-              ( %s, %s, %s )
-      ';
-      $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
-      //TODO we should have some sane error checking here
-      $ret = $wpdb->query($sql);
-      $feed_id = $wpdb->insert_id;
+    $resp = "";
+    if($feed['feed_id']){
+    /*
+     //TODO NO IDEA WHY THIS DOESN'T WORK!
+    $ret = $wpdb->update(
+      $table_name,//the table
+      array(
+        'feed_url' => $feed_url,
+        'feed_name' => $feed_name,
+        'site_url' => $site_url,
+        'private' => $is_private,
+      ),//columns to update
+      array(//where filters
+        'id' =>$feed_id, //current feed
+        'owner'=>$current_user->ID //logged in user
+      )
+    );*/
+      //we are updating.  just do an update on user_feeds
+      $sql = "UPDATE $user_feeds
+              SET feed_name = %s
+              , site_url = %s
+              , private = %d
+              WHERE feed_id = %d
+              AND owner = %d";
+      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
+      if(false===$wpdb->query($sql)) {
+        $resp->update_error = $wpdb->print_error();
+      }
     }
-    //Now let's link in the feed to user_feeds
-    $sql = 'INSERT INTO ' .$user_feeds.'
-      (feed_id, feed_name, site_url,owner, private,unread_count)
-       VALUES
-       (%d,%s,%s,%d,%d,0)';
-    $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
-    $ret = $wpdb->query($sql);
+    else{
+      //we are inserting a feed.  Does it already exist in feeds?
+      $sql = 'SELECT id 
+            FROM ' .$feeds.'
+            WHERE feed_url = %s';
+      $sql = $wpdb->prepare($sql, $feed['feed_url']);
+      $feed_id = $wpdb->get_var($sql);
+      if (! $feed_id){//we will insert the feed id and then link
+        //insert the feed and get the feed_id.
+        $sql = 'INSERT INTO ' . $feeds.'
+                ( `feed_url`, `feed_name`,  `site_url`)
+                VALUES
+                ( %s, %s, %s )
+        ';
+        $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
+        //TODO we should have some sane error checking here
+        if(false=== $wpdb->query($sql)){
+          $resp->feeds_error = $wpdb->print_error();
+        }
+
+        $feed_id = $wpdb->insert_id;
+      }
+      //Now let's link in the feed to user_feeds
+      $sql = 'INSERT INTO ' .$user_feeds.'
+        (feed_id, feed_name, site_url,owner, private,unread_count)
+         VALUES
+         (%d,%s,%s,%d,%d,0)';
+      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
+      if(false=== $wpdb->query($sql)){
+        $resp->user_feeds_error = $wpdb->print_error();
+      }
+    }
 
     $resp->updated = $ret;
     //TODO this should be eliminated
@@ -62,9 +99,12 @@ class WprssFeeds {
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
     $resp->is_private = $feed['is_private'];
-    $resp->error = $wpdb->print_error();
     return $resp;
   }
+
+/* Method to list all feeds
+ *   - Just return all feeds from user_feeds
+ */
   static function get(){
     global $wpdb;
     global $tbl_prefix;
@@ -82,14 +122,13 @@ class WprssFeeds {
         feeds.last_updated,
         feeds.last_error,
         u_feeds.private,
-        sum(ue.isRead =0) as unread_count
+        sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
         from ".$user_feeds." as u_feeds
         inner join ".$feeds." as feeds
         on u_feeds.feed_id = feeds.id
         left outer join ".$user_entries." as ue
         on ue.feed_id=feeds.id
 
-        where ue.owner_uid = ". $current_user->ID."
         and u_feeds.owner = ". $current_user->ID."
         group by feeds.id,
         feeds.feed_url,
@@ -100,6 +139,7 @@ class WprssFeeds {
         feeds.last_error,
         u_feeds.private
         
+
         ";
         //sum( if ue.isRead then 0 else 1 end) as unread_count,
     // AND feeds.owner = " . $current_user->ID."
@@ -130,9 +170,9 @@ class WprssFeeds {
       DELETE 
       FROM $user_feeds 
       WHERE owner = $current_user->ID 
-      AND feed_id = %d;";
+      AND feed_id = %d";
     $sql = $wpdb->prepare($sql,$feed_id);
-    if($wpdb->query($sql)){
+    if(false === $wpdb->query($sql)){
       $resp->uf_error = $wpdb->print_error();
     }
     //delete all user_entries for current user
@@ -140,9 +180,9 @@ class WprssFeeds {
       DELETE 
       FROM $user_entries 
       WHERE owner_uid = $current_user->ID 
-      AND feed_id = %d;";
+      AND feed_id = %d";
     $sql = $wpdb->prepare($sql,$feed_id);
-    if($wpdb->query($sql)){
+    if(false ===  $wpdb->query($sql)){
       $resp->ue_error = $wpdb->print_error();
     }
 
@@ -158,21 +198,20 @@ class WprssFeeds {
       $sql = "
         DELETE
         FROM $entries
-        WHERE feed_id = %d;";
+        WHERE feed_id = %d";
       $sql = $wpdb->prepare($sql,$feed_id);
-      if($wpdb->query($sql)){
+      if(false === $wpdb->query($sql)){
         $resp->entries_error = $wpdb->print_error();
       }
 
       //TODO we are getting a weird blank error on delete for this
-      //hence, the ignore keyword. 
       //Is that valid for postgres?  How can we just eliminate that error?
       $sql = "
-        DELETE IGNORE
+        DELETE 
         FROM $feeds
         WHERE id = %d;";
       $sql = $wpdb->prepare($sql,$feed_id);
-      if(!$wpdb->query($sql)){
+      if(false === $wpdb->query($sql)){
         $resp->feeds_error = $wpdb->print_error();
       }
     }
@@ -182,6 +221,23 @@ class WprssFeeds {
     return $resp;
   }
 
+
+/* Method to update a feed
+ *   - just update user_feeds
+ */
+  static function update($feed){
+    $sql = 'UPDATE '. $table_name .'
+            SET feed_name = %s
+            , site_url = %s
+            , feed_url = %s
+            , private = %d
+            WHERE id = %d
+            AND owner = %d';
+    $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
+
+
+  }
+  
 
 
 }
@@ -452,52 +508,7 @@ function wprss_save_feed(){
   $is_private = $_POST['is_private']=="true"?1:0;
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  /*
-   //TODO NO IDEA WHY THIS DOESN'T WORK!
-  $ret = $wpdb->update(
-    $table_name,//the table
-    array(
-      'feed_url' => $feed_url,
-      'feed_name' => $feed_name,
-      'site_url' => $site_url,
-      'private' => $is_private,
-    ),//columns to update
-    array(//where filters
-      'id' =>$feed_id, //current feed
-      'owner'=>$current_user->ID //logged in user
-    )
-  );*/
-  $sql = '';
-  $resp = '';
-  //We are inserting
-  if(null == $feed_id){
-    
-    $resp = WprssFeeds::insert(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'private'=>$is_private));
-
-
-  }
-  else{
-    $sql = 'UPDATE '. $table_name .'
-            SET feed_name = %s
-            , site_url = %s
-            , feed_url = %s
-            , private = %d
-            WHERE id = %d
-            AND owner = %d';
-    $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
-  }
-  /*
-  if(null == $feed_id){
-    $sql = 'INSERT INTO ' .  $prefix .'user_feeds 
-      ("owner", "feed_id", "unread_count" )
-      VALUES
-      ( %d, %d, %d)';
-    $sql = $wpdb->prepare($sql, $current_user->ID, $wpdb->insert_id, 0);
-    $wpdb->query($sql);
-
-  }*/
-          
-
+  $resp = WprssFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'private'=>$is_private));
   echo json_encode($resp);
   exit;
 }
