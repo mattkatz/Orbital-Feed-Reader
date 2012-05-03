@@ -116,7 +116,7 @@ function wprss_install_data(){
     'feed_name' => 'Wordprss Changes'));
 
   //Insert a sample entry
-  WprssEntries::insert(array(
+  WprssEntries::save(array(
     'feed_id'=> $wprssfeed->feed_id,
     'title'=>'Welcome to Wordprss!',
     'guid'=>'FAKEGUID',
@@ -126,7 +126,7 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
-  WprssEntries::insert(array(
+  WprssEntries::save(array(
   //$wpdb->insert($table_name, array(
     'feed_id'=> $bb->feed_id,
     'title'=>'Look at this fake post about a banana',

@@ -8,8 +8,6 @@
  * If a feed already exists, changing anything but the name is no good.
  *
  * CLASSES
- * TODO facade all this logic behind discrete classes
- * Then the install data logic can just use these classes.
  * Feeds Class
  */
 class WprssFeeds {
@@ -247,9 +245,6 @@ class WprssFeeds {
  * Update an entry underlying
  *    - update the content etc, then update the read flag on every user
  * Mark an entry read
- * unsubscribe feed from user
- *   - delete all user_entries for a user_feed
- *   - if no user has the feed, delete the entries as well. 
  *
  *
  * */
@@ -259,7 +254,7 @@ class WprssEntries{
  *    - TODO check to see if entry exists, using entry hash?
  *    - insert entry, then link for each user subscribed to the feed.
  */
-  static function insert($entry){
+  static function save($entry){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
