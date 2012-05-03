@@ -89,7 +89,7 @@ function wprss_install_data(){
   global $current_user;
   $user_id = $current_user->ID;
   //install some sample feeds
-  $feed = WprssFeeds::insert(
+  $feed = WprssFeeds::save(
   array(
   //'feed_url'=>'http://www.morelightmorelight.com/feed/',
   'feed_url'=>'http://localhost/morelightmorelight/feed',
@@ -98,7 +98,7 @@ function wprss_install_data(){
   //'owner' => $current_user->ID,
   'feed_name' =>'More Light! More Light!'));
   
-  $bb = WprssFeeds::insert(
+  $bb = WprssFeeds::save(
   array(
     //'feed_url'=>'http://boingboing.net/feed/',
     'feed_url'=>'http://localhost/boingboing/iBag',
@@ -106,7 +106,7 @@ function wprss_install_data(){
     'is_private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
-  $wprssfeed = WprssFeeds::insert(
+  $wprssfeed = WprssFeeds::save(
   array(
     //'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/html/feed.xml',
     'feed_url' => 'http://localhost/Wordprss/ditz/html/feed.xml',
