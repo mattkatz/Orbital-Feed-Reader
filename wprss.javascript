@@ -312,7 +312,7 @@ Wprss.selectedFeedController = Em.Object.create({
   },
   select:function(feed){
     this.set('content',feed);
-    this.onSelect(feed.feed_id);
+    this.onSelect(feed);
   },
   onSelect:function(feed_id){
    //null

@@ -13,8 +13,8 @@ jQuery(document).ready(function($){
     //alert(response);
     Wprss.entriesController.createEntries(response);
   });
-  Wprss.selectedFeedController.onSelect = function(feed_id){
-    Wprss.entriesController.selectFeed(feed_id);
+  Wprss.selectedFeedController.onSelect = function(feed){
+    Wprss.entriesController.selectFeed(feed.feed_id, feed.unread_count== 0?1:0);
   };
 
   setupKeys();

@@ -280,7 +280,7 @@ class WprssEntries{
         $filter_fields //where filters
       );
       $resp->updated = $ret;
-      if($array_key_exists('entry_id',$entry )){
+      if(array_key_exists('entry_id',$entry )){
         $resp->entry_id = $entry['entry_id'];
       }
       if(array_key_exists('user_feed_id',$entry)){

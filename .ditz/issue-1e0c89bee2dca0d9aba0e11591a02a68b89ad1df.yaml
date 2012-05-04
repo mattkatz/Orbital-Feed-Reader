@@ -1,22 +1,22 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Feed management screen shouldn't show only sites with unread
-desc: ""
-type: :bugfix
+title: Show unread when user selects a feed with no unread items
+desc: Presumably they clicked on it to see *SOMETHING*
+type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2012-04-20 10:58:49.048937 Z
+creation_time: 2012-05-04 16:19:59.215135 Z
 references: []
 
-id: a75db145fe342e772cce3a058f40eec470afb30a
+id: 1e0c89bee2dca0d9aba0e11591a02a68b89ad1df
 log_events: 
-- - 2012-04-20 10:58:49.049480 Z
+- - 2012-05-04 16:19:59.215512 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2012-05-04 16:20:44.791915 Z
+- - 2012-05-04 16:20:29.375232 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""
