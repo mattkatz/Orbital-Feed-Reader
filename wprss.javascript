@@ -63,7 +63,7 @@ Wprss.feedsController = Em.ArrayController.create({
     return this.content.filter(function(item,index,self){
       if(item.unread_count > 0){ return true;}
     });
-  },
+  }.property(),
   //for convenience, a function for the fist unread feed;
   firstUnreadFeed: function(){
     return this.findUnreadFeed(Wprss.feedsController.get('content'));
