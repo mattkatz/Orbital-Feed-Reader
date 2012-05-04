@@ -1,6 +1,8 @@
 <?php
 /* Users subscribe to feeds through user_feeds.
  * Feeds get updated to contain entries, and users see these through user_entries
+ * TODO User_entries should link to user_feeds which link to feeds
+ * user_entries link to entries
  * Feeds get updated in a batch and each time a feed is update with entries, users get a bunch of user entries.
  * When users look at user feeds, the only thing feeds have in common is the underlying feed_url and site_url.  What if someone wants to change that?
  * Everything but the underlying url belongs to the user_feeds. Those are the presentation.
@@ -27,7 +29,7 @@ class WprssFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $resp = "";
-    if($feed['feed_id']){
+    if(array_key_exists('feed_id', $feed)){
     /*
      //TODO NO IDEA WHY THIS DOESN'T WORK!
     $ret = $wpdb->update(
@@ -51,7 +53,8 @@ class WprssFeeds {
               WHERE feed_id = %d
               AND owner = %d";
       $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
-      if(false===$wpdb->query($sql)) {
+      $resp->updated = $wpdb->query($sql);
+      if(false=== $resp->updated ) {
         $resp->update_error = $wpdb->print_error();
       }
     }
@@ -71,7 +74,9 @@ class WprssFeeds {
         ';
         $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
         //TODO we should have some sane error checking here
-        if(false=== $wpdb->query($sql)){
+        $ret = $wpdb->query($sql);
+        $resp->inserted = $ret;
+        if(false=== $ret){
           $resp->feeds_error = $wpdb->print_error();
         }
 
@@ -88,7 +93,6 @@ class WprssFeeds {
       }
     }
 
-    $resp->updated = $ret;
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
@@ -125,7 +129,7 @@ class WprssFeeds {
         inner join ".$feeds." as feeds
         on u_feeds.feed_id = feeds.id
         left outer join ".$user_entries." as ue
-        on ue.feed_id=feeds.id
+        on ue.user_feed_id=feeds.id
 
         and u_feeds.owner = ". $current_user->ID."
         group by feeds.id,
@@ -174,11 +178,12 @@ class WprssFeeds {
       $resp->uf_error = $wpdb->print_error();
     }
     //delete all user_entries for current user
+    //TODO we should probably only link user_entries to user_feeds
     $sql = "
       DELETE 
       FROM $user_entries 
       WHERE owner_uid = $current_user->ID 
-      AND feed_id = %d";
+      AND user_feed_id = %d";
     $sql = $wpdb->prepare($sql,$feed_id);
     if(false ===  $wpdb->query($sql)){
       $resp->ue_error = $wpdb->print_error();
@@ -220,21 +225,6 @@ class WprssFeeds {
   }
 
 
-/* Method to update a feed
- *   - just update user_feeds
- */
-  static function update($feed){
-    $sql = 'UPDATE '. $table_name .'
-            SET feed_name = %s
-            , site_url = %s
-            , feed_url = %s
-            , private = %d
-            WHERE id = %d
-            AND owner = %d';
-    $sql = $wpdb->prepare($sql,$feed_name,$site_url,$feed_url,$is_private,$feed_id, $current_user->ID);
-
-
-  }
   
 
 
@@ -264,39 +254,76 @@ class WprssEntries{
 
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
-    //TODO see if the entry exists using entry hash or guid?
-    //insert the entry, get the ID for the feed
-    $wpdb->insert($entries, array(
-      'feed_id'=>$entry['feed_id'],
-      'title'=>$entry['title'],
-      'guid'=>$entry['guid'],
-      'link'=>$entry['link'],//TODO 
-      'updated'=>date ("Y-m-d H:m:s"),
-      'content'=>$entry['content'],//TODO
-      'entered' =>date ("Y-m-d H:m:s"), 
-      'author' => $entry['author']
-    ));
-    $entry_id = $wpdb->insert_id;
-    $resp->insert_id = $entry_id;
-    //insert the link to user_entries
-    $sql = "INSERT INTO ".$user_entries."
-            (ref_id, feed_id, orig_feed_id, owner_uid, marked, isRead)
-            SELECT
-            %d,%d,%d,owner,0,0
-            FROM ".$user_feeds." 
-            WHERE feed_id = %d" ;
-    $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
-    $resp->inserted = $wpdb->query($sql);
-    
-    //update the last updated time for the feed
-    $resp->last_update = $wpdb->update(
-      $feeds,//the table
-      array('last_updated' => date ("Y-m-d H:m:s")),//columns to update
-      array(//where filters
-        'id' =>$entry['feed_id'] //current feed
-      )
-    );
+
+    //echo var_dump($entry);
+
+    if(array_key_exists('entry_id',$entry )|| array_key_exists('user_feed_id',$entry)){
+      //this is an update
+      //try to update if the entry id exists, otherwise, insert
+      //we should iterate over the keys and put them in the update
+      $update_whitelist = array('marked','isRead');
+      $filter_whitelist = array('feed_id','entry_id','id');
+      $update_fields = array();
+      $filter_fields = array(
+          'owner_uid'=>$current_user->ID //logged in user
+      );
+      foreach ($entry as $key => $value){
+        if(in_array($key,$update_whitelist)){
+          $update_fields[$key] = $value;
+        }
+        if(in_array($key,$filter_whitelist)){
+          $filter_fields[$key] = $value;
+        }
+      }
+      $ret = $wpdb->update(
+        $user_entries,//the table
+        $update_fields,//columns to update
+        $filter_fields //where filters
+      );
+      $resp->updated = $ret;
+      $resp->entry_id = $entry['entry_id'];
+      $resp->feed_id = $entry['feed_id'];
+      
+    }
+    else{
+      //TODO see if the entry exists using entry hash or guid?
+      //insert the entry, get the ID for the feed
+      $wpdb->insert($entries, array(
+        'feed_id'=>$entry['feed_id'],
+        'title'=>$entry['title'],
+        'guid'=>$entry['guid'],
+        'link'=>$entry['link'],//TODO 
+        'updated'=>date ("Y-m-d H:m:s"),
+        'content'=>$entry['content'],//TODO
+        'entered' =>date ("Y-m-d H:m:s"), 
+        'author' => $entry['author']
+      ));
+      $entry_id = $wpdb->insert_id;
+      $resp->insert_id = $entry_id;
+      //insert the link to user_entries
+      $sql = "INSERT INTO ".$user_entries."
+              (entry_id, user_feed_id, orig_feed_id, owner_uid, marked, isRead)
+              SELECT
+              %d,%d,%d,owner,0,0
+              FROM ".$user_feeds." 
+              WHERE feed_id = %d" ;
+      $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
+      $resp->inserted = $wpdb->query($sql);
+      
+      //update the last updated time for the feed
+      $resp->last_update = $wpdb->update(
+        $feeds,//the table
+        array('last_updated' => date ("Y-m-d H:m:s")),//columns to update
+        array(//where filters
+          'id' =>$entry['feed_id'] //current feed
+        )
+      );
+
+    }
    return $resp; 
+
+  }
+  static function update_many($fields,$filters){
 
   }
   /* Get entries for a feed
@@ -312,7 +339,7 @@ class WprssEntries{
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
     //TODO allow like queries
-    $filter_whitelist = array('entry_id','title','guid', 'link','content','author','isRead','marked','id','ref_id','feed_id');
+    $filter_whitelist = array('entry_id','title','guid', 'link','content','author','isRead','marked','id','entry_id','feed_id');
     $filter = "";
     foreach ($filters as $filter_name => $value){
       if(in_array($filter_name,$filter_whitelist)){
@@ -331,11 +358,10 @@ class WprssEntries{
         ue.isRead as isRead,
         ue.marked as marked,
         ue.id as id,
-        ue.ref_id as ref_id,
-        ue.feed_id as feed_id
+        ue.user_feed_id as feed_id
         from  $entries  as entries
         inner join  $user_entries  as ue
-        on ue.ref_id=entries.id
+        on ue.entry_id=entries.id
         where ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
         limit 30
@@ -651,6 +677,12 @@ function wprss_mark_item_read($entry_id,$read_status=true){
   if($read_status == null){
     $read_status = $_GET['read_status'];
   }
+  $resp = WprssEntries::save(array(
+    'isRead' =>($read_status=="true"?1:0),//columns to update
+    'entry_id' =>$entry_id, //current entry
+  ));
+  echo json_encode($resp);
+/*
   $prefix = $wpdb->prefix.$tbl_prefix; 
   $ret = $wpdb->update(
     $prefix.'user_entries',//the table
@@ -660,11 +692,14 @@ function wprss_mark_item_read($entry_id,$read_status=true){
       'owner_uid'=>$current_user->ID //logged in user
     )//where filters
   );
+*/
+/*
   $returnval;
-  $returnval->updated = $ret;
+ // $returnval->updated = $ret;
   $returnval->id = $entry_id;
   $returnval->read_status = $read_status;
   echo json_encode($returnval);
+*/
 
   exit;
 }
