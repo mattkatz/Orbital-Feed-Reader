@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Ambient display
+desc: |-
+  Snatch the ideas from the guardian ambient radio.
+  Have a screen which displays recent feeds with a background
+  Every few minutes, speak a feed title that you just switched to
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-04 12:54:13.804985 Z
+references: []
+
+id: 4c5d841f9a25da2961bf092bdfc8591e1057e9b4
+log_events: 
+- - 2012-05-04 12:54:13.805332 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
