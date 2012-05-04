@@ -1,7 +1,7 @@
 <?php
 /* Users subscribe to feeds through user_feeds.
  * Feeds get updated to contain entries, and users see these through user_entries
- * TODO User_entries should link to user_feeds which link to feeds
+ * TODO User_entries should link to user_feeds which links to feeds
  * user_entries link to entries
  * Feeds get updated in a batch and each time a feed is update with entries, users get a bunch of user entries.
  * When users look at user feeds, the only thing feeds have in common is the underlying feed_url and site_url.  What if someone wants to change that?
@@ -255,7 +255,6 @@ class WprssEntries{
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
 
-    //echo var_dump($entry);
 
     if(array_key_exists('entry_id',$entry )|| array_key_exists('user_feed_id',$entry)){
       //this is an update
@@ -281,8 +280,12 @@ class WprssEntries{
         $filter_fields //where filters
       );
       $resp->updated = $ret;
-      $resp->entry_id = $entry['entry_id'];
-      $resp->feed_id = $entry['feed_id'];
+      if($array_key_exists('entry_id',$entry )){
+        $resp->entry_id = $entry['entry_id'];
+      }
+      if(array_key_exists('user_feed_id',$entry)){
+        $resp->feed_id = $entry['feed_id'];
+      }
       
     }
     else{
