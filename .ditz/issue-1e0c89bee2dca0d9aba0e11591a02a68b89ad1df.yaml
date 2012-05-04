@@ -1,25 +1,22 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Feed Management
-desc: |-
-  You should be able to add a feed
-  you should be able to reorder the feed list
-  You should be able to edit feed attributes
+title: Show unread when user selects a feed with no unread items
+desc: Presumably they clicked on it to see *SOMETHING*
 type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2012-03-08 02:54:07.749110 Z
+creation_time: 2012-05-04 16:19:59.215135 Z
 references: []
 
-id: 24af02584d9b1a258f16822de734209cb209e3e4
+id: 1e0c89bee2dca0d9aba0e11591a02a68b89ad1df
 log_events: 
-- - 2012-03-08 02:54:07.749492 Z
+- - 2012-05-04 16:19:59.215512 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2012-04-20 11:56:27.256245 Z
+- - 2012-05-04 16:20:29.375232 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""

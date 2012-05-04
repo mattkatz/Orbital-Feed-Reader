@@ -1,25 +1,22 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Feed Management
-desc: |-
-  You should be able to add a feed
-  you should be able to reorder the feed list
-  You should be able to edit feed attributes
-type: :feature
+title: feed management feed list stopped working
+desc: ""
+type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2012-03-08 02:54:07.749110 Z
+creation_time: 2012-04-27 17:41:08.507321 Z
 references: []
 
-id: 24af02584d9b1a258f16822de734209cb209e3e4
+id: f6c5b3d1db1ff51be5b989a7bd0edc73e7f2a4e5
 log_events: 
-- - 2012-03-08 02:54:07.749492 Z
+- - 2012-04-27 17:41:08.507795 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2012-04-20 11:56:27.256245 Z
+- - 2012-04-27 17:41:47.138376 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
-  - ""
+  - changed to straight json object rather than string

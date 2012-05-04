@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Multi feed edit
+desc: a checkable list, you get to set properties on many
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-12 12:28:47.717932 Z
+references: []
+
+id: 73dbfdc261838f3f2146c43c54d3b7fa3292336c
+log_events: 
+- - 2012-04-12 12:28:47.718430 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

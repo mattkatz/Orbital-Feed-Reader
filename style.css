@@ -4,13 +4,21 @@
   padding: 10px;
   background-color: #ECECEC;
   border-color: #CCCCCC;
-  position:fixed;
-  right:0;
-  top:30px;
+  position: fixed;
+  right: 0;
+  top: 30px;
+  height:100%
   
 }
+.no-feed-displayed{
+  font-weight: lighter;
+  font-size: large;
+  padding:20px;
+
+}
 .entries {
-  background-color: #ECECEC;
+  /*background-color: #ECECEC;*/
+  
 }
 
 .entries .current{
@@ -21,10 +29,16 @@ background-color: #ffffff;
 box-shadow: 2px 2px 4px #666;
 }
 
+.entry{
+  border-top: 2px ridge;
+  display:inline-block;
+  padding-bottom: 10px;
+  width:100%;
+}
+
 .ember-button{
   border-bottom: 1px dotted;
 }
-
 
 .feeds div
 {
@@ -32,14 +46,14 @@ box-shadow: 2px 2px 4px #666;
   border-top: 1px solid #F9F9F9;
 }
 .feedcounter{
-  font-size:xx-small;
-  vertical-align:top;
+  font-size: xx-small;
+  vertical-align: top;
 }
 .feedcounter:before{
-  content:"(";
+  content: "(";
 }
 .feedcounter:after{
-  content:")";
+  content: ")";
 }
 
 .is-selected{
@@ -50,25 +64,69 @@ box-shadow: 2px 2px 4px #666;
   color: #FFFFFF;
   text-shadow: 0 -1px 0 #333333;
 }
+.modal-window{
+  padding: 20px;
+  color: #dddddd;
+  background-color: #343434;
+  background-color: rgba(20,20,20,.8);
+  position: fixed;
+  top: 50px;
+  left: 200px;
+  border-radius: 20px;
+}
+.invisible{
+  display: none;
+}
 #wprss-content{
-  width:80%;
-
+  width: 80%;
 }
 #commandbar {
   background: #dddddd;
-  display:inline-block; 
-  position:fixed;
+  display: inline-block; 
+  position: fixed;
   /*this is the height of the admin bar.*/
   
-  top:28px;
+  top: 28px;
 }
 #commandbar ul{
-  display:inline; 
+  display: inline; 
 
 }
 #commandbar li{
-  float:left;
-  padding-left:5px;
-  padding-right:5px;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
 
+.horizontal-form label input{
+  font-weight:normal;
+}
+.horizontal-form label{
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+.horizontal-form label input{
+  font-weight:normal;
+}
+
+.horizontal-form input {
+   display: block;
+   padding: 5px;
+}
+.horizontal-form input[type='checkbox'] {
+   display: inline-block;
+}
+.horizontal-form input[type='text'] {
+  width: 80%;
+}
+.heading {
+  font-size: large;
+}
+/*hey it doesn't really work for this */
+#footer {
+  display:none;
+}
+.update-nag {
+  display:none;
 }

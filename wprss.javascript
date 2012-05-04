@@ -1,26 +1,3 @@
-//Set everything up after page load
-jQuery(document).ready(function($){
-  var data = {
-    action: 'wprss_get_feeds',
-    nonce_a_donce:get_url.nonce_a_donce 
-    
-  };
-  $.get(get_url.ajaxurl, data, function(response){
-    //TODO: put in error checks for bad responses, errors,etc.
-    Wprss.feedsController.createFeeds(response);
-  });
-
-  //TODO this should just be fed into the page on initial load
-  data.action='wprss_get_entries';
-  $.get(get_url.ajaxurl, data, function(response){
-    //alert(response);
-    Wprss.entriesController.createEntries(response);
-  });
-
-  setupKeys();
-  
-});
-
 
 Wprss = Ember.Application.create();
 Wprss.Feed = Em.Object.extend({
@@ -29,19 +6,51 @@ Wprss.Feed = Em.Object.extend({
   feed_id:null,
   site_url: null,
   unread_count:null,
+  is_private: null,
 });
 
-Wprss.feedsController = Em.ArrayProxy.create({
+Wprss.feedsController = Em.ArrayController.create({
   content: [],
-  createFeed: function(feed,domain,name,id,unread){
-    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread});
+  createFeed: function(feed,domain,name,id,unread,priv){
+    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
-  createFeeds: function(jsonFeeds){
-    var feeds = JSON.parse(jsonFeeds);
+
+  refreshFeeds: function(unreadOnly){
+    var data = {
+      action: 'wprss_get_feeds',
+      nonce_a_donce:get_url.nonce_a_donce 
+      
+    };
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //TODO: put in error checks for bad responses, errors,etc.
+      Wprss.feedsController.createFeeds(response);
+    },'json');
+  },
+  
+  createFeeds: function(feeds){
+    //var feeds = JSON.parse(jsonFeeds);
     feeds.forEach(function(value){
-      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count);
+      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
+  },
+  showFeed: function(){
+    //show the add feed window
+    var dlg = jQuery('#subscribe-window');
+    dlg.toggleClass('invisible');
+
+  },
+  subscribeFeedCommit: function(){
+    //get the feed url 
+    //validate it
+    //add the feed
+    //close the dialog
+    
+
+  },
+  addFeed:function(){
+    //post a feed 
+
   },
   changeUnreadCount:function(id,delta){
     var feed = this.get('content').findProperty('feed_id',id);
@@ -54,7 +63,7 @@ Wprss.feedsController = Em.ArrayProxy.create({
     return this.content.filter(function(item,index,self){
       if(item.unread_count > 0){ return true;}
     });
-  },
+  }.property(),
   //for convenience, a function for the fist unread feed;
   firstUnreadFeed: function(){
     return this.findUnreadFeed(Wprss.feedsController.get('content'));
@@ -125,6 +134,55 @@ Wprss.feedsController = Em.ArrayProxy.create({
     });
 
   },
+  removeFeed: function(feed_id){
+    var feed = this.findProperty('feed_id',feed_id);
+    this.removeObject(feed);
+  },
+  unsubscribe: function(feed_id){
+    var data = {
+      action: 'wprss_unsubscribe_feed',
+      feed_id: feed_id,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    jQuery.post(get_url.ajaxurl,data, function(data){
+      if(data.result)//TODO: test to see if the feed actually got deleted
+      {
+        //remove the feed from the list
+        Wprss.feedsController.removeFeed(data.feed_id);
+        Wprss.selectedFeedController.set('content',null);
+      }
+    },'json');
+  },
+  saveFeed: function(feed){
+    var data = {
+      action: 'wprss_save_feed',
+      feed_id: feed.feed_id,
+      feed_url : feed.feed_url,
+      feed_name: feed.feed_name,
+      site_url: feed.site_url,
+      is_private: feed.is_private,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+              console.log('at least we got here');
+    jQuery.post(get_url.ajaxurl,data, function(response){
+      if(response.updated)//TODO: test to see if the feed actually got saved
+      {
+        //indicate somehow?
+        //TODO this should be agnostic per screen.
+        //the main window should update the list of feeds.
+        //and close the subscribe window
+        //the feed management window should also update the feed list
+        jQuery('#subscribe-window').toggleClass('invisible');
+        
+      }
+      else{
+        //TODO Alert the user?
+        console.log(response.updated);
+      }
+    },'json');
+              console.log('ant then we got here');
+
+  },
 });
 Wprss.Entry = Em.Object.extend({
   feed_id: null,
@@ -140,7 +198,7 @@ Wprss.Entry = Em.Object.extend({
 
   }.property(),
 });
-Wprss.entriesController = Em.ArrayProxy.create({
+Wprss.entriesController = Em.ArrayController.create({
   content: [],
   createEntry: function(feed,ref_id,head, url,by,read,mark,des){
     var entry = Wprss.Entry.create({
@@ -200,7 +258,7 @@ Wprss.entriesController = Em.ArrayProxy.create({
     
     var data = {
       action: 'wprss_mark_item_read',
-      unread_status: isRead,
+      read_status: isRead,
       entry_id: id,
       nonce_a_donce:get_url.nonce_a_donce 
     };
@@ -246,10 +304,22 @@ Wprss.selectedFeedController = Em.Object.create({
     //should change this to show next available feed with unread items
     Wprss.entriesController.selectFeed(id);
   },
+  unsubscribe: function(){
+    Wprss.feedsController.unsubscribe(this.get('content').feed_id);
+  },
+  saveFeed: function(){
+    Wprss.feedsController.saveFeed(this.get('content'));
+  },
   select:function(feed){
     this.set('content',feed);
-    Wprss.entriesController.selectFeed(feed.feed_id);
+    this.onSelect(feed);
   },
+  onSelect:function(feed_id){
+   //null
+   return;
+  }
+
+
   
 });
 
@@ -257,9 +327,7 @@ Wprss.FeedsView = Em.View.extend({
   //templateName: feedsView,
   click: function(evt){
     var content = this.get('content');
-    //alert(content.feed_id);
-    Wprss.selectedFeedController.set('content', content);
-    Wprss.entriesController.selectFeed(content.feed_id);
+    Wprss.selectedFeedController.select(content);
     
   },
   isSelected: function(){
@@ -272,6 +340,10 @@ Wprss.FeedsView = Em.View.extend({
 });
 Wprss.selectedEntryController = Em.Object.create({
   content: null
+});
+
+Wprss.FeedView = Em.View.extend({
+  contentBinding: 'Wprss.selectedFeedController.content',
 });
 
 Wprss.EntriesView = Em.View.extend({
@@ -294,6 +366,15 @@ Wprss.EntriesView = Em.View.extend({
   },
   classNameBindings:['isCurrent']
 });
+
+Wprss.commandController = Em.ArrayController.create({
+  content: null,
+  addFeed: function(){
+    console.log("we should be showing the feed view");
+  },
+
+});
+
 
 Wprss.ReadView = Em.View.extend({
   readStatus: function(){
@@ -321,10 +402,92 @@ Wprss.ReadView = Em.View.extend({
   }
 
 });
+Wprss.feedFinder= Em.Object.create({
+  url: null,
+  possibleFeeds: null,
+  feedCandidate: null,
+  saveFeed: function(){
+    Wprss.feedsController.saveFeed(this.get('feedCandidate'));
+  },
+  findFeed: function(){
+    console.log('in findFeed');
+    // First get the feed url or site url from the link
+    console.log(this.url);
+    //TODO: then ask the backend to validate the feed details
+    var data = {
+      action: 'wprss_find_feed',
+      url: this.url,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //alert(response);
+      //TODO if this was a feed, let's make it save!
+      if("feed" == response.url_type){
+        console.log('a feed!');
+        console.log(response.orig_url);
+        console.log(response.site_url);
+        console.log(response.feed_name);
+        var feed  =  Wprss.Feed.create(
+          { feed_url: response.orig_url, 
+            site_url: response.site_url, 
+            feed_id: null, 
+            feed_name: response.feed_name,
+            unread_count:0,
+            is_private:false
+          });
+        console.log("feed " + feed);
+        Wprss.feedFinder.set('feedCandidate',feed);
+        console.log( "candidate " + Wprss.feedFinder.feedCandidate);
+
+
+      }
+      else{
+        //TODO if this was a page, let the user choose feeds and then save them.
+        Wprss.feedFinder.set('feedCandidate', null);
+        Wprss.feedFinder.set('possibleFeeds', response.feeds);
+      }
+    },"json");
+    
+    //TODO: Allow the user to edit the feed details
+  },
+
+});
+Wprss.AddFeedView = Em.TextField.extend({
+  focusOut: function(){
+    console.log('out');
+  },
+  insertNewLine: function(){
+    console.log('rah');
+  },
+
+});
+Wprss.PossibleFeedView  = Em.View.extend({
+  click: function(evt){
+    var content = this.get('content');
+    //TODO now we pull the feed here and smack it into the feed url etc.
+    console.log(content);
+    //TODO it would be best if we were pulling the actual feed info bc we could create a feed...  
+    //instead we will pull the feed url and then call the click handler on it.
+    Wprss.feedFinder.set('url',content.url);
+    Wprss.feedFinder.findFeed();
+
+
+    //clean up the form by erasing the old feedlist
+    Wprss.feedFinder.set('possibleFeeds',null);
+    
+  },
+});
 Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
   return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);
 });
+
+
+
+
+
+
+
 
 function scrollToEntry(currentItem){
 
@@ -342,32 +505,6 @@ function scrollToEntry(currentItem){
     jQuery('html').animate({
       scrollTop: row.offset().top - adminbar.height() - commandbar.height()}, 200);
 
-}
-
-function setupKeys(){
-  //handle the down arrow keys and j to scroll the next item to top of scren
-  key('j,down',function(event,handler){
-    Wprss.entriesController.nextEntry();
-  });
-  //up and k should scroll the previous item to the top of the screen
-  key('k,up',function(event,handler){
-    Wprss.entriesController.previousEntry();
-  });
-  //h should go to previous feed
-  key('h,left',function(event,handler){
-    Wprss.feedsController.previousUnreadFeed();
-  });
-  //l should go to next feed
-  key('l,right',function(event,handler){
-    Wprss.feedsController.nextUnreadFeed();
-  });
-  //u should toggle the current item's read status
-  key('u',function(event,handler){
-    var currentItem = Wprss.selectedEntryController.content;
-    if(null == currentItem)
-      return;
-    Wprss.entriesController.toggleEntryRead(currentItem.id);
-  });
 }
 
 

@@ -1,0 +1,25 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make uninstall work better
+desc: tables don't disappear when we uninstall.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-04-12 12:23:59.548208 Z
+references: []
+
+id: d591bc2f67805c254e32e32e88caa1ba01e5bfdd
+log_events: 
+- - 2012-04-12 12:23:59.548755 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-04-28 05:22:21.645305 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - |-
+    I'm deleting all the tables. 
+    Perhaps I should only do that on plugin delete 
+    I wonder if there is a plugin for that.

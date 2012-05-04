@@ -30,9 +30,14 @@ require_once 'backend.php';
 function wprss_plugin_menu(){
   //We add the hook for our menu item on the main menu
   $hook = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
+  //TODO add hook for feed management page
+  $subhook = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
+  
   //Register the js that we need
   wp_register_script( 'emberjs_script', plugins_url('Wordprss/ember-0.9.3.min.js', dir(__FILE__)) ,array('jquery'));
   wp_register_script( 'wordprss_script', plugins_url('Wordprss/wprss.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script'));
+  wp_register_script( 'mainwindow_script', plugins_url('Wordprss/mainwindow.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script','wordprss_script'));
+  wp_register_script( 'feedmgmt_script', plugins_url('Wordprss/feed_management.javascript', dir(__FILE__)),array('jquery', 'json2', 'emberjs_script'));
   //keyboard shortcut handling
   wp_register_script( 'keymaster_script', plugins_url('Wordprss/js/keymaster.min.js', dir(__FILE__)),array('jquery', 'emberjs_script'));
   /* Register our stylesheet. */
@@ -53,9 +58,26 @@ function generate_main_page()
     'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
   ) );
   wp_enqueue_script('keymaster_script');
+  wp_enqueue_script('mainwindow_script');
   //add our stylesheet
   wp_enqueue_style('wprsscss');
   require_once('mainwindow.php');
+}
+function feed_management(){
+
+  //add our stylesheet
+  wp_enqueue_style('wprsscss');
+  wp_enqueue_script( 'json2' );
+  wp_enqueue_script('emberjs_script');
+  wp_enqueue_script('wordprss_script');
+  wp_localize_script( 'wordprss_script', 'get_url', array( 
+    'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
+    // generate a nonce with a unique ID "myajax-post-comment-nonce"
+    // so that you can check it later when an AJAX request is sent
+    'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
+  ) );
+  wp_enqueue_script('feedmgmt_script');
+  require_once('feed_management.php');
 }
 //Something is wrong.  this thing never fires.
 function wprss_uninstall_db()
@@ -64,10 +86,14 @@ function wprss_uninstall_db()
   delete_option('wordprss_db_version');
   //TODO clean up all the tables
   global $wpdb;
+  global $tbl_prefix;
+  $tables =array('feeds','user_feeds','entries','user_entries');
+  foreach($tables as $table){
+    $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix.$table.";";
+    $wpdb->query($sql);
+
+  }
   
-  //$wpdb->insert($wpdb->prefix.$tbl_prefix, array('owner'=> 1,'feed_url'=>'http://boingboing.net/feed/','site_url'=> 'http://boingboing.net', 'feed_name' => 'NARF NARF'));
-  $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
-  $wpdb->query($sql);
 
 }
 

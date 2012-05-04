@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: confirm or undo on unsubscribe
+desc: |-
+  I don't like confirmation boxes.
+  maybe instead just set a timer for the undelete, put a note with a link to cancel it.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-04-12 12:30:28.833210 Z
+references: []
+
+id: 30c19402f901067945e4004cc40aba34a301fc45
+log_events: 
+- - 2012-04-12 12:30:28.833722 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

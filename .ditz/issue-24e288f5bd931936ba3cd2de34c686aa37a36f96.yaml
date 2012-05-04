@@ -1,25 +1,24 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Feed Management
+title: Properly show rss html content
 desc: |-
-  You should be able to add a feed
-  you should be able to reorder the feed list
-  You should be able to edit feed attributes
-type: :feature
+  we need to sanitize content
+  then actually display the html
+type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2012-03-08 02:54:07.749110 Z
+creation_time: 2012-03-21 21:32:19.683071 Z
 references: []
 
-id: 24af02584d9b1a258f16822de734209cb209e3e4
+id: 24e288f5bd931936ba3cd2de34c686aa37a36f96
 log_events: 
-- - 2012-03-08 02:54:07.749492 Z
+- - 2012-03-21 21:32:19.683415 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2012-04-20 11:56:27.256245 Z
+- - 2012-04-12 12:25:07.003752 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
-  - ""
+  - done a while ago!

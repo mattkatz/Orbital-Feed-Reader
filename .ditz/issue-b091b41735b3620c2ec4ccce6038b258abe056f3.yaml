@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Show and Hide a subscribe view
+desc: We should let people fill in a URL to a feed, then add that to DB, set up an async update of that feed, then auto refresh it once done.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-03-21 22:09:36.511384 Z
+references: []
+
+id: b091b41735b3620c2ec4ccce6038b258abe056f3
+log_events: 
+- - 2012-03-21 22:09:36.558232 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-04-16 12:08:36.449156 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - |-
+    Show hide is easy.
+    should also make sure the form resets when hidden.
