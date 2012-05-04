@@ -36,6 +36,7 @@ function wprss_plugin_menu(){
   
    /* Using registered $page handle to hook script load */
   add_action('admin_print_styles-' . $main, 'wprss_enqueue_scripts');
+  add_action('admin_print_styles-' . $main, 'wprss_main_scripts');
   add_action('admin_print_styles-' . $feed_mgmt, 'wprss_enqueue_scripts');
 
 }
@@ -54,6 +55,8 @@ function wprss_admin_init(){
   wp_register_style( 'wprsscss', plugins_url('style.css', __FILE__) );
 
 }
+
+// these are common to all of our pages
 function wprss_enqueue_scripts()
 {
   wp_enqueue_script( 'json2' );
@@ -69,20 +72,26 @@ function wprss_enqueue_scripts()
   wp_enqueue_style('wprsscss');
 }
 
-function generate_main_page()
+//these are just for the main page
+function wprss_main_scripts()
 {
   //here we set up our keyboard shortcuts
   wp_enqueue_script('keymaster_script');
   //here we set up hook like the shortcuts
   //also things like what to do when a feed is selected
   wp_enqueue_script('mainwindow_script');
+
+}
+
+function generate_main_page()
+{
   require_once('mainwindow.php');
 }
 
 function feed_management(){
 
   //I HAVE VIOLATED YAGNI bc this has nothing in it.
-  wp_enqueue_script('feedmgmt_script');
+  //wp_enqueue_script('feedmgmt_script');
   require_once('feed_management.php');
 }
 //Something is wrong.  this thing never fires.
