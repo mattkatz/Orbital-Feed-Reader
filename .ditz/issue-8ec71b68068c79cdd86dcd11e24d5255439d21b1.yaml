@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add loading indicators to elements when they are loading.
+desc: Right now it is unclear when elements are loading or have stopped.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-04 16:57:26.503217 Z
+references: []
+
+id: 8ec71b68068c79cdd86dcd11e24d5255439d21b1
+log_events: 
+- - 2012-05-04 16:57:26.503604 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
