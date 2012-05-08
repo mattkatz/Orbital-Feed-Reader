@@ -1,4 +1,15 @@
 <?php
+if(!function_exists('_log')){
+  function _log( $message ) {
+    if( WP_DEBUG === true ){
+      if( is_array( $message ) || is_object( $message ) ){
+        error_log( print_r( $message, true ) );
+      } else {
+        error_log( $message );
+      }
+    }
+  }
+}
 /* Users subscribe to feeds through user_feeds.
  * Feeds get updated to contain entries, and users see these through user_entries
  * TODO User_entries should link to user_feeds which links to feeds
@@ -601,7 +612,9 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     from ". $prefix . "feeds
     where id=".$feed_id."
     ;";
+  //_log($sql);
   $feedrow = $wpdb->get_row($sql);
+  //_log($feedrow);
   echo $feedrow->feed_url;
 
   $feed = new SimplePie();
@@ -618,6 +631,8 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
+  //_log('past feed init');
+  //_log($feed->get_items());
 
   //echo json_encode($feed->get_items());
   foreach($feed->get_items() as $item)
@@ -628,7 +643,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     if(null != $author){
       $name =$author->get_name(); 
     }
-    WprssEntries::insert(array(
+    WprssEntries::save(array(
       'feed_id'=>$feed_id,
       'title'=>$item->get_title(),
       'guid'=>$item->get_id(),
