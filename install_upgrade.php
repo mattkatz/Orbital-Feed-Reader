@@ -68,7 +68,7 @@ function wprss_install_db()
     id integer NOT NULL AUTO_INCREMENT,
     feed_id integer,
     title text NOT NULL,
-    guid varchar(255) NOT NULL UNIQUE,
+    guid varchar(255) NOT NULL ,
     link text NOT NULL,
     updated datetime NOT NULL,
     content longtext NOT NULL,
