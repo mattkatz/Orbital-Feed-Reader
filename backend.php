@@ -614,11 +614,12 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     ;";
   //_log($sql);
   $feedrow = $wpdb->get_row($sql);
-  //_log($feedrow);
+  _log($feedrow);
   echo $feedrow->feed_url;
 
   $feed = new SimplePie();
   $feed->set_feed_url($feedrow->feed_url);
+  $feed->force_feed(true);
   // Remove these tags from the list
   $strip_htmltags = $feed->strip_htmltags;
   array_splice($strip_htmltags, array_search('object', $strip_htmltags), 1);
@@ -629,7 +630,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
-  //_log('past feed init');
+  _log('past feed init');
   //_log($feed->get_items());
 
   //echo json_encode($feed->get_items());
