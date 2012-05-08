@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Save button on subscribe feeds not working
+desc: ""
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-08 02:09:58.000447 Z
+references: []
+
+id: 7f2cd38231bc19efc29d149c556b42b61b34ce5a
+log_events: 
+- - 2012-05-08 02:09:58.000926 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
