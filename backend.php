@@ -620,14 +620,12 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   $feed = new SimplePie();
   $feed->set_feed_url($feedrow->feed_url);
   // Remove these tags from the list
-/*
   $strip_htmltags = $feed->strip_htmltags;
   array_splice($strip_htmltags, array_search('object', $strip_htmltags), 1);
   array_splice($strip_htmltags, array_search('param', $strip_htmltags), 1);
   array_splice($strip_htmltags, array_search('embed', $strip_htmltags), 1);
    
   $feed->strip_htmltags($strip_htmltags);
-*/
 
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
