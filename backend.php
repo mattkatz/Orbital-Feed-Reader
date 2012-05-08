@@ -40,7 +40,7 @@ class WprssFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $resp = "";
-    if(array_key_exists('feed_id', $feed)){
+    if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
     /*
      //TODO NO IDEA WHY THIS DOESN'T WORK!
     $ret = $wpdb->update(
@@ -267,7 +267,7 @@ class WprssEntries{
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
 
 
-    if(array_key_exists('entry_id',$entry )|| array_key_exists('user_feed_id',$entry)){
+    if((array_key_exists('entry_id',$entry )&& $entry['entry_id'] )|| ( array_key_exists('user_feed_id',$entry) && $entry['entry_id'])){
       //this is an update
       //try to update if the entry id exists, otherwise, insert
       //we should iterate over the keys and put them in the update
