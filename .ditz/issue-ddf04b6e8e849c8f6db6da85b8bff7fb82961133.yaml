@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: DB upgrade plan
+desc: test how to do a new version
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-09 15:13:29.856468 Z
+references: []
+
+id: ddf04b6e8e849c8f6db6da85b8bff7fb82961133
+log_events: 
+- - 2012-05-09 15:13:29.856859 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Guid should be unique on entries.
+desc: |-
+  add the unique constraint back in on the table
+  when adding an entry, look up to see if the guid exists first
+  then update if it does
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-09 15:43:13.703926 Z
+references: []
+
+id: 01bda893c2cba3e16a7b6626ca60fc267585a0a9
+log_events: 
+- - 2012-05-09 15:43:13.704431 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
