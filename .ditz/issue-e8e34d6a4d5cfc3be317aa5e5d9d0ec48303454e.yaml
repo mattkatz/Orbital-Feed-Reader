@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Support PostGres
+desc: |-
+  seems to be mainly date functions that don't transfer.
+  what does ttrss do?  what does wordpress do?
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-09 17:15:45.343506 Z
+references: []
+
+id: e8e34d6a4d5cfc3be317aa5e5d9d0ec48303454e
+log_events: 
+- - 2012-05-09 17:15:45.384304 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
