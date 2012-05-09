@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Masonry Display
+desc: Maybe use something like jquery masonry to do a flipboard style display...
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-09 15:11:37.472501 Z
+references: []
+
+id: dd67abb15b9ce023537c4a53f8579d47f29072fb
+log_events: 
+- - 2012-05-09 15:11:37.472969 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
