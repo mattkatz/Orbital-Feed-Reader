@@ -127,12 +127,21 @@ Wprss.feedsController = Em.ArrayController.create({
     };
     jQuery.post(get_url.ajaxurl, data, function(response){
       //TODO: put in error checks for bad responses, errors,etc.
-      //update the fiedview to show this item has no read count
       var resp = JSON.parse(response);
       Wprss.feedsController.changeUnreadCount(resp.feed_id,-1* resp.updated);
-      //move onto next feed?
+      //TODO move onto next feed?
     });
 
+  },
+  update: function(id){
+    var data = {
+      action: 'wprss_update_feed',
+      nonce_a_donce: get_url.nonce_a_donce,
+      feed_id: id,
+    };
+    jQuery.post(get_url.ajaxurl,data,function(response){
+      Wprss.feedsController.changeUnreadCount(response.feed_id, response.updated);
+    },'json');
   },
   removeFeed: function(feed_id){
     var feed = this.findProperty('feed_id',feed_id);
@@ -313,6 +322,9 @@ Wprss.selectedFeedController = Em.Object.create({
   select:function(feed){
     this.set('content',feed);
     this.onSelect(feed);
+  },
+  update: function(feed){
+    Wprss.feedsController.update(this.get('content').feed_id);
   },
   onSelect:function(feed_id){
    //null
