@@ -235,6 +235,24 @@ class WprssFeeds {
     return $resp;
   }
 
+  /*
+   * Stale feeds haven't been updated in over an hour
+   * Get a list of them
+   */
+  static function getStaleFeeds(){
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    $now = getdate();
+    $then = $now->sub(new DateInterval('1 hour'));
+    _log($then);
+    $sql = "
+      SELECT feeds.id
+      FROM $feeds as feeds
+      WHERE feeds.last_updated < DATE_ADD(NOW(),1 HOUR) 
+      ";
+
+  }
+
+
 
   
 
@@ -259,10 +277,9 @@ class WprssEntries{
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
-    $resp = '';
+
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
-
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
 
@@ -301,45 +318,62 @@ class WprssEntries{
     }
     else{
       //TODO see if the entry exists using entry hash or guid?
+
       //insert the entry, get the ID for the feed
-      $wpdb->insert($entries, array(
-        'feed_id'=>$entry['feed_id'],
-        'title'=>$entry['title'],
-        'guid'=>$entry['guid'],
-        'link'=>$entry['link'],//TODO 
-        'updated'=>date ("Y-m-d H:m:s"),
-        'content'=>$entry['content'],//TODO
-        'entered' =>date ("Y-m-d H:m:s"), 
-        'author' => $entry['author']
-      ));
-      $entry_id = $wpdb->insert_id;
-      $resp->insert_id = $entry_id;
-      //insert the link to user_entries
-      $sql = "INSERT INTO ".$user_entries."
-              (entry_id, user_feed_id, orig_feed_id, owner_uid, marked, isRead)
-              SELECT
-              %d,%d,%d,owner,0,0
-              FROM ".$user_feeds." 
-              WHERE feed_id = %d" ;
-      $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
-      $resp->inserted = $wpdb->query($sql);
-      
-      //update the last updated time for the feed
-      $resp->last_update = $wpdb->update(
-        $feeds,//the table
-        array('last_updated' => date ("Y-m-d H:m:s")),//columns to update
-        array(//where filters
-          'id' =>$entry['feed_id'] //current feed
-        )
-      );
+      $resp = WprssEntries::insert($entry);
 
     }
    return $resp; 
 
   }
-  static function update_many($fields,$filters){
+  //assumes you have already checked that the entry isn't in there.
+  //probably best if you just use save, it does the checking
+  static function insert($entry){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    
+    $resp;
+
+    $wpdb->insert($entries, array(
+      'feed_id'=>$entry['feed_id'],
+      'title'=>$entry['title'],
+      'guid'=>$entry['guid'],
+      'link'=>$entry['link'],//TODO 
+      'updated'=>date ("Y-m-d H:m:s"),
+      'content'=>$entry['content'],//TODO
+      'entered' =>date ("Y-m-d H:m:s"), 
+      'author' => $entry['author']
+    ));
+    $entry_id = $wpdb->insert_id;
+    $resp->insert_id = $entry_id;
+    //insert the link to user_entries
+    $sql = "INSERT INTO ".$user_entries."
+            (entry_id, user_feed_id, orig_feed_id, owner_uid, marked, isRead)
+            SELECT
+            %d,%d,%d,owner,0,0
+            FROM ".$user_feeds." 
+            WHERE feed_id = %d" ;
+    $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
+    $resp->inserted = $wpdb->query($sql);
+    
+    //update the last updated time for the feed
+    $resp->last_update = $wpdb->update(
+      $feeds,//the table
+      array('last_updated' => date ("Y-m-d H:m:s")),//columns to update
+      array(//where filters
+        'id' =>$entry['feed_id'] //current feed
+      )
+    );
+    return $resp;
 
   }
+
   /* Get entries for a feed
    *    - for a user, filter by a condition - unread = true..
    */
@@ -577,6 +611,7 @@ add_action('wp_ajax_nopriv_wprss_get_entries','wprss_get_feed_entries');
 //update multiple feeds
 function wprss_update_feeds(){
   //get the list of feeds to update that haven't been updated recently
+  
   //TODO Limit it to a reasonable number of feeds in a batch
   //for each feed call update_feed
   
@@ -590,16 +625,17 @@ add_action('wp_ajax_nopriv_wprss_update_feeds','wprss_get_update_feeds');
 function wprss_update_feed($feed_id="",$feed_url=""){
   //if we didn't get passed a feed, check to see if it is in the url
   if("" == $feed_id){
-    $feed_id = filter_input(INPUT_GET, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
+    $feed_id = filter_input(INPUT_POST, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
     if("" == $feed_id){
       $resp;
+      $resp->feed_id = $feed_id;
       $resp->updated = 0;
       $resp->reason = "No feed_id passed";
       echo json_encode($resp);
       exit;
     }
   }
-  echo $feed_id;
+  //echo $feed_id;
 
   //TODO update the feeds last updated time
   require_once('simplepie.inc');
@@ -615,7 +651,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   //_log($sql);
   $feedrow = $wpdb->get_row($sql);
   _log($feedrow);
-  echo $feedrow->feed_url;
+  //echo $feedrow->feed_url;
 
   $feed = new SimplePie();
   $feed->set_feed_url($feedrow->feed_url);
@@ -634,9 +670,10 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   //_log($feed->get_items());
 
   //echo json_encode($feed->get_items());
-  foreach($feed->get_items() as $item)
+  $items = $feed->get_items();
+  foreach($items as $item)
   {
-    echo $item->get_description();
+    //echo $item->get_description();
     $name = "";
     $author = $item->get_author();
     if(null != $author){
@@ -652,10 +689,12 @@ function wprss_update_feed($feed_id="",$feed_url=""){
       'entered' =>date ("Y-m-d H:m:s"), 
       'author' => $name
     ));
-    echo  $name;
+    //echo  $name;
   }
 
   //echo $feedrow->feed_url;
+  $resp->feed_id = $feed_id;
+  $resp->updated = count($items);
   exit;
 }
 add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
