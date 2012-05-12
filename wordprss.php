@@ -108,6 +108,15 @@ function wprss_uninstall_db()
     $wpdb->query($sql);
 
   }
+}
+add_action('wprss_update_event', 'wprss_update_job');
+function wprss_set_up_cron(){
+  wp_schedule_event( current_time( 'timestamp' ), 'hourly', 'wprss_update_event');
+}
+
+function wprss_update_job(){
+  //call feeds update.
+  //somehow signal a pop to the front end that the job, it is done.
   
 
 }
@@ -116,6 +125,8 @@ function wprss_install_db_and_data(){
   require_once 'install_upgrade.php';
   wprss_install_db();
   wprss_install_data();
+  wprss_set_up_cron();
+
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 add_action( 'admin_init', 'wprss_admin_init' );
