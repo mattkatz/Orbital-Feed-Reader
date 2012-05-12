@@ -344,10 +344,10 @@ class WprssEntries{
         'owner_uid'=>$current_user->ID //logged in user
     );
     foreach ($entry as $key => $value){
-      if(in_array($key,$update_whitelist)){
+      if(array_key_exists($key,$update_whitelist)){
         $update_fields[$update_whitelist[$key]] = $value;
       }
-      if(in_array($key,$filter_whitelist)){
+      if(array_key_exists($key,$filter_whitelist)){
         $filter_fields[$filter_whitelist[$key]] = $value;
       }
     }
