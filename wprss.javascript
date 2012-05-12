@@ -174,7 +174,7 @@ Wprss.feedsController = Em.ArrayController.create({
     };
               console.log('at least we got here');
     jQuery.post(get_url.ajaxurl,data, function(response){
-      if(response.updated || response.inserted )//TODO: test to see if the feed actually got saved
+      if(response.updated || response.inserted )// test to see if the feed actually got saved
       {
         //indicate somehow?
         //TODO this should be agnostic per screen.
