@@ -363,6 +363,7 @@ class WprssEntries{
     if(array_key_exists('feed_id',$entry)){
       $resp->feed_id = $entry['feed_id'];
     }
+    return $resp;
 
   }
 
