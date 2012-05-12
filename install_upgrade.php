@@ -53,7 +53,7 @@ function wprss_install_db()
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
     entry_id integer NOT NULL,
-    user_feed_id integer,
+    feed_id integer,
     orig_feed_id integer,
     owner_uid integer NOT NULL,
     marked bool NOT NULL DEFAULT false,
@@ -68,7 +68,7 @@ function wprss_install_db()
     id integer NOT NULL AUTO_INCREMENT,
     feed_id integer,
     title text NOT NULL,
-    guid varchar(255) NOT NULL ,
+    guid varchar(255) NOT NULL UNIQUE,
     link text NOT NULL,
     updated datetime NOT NULL,
     content longtext NOT NULL,

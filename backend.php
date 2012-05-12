@@ -140,7 +140,7 @@ class WprssFeeds {
         inner join ".$feeds." as feeds
         on u_feeds.feed_id = feeds.id
         left outer join ".$user_entries." as ue
-        on ue.user_feed_id=feeds.id
+        on ue.feed_id=feeds.id
 
         and u_feeds.owner = ". $current_user->ID."
         group by feeds.id,
@@ -194,7 +194,7 @@ class WprssFeeds {
       DELETE 
       FROM $user_entries 
       WHERE owner_uid = $current_user->ID 
-      AND user_feed_id = %d";
+      AND feed_id = %d";
     $sql = $wpdb->prepare($sql,$feed_id);
     if(false ===  $wpdb->query($sql)){
       $resp->ue_error = $wpdb->print_error();
@@ -251,12 +251,6 @@ class WprssFeeds {
       ";
 
   }
-
-
-
-  
-
-
 }
 /*
  * Entries Class
@@ -272,8 +266,64 @@ class WprssEntries{
  * Insert an entry for a feed
  *    - TODO check to see if entry exists, using entry hash?
  *    - insert entry, then link for each user subscribed to the feed.
+ *    - alternately, update the stored entry - this should be used to mark feeds updated or to update their content when the feed is updated.
+ *    - TODO compare the content_hash on old and new before resetting isread
  */
   static function save($entry){
+
+    if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
+      //this is an update
+      $resp = WprssEntries::update($entry);
+    }
+    else{
+      //TODO see if the entry exists using entry hash or guid?
+      if(array_key_exists('guid', $entry) && $entry['guid']){
+        $entry_id = WprssEntries::check_guid($entry['guid']);
+      }
+
+      if(null === $entry_id){
+        //insert the entry, get the ID for the feed
+        $resp = WprssEntries::insert($entry);
+      }
+      else {
+        //this is an update - let's do it.
+        $entry['entry_id'] = $entry_id;
+        $resp = WprssEntries::update($entry);
+      }
+    }
+   return $resp; 
+
+  }
+  /* Function: check_guid
+   *
+   * Checks to see if we've already stored an entry with that guid
+   * Returns: the entry_id of the entry or null;
+   */
+  static function check_guid($guid){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+
+    $sql = "SELECT id
+            FROM $entries
+            WHERE guid = %s;";
+
+    $sql = $wpdb->prepare($sql, $guid);
+    $entry_id = $wpdb->get_var($sql);
+    return  $entry_id;
+
+
+  }
+
+  /* Function: update
+   *
+   * Assumes that you already know the entry has an id and exists.
+   * Probably best to just use Save
+   */
+  static function update($entry){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
@@ -283,49 +333,39 @@ class WprssEntries{
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
 
-
-    if((array_key_exists('entry_id',$entry )&& $entry['entry_id'] )|| ( array_key_exists('user_feed_id',$entry) && $entry['entry_id'])){
-      //this is an update
-      //try to update if the entry id exists, otherwise, insert
-      //we should iterate over the keys and put them in the update
-      $update_whitelist = array('marked','isRead');
-      $filter_whitelist = array('feed_id','entry_id','id');
-      $update_fields = array();
-      $filter_fields = array(
-          'owner_uid'=>$current_user->ID //logged in user
-      );
-      foreach ($entry as $key => $value){
-        if(in_array($key,$update_whitelist)){
-          $update_fields[$key] = $value;
-        }
-        if(in_array($key,$filter_whitelist)){
-          $filter_fields[$key] = $value;
-        }
+    //try to update if the entry id exists, otherwise, insert
+    //we should iterate over the keys and put them in the update
+    //TODO sep out content and content_hash to update the underlying entry
+    //TODO we should have a method that updates entries and one that updates user_entries
+    $update_whitelist = array('marked'=>'marked','isRead'=>'isRead');
+    $filter_whitelist = array('feed_id'=>'feed_id','entry_id'=>'entry_id','id'=>'id');
+    $update_fields = array();
+    $filter_fields = array(
+        'owner_uid'=>$current_user->ID //logged in user
+    );
+    foreach ($entry as $key => $value){
+      if(in_array($key,$update_whitelist)){
+        $update_fields[$update_whitelist[$key]] = $value;
       }
-      $ret = $wpdb->update(
-        $user_entries,//the table
-        $update_fields,//columns to update
-        $filter_fields //where filters
-      );
-      $resp->updated = $ret;
-      if(array_key_exists('entry_id',$entry )){
-        $resp->entry_id = $entry['entry_id'];
+      if(in_array($key,$filter_whitelist)){
+        $filter_fields[$filter_whitelist[$key]] = $value;
       }
-      if(array_key_exists('user_feed_id',$entry)){
-        $resp->feed_id = $entry['feed_id'];
-      }
-      
     }
-    else{
-      //TODO see if the entry exists using entry hash or guid?
-
-      //insert the entry, get the ID for the feed
-      $resp = WprssEntries::insert($entry);
-
+    $ret = $wpdb->update(
+      $user_entries,//the table
+      $update_fields,//columns to update
+      $filter_fields //where filters
+    );
+    $resp->updated = $ret;
+    if(array_key_exists('entry_id',$entry )){
+      $resp->entry_id = $entry['entry_id'];
     }
-   return $resp; 
+    if(array_key_exists('feed_id',$entry)){
+      $resp->feed_id = $entry['feed_id'];
+    }
 
   }
+
   //assumes you have already checked that the entry isn't in there.
   //probably best if you just use save, it does the checking
   static function insert($entry){
@@ -354,7 +394,7 @@ class WprssEntries{
     $resp->insert_id = $entry_id;
     //insert the link to user_entries
     $sql = "INSERT INTO ".$user_entries."
-            (entry_id, user_feed_id, orig_feed_id, owner_uid, marked, isRead)
+            (entry_id, feed_id, orig_feed_id, owner_uid, marked, isRead)
             SELECT
             %d,%d,%d,owner,0,0
             FROM ".$user_feeds." 
@@ -386,13 +426,14 @@ class WprssEntries{
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
+    _log($filters);
     //TODO allow like queries
-    $filter_whitelist = array('entry_id','title','guid', 'link','content','author','isRead','marked','id','entry_id','feed_id');
+    $filter_whitelist = array('entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
     foreach ($filters as $filter_name => $value){
-      if(in_array($filter_name,$filter_whitelist)){
+      if(array_key_exists($filter_name,$filter_whitelist)){
         $filter = $filter . 
-          $wpdb->prepare( " AND $filter_name  = %s ", $value);
+          $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
       }
     }
 
@@ -406,7 +447,7 @@ class WprssEntries{
         ue.isRead as isRead,
         ue.marked as marked,
         ue.id as id,
-        ue.user_feed_id as feed_id
+        ue.feed_id as feed_id
         from  $entries  as entries
         inner join  $user_entries  as ue
         on ue.entry_id=entries.id
@@ -414,6 +455,7 @@ class WprssEntries{
         ". $filter . " 
         limit 30
     ;";
+    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
 
