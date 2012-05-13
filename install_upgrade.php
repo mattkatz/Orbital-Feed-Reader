@@ -105,7 +105,7 @@ function wprss_install_data(){
     'site_url'=> 'http://boingboing.net',
     'is_private'=>0,
     //'owner' => $current_user->ID,
-    'feed_name' => 'Boing Boing'));
+    'feed_name' => 'Fake Boing Boing'));
   $wprssfeed = WprssFeeds::save(
   array(
     //'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/html/feed.xml',
@@ -137,6 +137,15 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Cory Doctorow'
   ));
+
+  $bb = WprssFeeds::save(
+  array(
+    'feed_url'=>'http://boingboing.net/feed/',
+    //'feed_url'=>'http://localhost/boingboing/iBag',
+    'site_url'=> 'http://boingboing.net',
+    'is_private'=>0,
+    //'owner' => $current_user->ID,
+    'feed_name' => 'Boing Boing'));
 }
 /*
 function wprss_uninstall_db()
