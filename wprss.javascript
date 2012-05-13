@@ -141,6 +141,7 @@ Wprss.feedsController = Em.ArrayController.create({
     };
     jQuery.post(get_url.ajaxurl,data,function(response){
       Wprss.feedsController.changeUnreadCount(response.feed_id, response.updated);
+      Wprss.feedsController.selectFeed(response.feed_id);
     },'json');
   },
   removeFeed: function(feed_id){
