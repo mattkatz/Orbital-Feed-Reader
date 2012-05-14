@@ -498,12 +498,6 @@ Em.Handlebars.registerHelper('checkable', function(path,options){
 });
 
 
-
-
-
-
-
-
 function scrollToEntry(currentItem){
 
     var body = jQuery('html');
@@ -525,6 +519,3 @@ function scrollToEntry(currentItem){
       scrollTop: row.offset().top - adminbar.height() - commandbar.height()}, 200);
 
 }
-
-
-
