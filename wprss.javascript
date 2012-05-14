@@ -301,7 +301,7 @@ Wprss.entriesController = Em.ArrayController.create({
       //alert(response);
       Wprss.entriesController.clearEntries();
       Wprss.entriesController.createEntries(response);
-      scrollToEntry(this.get('content')[0]);
+      scrollToEntry(Wprss.entriesController.get('content')[0]);
     });
   }
 });
@@ -512,10 +512,14 @@ function scrollToEntry(currentItem){
     //console.log(window.scrollTop());
     //TODO why is entryID coming up undefined in this context?
     //var row = jQuery('#'+currentItem.entryID);
-    console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
+    //console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
     var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
-    console.log('current row: ' + row.offset().top);
+    //console.log('current row: ' + row.offset().top);
     //body.scrollTop(row.offset().top - adminbar.height());
+    if(null === row.offset()){
+      console.log('row.offset() was null');
+      return;
+    }
     
     jQuery('html').animate({
       scrollTop: row.offset().top - adminbar.height() - commandbar.height()}, 200);

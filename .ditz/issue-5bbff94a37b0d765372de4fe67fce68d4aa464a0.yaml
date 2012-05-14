@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fire scrollToEntry once ember render is done.
+desc: |-
+  Currently i
+  currently it fires too early, so we don't have a row to do an offset from.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-14 12:29:48.317016 Z
+references: []
+
+id: 5bbff94a37b0d765372de4fe67fce68d4aa464a0
+log_events: 
+- - 2012-05-14 12:29:48.317521 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
