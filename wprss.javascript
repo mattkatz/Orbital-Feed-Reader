@@ -141,7 +141,8 @@ Wprss.feedsController = Em.ArrayController.create({
     };
     jQuery.post(get_url.ajaxurl,data,function(response){
       Wprss.feedsController.changeUnreadCount(response.feed_id, response.updated);
-      Wprss.feedsController.selectFeed(response.feed_id);
+      feed = Wprss.feedsController.get('content').findProperty('feed_id',response.feed_id);
+      Wprss.feedsController.selectFeed(feed);
     },'json');
   },
   removeFeed: function(feed_id){
@@ -300,6 +301,7 @@ Wprss.entriesController = Em.ArrayController.create({
       //alert(response);
       Wprss.entriesController.clearEntries();
       Wprss.entriesController.createEntries(response);
+      scrollToEntry(this.get('content')[0]);
     });
   }
 });

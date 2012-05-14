@@ -270,24 +270,32 @@ class WprssEntries{
  *    - TODO compare the content_hash on old and new before resetting isread
  */
   static function save($entry){
+    _log('in save');
+    _log($entry);
 
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
       $resp = WprssEntries::update($entry);
+      _log('sending to update');
     }
     else{
+      $entry_id = null;
       //TODO see if the entry exists using entry hash or guid?
       if(array_key_exists('guid', $entry) && $entry['guid']){
         $entry_id = WprssEntries::check_guid($entry['guid']);
+        _log('check guid says entry id is');
+        _log($entry_id);
       }
 
       if(null === $entry_id){
+        _log('sending to insert');
         //insert the entry, get the ID for the feed
         $resp = WprssEntries::insert($entry);
       }
       else {
         //this is an update - let's do it.
         $entry['entry_id'] = $entry_id;
+        _log('found an entry and sending to update');
         $resp = WprssEntries::update($entry);
       }
     }
@@ -351,12 +359,18 @@ class WprssEntries{
         $filter_fields[$filter_whitelist[$key]] = $value;
       }
     }
-    $ret = $wpdb->update(
-      $user_entries,//the table
-      $update_fields,//columns to update
-      $filter_fields //where filters
-    );
-    $resp->updated = $ret;
+    if(count($update_fields) <=0){
+      $resp->updated = 0;
+      $resp->message = "Nothing to update";
+    }else{
+
+      $ret = $wpdb->update(
+        $user_entries,//the table
+        $update_fields,//columns to update
+        $filter_fields //where filters
+      );
+      $resp->updated = $ret;
+    }
     if(array_key_exists('entry_id',$entry )){
       $resp->entry_id = $entry['entry_id'];
     }
@@ -738,6 +752,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
   //echo $feedrow->feed_url;
   $resp->feed_id = $feed_id;
   $resp->updated = count($items);
+  echo json_encode($resp);
   exit;
 }
 add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
