@@ -6,6 +6,7 @@ jQuery(document).ready(function($){
   //TODO this should just be fed into the page on initial load
   var data = {
     action: 'wprss_get_entries',
+    show_read: 0,
     nonce_a_donce:get_url.nonce_a_donce 
     
   };
