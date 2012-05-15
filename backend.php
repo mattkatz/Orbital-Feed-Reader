@@ -246,7 +246,7 @@ class WprssFeeds {
     $now = new DateTime();
     //lets go back 1 hour
     $then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
-    _log($then);
+    //_log($then);
     $sql = "
       SELECT feeds.id
       FROM $feeds as feeds
@@ -257,6 +257,84 @@ class WprssFeeds {
     $myrows = $wpdb->get_results($sql);
     return $myrows;
 
+  }
+
+  /* Function: get_feed
+   *
+   * Returns:  a single feed by id
+   */
+  static function get_feed($feed_id)
+  {
+    global $wpdb;
+    global $tbl_prefix;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    //echo $feed_id;
+    $sql = "select *
+      from $feeds
+      where id=".$feed_id."
+      ;";
+    //_log($sql);
+    $feedrow = $wpdb->get_row($sql);
+    return $feedrow;
+  }
+
+
+  /* Function: Refresh
+   *
+   * Refresh a feed from it's underlying source.  
+   * Process it and save all new or updated entries
+   *
+   * Returns: a count of updates and inserts made
+   */
+  static function refresh($feed_id){
+    //TODO update the feeds last updated time
+    require_once('simplepie.inc');
+    //_log($feedrow);
+    //echo $feedrow->feed_url;
+    $feedrow = WprssFeeds::get_feed($feed_id);
+
+    $feed = new SimplePie();
+    $feed->set_feed_url($feedrow->feed_url);
+    $feed->force_feed(true);
+    // Remove these tags from the list
+    $strip_htmltags = $feed->strip_htmltags;
+    array_splice($strip_htmltags, array_search('object', $strip_htmltags), 1);
+    array_splice($strip_htmltags, array_search('param', $strip_htmltags), 1);
+    array_splice($strip_htmltags, array_search('embed', $strip_htmltags), 1);
+     
+    $feed->strip_htmltags($strip_htmltags);
+
+    //Here is where the feed parsing/fetching/etc. happens
+    $feed->init();
+    //_log('past feed init');
+    //_log($feed->get_items());
+
+    //echo json_encode($feed->get_items());
+    $items = $feed->get_items();
+    foreach($items as $item)
+    {
+      //echo $item->get_description();
+      $name = "";
+      $author = $item->get_author();
+      if(null != $author){
+        $name =$author->get_name(); 
+      }
+      WprssEntries::save(array(
+        'feed_id'=>$feed_id,
+        'title'=>$item->get_title(),
+        'guid'=>$item->get_id(),
+        'link'=>$item->get_link(),//TODO 
+        'updated'=>date ("Y-m-d H:m:s"),
+        'content'=>$item->get_content(),//TODO
+        'entered' =>date ("Y-m-d H:m:s"), 
+        'author' => $name
+      ));
+      //echo  $name;
+    }
+    //echo $feedrow->feed_url;
+    $resp->feed_id = $feed_id;
+    $resp->updated = count($items);
+    return $resp;
   }
 }
 /*
@@ -283,26 +361,26 @@ class WprssEntries{
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
       $resp = WprssEntries::update($entry);
-      _log('sending to update');
+      //_log('sending to update');
     }
     else{
       $entry_id = null;
       //TODO see if the entry exists using entry hash or guid?
       if(array_key_exists('guid', $entry) && $entry['guid']){
         $entry_id = WprssEntries::check_guid($entry['guid']);
-        _log('check guid says entry id is');
-        _log($entry_id);
+        //_log('check guid says entry id is');
+        //_log($entry_id);
       }
 
       if(null === $entry_id){
-        _log('sending to insert');
+        //_log('sending to insert');
         //insert the entry, get the ID for the feed
         $resp = WprssEntries::insert($entry);
       }
       else {
         //this is an update - let's do it.
         $entry['entry_id'] = $entry_id;
-        _log('found an entry and sending to update');
+        //_log("found an $entry_id  and sending to update");
         $resp = WprssEntries::update($entry);
       }
     }
@@ -684,8 +762,8 @@ function wprss_update_feeds(){
   //for each feed call update_feed
   foreach( $feeds as $feed){
     _log($feed);
-    //WprssFeeds::refresh($feed->id);
-    wprss_update_feed($feed->id);
+    WprssFeeds::refresh($feed->id);
+    //wprss_update_feed($feed->id);
   }
 }
 add_action('wp_ajax_wprss_update_feeds','wprss_update_feeds');
@@ -707,65 +785,8 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     }
   }
   //echo $feed_id;
+  $resp = WprssFeeds::refresh($feed_id);
 
-  //TODO update the feeds last updated time
-  require_once('simplepie.inc');
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
-  //echo $feed_id;
-  $prefix = $wpdb->prefix.$tbl_prefix; 
-  $sql = "select *
-    from ". $prefix . "feeds
-    where id=".$feed_id."
-    ;";
-  //_log($sql);
-  $feedrow = $wpdb->get_row($sql);
-  //_log($feedrow);
-  //echo $feedrow->feed_url;
-
-  $feed = new SimplePie();
-  $feed->set_feed_url($feedrow->feed_url);
-  $feed->force_feed(true);
-  // Remove these tags from the list
-  $strip_htmltags = $feed->strip_htmltags;
-  array_splice($strip_htmltags, array_search('object', $strip_htmltags), 1);
-  array_splice($strip_htmltags, array_search('param', $strip_htmltags), 1);
-  array_splice($strip_htmltags, array_search('embed', $strip_htmltags), 1);
-   
-  $feed->strip_htmltags($strip_htmltags);
-
-  //Here is where the feed parsing/fetching/etc. happens
-  $feed->init();
-  //_log('past feed init');
-  //_log($feed->get_items());
-
-  //echo json_encode($feed->get_items());
-  $items = $feed->get_items();
-  foreach($items as $item)
-  {
-    //echo $item->get_description();
-    $name = "";
-    $author = $item->get_author();
-    if(null != $author){
-      $name =$author->get_name(); 
-    }
-    WprssEntries::save(array(
-      'feed_id'=>$feed_id,
-      'title'=>$item->get_title(),
-      'guid'=>$item->get_id(),
-      'link'=>$item->get_link(),//TODO 
-      'updated'=>date ("Y-m-d H:m:s"),
-      'content'=>$item->get_content(),//TODO
-      'entered' =>date ("Y-m-d H:m:s"), 
-      'author' => $name
-    ));
-    //echo  $name;
-  }
-
-  //echo $feedrow->feed_url;
-  $resp->feed_id = $feed_id;
-  $resp->updated = count($items);
   echo json_encode($resp);
   exit;
 }
