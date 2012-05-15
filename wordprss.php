@@ -109,13 +109,26 @@ function wprss_uninstall_db()
 
   }
 }
+add_filter('cron_schedules', 'five_minutes_baby');
+function five_minutes_baby( $schedules ) {
+    $schedules['5minutes'] = array(
+          'interval' => 300, //that's how many seconds in 5 minutes, for the unix timestamp
+              'display' => __('Five Minutes')
+                );
+      return $schedules;
+}
 add_action('wprss_update_event', 'wprss_update_job');
 function wprss_set_up_cron(){
-  wp_schedule_event( current_time( 'timestamp' ), 'hourly', 'wprss_update_event');
+
+  
+wp_schedule_event( current_time( 'timestamp' ), '5minutes', 'wprss_update_event');
 }
 
 function wprss_update_job(){
   //call feeds update.
+  _log('wprss_update_job called');
+  wprss_update_feeds();
+  
   //somehow signal a pop to the front end that the job, it is done.
   
 

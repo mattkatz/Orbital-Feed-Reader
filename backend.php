@@ -239,16 +239,23 @@ class WprssFeeds {
    * Stale feeds haven't been updated in over an hour
    * Get a list of them
    */
-  static function getStaleFeeds(){
+  static function get_stale_feeds(){
+    global $wpdb;
+    global $tbl_prefix;
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
-    $now = getdate();
-    $then = $now->sub(new DateInterval('1 hour'));
+    $now = new DateTime();
+    //lets go back 1 hour
+    $then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
     _log($then);
     $sql = "
       SELECT feeds.id
       FROM $feeds as feeds
-      WHERE feeds.last_updated < DATE_ADD(NOW(),1 HOUR) 
+      WHERE feeds.last_updated < %s
       ";
+    $sql = $wpdb->prepare($sql,$then);
+    _log($sql);
+    $myrows = $wpdb->get_results($sql);
+    return $myrows;
 
   }
 }
@@ -270,8 +277,8 @@ class WprssEntries{
  *    - TODO compare the content_hash on old and new before resetting isread
  */
   static function save($entry){
-    _log('in save');
-    _log($entry);
+    //_log('in save');
+    //_log($entry);
 
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
@@ -441,7 +448,7 @@ class WprssEntries{
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
-    _log($filters);
+    //_log($filters);
     //TODO allow like queries
     $filter_whitelist = array('entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
@@ -470,7 +477,7 @@ class WprssEntries{
         ". $filter . " 
         limit 30
     ;";
-    _log($sql);
+    //_log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
 
@@ -668,11 +675,18 @@ add_action('wp_ajax_nopriv_wprss_get_entries','wprss_get_feed_entries');
 //update multiple feeds
 function wprss_update_feeds(){
   //get the list of feeds to update that haven't been updated recently
+  _log('wp_cron update fired!');
+  $feeds = WprssFeeds::get_stale_feeds();
+  _log($feeds);
   
   //TODO Limit it to a reasonable number of feeds in a batch
+  //TODO Maybe we should schedule wp_cron jobs for each update?
   //for each feed call update_feed
-  
-
+  foreach( $feeds as $feed){
+    _log($feed);
+    //WprssFeeds::refresh($feed->id);
+    wprss_update_feed($feed->id);
+  }
 }
 add_action('wp_ajax_wprss_update_feeds','wprss_update_feeds');
 add_action('wp_ajax_nopriv_wprss_update_feeds','wprss_get_update_feeds');
@@ -707,7 +721,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     ;";
   //_log($sql);
   $feedrow = $wpdb->get_row($sql);
-  _log($feedrow);
+  //_log($feedrow);
   //echo $feedrow->feed_url;
 
   $feed = new SimplePie();
@@ -723,7 +737,7 @@ function wprss_update_feed($feed_id="",$feed_url=""){
 
   //Here is where the feed parsing/fetching/etc. happens
   $feed->init();
-  _log('past feed init');
+  //_log('past feed init');
   //_log($feed->get_items());
 
   //echo json_encode($feed->get_items());
