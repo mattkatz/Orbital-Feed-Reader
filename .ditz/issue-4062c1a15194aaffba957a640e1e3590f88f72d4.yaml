@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :paused
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-16 00:54:28.973148 Z
 references: []
 
@@ -30,3 +30,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from in_progress to paused
   - ""
+- - 2012-05-15 15:43:01.221658 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - wp-cron is now getting called and is calling update feeds.
