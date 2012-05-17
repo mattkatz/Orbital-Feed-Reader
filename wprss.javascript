@@ -174,7 +174,6 @@ Wprss.feedsController = Em.ArrayController.create({
       is_private: feed.is_private,
       nonce_a_donce:get_url.nonce_a_donce 
     };
-              console.log('at least we got here');
     jQuery.post(get_url.ajaxurl,data, function(response){
       if(response.updated || response.inserted )// test to see if the feed actually got saved
       {
@@ -191,7 +190,6 @@ Wprss.feedsController = Em.ArrayController.create({
         console.log(response.updated);
       }
     },'json');
-              console.log('ant then we got here');
 
   },
 });
