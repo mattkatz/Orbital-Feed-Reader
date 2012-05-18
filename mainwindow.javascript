@@ -55,4 +55,29 @@ function setupKeys(){
     Wprss.entriesController.toggleEntryRead(currentItem.id);
   });
 }
-
+//put in some infinite scrolling logic
+jQuery(window).scroll(function()
+{
+    //how far from the bottom should we wait?
+    if(jQuery(window).scrollTop() == jQuery(document).height() - jQuery(window).height())
+    {
+        jQuery('div#loadmoreajaxloader').show();
+        var data = {
+          action: 'wprss_get_entries',
+          show_read: 0,
+          nonce_a_donce:get_url.nonce_a_donce 
+          
+        };
+        if(feed = Wprss.selectedFeedController.get('content') ){
+          data['feed_id']=feed.feed_id;
+        }
+        //how are you going to handle the failure?
+        //TODO whaddya do when there are no more posts?
+        jQuery.get(get_url.ajaxurl, data, function(response){
+          //alert(response);
+          Wprss.entriesController.createEntries(response);
+          jQuery('div#loadmoreajaxloader').hide();
+        });
+        
+    }
+});

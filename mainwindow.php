@@ -81,6 +81,11 @@
           {{/view}}
         {{/each}}
       </ul>
+      <div id="loadmoreajaxloader" style="display:none;">
+        <center>
+          Loading more entries, just a sec
+        </center>
+      </div>
     {{else}}
       <div class="no-feed-displayed"><p>Whoa - there's nothing to show right now.</p> <p>Try clicking on one of the feeds on the right.</p></div>
     {{/if}}
