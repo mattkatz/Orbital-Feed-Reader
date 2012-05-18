@@ -41,11 +41,11 @@
     </script>
   </div>
   <div id="wprss-feedlist">
-  <div>CURRENT USER: <?php 
-  $curusr = wp_get_current_user();
-  echo $curusr->ID; 
-
- ?></div>
+      <div id="loadmoreajaxloader" style="display:none;">
+        <center>
+          just a sec
+        </center>
+      </div>
   <div><a class="button" href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feeds">Refresh Feeds</a></div>
   <h2>The Feeds</h2>
     <script type="text/x-handlebars" >
@@ -81,11 +81,6 @@
           {{/view}}
         {{/each}}
       </ul>
-      <div id="loadmoreajaxloader" style="display:none;">
-        <center>
-          Loading more entries, just a sec
-        </center>
-      </div>
     {{else}}
       <div class="no-feed-displayed"><p>Whoa - there's nothing to show right now.</p> <p>Try clicking on one of the feeds on the right.</p></div>
     {{/if}}
