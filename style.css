@@ -130,3 +130,18 @@ box-shadow: 2px 2px 4px #666;
 .update-nag {
   display:none;
 }
+
+#loadmoreajaxloader{
+  display:block;
+  border-radius:5px;
+  color:white;
+  text-shadow: 0 0 3px;
+  padding: 10px;
+  background: rgba(100,100,100,0.7);
+  position:absolute;
+  right:5px;
+  top: 20px;
+  float:right;
+}
+
+}

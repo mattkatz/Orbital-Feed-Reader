@@ -41,9 +41,9 @@
     </script>
   </div>
   <div id="wprss-feedlist">
-      <div id="loadmoreajaxloader" style="display:none;">
+      <div id="loadmoreajaxloader" style="">
         <center>
-          just a sec
+          loading, just a sec...
         </center>
       </div>
   <div><a class="button" href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feeds">Refresh Feeds</a></div>
