@@ -547,7 +547,10 @@ class WprssEntries{
         ue.isRead as isRead,
         ue.marked as marked,
         ue.id as id,
-        ue.feed_id as feed_id
+        ue.feed_id as feed_id,
+        entries.entered as entered,
+        entries.updated as updated
+
         from  $entries  as entries
         inner join  $user_entries  as ue
         on ue.entry_id=entries.id

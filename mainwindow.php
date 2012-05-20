@@ -69,15 +69,24 @@
         {{#each Wprss.entriesController}}
           {{#view Wprss.EntriesView contentBinding="this"}}
             <li class="entry" {{bindAttr id="content.entryID"}} >
-              <a {{bindAttr href="content.link"}} target="_blank"><h2>{{content.title}}</h2></a> {{#if content.author}}<span class="attribution">by {{{content.author}}}</span>{{/if}}
-              {{{content.description}}}
-              <div class="attributes">
-              {{checkable  "content" contentBinding="content"}}
-              <div class="entry-isloading" style="display:none;">
-               loading 
+              <a {{bindAttr href="content.link"}} target="_blank">
+                <h2>{{content.title}}</h2>
+              </a> 
+              {{#if content.author}}
+                <span class="attribution">by {{{content.author}}}</span>
+              {{/if}} 
+              {{#if content.entered}}
+                <span class="entry-time"> {{{content.entered}}}</span>
+              {{/if}}
+              <div class="entry-content">
+                {{{content.content}}}
+                
               </div>
-              
-
+              <div class="attributes">
+                {{checkable  "content" contentBinding="content"}}
+                <div class="entry-isloading" style="display:none;">
+                 loading 
+                </div>
               </div>
             </li>
           {{/view}}

@@ -214,8 +214,8 @@ Wprss.Entry = Em.Object.extend({
   author:null,
   isRead:null,
   marked:null,
-  description: null,
-  //entered:null,
+  content:null,
+  entered:null,
 
   entryID: function(){
     return this.get('feed_id')+"_"+this.get('id');
