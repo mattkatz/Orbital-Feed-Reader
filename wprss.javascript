@@ -215,6 +215,8 @@ Wprss.Entry = Em.Object.extend({
   isRead:null,
   marked:null,
   description: null,
+  //entered:null,
+
   entryID: function(){
     return this.get('feed_id')+"_"+this.get('id');
 
@@ -222,24 +224,16 @@ Wprss.Entry = Em.Object.extend({
 });
 Wprss.entriesController = Em.ArrayController.create({
   content: [],
-  createEntry: function(feed,ref_id,head, url,by,read,mark,des){
+  createEntry: function(entryHash){
     //Don't add the entry if we already have it
-    if(this.get('content').findProperty('id',ref_id)){return;}
-    var entry = Wprss.Entry.create({
-    feed_id: feed, 
-    id: ref_id,
-    title:head,
-    link:url,
-    author:by,
-    isRead:read!='0',
-    marked:mark!='0',
-    description:des});
+    if(this.get('content').findProperty('id',entryHash.id)){return;}
+    var entry = Wprss.Entry.create(entryHash);
     this.pushObject(entry);
   },
   createEntries: function(jsonEntries){
     var entries = JSON.parse(jsonEntries);
     entries.forEach(function(entry){
-      Wprss.entriesController.createEntry(entry.feed_id,entry.id,entry.title, entry.link,entry.author,entry.isRead,entry.marked,entry.content);
+      Wprss.entriesController.createEntry(entry);
     });
   },
   clearEntries: function(){
