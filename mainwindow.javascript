@@ -17,10 +17,24 @@ jQuery(document).ready(function($){
   Wprss.selectedFeedController.onSelect = function(feed){
     Wprss.entriesController.selectFeed(feed.feed_id, feed.unread_count== 0?1:0);
   };
-
   setupKeys();
-  
+  feedTimer();
 });
+
+function feedTimer(){
+    setTimeout(function(){  
+      var data = {
+        action: 'wprss_get_feeds',
+        nonce_a_donce:get_url.nonce_a_donce 
+        
+      };
+      jQuery.get(get_url.ajaxurl, data, function(response){
+        //TODO: put in error checks for bad responses, errors,etc.
+        Wprss.feedsController.updateFeeds(response);
+        feedTimer();
+      },'json');
+    }, 60000);
+}
 
 function setupKeys(){
   //handle the down arrow keys and j to scroll the next item to top of scren

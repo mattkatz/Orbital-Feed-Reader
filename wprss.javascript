@@ -34,6 +34,13 @@ Wprss.feedsController = Em.ArrayController.create({
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
+  updateFeeds: function(feeds){
+    feeds.forEach(function(value){
+      var content = Wprss.feedsController.get('content');
+      var feed = content.findProperty('feed_id',value.id);
+      feed.set('unread_count',value.unread_count);
+    });
+  },
   showFeed: function(){
     //show the add feed window
     var dlg = jQuery('#subscribe-window');
@@ -264,6 +271,7 @@ Wprss.entriesController = Em.ArrayController.create({
   },
   setEntryIsRead: function(id,isRead){
     var entry = this.content.findProperty('id',id);
+    jQuery('#'+entry.entry_id+"<.entry_isloading").show();
     
     var data = {
       action: 'wprss_mark_item_read',
@@ -273,6 +281,7 @@ Wprss.entriesController = Em.ArrayController.create({
     };
     jQuery.post(get_url.ajaxurl,data, function(response){
       response = JSON.parse(response);
+      jQuery('#'+entry.entry_id+">.entry_isloading").hide();
       if(response.updated >0){
         console.log("updating");
         entry.set('isRead', isRead);

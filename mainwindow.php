@@ -74,6 +74,9 @@
               {{{content.description}}}
               <div class="attributes">
               {{checkable  "content" contentBinding="content"}}
+              <div class="entry-isloading" style="display:none;">
+               loading 
+              </div>
               
 
               </div>
