@@ -248,7 +248,7 @@ class WprssFeeds {
     $then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
     //_log($then);
     $sql = "
-      SELECT feeds.id
+      SELECT feeds.id,feeds.feed_name
       FROM $feeds as feeds
       WHERE feeds.last_updated < %s
       ";

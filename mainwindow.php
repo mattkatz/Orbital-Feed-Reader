@@ -46,7 +46,6 @@
           loading, just a sec...
         </center>
       </div>
-  <div><a class="button" href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feeds">Refresh Feeds</a></div>
   <h2>The Feeds</h2>
     <script type="text/x-handlebars" >
     <ul class="feeds">
