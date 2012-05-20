@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-05-20 14:55:04.872594 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-05-20 17:08:44.606483 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - should show it in a NICER way, but it is showing

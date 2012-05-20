@@ -8,8 +8,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-05-09 15:43:13.703926 Z
 references: []
 
@@ -19,3 +19,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-05-20 17:09:37.911253 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - this was done a while ago, wasn't it?
