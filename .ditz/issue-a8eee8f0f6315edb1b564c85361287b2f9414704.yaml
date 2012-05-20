@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Finish add feed should enter feed in feedlist when done.
+desc: ""
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-20 14:45:31.279499 Z
+references: []
+
+id: a8eee8f0f6315edb1b564c85361287b2f9414704
+log_events: 
+- - 2012-05-20 14:45:31.279890 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
