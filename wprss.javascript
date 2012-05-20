@@ -35,10 +35,16 @@ Wprss.feedsController = Em.ArrayController.create({
     });
   },
   updateFeeds: function(feeds){
+    var content = Wprss.feedsController.get('content');
     feeds.forEach(function(value){
-      var content = Wprss.feedsController.get('content');
       var feed = content.findProperty('feed_id',value.id);
-      feed.set('unread_count',value.unread_count);
+      if(feed){
+        feed.set('unread_count',value.unread_count);
+      }
+      else
+      {
+        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
+      }
     });
   },
   showFeed: function(){
