@@ -217,6 +217,8 @@ Wprss.Entry = Em.Object.extend({
 Wprss.entriesController = Em.ArrayController.create({
   content: [],
   createEntry: function(feed,ref_id,head, url,by,read,mark,des){
+    //Don't add the entry if we already have it
+    if(this.get('content').findProperty('id',ref_id)){return;}
     var entry = Wprss.Entry.create({
     feed_id: feed, 
     id: ref_id,
