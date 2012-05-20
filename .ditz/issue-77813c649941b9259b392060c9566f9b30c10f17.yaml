@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Show entry date on entries
+desc: pay more attention to the great work of tt-rss and google reader
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-20 14:55:04.872594 Z
+references: []
+
+id: 77813c649941b9259b392060c9566f9b30c10f17
+log_events: 
+- - 2012-05-20 14:55:04.873154 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: finally figure out feedlist vs content
+desc: |-
+  The feedlist gets too big, it overrides the content area.
+  how can we make sure feedlist words wrap, that feedlist scrolls by itself
+  that content area has a max-width that makes sense
+  who has done this right?
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-20 14:53:58.297294 Z
+references: []
+
+id: d303c243647e9e196d71541ac4397ae51b8a82c5
+log_events: 
+- - 2012-05-20 14:53:58.315990 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
