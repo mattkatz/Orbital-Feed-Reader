@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Special All Unread Feed
+desc: onload show a special all unread feed
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-21 02:42:05.071261 Z
+references: []
+
+id: 508d25f16f973537e87ef85dc7995e4aa1021358
+log_events: 
+- - 2012-05-21 02:42:05.071776 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
