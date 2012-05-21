@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Simplepie doesn't autodiscover some feeds
+desc: for example, http://mattkatz.github.com/Wordprss/
+type: :bugfix
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-21 10:50:54.986219 Z
+references: []
+
+id: 57717b5f33fc41286aaf84e985072357d99c9f7c
+log_events: 
+- - 2012-05-21 10:50:54.986708 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
