@@ -30,6 +30,7 @@ Wprss.feedsController = Em.ArrayController.create({
   
   createFeeds: function(feeds){
     //var feeds = JSON.parse(jsonFeeds);
+    Wprss.feedsController.createFeed('','','Fresh Entries',null,'lots');
     feeds.forEach(function(value){
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
