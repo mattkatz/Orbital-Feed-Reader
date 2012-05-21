@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Use JS to set content height and feedlist height
+desc: |-
+  instead of saying full - set it to fixed and the height of the window
+  also stick it in place so outer window can scroll and it stays still
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-21 12:12:49.313780 Z
+references: []
+
+id: 1f4a5ad63028e4bf66e7fbc35ccbf4bf111ff622
+log_events: 
+- - 2012-05-21 12:12:49.314143 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
