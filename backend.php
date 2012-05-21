@@ -111,7 +111,7 @@ class WprssFeeds {
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
-    $resp->is_private = $feed['is_private'];
+    //$resp->is_private = $feed['is_private'];
     return $resp;
   }
 
@@ -296,6 +296,7 @@ class WprssFeeds {
     $feed = new SimplePie();
     $feed->set_feed_url($feedrow->feed_url);
     $feed->force_feed(true);
+
     // Remove these tags from the list
     $strip_htmltags = $feed->strip_htmltags;
     array_splice($strip_htmltags, array_search('object', $strip_htmltags), 1);
@@ -306,14 +307,9 @@ class WprssFeeds {
 
     //Here is where the feed parsing/fetching/etc. happens
     $feed->init();
-    //_log('past feed init');
-    //_log($feed->get_items());
-
-    //echo json_encode($feed->get_items());
     $items = $feed->get_items();
     foreach($items as $item)
     {
-      //echo $item->get_description();
       $name = "";
       $author = $item->get_author();
       if(null != $author){
@@ -329,8 +325,19 @@ class WprssFeeds {
         'entered' =>date ("Y-m-d H:m:s"), 
         'author' => $name
       ));
-      //echo  $name;
     }
+    // We update the last updated time for the feed no matter what
+    // This prevents us from hitting the feed repeatedly if there aren't
+    // new items
+    //TODO extract this to the update method
+    global $wpdb;
+    global $tbl_prefix;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+      $ret = $wpdb->update(
+        $feeds,//the table
+        array('last_updated'=>date("Y-m-d H:m:s")),//columns to update
+        array('id'=>$feed_id)//where filters
+      );
     //echo $feedrow->feed_url;
     $resp->feed_id = $feed_id;
     $resp->updated = count($items);
