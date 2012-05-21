@@ -40,28 +40,6 @@
   </ul>
     </script>
   </div>
-  <div id="wprss-feedlist">
-      <div id="loadmoreajaxloader" style="">
-        <center>
-          loading, just a sec...
-        </center>
-      </div>
-  <h2>The Feeds</h2>
-    <script type="text/x-handlebars" >
-    <ul class="feeds">
-    {{#each Wprss.feedsController}}
-      {{#view Wprss.FeedsView contentBinding="this"}}
-      {{#with content}}
-        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
-      {{/with }}
-      {{/view}}
-    {{/each}}
-
-    </ul>
-
-
-    </script>
-  </div>
   <div id="wprss-content">
     <script type="text/x-handlebars">
     {{#if Wprss.selectedFeedController.content}}
@@ -95,6 +73,28 @@
     {{else}}
       <div class="no-feed-displayed"><p>Whoa - there's nothing to show right now.</p> <p>Try clicking on one of the feeds on the right.</p></div>
     {{/if}}
+    </script>
+  </div>
+  <div id="wprss-feedlist">
+      <div id="loadmoreajaxloader" style="">
+        <center>
+          loading, just a sec...
+        </center>
+      </div>
+  <h2>The Feeds</h2>
+    <script type="text/x-handlebars" >
+    <ul class="feeds">
+    {{#each Wprss.feedsController}}
+      {{#view Wprss.FeedsView contentBinding="this"}}
+      {{#with content}}
+        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
+      {{/with }}
+      {{/view}}
+    {{/each}}
+
+    </ul>
+
+
     </script>
   </div>
 </div>
