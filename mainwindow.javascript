@@ -3,7 +3,6 @@ jQuery(document).ready(function($){
   //dynamically set the height of the content to the window
   function setContentHeight(id){
     $(id).css({'height':(($(window).height())-28)+'px'});
-
   }
   $(window).resize(function(){
     setContentHeight('#wprss-content');
