@@ -227,6 +227,7 @@ Wprss.entriesController = Em.ArrayController.create({
   createEntry: function(entryHash){
     //Don't add the entry if we already have it
     if(this.get('content').findProperty('id',entryHash.id)){return;}
+    entryHash.isRead = (1==entryHash.isRead);
     var entry = Wprss.Entry.create(entryHash);
     this.pushObject(entry);
   },
@@ -388,7 +389,7 @@ Wprss.EntriesView = Em.View.extend({
     Wprss.entriesController.toggleEntryRead(contentId);
     return false;
   },
-  classNameBindings:['isCurrent']
+  //classNameBindings:['isCurrent']
 });
 
 Wprss.commandController = Em.ArrayController.create({

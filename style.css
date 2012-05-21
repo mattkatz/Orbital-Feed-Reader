@@ -7,7 +7,7 @@
   position: fixed;
   right: 0;
   top: 30px;
-  height:100%
+  height:100%;
   overflow-y:scroll;
   max-width:200px;
   
@@ -20,15 +20,19 @@
 }
 .entries {
   /*background-color: #ECECEC;*/
+  background-color: #fdfdfd;
   
 }
 
-.entries .current{
-background-color: #ffffff;
+.entries .is-read{
+  background-color: #fafafa;
+  font-style:italic;
 }
+
 .entries .is-current{
-background-color: #ffffff;
-box-shadow: 2px 2px 4px #666;
+  font-style:normal;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 4px #666;
 }
 
 .entry{

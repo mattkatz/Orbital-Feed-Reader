@@ -67,7 +67,7 @@
     {{#if Wprss.selectedFeedController.content}}
       <ul class="entries">
         {{#each Wprss.entriesController}}
-          {{#view Wprss.EntriesView contentBinding="this"}}
+          {{#view Wprss.EntriesView contentBinding="this" classBinding="content.isRead isCurrent" }}
             <li class="entry" {{bindAttr id="content.entryID"}} >
               <a {{bindAttr href="content.link"}} target="_blank">
                 <h2>{{content.title}}</h2>
