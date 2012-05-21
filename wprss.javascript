@@ -7,6 +7,10 @@ Wprss.Feed = Em.Object.extend({
   site_url: null,
   unread_count:null,
   is_private: null,
+  has_unread: function(){
+    return unread_count > 0;
+
+  }.property(),
 });
 
 Wprss.feedsController = Em.ArrayController.create({
@@ -525,8 +529,9 @@ function scrollToEntry(currentItem){
       console.log('row.offset() was null');
       return;
     }
+    //position is the offset from the parent scrollable element
+    var scrollAmount = row.position().top;
+    var currentScroll = jQuery('#wprss-content').scrollTop();
     
-    jQuery('html').animate({
-      scrollTop: row.offset().top - adminbar.height() - commandbar.height()}, 200);
-
+    jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
 }

@@ -1,5 +1,16 @@
 //Set everything up after page load
 jQuery(document).ready(function($){
+  //dynamically set the height of the content to the window
+  function setContentHeight(id){
+    $(id).css({'height':(($(window).height())-28)+'px'});
+
+  }
+  $(window).resize(function(){
+    setContentHeight('#wprss-content');
+    setContentHeight('#wprss-feedlist');
+  });
+  setContentHeight('#wprss-content');
+  setContentHeight('#wprss-feedlist');
   //TODO This should be just fed in on page load
   Wprss.feedsController.refreshFeeds(true);
 
