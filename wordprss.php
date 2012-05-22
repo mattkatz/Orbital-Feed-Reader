@@ -109,10 +109,10 @@ function wprss_uninstall_db()
 
   }
 }
-add_filter('cron_schedules', '1hour');
-function five_minutes_baby( $schedules ) {
-    $schedules['5minutes'] = array(
-          'interval' => 36000, //that's how many seconds in 5 minutes, for the unix timestamp
+add_filter('cron_schedules', 'one_hour');
+function one_hour( $schedules ) {
+    $schedules['1hour'] = array(
+          'interval' => 36000, //that's how many seconds in 1 hour, for the unix timestamp
               'display' => __('60 Minutes')
                 );
       return $schedules;
