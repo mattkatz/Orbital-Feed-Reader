@@ -76,7 +76,7 @@
     </script>
   </div>
   <div id="wprss-feedlist">
-      <div id="loadmoreajaxloader" style="">
+      <div id="loadmoreajaxloader" style="display:none;">
         <center>
           loading, just a sec...
         </center>
