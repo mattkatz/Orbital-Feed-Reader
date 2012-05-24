@@ -5,15 +5,15 @@ jQuery(document).ready(function($){
     $(id).css({'height':(($(window).height())-height)+'px'});
   }
   $(window).resize(function(){
-    setContentHeight('.entries',100);
+    setContentHeight('#wprss-content',28+22);
     setContentHeight('#wprss-feedlist',28);
 
-    $('.entries').css({'width':(($('#wprss-container').width() - 155)+'px')});
+    $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
   });
-  setContentHeight('.entries',100);
+  setContentHeight('#wprss-content',28+22);
   setContentHeight('#wprss-feedlist',28);
   console.log((($('#wprss-container').width() - 155)+'px'));
-  $('.entries').css({'width':(($('#wprss-container').width() - 155)+'px')});
+    $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
   //TODO This should be just fed in on page load
   Wprss.feedsController.refreshFeeds(true);
 

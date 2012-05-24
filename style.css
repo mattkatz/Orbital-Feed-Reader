@@ -21,9 +21,6 @@
 .entries {
   /*background-color: #ECECEC;*/
   background-color: #eee;
-  width:80%;
-  overflow-y:auto;
-  
 }
 
 .entries .is-read{
@@ -94,8 +91,9 @@
   display: none;
 }
 #wprss-content{
-  width: 80%;
   float:left;
+  background:#dedede;
+  overflow-y:auto;
 }
 #commandbar {
   background: #dddddd;
