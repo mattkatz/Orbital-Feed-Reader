@@ -1,15 +1,17 @@
 #wprss-feedlist{
   //float:right;
+  top:28px;
+  overflow-y:auto;
+
   border-left: 1px solid #dddddd;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: #ECECEC;
   border-color: #CCCCCC;
   position: fixed;
   right: 0;
-  bottom: 0px;
-  overflow-y:scroll;
-  max-width:200px;
-  
+  min-width:100px;
+  width:180px;
 }
 .no-feed-displayed{
   font-weight: lighter;
@@ -19,6 +21,8 @@
 .entries {
   /*background-color: #ECECEC;*/
   background-color: #eee;
+  width:80%;
+  overflow-y:auto;
   
 }
 
@@ -48,7 +52,10 @@
   border-bottom: 1px dotted;
 }
 
-/*.feeds div*/
+.feeds {
+  overflow-y:auto;
+}
+
 #wprss-feedlist ul div 
 {
   border-bottom: 1px solid #DFDFDF;
@@ -88,13 +95,15 @@
 }
 #wprss-content{
   width: 80%;
-  overflow-y:auto;
+  float:left;
 }
 #commandbar {
   background: #dddddd;
   display: inline-block; 
-  position: fixed;
+  float:left;
+  /*position: absolute;*/
   /*this is the height of the admin bar.*/
+  width:100%;
   
   top: 28px;
 }
