@@ -78,6 +78,10 @@
   <div id="wprss-feedlist">
       <div id="loadmoreajaxloader" style="display:none;">
         <center>
+          <img src="<?php
+            echo plugins_url("ajax-loader.gif", __FILE__);
+
+          ?>">
           loading, just a sec...
         </center>
       </div>
@@ -87,7 +91,12 @@
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
       {{#with content}}
-        <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
+        <li class="feed" {{bindAttr id="feed_id" }}>
+          {{#if is_loading}}
+            <img src="<?php echo plugins_url("ajax-loader.gif", __FILE__); ?>">
+          {{/if}}
+          
+          {{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
       {{/with }}
       {{/view}}
     {{/each}}

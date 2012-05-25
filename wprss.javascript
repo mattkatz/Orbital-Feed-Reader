@@ -11,6 +11,7 @@ Wprss.Feed = Em.Object.extend({
     return unread_count > 0;
 
   }.property(),
+  is_loading: false,
 });
 
 Wprss.feedsController = Em.ArrayController.create({
@@ -42,9 +43,8 @@ Wprss.feedsController = Em.ArrayController.create({
   updateFeeds: function(feeds){
     var content = Wprss.feedsController.get('content');
     feeds.forEach(function(value){
-      var feed = content.findProperty('feed_id',value.id);
-      if(feed){
-        feed.set('unread_count',value.unread_count);
+      if(this.set(value.id,'unread_count',value.unread_count)){
+        //great!
       }
       else
       {
@@ -56,18 +56,17 @@ Wprss.feedsController = Em.ArrayController.create({
     //show the add feed window
     var dlg = jQuery('#subscribe-window');
     dlg.toggleClass('invisible');
-
   },
-  subscribeFeedCommit: function(){
-    //get the feed url 
-    //validate it
-    //add the feed
-    //close the dialog
-    
-
-  },
-  addFeed:function(){
-    //post a feed 
+  set: function(id,property,value){
+    var content = Wprss.feedsController.get('content');
+    var feed = content.findProperty('feed_id',id);
+    if(feed){
+      feed.set(property,value);
+      return true;
+    }
+    else{
+      return false;
+    }
 
   },
   changeUnreadCount:function(id,delta){
@@ -312,11 +311,16 @@ Wprss.entriesController = Em.ArrayController.create({
       show_read: show_read,
       nonce_a_donce:get_url.nonce_a_donce 
     };
+    //Set this feed as loading.
+    Wprss.feedsController.set(id,'is_loading',true);
+    
     jQuery.get(get_url.ajaxurl, data, function(response){
       //alert(response);
       Wprss.entriesController.clearEntries();
       Wprss.entriesController.createEntries(response);
       scrollToEntry(Wprss.entriesController.get('content')[0]);
+      //Set the feed as not loading
+      Wprss.feedsController.set(id,'is_loading',false);
     });
   }
 });
