@@ -70,6 +70,9 @@
           {{/view}}
         {{/each}}
       </ul>
+      <div id="load-more">
+        The magic elves are busily shoveling more info into the pipes right now.
+      </div>
     {{else}}
       <div class="no-feed-displayed"><p>Whoa - there's nothing to show right now.</p> <p>Try clicking on one of the feeds on the right.</p></div>
     {{/if}}
