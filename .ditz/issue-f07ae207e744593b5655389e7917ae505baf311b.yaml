@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "Fix infinite scrolling.  "
+desc: now that we are scrolling the div instead of the document, we have to detect that.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-25 12:36:15.533324 Z
+references: []
+
+id: f07ae207e744593b5655389e7917ae505baf311b
+log_events: 
+- - 2012-05-25 12:36:15.533697 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
