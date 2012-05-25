@@ -7,13 +7,11 @@ jQuery(document).ready(function($){
   $(window).resize(function(){
     setContentHeight('#wprss-content',28+22);
     setContentHeight('#wprss-feedlist',28);
-
     $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
   });
   setContentHeight('#wprss-content',28+22);
   setContentHeight('#wprss-feedlist',28);
-  console.log((($('#wprss-container').width() - 155)+'px'));
-    $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
+  $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
   //TODO This should be just fed in on page load
   Wprss.feedsController.refreshFeeds(true);
 
