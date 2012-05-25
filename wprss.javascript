@@ -43,7 +43,7 @@ Wprss.feedsController = Em.ArrayController.create({
   updateFeeds: function(feeds){
     var content = Wprss.feedsController.get('content');
     feeds.forEach(function(value){
-      if(this.set(value.id,'unread_count',value.unread_count)){
+      if(Wprss.feedsController.set(value.id,'unread_count',value.unread_count)){
         //great!
       }
       else
