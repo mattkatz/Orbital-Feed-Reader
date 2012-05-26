@@ -71,9 +71,9 @@ Wprss.feedsController = Em.ArrayController.create({
   },
   changeUnreadCount:function(id,delta){
     var feed = this.get('content').findProperty('feed_id',id);
-    console.log(feed.feed_name + "("+feed.unread_count+")");
+    //console.log(feed.feed_name + "("+feed.unread_count+")");
     feed.set('unread_count', +feed.unread_count + delta);
-    console.log(feed.unread_count);
+    //console.log(feed.unread_count);
   },
   //a list of all unread feeds
   unreadFeeds: function(){
@@ -262,7 +262,12 @@ Wprss.entriesController = Em.ArrayController.create({
       //if there is an item selected, select the next one.
       console.log('current item');
       var idx = array.indexOf(currentItem);
-      currentItem = array.get(++idx);
+      if(++idx == array.length){
+        currentItem = array.get('firstObject');
+      }
+      else{
+        currentItem = array.get(idx);
+      }
     }
     Wprss.selectedEntryController.set('content',currentItem);
     //scroll to this element.
@@ -290,7 +295,7 @@ Wprss.entriesController = Em.ArrayController.create({
       response = JSON.parse(response);
       jQuery('#'+entry.entry_id+">.entry_isloading").hide();
       if(response.updated >0){
-        console.log("updating");
+        //console.log("updating");
         entry.set('isRead', isRead);
         Wprss.feedsController.changeUnreadCount(entry.feed_id,isRead?-1:1);
       }
@@ -417,7 +422,6 @@ Wprss.ReadView = Em.View.extend({
     }else{
       return "Unread";
     }
-    console.log(content);
   }.property(),
   templateName:'read-check',
   click: function(evt){
@@ -444,9 +448,7 @@ Wprss.feedFinder= Em.Object.create({
     Wprss.feedsController.saveFeed(this.get('feedCandidate'));
   },
   findFeed: function(){
-    console.log('in findFeed');
     // First get the feed url or site url from the link
-    console.log(this.url);
     //TODO: then ask the backend to validate the feed details
     var data = {
       action: 'wprss_find_feed',
@@ -488,7 +490,6 @@ Wprss.feedFinder= Em.Object.create({
 });
 Wprss.AddFeedView = Em.TextField.extend({
   focusOut: function(){
-    console.log('out');
   },
   insertNewLine: function(){
     console.log('rah');

@@ -15,22 +15,44 @@ jQuery(document).ready(function($){
   //TODO This should be just fed in on page load
   Wprss.feedsController.refreshFeeds(true);
 
-  //TODO this should just be fed into the page on initial load
-  var data = {
-    action: 'wprss_get_entries',
-    show_read: 0,
-    nonce_a_donce:get_url.nonce_a_donce 
-    
-  };
-  $.get(get_url.ajaxurl, data, function(response){
-    //alert(response);
-    Wprss.entriesController.createEntries(response);
-  });
   Wprss.selectedFeedController.onSelect = function(feed){
     Wprss.entriesController.selectFeed(feed.feed_id, feed.unread_count== 0?1:0);
   };
   setupKeys();
   feedTimer();
+  //put in some infinite scrolling logic
+  jQuery('#wprss-content').endlessScroll({
+    loader: '<div class="loading">LOADING UP MORE POSTS BOSS!</div>',
+    ceaseFireOnEmpty: false,
+    fireOnce:false,
+    callback: function(fireSequence,pageSequence,scrollDirection){
+      console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
+      if("next" == scrollDirection){
+        var data = {
+          action: 'wprss_get_entries',
+          show_read: 0,
+          nonce_a_donce:get_url.nonce_a_donce 
+          
+        };
+        var feed = Wprss.selectedFeedController.get('content') ;
+        if(feed){
+          data['feed_id']=feed.feed_id;
+          feed.set('is_loading',true);
+        }
+
+        //how are you going to handle the failure?
+        //TODO whaddya do when there are no more posts?
+        jQuery.get(get_url.ajaxurl, data, function(response){
+          Wprss.entriesController.createEntries(response);
+          Wprss.selectedFeedController.get('content').set('is_loading',false);
+          jQuery('.loading').remove();
+          //scrollToEntry(Wprss.selectedEntryController.get('content'));
+        });
+        console.log('called for more posts');
+      }
+    }
+
+  });
 });
 
 function feedTimer(){
@@ -81,11 +103,13 @@ function setupKeys(){
     Wprss.entriesController.toggleEntryRead(currentItem.id);
   });
 }
-//put in some infinite scrolling logic
+
+  
+/*
 jQuery(window).scroll(function()
 {
     //how far from the bottom should we wait?
-    if(jQuery(window).scrollTop() == jQuery(document).height() - jQuery(window).height())
+    if(jQuery('#wprss-content').scrollTop() == jQuery(document).height() - jQuery(window).height())
     {
         jQuery('div#loadmoreajaxloader').show();
         var data = {
@@ -107,3 +131,4 @@ jQuery(window).scroll(function()
         
     }
 });
+*/
