@@ -8,8 +8,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-03-21 11:21:21.440746 Z
 references: []
 
@@ -29,3 +29,7 @@ log_events:
     3. when we are X items away from the end and the feed has unread items, 
     then we should add more items to the end.
     4. eventually we may need to add something for the infinite scrolling like linkedin did. As items scroll off the viewport, we would replace them with simlar sized div. Or increase the height on a spacer div.
+- - 2012-05-26 17:25:56.532103 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - now it should work partially.
