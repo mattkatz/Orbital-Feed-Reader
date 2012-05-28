@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make the feeds header still and just the feeds scroll
+desc: ""
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-27 00:52:49.601294 Z
+references: []
+
+id: 9ae05c36387b96c794b1d6dbdc5c4939bcf59bda
+log_events: 
+- - 2012-05-27 00:52:49.601762 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

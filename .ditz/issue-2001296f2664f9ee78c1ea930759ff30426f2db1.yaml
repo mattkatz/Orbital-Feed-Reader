@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make read if you scroll past the cursor x position
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-05-27 00:45:25.408219 Z
+references: []
+
+id: 2001296f2664f9ee78c1ea930759ff30426f2db1
+log_events: 
+- - 2012-05-27 00:45:25.445505 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
