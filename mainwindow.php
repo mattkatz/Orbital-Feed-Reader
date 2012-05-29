@@ -37,6 +37,11 @@
         Show Read Items
       {{/view}}
     </li>
+    {{#if Wprss.selectedEntryController.content}}
+      <li class="command">
+        {{Wprss.selectedEntryController.content.feed_name}}
+      </li>
+    {{/if}}
   </ul>
     </script>
   </div>

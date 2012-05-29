@@ -220,6 +220,9 @@ Wprss.Entry = Em.Object.extend({
   marked:null,
   content:null,
   entered:null,
+  feed_name: function(){
+    return Wprss.feedsController.get('content').findProperty('feed_id',this.get('feed_id')).get('feed_name');
+  }.property(),
 
   entryID: function(){
     return this.get('feed_id')+"_"+this.get('id');
