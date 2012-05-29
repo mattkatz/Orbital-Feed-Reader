@@ -48,6 +48,13 @@
   border-bottom: 1px dotted;
 }
 
+#feed-head{
+  display:inline;
+}
+#feed-head  h2{
+  display:inline;
+}
+
 #feeds {
   overflow-y:auto;
   margin:0px;

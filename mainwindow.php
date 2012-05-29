@@ -86,9 +86,9 @@
           loading, just a sec...
         </center>
       </div>
-    <div id='feed_head'>
-      <h2>The Feeds</h2>
+    <div id='feed-head'>
     <script type="text/x-handlebars" >
+      <h2>The Feeds</h2>
       {{#view Em.Button className="button"
         tagName="span"
         target="Wprss.feedsController"
