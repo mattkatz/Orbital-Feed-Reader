@@ -1,3 +1,4 @@
+  
 #wprss-feedlist{
   top:28px;
   overflow-y:auto;
@@ -19,7 +20,8 @@
 }
 .entries {
   /*background-color: #ECECEC;*/
-  background-color: #eee;
+  background-color: #fff;
+  color: #666;
 }
 
 .entries .is-read{
@@ -31,12 +33,14 @@
   font-style:normal;
   background-color: #ffffff;
   box-shadow: 2px 2px 4px #666;
+  color: #333;
 }
 
 .entry{
   border-top: 2px ridge;
   display:inline-block;
   padding-bottom: 10px;
+  /*padding-left: 5px;*/
   width:100%;
 }
 
@@ -100,7 +104,7 @@
 }
 #wprss-content{
   float:left;
-  background:#dedede;
+ /* background:#dedede;*/
   overflow-y:auto;
 }
 #commandbar {
