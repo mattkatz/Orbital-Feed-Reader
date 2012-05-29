@@ -87,8 +87,8 @@
         </center>
       </div>
     <div id='feed-head'>
-    <script type="text/x-handlebars" >
       <h2>The Feeds</h2>
+    <script type="text/x-handlebars" >
       {{#view Em.Button className="button"
         tagName="span"
         target="Wprss.feedsController"

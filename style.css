@@ -52,10 +52,10 @@
   border-bottom: 1px dotted;
 }
 
-#feed-head{
+#feed-head >div{
   display:inline;
 }
-#feed-head  h2{
+#feed-head > h2{
   display:inline;
 }
 
