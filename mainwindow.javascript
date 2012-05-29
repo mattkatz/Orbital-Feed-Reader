@@ -20,39 +20,7 @@ jQuery(document).ready(function($){
   };
   setupKeys();
   feedTimer();
-  //put in some infinite scrolling logic
-  jQuery('#wprss-content').endlessScroll({
-    loader: '<div class="loading">LOADING UP MORE POSTS BOSS!</div>',
-    ceaseFireOnEmpty: false,
-    fireOnce:false,
-    callback: function(fireSequence,pageSequence,scrollDirection){
-      console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
-      if("next" == scrollDirection){
-        var data = {
-          action: 'wprss_get_entries',
-          show_read: 0,
-          nonce_a_donce:get_url.nonce_a_donce 
-          
-        };
-        var feed = Wprss.selectedFeedController.get('content') ;
-        if(feed){
-          data['feed_id']=feed.feed_id;
-          feed.set('is_loading',true);
-        }
-
-        //how are you going to handle the failure?
-        //TODO whaddya do when there are no more posts?
-        jQuery.get(get_url.ajaxurl, data, function(response){
-          Wprss.entriesController.createEntries(response);
-          Wprss.selectedFeedController.get('content').set('is_loading',false);
-          jQuery('.loading').remove();
-          //scrollToEntry(Wprss.selectedEntryController.get('content'));
-        });
-        console.log('called for more posts');
-      }
-    }
-
-  });
+  setupInfiniteScroll();
 });
 
 function feedTimer(){
@@ -101,6 +69,41 @@ function setupKeys(){
     if(null == currentItem)
       return;
     Wprss.entriesController.toggleEntryRead(currentItem.id);
+  });
+}
+function setupInfiniteScroll(){
+  //put in some infinite scrolling logic
+  jQuery('#wprss-content').endlessScroll({
+    loader: '<div class="loading">LOADING UP MORE POSTS BOSS!</div>',
+    ceaseFireOnEmpty: false,
+    fireOnce:false,
+    callback: function(fireSequence,pageSequence,scrollDirection){
+      console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
+      if("next" == scrollDirection){
+        var data = {
+          action: 'wprss_get_entries',
+          show_read: 0,
+          nonce_a_donce:get_url.nonce_a_donce 
+          
+        };
+        var feed = Wprss.selectedFeedController.get('content') ;
+        if(feed){
+          data['feed_id']=feed.feed_id;
+          feed.set('is_loading',true);
+        }
+
+        //how are you going to handle the failure?
+        //TODO whaddya do when there are no more posts?
+        jQuery.get(get_url.ajaxurl, data, function(response){
+          Wprss.entriesController.createEntries(response);
+          Wprss.selectedFeedController.get('content').set('is_loading',false);
+          jQuery('.loading').remove();
+          //scrollToEntry(Wprss.selectedEntryController.get('content'));
+        });
+        console.log('called for more posts');
+      }
+    }
+
   });
 }
 
