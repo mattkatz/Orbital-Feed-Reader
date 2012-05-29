@@ -3,7 +3,6 @@
   <div id="commandbar" class="quicklinks">
     <script type="text/x-handlebars" >
   <ul>
-    <li class="command"><a href="http://localhost/wp/wp-admin/admin-ajax.php?action=wprss_update_feed&feed_id=1">Update Feed</a></li>
     <li class="command">
       {{#view Em.Button classBinding="isActive"
         tagName="span"
@@ -22,12 +21,6 @@
       {{/view}}
     </li>
     <li class="command">
-      {{#view Em.Button classBinding="isActive"
-        tagName="span"
-        target="Wprss.feedsController"
-        action="showFeed" }}
-        Subscribe +
-      {{/view}}
     </li>
     <li class="command">
       {{#view Em.Button classBinding="isActive"
@@ -93,8 +86,16 @@
           loading, just a sec...
         </center>
       </div>
-  <h2>The Feeds</h2>
     <script type="text/x-handlebars" >
+    <div id='feed_head'>
+      <h2>The Feeds</h2>
+      {{#view Em.Button className="button"
+        tagName="span"
+        target="Wprss.feedsController"
+        action="showFeed" }}
+         +
+      {{/view}}
+    </div>
     <ul class="feeds">
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
@@ -110,6 +111,7 @@
     {{/each}}
 
     </ul>
+
 
 
     </script>
