@@ -14,6 +14,7 @@ Wprss.Feed = Em.Object.extend({
   is_loading: false,
 });
 
+// #THE FEEDS#
 Wprss.feedsController = Em.ArrayController.create({
   content: [],
   changeUnreadCount:function(id,delta){
@@ -227,8 +228,13 @@ Wprss.Entry = Em.Object.extend({
 
   }.property(),
 });
+
+//#THE ENTRIES
 Wprss.entriesController = Em.ArrayController.create({
   content: [],
+  clearEntries: function(){
+    this.set('content', []);
+  },
   createEntry: function(entryHash){
     //Don't add the entry if we already have it
     if(this.get('content').findProperty('id',entryHash.id)){return;}
@@ -242,16 +248,34 @@ Wprss.entriesController = Em.ArrayController.create({
       Wprss.entriesController.createEntry(entry);
     });
   },
-  clearEntries: function(){
-    this.set('content', []);
+  nextEntry: function(){
+    this.selectNextEntry(Wprss.entriesController.get('content'));
   },
-  toggleEntryRead: function(id){
-    var entry = this.content.findProperty('id',id);
-    var unreadStatus = entry.get('isRead');
-    this.setEntryIsRead(id,!unreadStatus);
-
+  previousEntry: function(){
+    this.selectNextEntry(Wprss.entriesController.get('content').toArray().reverse());
   },
-  //this is the ugly function for the two pretty ones below
+  selectFeed: function(id,show_read){
+    show_read = show_read || 0;
+    
+    var data = {
+      action: 'wprss_get_entries',
+      feed_id: id,
+      show_read: show_read,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    //Set this feed as loading.
+    Wprss.feedsController.set(id,'is_loading',true);
+    
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //alert(response);
+      Wprss.entriesController.clearEntries();
+      Wprss.entriesController.createEntries(response);
+      scrollToEntry(Wprss.entriesController.get('content')[0]);
+      //Set the feed as not loading
+      Wprss.feedsController.set(id,'is_loading',false);
+    });
+  },
+  //this is the ugly function for the two pretty ones 
   selectNextEntry: function(array){
     var currentItem = Wprss.selectedEntryController.get('content');
     //if there is no item selected, select the first one.
@@ -275,12 +299,6 @@ Wprss.entriesController = Em.ArrayController.create({
     scrollToEntry(currentItem);
     Wprss.entriesController.setEntryIsRead(currentItem.id,true);
 
-  },
-  nextEntry: function(){
-    this.selectNextEntry(Wprss.entriesController.get('content'));
-  },
-  previousEntry: function(){
-    this.selectNextEntry(Wprss.entriesController.get('content').toArray().reverse());
   },
   setEntryIsRead: function(id,isRead){
     var entry = this.content.findProperty('id',id);
@@ -307,28 +325,13 @@ Wprss.entriesController = Em.ArrayController.create({
     });
 
   },
+  toggleEntryRead: function(id){
+    var entry = this.content.findProperty('id',id);
+    var unreadStatus = entry.get('isRead');
+    this.setEntryIsRead(id,!unreadStatus);
+
+  },
   
-  selectFeed: function(id,show_read){
-    show_read = show_read || 0;
-    
-    var data = {
-      action: 'wprss_get_entries',
-      feed_id: id,
-      show_read: show_read,
-      nonce_a_donce:get_url.nonce_a_donce 
-    };
-    //Set this feed as loading.
-    Wprss.feedsController.set(id,'is_loading',true);
-    
-    jQuery.get(get_url.ajaxurl, data, function(response){
-      //alert(response);
-      Wprss.entriesController.clearEntries();
-      Wprss.entriesController.createEntries(response);
-      scrollToEntry(Wprss.entriesController.get('content')[0]);
-      //Set the feed as not loading
-      Wprss.feedsController.set(id,'is_loading',false);
-    });
-  }
 });
 Wprss.selectedFeedController = Em.Object.create({
   content: null,
