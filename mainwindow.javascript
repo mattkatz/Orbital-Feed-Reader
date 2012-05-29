@@ -21,7 +21,19 @@ jQuery(document).ready(function($){
   setupKeys();
   feedTimer();
   setupInfiniteScroll();
+  setupScrollToRead();
 });
+
+function setupScrollToRead(){
+  jQuery('#wprss-content').scroll(function(evt){
+    //Where is the mouse cursor?
+    //Which element is underneath the mouse cursor?
+    //where is the top of that element?
+    //Where is the bottom of that element?
+
+    console.log(evt);
+  });
+}
 
 function feedTimer(){
     setTimeout(function(){  
