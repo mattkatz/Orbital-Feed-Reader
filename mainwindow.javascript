@@ -8,9 +8,8 @@ jQuery(document).ready(function($){
     setContentHeight('#wprss-content',28+22);
     setContentHeight('#wprss-feedlist',28);
     $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
-    //setContentHeight('#feeds', 28+76);
-    $('#feeds').css({'height':(($('#wprss-feedlist').height()- 76) +'px')});
-    //jQuery('#feeds').css({'height':((jQuery('#wprss-feedlist').height() - 76) + 'px')});
+    setContentHeight('#feeds', 28+63);
+    //$('#feeds').css({'height':(($('#wprss-feedlist').height()-$('feed-head').height()-28 ) +'px')});
   });
   //TODO This should be just fed in on page load
   Wprss.feedsController.refreshFeeds(true);
