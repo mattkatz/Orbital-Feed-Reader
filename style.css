@@ -48,8 +48,10 @@
   border-bottom: 1px dotted;
 }
 
-.feeds {
+#feeds {
   overflow-y:auto;
+  margin-bottom:0px;
+  
 }
 
 #wprss-feedlist ul div 

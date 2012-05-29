@@ -86,17 +86,19 @@
           loading, just a sec...
         </center>
       </div>
-    <script type="text/x-handlebars" >
     <div id='feed_head'>
       <h2>The Feeds</h2>
+    <script type="text/x-handlebars" >
       {{#view Em.Button className="button"
         tagName="span"
         target="Wprss.feedsController"
         action="showFeed" }}
          +
       {{/view}}
+    </script>
     </div>
-    <ul class="feeds">
+    <ul id="feeds" >
+    <script type="text/x-handlebars" >
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
       {{#with content}}
@@ -109,12 +111,9 @@
       {{/with }}
       {{/view}}
     {{/each}}
+    </script>
 
     </ul>
-
-
-
-    </script>
   </div>
 </div>
 
