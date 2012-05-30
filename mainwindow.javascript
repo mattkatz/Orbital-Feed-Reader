@@ -31,7 +31,7 @@ function setupScrollToRead(){
     //Which element is underneath the mouse cursor?
     //where is the top of that element?
     //Where is the bottom of that element?
-  }
+  });
 }
 
 function setupInfiniteScroll(){
