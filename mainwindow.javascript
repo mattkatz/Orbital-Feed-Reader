@@ -11,8 +11,10 @@ jQuery(document).ready(function($){
     //setContentHeight('#feeds', 28+63);
     $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
   });
-  //TODO This should be just fed in on page load
-  Wprss.feedsController.refreshFeeds(true);
+  
+  Wprss.feedsController.createFeeds(startfeeds);
+  Wprss.entriesController.createEntries(startentries);
+  Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
   $(window).resize();
 
   Wprss.selectedFeedController.onSelect = function(feed){
