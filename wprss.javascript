@@ -234,6 +234,7 @@ Wprss.entriesController = Em.ArrayController.create({
   content: [],
   clearEntries: function(){
     this.set('content', []);
+    Wprss.selectedEntryController.clear();
   },
   createEntry: function(entryHash){
     //Don't add the entry if we already have it
@@ -382,7 +383,11 @@ Wprss.FeedsView = Em.View.extend({
   classNameBindings:['isSelected']
 });
 Wprss.selectedEntryController = Em.Object.create({
-  content: null
+  content: null,
+  clear: function(){
+    Wprss.selectedEntryController.set('content',null);
+  },
+
 });
 
 Wprss.FeedView = Em.View.extend({

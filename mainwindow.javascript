@@ -16,13 +16,14 @@ jQuery(document).ready(function($){
   $(window).resize();
 
   Wprss.selectedFeedController.onSelect = function(feed){
+    Wprss.selectedEntryController.clear();
     Wprss.entriesController.selectFeed(feed.feed_id, feed.unread_count== 0?1:0);
   };
   setupKeys();
   feedTimer();
   //put in some infinite scrolling logic
   jQuery('#wprss-content').endlessScroll({
-    loader: '<div class="loading">LOADING UP MORE POSTS BOSS!</div>',
+    loader: '<div class="loading_indicator">LOADING MORE POSTS, BOSS!</div>',
     ceaseFireOnEmpty: false,
     fireOnce:false,
     callback: function(fireSequence,pageSequence,scrollDirection){
@@ -48,8 +49,9 @@ jQuery(document).ready(function($){
           jQuery('.loading').remove();
           //scrollToEntry(Wprss.selectedEntryController.get('content'));
         });
-        console.log('called for more posts');
+        return true;
       }
+      return true;
     }
 
   });

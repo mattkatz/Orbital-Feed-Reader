@@ -62,7 +62,6 @@
 #feeds {
   overflow-y:auto;
   margin:0px;
-  
 }
 
 #wprss-feedlist ul div 
@@ -125,6 +124,11 @@
   float: left;
   padding-left: 5px;
   padding-right: 5px;
+}
+.title {
+  font-weight:strong;
+  font-size:1.1em;
+
 }
 
 .horizontal-form label input{

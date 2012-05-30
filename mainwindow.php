@@ -31,7 +31,7 @@
       {{/view}}
     </li>
     {{#if Wprss.selectedEntryController.content}}
-      <li class="command">
+      <li class="title">
         {{Wprss.selectedEntryController.content.feed_name}}
       </li>
     {{/if}}
