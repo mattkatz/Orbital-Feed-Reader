@@ -1,4 +1,3 @@
-
 <div id='wprss-container'>
   <div id="commandbar" class="quicklinks">
     <script type="text/x-handlebars" >

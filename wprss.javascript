@@ -549,3 +549,17 @@ function scrollToEntry(currentItem){
     
     jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
 }
+//Set everything up after page load
+jQuery(document).ready(function($){
+  function setContentHeight(id,height){
+    $(id).css({'height':(($(window).height())-height)+'px'});
+  }
+  $(window).resize(function(){
+    setContentHeight('#wprss-content',28+22);
+    setContentHeight('#wprss-feedlist',28);
+    $('#wprss-content').css({'width':(($('#wprss-container').width() - 190 )+'px')});
+    //setContentHeight('#feeds', 28+63);
+    $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
+  });
+  $(window).resize();
+});
