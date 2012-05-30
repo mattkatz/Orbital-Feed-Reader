@@ -53,8 +53,8 @@
       {{/view}}
     </script>
     </div>
-    <script type="text/x-handlebars" >
-      <ul class="feeds">
+    <ul id="feeds">
+      <script type="text/x-handlebars" >
         {{#each Wprss.feedsController}}
           {{#view Wprss.FeedsView contentBinding="this"}}
           {{#with content}}
@@ -62,7 +62,7 @@
           {{/with }}
           {{/view}}
         {{/each}}
-      </ul>
-    </script>
+      </script>
+    </ul>
   </div>  
 </div>
