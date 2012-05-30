@@ -12,9 +12,9 @@ jQuery(document).ready(function($){
     $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
   });
   
-  //Wprss.feedsController.refreshFeeds(true);
-
   Wprss.feedsController.createFeeds(startfeeds);
+  Wprss.entriesController.createEntries(startentries);
+  Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
   $(window).resize();
 
   Wprss.selectedFeedController.onSelect = function(feed){

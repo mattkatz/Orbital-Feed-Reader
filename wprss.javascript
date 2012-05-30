@@ -244,7 +244,7 @@ Wprss.entriesController = Em.ArrayController.create({
     this.pushObject(entry);
   },
   createEntries: function(jsonEntries){
-    var entries = JSON.parse(jsonEntries);
+    var entries = jsonEntries;
     entries.forEach(function(entry){
       Wprss.entriesController.createEntry(entry);
     });
@@ -274,7 +274,7 @@ Wprss.entriesController = Em.ArrayController.create({
       scrollToEntry(Wprss.entriesController.get('content')[0]);
       //Set the feed as not loading
       Wprss.feedsController.set(id,'is_loading',false);
-    });
+    },'json');
   },
   //this is the ugly function for the two pretty ones 
   selectNextEntry: function(array){

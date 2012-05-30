@@ -194,4 +194,12 @@
       $feeds = WprssFeeds::get();
       echo json_encode($feeds);
     ?>;
+    var startentries = 
+    <?php
+      require_once('backend.php');
+      $entries = WprssEntries::get(array('isRead'=>0));
+
+      echo json_encode($entries);
+    ?>;
+    
   </script>
