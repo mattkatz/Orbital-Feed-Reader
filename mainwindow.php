@@ -186,6 +186,12 @@
   <script type="text/x-handlebars" data-template-name="command-item">
     {{commandName}}
   </script>
-<?php
-
-?>
+  <script type="text/javascript">
+    //TODO This should be just fed in on page load
+    var startfeeds = 
+    <?php
+      require_once('backend.php');
+      $feeds = WprssFeeds::get();
+      echo json_encode($feeds);
+    ?>;
+  </script>
