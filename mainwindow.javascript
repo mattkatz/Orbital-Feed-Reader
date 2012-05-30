@@ -7,15 +7,16 @@ jQuery(document).ready(function($){
   $(window).resize(function(){
     setContentHeight('#wprss-content',28+22);
     setContentHeight('#wprss-feedlist',28);
-    $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
+    $('#wprss-content').css({'width':(($('#wprss-container').width() - 190 )+'px')});
+    //setContentHeight('#feeds', 28+63);
+    $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
   });
-  setContentHeight('#wprss-content',28+22);
-  setContentHeight('#wprss-feedlist',28);
-  $('#wprss-content').css({'width':(($('#wprss-container').width() - 200 )+'px')});
   //TODO This should be just fed in on page load
   Wprss.feedsController.refreshFeeds(true);
+  $(window).resize();
 
   Wprss.selectedFeedController.onSelect = function(feed){
+    Wprss.selectedEntryController.clear();
     Wprss.entriesController.selectFeed(feed.feed_id, feed.unread_count== 0?1:0);
   };
   setupKeys();
@@ -30,8 +31,42 @@ function setupScrollToRead(){
     //Which element is underneath the mouse cursor?
     //where is the top of that element?
     //Where is the bottom of that element?
+  }
+}
 
-    console.log(evt);
+function setupInfiniteScroll(){
+  //put in some infinite scrolling logic
+  jQuery('#wprss-content').endlessScroll({
+    loader: '<div class="loading_indicator">LOADING MORE POSTS, BOSS!</div>',
+    ceaseFireOnEmpty: false,
+    fireOnce:false,
+    callback: function(fireSequence,pageSequence,scrollDirection){
+      console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
+      if("next" == scrollDirection){
+        var data = {
+          action: 'wprss_get_entries',
+          show_read: 0,
+          nonce_a_donce:get_url.nonce_a_donce 
+          
+        };
+        var feed = Wprss.selectedFeedController.get('content') ;
+        if(feed){
+          data['feed_id']=feed.feed_id;
+          feed.set('is_loading',true);
+        }
+
+        //how are you going to handle the failure?
+        //TODO whaddya do when there are no more posts?
+        jQuery.get(get_url.ajaxurl, data, function(response){
+          Wprss.entriesController.createEntries(response);
+          Wprss.selectedFeedController.get('content').set('is_loading',false);
+          jQuery('.loading').remove();
+          //scrollToEntry(Wprss.selectedEntryController.get('content'));
+        });
+        return true;
+      }
+      return true;
+    }
   });
 }
 

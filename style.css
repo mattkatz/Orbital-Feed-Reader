@@ -1,10 +1,11 @@
+  
 #wprss-feedlist{
   top:28px;
   overflow-y:auto;
 
   border-left: 1px solid #dddddd;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 0px;
   background-color: #ECECEC;
   border-color: #CCCCCC;
   position: fixed;
@@ -19,7 +20,8 @@
 }
 .entries {
   /*background-color: #ECECEC;*/
-  background-color: #eee;
+  background-color: #fff;
+  color: #666;
 }
 
 .entries .is-read{
@@ -31,12 +33,14 @@
   font-style:normal;
   background-color: #ffffff;
   box-shadow: 2px 2px 4px #666;
+  color: #333;
 }
 
 .entry{
   border-top: 2px ridge;
   display:inline-block;
   padding-bottom: 10px;
+  /*padding-left: 5px;*/
   width:100%;
 }
 
@@ -48,8 +52,16 @@
   border-bottom: 1px dotted;
 }
 
-.feeds {
+#feed-head >div{
+  display:inline;
+}
+#feed-head > h2{
+  display:inline;
+}
+
+#feeds {
   overflow-y:auto;
+  margin:0px;
 }
 
 #wprss-feedlist ul div 
@@ -91,7 +103,7 @@
 }
 #wprss-content{
   float:left;
-  background:#dedede;
+ /* background:#dedede;*/
   overflow-y:auto;
 }
 #commandbar {
@@ -112,6 +124,11 @@
   float: left;
   padding-left: 5px;
   padding-right: 5px;
+}
+.title {
+  font-weight:strong;
+  font-size:1.1em;
+
 }
 
 .horizontal-form label input{

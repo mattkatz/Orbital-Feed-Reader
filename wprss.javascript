@@ -14,25 +14,19 @@ Wprss.Feed = Em.Object.extend({
   is_loading: false,
 });
 
+// #THE FEEDS#
 Wprss.feedsController = Em.ArrayController.create({
   content: [],
+  changeUnreadCount:function(id,delta){
+    var feed = this.get('content').findProperty('feed_id',id);
+    //console.log(feed.feed_name + "("+feed.unread_count+")");
+    feed.set('unread_count', +feed.unread_count + delta);
+    //console.log(feed.unread_count);
+  },
   createFeed: function(feed,domain,name,id,unread,priv){
     var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
-
-  refreshFeeds: function(unreadOnly){
-    var data = {
-      action: 'wprss_get_feeds',
-      nonce_a_donce:get_url.nonce_a_donce 
-      
-    };
-    jQuery.get(get_url.ajaxurl, data, function(response){
-      //TODO: put in error checks for bad responses, errors,etc.
-      Wprss.feedsController.createFeeds(response);
-    },'json');
-  },
-  
   createFeeds: function(feeds){
     //var feeds = JSON.parse(jsonFeeds);
     Wprss.feedsController.createFeed('','','Fresh Entries',null,'lots');
@@ -40,47 +34,12 @@ Wprss.feedsController = Em.ArrayController.create({
       Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
-  updateFeeds: function(feeds){
-    var content = Wprss.feedsController.get('content');
-    feeds.forEach(function(value){
-      if(Wprss.feedsController.set(value.id,'unread_count',value.unread_count)){
-        //great!
-      }
-      else
-      {
-        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
-      }
+  //does the actual work of finding an unread feed in an array
+  findUnreadFeed: function(array){
+    return array.find(function(item,index,self){
+      if(item.unread_count > 0){return true;}
     });
   },
-  showFeed: function(){
-    //show the add feed window
-    var dlg = jQuery('#subscribe-window');
-    dlg.toggleClass('invisible');
-  },
-  set: function(id,property,value){
-    var content = Wprss.feedsController.get('content');
-    var feed = content.findProperty('feed_id',id);
-    if(feed){
-      feed.set(property,value);
-      return true;
-    }
-    else{
-      return false;
-    }
-
-  },
-  changeUnreadCount:function(id,delta){
-    var feed = this.get('content').findProperty('feed_id',id);
-    //console.log(feed.feed_name + "("+feed.unread_count+")");
-    feed.set('unread_count', +feed.unread_count + delta);
-    //console.log(feed.unread_count);
-  },
-  //a list of all unread feeds
-  unreadFeeds: function(){
-    return this.content.filter(function(item,index,self){
-      if(item.unread_count > 0){ return true;}
-    });
-  }.property(),
   //for convenience, a function for the fist unread feed;
   firstUnreadFeed: function(){
     return this.findUnreadFeed(Wprss.feedsController.get('content'));
@@ -88,51 +47,6 @@ Wprss.feedsController = Em.ArrayController.create({
   //a function for the last unread feed
   lastUnreadFeed: function(){
     return this.findUnreadFeed(Wprss.feedsController.get('content').toArray().reverse());
-  },
-  //does the actual work of finding an unread feed in an array
-  findUnreadFeed: function(array){
-    return array.find(function(item,index,self){
-      if(item.unread_count > 0){return true;}
-    });
-  },
-
-  //select a feed
-  //expects the feed to not be null!
-  selectFeed: function(feed){
-    if(null == feed){return;}
-    Wprss.selectedFeedController.select(feed);
-  },
-  //Select the previous unread feed
-  previousUnreadFeed:function(id){
-    this.unreadFeedNextSelect(this.get('content').toArray().reverse());
-  },
-  //Select the next  unread feed
-  nextUnreadFeed: function(){
-    this.unreadFeedNextSelect(this.get('content'));
-  },
-  //this ugly function is the guts of the previous nice ones
-  unreadFeedNextSelect: function(array){
-    var current_feed = Wprss.selectedFeedController.content;
-    if(null == current_feed){
-      //no feed selected?  Let's choose the first unread feed.
-      console.log('no feed selected');
-      this.selectFeed(this.findUnreadFeed(array));
-      return;
-    }
-    var current_index;
-    var next_feed = array.find(function(item,index,self){
-      if(item.feed_id== current_feed.feed_id ){
-        current_index = index;
-      }
-      if(current_index < index && item.unread_count > 0){
-        return true;
-      }
-    }, current_feed);
-    if(null == next_feed){
-      //we should just cycle back around to the first unread
-      next_feed= this.findUnreadFeed(array);
-    }
-    this.selectFeed(next_feed);
   },
   markAsRead: function(id){
     //call the markfeedread backend
@@ -150,36 +64,28 @@ Wprss.feedsController = Em.ArrayController.create({
     });
 
   },
-  update: function(id){
+  //Select the next  unread feed
+  nextUnreadFeed: function(){
+    this.unreadFeedNextSelect(this.get('content'));
+  },
+  //Select the previous unread feed
+  previousUnreadFeed:function(id){
+    this.unreadFeedNextSelect(this.get('content').toArray().reverse());
+  },
+  refreshFeeds: function(unreadOnly){
     var data = {
-      action: 'wprss_update_feed',
-      nonce_a_donce: get_url.nonce_a_donce,
-      feed_id: id,
+      action: 'wprss_get_feeds',
+      nonce_a_donce:get_url.nonce_a_donce 
+      
     };
-    jQuery.post(get_url.ajaxurl,data,function(response){
-      Wprss.feedsController.changeUnreadCount(response.feed_id, response.updated);
-      feed = Wprss.feedsController.get('content').findProperty('feed_id',response.feed_id);
-      Wprss.feedsController.selectFeed(feed);
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //TODO: put in error checks for bad responses, errors,etc.
+      Wprss.feedsController.createFeeds(response);
     },'json');
   },
   removeFeed: function(feed_id){
     var feed = this.findProperty('feed_id',feed_id);
     this.removeObject(feed);
-  },
-  unsubscribe: function(feed_id){
-    var data = {
-      action: 'wprss_unsubscribe_feed',
-      feed_id: feed_id,
-      nonce_a_donce:get_url.nonce_a_donce 
-    };
-    jQuery.post(get_url.ajaxurl,data, function(data){
-      if(data.result)//TODO: test to see if the feed actually got deleted
-      {
-        //remove the feed from the list
-        Wprss.feedsController.removeFeed(data.feed_id);
-        Wprss.selectedFeedController.set('content',null);
-      }
-    },'json');
   },
   saveFeed: function(feed){
     var data = {
@@ -209,6 +115,99 @@ Wprss.feedsController = Em.ArrayController.create({
     },'json');
 
   },
+  //select a feed
+  //expects the feed to not be null!
+  selectFeed: function(feed){
+    if(null == feed){return;}
+    Wprss.selectedFeedController.select(feed);
+  },
+  set: function(id,property,value){
+    var content = Wprss.feedsController.get('content');
+    var feed = content.findProperty('feed_id',id);
+    if(feed){
+      feed.set(property,value);
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  },
+  showFeed: function(){
+    //show the add feed window
+    var dlg = jQuery('#subscribe-window');
+    dlg.toggleClass('invisible');
+  },
+  //a list of all unread feeds
+  unreadFeeds: function(){
+    return this.content.filter(function(item,index,self){
+      if(item.unread_count > 0){ return true;}
+    });
+  }.property(),
+  updateFeeds: function(feeds){
+    var content = Wprss.feedsController.get('content');
+    feeds.forEach(function(value){
+      if(Wprss.feedsController.set(value.id,'unread_count',value.unread_count)){
+        //great!
+      }
+      else
+      {
+        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
+      }
+    });
+  },
+
+  //this ugly function is the guts of the previous nice ones
+  unreadFeedNextSelect: function(array){
+    var current_feed = Wprss.selectedFeedController.content;
+    if(null == current_feed){
+      //no feed selected?  Let's choose the first unread feed.
+      console.log('no feed selected');
+      this.selectFeed(this.findUnreadFeed(array));
+      return;
+    }
+    var current_index;
+    var next_feed = array.find(function(item,index,self){
+      if(item.feed_id== current_feed.feed_id ){
+        current_index = index;
+      }
+      if(current_index < index && item.unread_count > 0){
+        return true;
+      }
+    }, current_feed);
+    if(null == next_feed){
+      //we should just cycle back around to the first unread
+      next_feed= this.findUnreadFeed(array);
+    }
+    this.selectFeed(next_feed);
+  },
+  unsubscribe: function(feed_id){
+    var data = {
+      action: 'wprss_unsubscribe_feed',
+      feed_id: feed_id,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    jQuery.post(get_url.ajaxurl,data, function(data){
+      if(data.result)//TODO: test to see if the feed actually got deleted
+      {
+        //remove the feed from the list
+        Wprss.feedsController.removeFeed(data.feed_id);
+        Wprss.selectedFeedController.set('content',null);
+      }
+    },'json');
+  },
+  update: function(id){
+    var data = {
+      action: 'wprss_update_feed',
+      nonce_a_donce: get_url.nonce_a_donce,
+      feed_id: id,
+    };
+    jQuery.post(get_url.ajaxurl,data,function(response){
+      Wprss.feedsController.changeUnreadCount(response.feed_id, response.updated);
+      feed = Wprss.feedsController.get('content').findProperty('feed_id',response.feed_id);
+      Wprss.feedsController.selectFeed(feed);
+    },'json');
+  },
 });
 Wprss.Entry = Em.Object.extend({
   feed_id: null,
@@ -220,14 +219,23 @@ Wprss.Entry = Em.Object.extend({
   marked:null,
   content:null,
   entered:null,
+  feed_name: function(){
+    return Wprss.feedsController.get('content').findProperty('feed_id',this.get('feed_id')).get('feed_name');
+  }.property(),
 
   entryID: function(){
     return this.get('feed_id')+"_"+this.get('id');
 
   }.property(),
 });
+
+//#THE ENTRIES
 Wprss.entriesController = Em.ArrayController.create({
   content: [],
+  clearEntries: function(){
+    this.set('content', []);
+    Wprss.selectedEntryController.clear();
+  },
   createEntry: function(entryHash){
     //Don't add the entry if we already have it
     if(this.get('content').findProperty('id',entryHash.id)){return;}
@@ -241,16 +249,34 @@ Wprss.entriesController = Em.ArrayController.create({
       Wprss.entriesController.createEntry(entry);
     });
   },
-  clearEntries: function(){
-    this.set('content', []);
+  nextEntry: function(){
+    this.selectNextEntry(Wprss.entriesController.get('content'));
   },
-  toggleEntryRead: function(id){
-    var entry = this.content.findProperty('id',id);
-    var unreadStatus = entry.get('isRead');
-    this.setEntryIsRead(id,!unreadStatus);
-
+  previousEntry: function(){
+    this.selectNextEntry(Wprss.entriesController.get('content').toArray().reverse());
   },
-  //this is the ugly function for the two pretty ones below
+  selectFeed: function(id,show_read){
+    show_read = show_read || 0;
+    
+    var data = {
+      action: 'wprss_get_entries',
+      feed_id: id,
+      show_read: show_read,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    //Set this feed as loading.
+    Wprss.feedsController.set(id,'is_loading',true);
+    
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //alert(response);
+      Wprss.entriesController.clearEntries();
+      Wprss.entriesController.createEntries(response);
+      scrollToEntry(Wprss.entriesController.get('content')[0]);
+      //Set the feed as not loading
+      Wprss.feedsController.set(id,'is_loading',false);
+    });
+  },
+  //this is the ugly function for the two pretty ones 
   selectNextEntry: function(array){
     var currentItem = Wprss.selectedEntryController.get('content');
     //if there is no item selected, select the first one.
@@ -274,12 +300,6 @@ Wprss.entriesController = Em.ArrayController.create({
     scrollToEntry(currentItem);
     Wprss.entriesController.setEntryIsRead(currentItem.id,true);
 
-  },
-  nextEntry: function(){
-    this.selectNextEntry(Wprss.entriesController.get('content'));
-  },
-  previousEntry: function(){
-    this.selectNextEntry(Wprss.entriesController.get('content').toArray().reverse());
   },
   setEntryIsRead: function(id,isRead){
     var entry = this.content.findProperty('id',id);
@@ -306,28 +326,13 @@ Wprss.entriesController = Em.ArrayController.create({
     });
 
   },
+  toggleEntryRead: function(id){
+    var entry = this.content.findProperty('id',id);
+    var unreadStatus = entry.get('isRead');
+    this.setEntryIsRead(id,!unreadStatus);
+
+  },
   
-  selectFeed: function(id,show_read){
-    show_read = show_read || 0;
-    
-    var data = {
-      action: 'wprss_get_entries',
-      feed_id: id,
-      show_read: show_read,
-      nonce_a_donce:get_url.nonce_a_donce 
-    };
-    //Set this feed as loading.
-    Wprss.feedsController.set(id,'is_loading',true);
-    
-    jQuery.get(get_url.ajaxurl, data, function(response){
-      //alert(response);
-      Wprss.entriesController.clearEntries();
-      Wprss.entriesController.createEntries(response);
-      scrollToEntry(Wprss.entriesController.get('content')[0]);
-      //Set the feed as not loading
-      Wprss.feedsController.set(id,'is_loading',false);
-    });
-  }
 });
 Wprss.selectedFeedController = Em.Object.create({
   content: null,
@@ -378,7 +383,11 @@ Wprss.FeedsView = Em.View.extend({
   classNameBindings:['isSelected']
 });
 Wprss.selectedEntryController = Em.Object.create({
-  content: null
+  content: null,
+  clear: function(){
+    Wprss.selectedEntryController.set('content',null);
+  },
+
 });
 
 Wprss.FeedView = Em.View.extend({
