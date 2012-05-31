@@ -4,7 +4,6 @@ jQuery(document).ready(function($){
   Wprss.entriesController.createEntries(startentries);
   Wprss.selectedEntryController.set('content',Wprss.entriesController.get('content').get('firstObject'));
   
-  scrollToEntry(Wprss.selectedEntryController.get('content'));
   Wprss.feedsController.onInit = function(){
     Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
   };
