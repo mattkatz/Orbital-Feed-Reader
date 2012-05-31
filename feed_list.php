@@ -45,5 +45,8 @@
   //Set everything up after page load
   jQuery(document).ready(function($){
     Wprss.feedsController.createFeeds(feeds);
+    if(Wprss.feedsController.onInit){
+      Wprss.feedsController.onInit();
+    }
   });
 </script>

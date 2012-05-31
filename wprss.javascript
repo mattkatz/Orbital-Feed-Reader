@@ -17,6 +17,7 @@ Wprss.Feed = Em.Object.extend({
 // #THE FEEDS#
 Wprss.feedsController = Em.ArrayController.create({
   content: [],
+  onInit: null,
   changeUnreadCount:function(id,delta){
     var feed = this.get('content').findProperty('feed_id',id);
     //console.log(feed.feed_name + "("+feed.unread_count+")");
