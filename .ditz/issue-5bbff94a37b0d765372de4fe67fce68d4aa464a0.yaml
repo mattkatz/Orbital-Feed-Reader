@@ -7,7 +7,7 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2012-05-14 12:29:48.317016 Z
 references: []
@@ -17,4 +17,8 @@ log_events:
 - - 2012-05-14 12:29:48.317521 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2012-05-31 12:02:04.517434 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
   - ""
