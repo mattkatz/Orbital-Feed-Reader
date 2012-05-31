@@ -272,7 +272,9 @@ Wprss.entriesController = Em.ArrayController.create({
       //alert(response);
       Wprss.entriesController.clearEntries();
       Wprss.entriesController.createEntries(response);
-      scrollToEntry(Wprss.entriesController.get('content')[0]);
+      Ember.run.next(this,function(){
+        scrollToEntry(Wprss.entriesController.get('content')[0]);
+      });
       //Set the feed as not loading
       Wprss.feedsController.set(id,'is_loading',false);
     },'json');

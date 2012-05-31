@@ -6,6 +6,9 @@ jQuery(document).ready(function($){
   
   Wprss.feedsController.onInit = function(){
     Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
+      Ember.run.next(this,function(){
+        scrollToEntry(Wprss.entriesController.get('content')[0]);
+      });
   };
 
   Wprss.selectedFeedController.onSelect = function(feed){
