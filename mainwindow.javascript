@@ -1,9 +1,9 @@
 //Set everything up after page load
 jQuery(document).ready(function($){
-  //dynamically set the height of the content to the window
   
-  Wprss.feedsController.createFeeds(startfeeds);
   Wprss.entriesController.createEntries(startentries);
+  Wprss.selectedEntryController.set('content',Wprss.entriesController.get('content').get('firstObject'));
+
   Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
 
   Wprss.selectedFeedController.onSelect = function(feed){

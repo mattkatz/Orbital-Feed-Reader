@@ -1,13 +1,3 @@
-<script type="text/javascript">
-  var feeds= <?php
-    require_once('backend.php');
-    wprss_list_feeds();
-  ?>;
-  //Set everything up after page load
-  jQuery(document).ready(function($){
-    Wprss.feedsController.createFeeds(feeds);
-  });
-</script>
 <div id='wprss-container'>
   <div id="wprss-content" class="horizontal-form">
     <script type="text/x-handlebars" >
@@ -41,28 +31,7 @@
     {{/if}}
     </script>
   </div>
-  <div id="wprss-feedlist">
-    <div id='feed-head'>
-      <h2>The Feeds</h2>
-    <script type="text/x-handlebars" >
-      {{#view Em.Button className="button"
-        tagName="span"
-        target="Wprss.feedsController"
-        action="showFeed" }}
-         +
-      {{/view}}
-    </script>
-    </div>
-    <ul id="feeds">
-      <script type="text/x-handlebars" >
-        {{#each Wprss.feedsController}}
-          {{#view Wprss.FeedsView contentBinding="this"}}
-          {{#with content}}
-            <li class="feed" {{bindAttr id="feed_id" }}>{{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
-          {{/with }}
-          {{/view}}
-        {{/each}}
-      </script>
-    </ul>
-  </div>  
+<?php
+require_once('feed_list.php');
+?>
 </div>

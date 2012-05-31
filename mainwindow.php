@@ -75,45 +75,10 @@
     {{/if}}
     </script>
   </div>
-  <div id="wprss-feedlist">
-      <div id="loadmoreajaxloader" style="display:none;">
-        <center>
-          <img src="<?php
-            echo plugins_url("ajax-loader.gif", __FILE__);
-
-          ?>">
-          loading, just a sec...
-        </center>
-      </div>
-    <div id='feed-head'>
-      <h2>The Feeds</h2>
-    <script type="text/x-handlebars" >
-      {{#view Em.Button className="button"
-        tagName="span"
-        target="Wprss.feedsController"
-        action="showFeed" }}
-         +
-      {{/view}}
-    </script>
-    </div>
-    <ul id="feeds" >
-    <script type="text/x-handlebars" >
-    {{#each Wprss.feedsController}}
-      {{#view Wprss.FeedsView contentBinding="this"}}
-      {{#with content}}
-        <li class="feed" {{bindAttr id="feed_id" }}>
-          {{#if is_loading}}
-            <img src="<?php echo plugins_url("ajax-loader.gif", __FILE__); ?>">
-          {{/if}}
-          
-          {{feed_name}} <span class="feedcounter">{{unread_count}}</span></li>
-      {{/with }}
-      {{/view}}
-    {{/each}}
-    </script>
-
-    </ul>
-  </div>
+<?php
+require_once('feed_list.php');
+?>
+  
 </div>
 
   <div id="subscribe-window" class="modal-window invisible">
@@ -186,13 +151,6 @@
     {{commandName}}
   </script>
   <script type="text/javascript">
-    //TODO This should be just fed in on page load
-    var startfeeds = 
-    <?php
-      require_once('backend.php');
-      $feeds = WprssFeeds::get();
-      echo json_encode($feeds);
-    ?>;
     var startentries = 
     <?php
       require_once('backend.php');
