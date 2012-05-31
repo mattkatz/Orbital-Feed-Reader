@@ -17,6 +17,7 @@ Wprss.Feed = Em.Object.extend({
 // #THE FEEDS#
 Wprss.feedsController = Em.ArrayController.create({
   content: [],
+  onInit: null,
   changeUnreadCount:function(id,delta){
     var feed = this.get('content').findProperty('feed_id',id);
     //console.log(feed.feed_name + "("+feed.unread_count+")");
@@ -271,7 +272,9 @@ Wprss.entriesController = Em.ArrayController.create({
       //alert(response);
       Wprss.entriesController.clearEntries();
       Wprss.entriesController.createEntries(response);
-      scrollToEntry(Wprss.entriesController.get('content')[0]);
+      Ember.run.next(this,function(){
+        scrollToEntry(Wprss.entriesController.get('content')[0]);
+      });
       //Set the feed as not loading
       Wprss.feedsController.set(id,'is_loading',false);
     },'json');
@@ -549,3 +552,17 @@ function scrollToEntry(currentItem){
     
     jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
 }
+//Set everything up after page load
+jQuery(document).ready(function($){
+  function setContentHeight(id,height){
+    $(id).css({'height':(($(window).height())-height)+'px'});
+  }
+  $(window).resize(function(){
+    setContentHeight('#wprss-content',28+22);
+    setContentHeight('#wprss-feedlist',28);
+    $('#wprss-content').css({'width':(($('#wprss-container').width() - 190 )+'px')});
+    //setContentHeight('#feeds', 28+63);
+    $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
+  });
+  $(window).resize();
+});

@@ -1,21 +1,15 @@
 //Set everything up after page load
 jQuery(document).ready(function($){
-  //dynamically set the height of the content to the window
-  function setContentHeight(id,height){
-    $(id).css({'height':(($(window).height())-height)+'px'});
-  }
-  $(window).resize(function(){
-    setContentHeight('#wprss-content',28+22);
-    setContentHeight('#wprss-feedlist',28);
-    $('#wprss-content').css({'width':(($('#wprss-container').width() - 190 )+'px')});
-    //setContentHeight('#feeds', 28+63);
-    $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
-  });
   
-  Wprss.feedsController.createFeeds(startfeeds);
   Wprss.entriesController.createEntries(startentries);
-  Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
-  $(window).resize();
+  Wprss.selectedEntryController.set('content',Wprss.entriesController.get('content').get('firstObject'));
+  
+  Wprss.feedsController.onInit = function(){
+    Wprss.selectedFeedController.set('content', Wprss.feedsController.get('content').get('firstObject'));
+      Ember.run.next(this,function(){
+        scrollToEntry(Wprss.entriesController.get('content')[0]);
+      });
+  };
 
   Wprss.selectedFeedController.onSelect = function(feed){
     Wprss.selectedEntryController.clear();

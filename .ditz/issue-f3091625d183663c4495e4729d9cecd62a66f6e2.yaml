@@ -1,22 +1,24 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: make the feeds header still and just the feeds scroll
-desc: ""
+title: Need to select first feed on load
+desc: |-
+  two onloads are conflicting
+  need to make an init event for feedcontroller and attach the select first code to it.
 type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2012-05-27 00:52:49.601294 Z
+creation_time: 2012-05-31 10:59:47.438256 Z
 references: []
 
-id: 9ae05c36387b96c794b1d6dbdc5c4939bcf59bda
+id: f3091625d183663c4495e4729d9cecd62a66f6e2
 log_events: 
-- - 2012-05-27 00:52:49.601762 Z
+- - 2012-05-31 10:59:47.438749 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2012-05-31 11:07:01.980551 Z
+- - 2012-05-31 11:06:49.276820 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""
