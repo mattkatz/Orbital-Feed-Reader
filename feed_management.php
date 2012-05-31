@@ -35,6 +35,3 @@
 require_once('feed_list.php');
 ?>
 </div>
-<?php
-require_once('subscription_window.php');
-?>

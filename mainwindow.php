@@ -80,9 +80,6 @@ require_once('feed_list.php');
 ?>
   
 </div>
-<?php
-require_once('subscription_window.php');
-?>
   <script type="text/x-handlebars" data-template-name="read-check">
               {{#if content.isRead}}
                 Read  
