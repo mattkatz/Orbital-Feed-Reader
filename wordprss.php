@@ -51,6 +51,7 @@ function wprss_admin_init(){
   //keyboard shortcut handling
   wp_register_script( 'keymaster_script', plugins_url('/js/keymaster.min.js', __FILE__),array('jquery'));
   wp_register_script( 'endless_scroll', plugins_url('/js/jquery.endless-scroll.js', __FILE__),array('jquery'));
+  wp_register_script( 'jquery_waypoints', plugins_url('/js/waypoints.js', __FILE__),array('jquery'));
   wp_register_script( 'mainwindow_script', plugins_url('/mainwindow.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script','wordprss_script','keymaster_script','endless_scroll'));
   /* Register our stylesheet. */
   wp_register_style( 'wprsscss', plugins_url('style.css', __FILE__) );
@@ -80,6 +81,7 @@ function wprss_main_scripts()
   //here we set up our keyboard shortcuts
   wp_enqueue_script('keymaster_script');
   wp_enqueue_script('endless_scroll');
+  wp_enqueue_script('jquery_waypoints');
   //here we set up hook like the shortcuts
   //also things like what to do when a feed is selected
   wp_enqueue_script('mainwindow_script');
