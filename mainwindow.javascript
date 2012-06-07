@@ -22,12 +22,25 @@ jQuery(document).ready(function($){
 });
 
 function setupScrollToRead(){
-  jQuery('#wprss-content').scroll(function(evt){
+  /*jQuery('#wprss-content').scroll(function(evt){
     //Where is the mouse cursor?
+    console.log(evt);
     //Which element is underneath the mouse cursor?
     //where is the top of that element?
     //Where is the bottom of that element?
   });
+  */
+  console.log('setting up waypoints');
+  Ember.run.next(this,function(){
+    jQuery('.entry').waypoint({
+      context: '#wprss-content',
+      handler: function(evt, direction){
+        console.log(evt.target.id);
+        console.log(direction);
+      }
+    });
+  });
+  console.log('set up waypoints');
 }
 
 function setupInfiniteScroll(){
