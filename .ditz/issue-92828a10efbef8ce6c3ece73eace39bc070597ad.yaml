@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: export opml
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-06-13 23:33:00.723404 Z
+references: []
+
+id: 92828a10efbef8ce6c3ece73eace39bc070597ad
+log_events: 
+- - 2012-06-13 23:33:03.227177 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: import opml from tt-rss
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-06-13 23:32:19.156390 Z
+references: []
+
+id: 9b44d5589b328528bbb8e01c4f23f13713f6dcc7
+log_events: 
+- - 2012-06-13 23:32:20.676281 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
