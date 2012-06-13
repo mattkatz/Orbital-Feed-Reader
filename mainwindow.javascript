@@ -22,9 +22,19 @@ jQuery(document).ready(function($){
 });
 
 function setupScrollToRead(){
-  /*jQuery('#wprss-content').scroll(function(evt){
+  /*jQuery('#wprss-content').mousemove(function(evt){
+    //console.log(evt.pageY);
+    Wprss.cache.set('mouseY',  evt.pageY);
+
+  });
+  jQuery('#wprss-content').mouseout(function(evt){
+    console.log('mouseout');
+    Wprss.cache.mouseY = null;
+  });
+
+  jQuery('#wprss-content').scroll(function(evt){
     //Where is the mouse cursor?
-    console.log(evt);
+    console.log(Wprss.cache.get('mouseY'));
     //Which element is underneath the mouse cursor?
     //where is the top of that element?
     //Where is the bottom of that element?
@@ -32,9 +42,10 @@ function setupScrollToRead(){
   */
   console.log('setting up waypoints');
   Ember.run.next(this,function(){
-    jQuery('.entry').waypoint({
-      context: '#wprss-content',
+    jQuery('li .entry').waypoint({
+      context: 'ul #wprss-content',
       handler: function(evt, direction){
+        var active = jQuery(this);
         console.log(evt.target.id);
         console.log(direction);
       }

@@ -1,5 +1,9 @@
 
 Wprss = Ember.Application.create();
+Wprss.cache = Ember.Object.create({
+  mouseX: null,
+  mouseY: null,
+});
 Wprss.Feed = Em.Object.extend({
   feed_url : null,
   feed_name: null,
