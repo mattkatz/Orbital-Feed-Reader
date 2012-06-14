@@ -120,6 +120,13 @@
   display: inline; 
 
 }
+#commandbar li:hover,
+.feed:hover
+{
+  cursor: pointer;
+  text-shadow: 0 0 3px #fff;
+  color: #D54E21;
+}
 #commandbar li{
   float: left;
   padding-left: 5px;
