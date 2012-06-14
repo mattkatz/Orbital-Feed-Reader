@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Check export for private feeds!
+desc: We should be able to call wprssFeeds::get on any userid and get the public feeds.  For the current user we should also show public feeds.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-06-14 16:46:17.723479 Z
+references: []
+
+id: ec701dc82fde21aa73f6097badb030d53ed56819
+log_events: 
+- - 2012-06-14 16:46:18.686013 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
