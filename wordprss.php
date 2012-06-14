@@ -144,6 +144,19 @@ function wprss_install_db_and_data(){
   wprss_set_up_cron();
 
 }
+add_filter('query_vars','plugin_add_trigger');
+function plugin_add_trigger($vars) {
+      $vars[] = 'export_opml';
+          return $vars;
+}
+
+add_action('template_redirect', 'plugin_trigger_check');
+function plugin_trigger_check() {
+  if(intval(get_query_var('export_opml')) == wp_get_current_user()->ID) {
+    require_once 'export_opml.php';
+    exit;
+  }
+}
 add_action('admin_menu', 'wprss_plugin_menu');
 add_action( 'admin_init', 'wprss_admin_init' );
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
