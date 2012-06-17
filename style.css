@@ -121,11 +121,13 @@
 
 }
 #commandbar li:hover,
-.feed:hover
+.feed:hover,
+.ember-button:hover
 {
   cursor: pointer;
   text-shadow: 0 0 3px #fff;
   color: #D54E21;
+  background: #E4E4E4;
 }
 #commandbar li{
   float: left;
