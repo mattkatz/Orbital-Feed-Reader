@@ -18,6 +18,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?".">";
   <body>
     <?php
     require_once 'backend.php';
+    //TODO this should take in a param.
+//  // the param should be a userid.
+//  // if the userid == current user, we export everything but private
+//  // otherwise, just export the public stuff.
     $feeds = WprssFeeds::get();
     foreach($feeds as $feed){
     ?>
