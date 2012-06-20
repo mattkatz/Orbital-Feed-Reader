@@ -93,6 +93,7 @@
   color: #dddddd;
   background-color: #343434;
   background-color: rgba(20,20,20,.8);
+  background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(20, 20, 20, 0.6) 50px);
   position: fixed;
   top: 50px;
   left: 200px;
