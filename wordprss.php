@@ -132,9 +132,7 @@ function wprss_update_job(){
   _log('wprss_update_job called');
   wprss_update_feeds();
   
-  //somehow signal a pop to the front end that the job, it is done.
-  
-
+  //TODO somehow signal a pop to the front end that the job, it is done.
 }
 
 function wprss_install_db_and_data(){
