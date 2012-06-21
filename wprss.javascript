@@ -134,6 +134,11 @@ Wprss.feedsController = Em.ArrayController.create({
     }
 
   },
+  showOpmlImport: function(){
+    var dlg = jQuery('#opml-dialog');
+    dlg.toggleClass('invisible');
+  },
+
   showFeed: function(){
     //show the add feed window
     var dlg = jQuery('#subscribe-window');

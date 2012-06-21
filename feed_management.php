@@ -2,8 +2,17 @@
   <div id="commandbar" class="quicklinks">
   <ul>
     <li class="command">
-    <a href="<?php echo plugins_url('export_opml.php',__FILE__) ?>" >Export Opml</a>
     <a href="<?echo site_url();?>?export_opml=<?php echo wp_get_current_user()->ID;?>">Export OPML</a>
+    </li>
+    <li class="command">
+    <script type="text/x-handlebars" >
+      {{#view Em.Button classBinding="isActive"
+        tagName="span"
+        target="Wprss.feedsController"
+        action="showOpmlImport" }}
+        Import OPML
+      {{/view}}
+    </script>
     </li>
   </ul>
   </div>
@@ -41,5 +50,7 @@
   </div>
 <?php
 require_once('feed_list.php');
+require_once('import_opml.php');
 ?>
+
 </div>
