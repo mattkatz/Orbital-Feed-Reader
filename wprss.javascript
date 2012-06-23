@@ -28,7 +28,6 @@ Wprss.feedsController = Em.ArrayController.create({
   createFeed: function(feedHash){
     feedHash.is_private = (1==feedHash.is_private);
     feedHash.feed_id = feedHash.id;
-    console.log(feedHash);
     var feed = Wprss.Feed.create(feedHash);
     //var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
@@ -106,15 +105,14 @@ Wprss.feedsController = Em.ArrayController.create({
     jQuery.post(get_url.ajaxurl,data, function(response){
       if(response.updated || response.inserted )// test to see if the feed actually got saved
       {
-        //indicate somehow?
-        //TODO this should be agnostic per screen.
-        //the main window should update the list of feeds.
-        //and close the subscribe window
-        //the feed management window should also update the feed list
+        //this should be agnostic per screen.
+        //So whoever calls save feed can have something trigger on yay
         if(successFunction){
           successFunction(response);
         }
-        Wprss.feedsController.createFeed(response);
+        if(response.inserted){
+          Wprss.feedsController.createFeed(response);
+        }
       }
       else{
         //TODO Alert the user?

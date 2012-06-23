@@ -55,7 +55,22 @@ function uploadOpml(){
     reader.onload = (function (theFile){
       return function (e){
         //parse the opml and upload it
-        console.log(e.target.result);
+        //console.log(e.target.result);
+        var opml =  jQuery.parseXML(e.target.result);
+        jQuery(opml).find('outline[xmlUrl]').each(function(index){
+          var el = jQuery(this);
+          var feed = {};
+          feed.feed_id = null;
+          //TODO later we should let people choose before we upload.
+          feed.is_private = false;
+          feed.feed_name = el.attr('text'); 
+          feed.feed_url = el.attr('xmlUrl');
+          feed.site_url = el.attr('htmlUrl');
+          Wprss.feedsController.saveFeed(feed);
+
+        });
+        //console.log(opml);
+
       };
     })(f);
     reader.readAsText(f);
