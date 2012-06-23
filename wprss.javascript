@@ -92,7 +92,7 @@ Wprss.feedsController = Em.ArrayController.create({
     var feed = this.findProperty('feed_id',feed_id);
     this.removeObject(feed);
   },
-  saveFeed: function(feed,successFunction){
+  saveFeed: function(feed,successFunction,failFunction){
     var data = {
       action: 'wprss_save_feed',
       feed_id: feed.feed_id,
@@ -115,8 +115,12 @@ Wprss.feedsController = Em.ArrayController.create({
         }
       }
       else{
-        //TODO Alert the user?
-        console.log(response.updated);
+        if(failFunction){
+          failFunction(response);
+        }else{
+          //TODO Alert the user?
+          console.log(response);
+        }
       }
     },'json');
 
