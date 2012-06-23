@@ -24,15 +24,20 @@ Wprss.feedsController = Em.ArrayController.create({
     feed.set('unread_count', +feed.unread_count + delta);
     //console.log(feed.unread_count);
   },
-  createFeed: function(feed,domain,name,id,unread,priv){
-    var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
+  //createFeed: function(feed,domain,name,id,unread,priv){
+  createFeed: function(feedHash){
+    feedHash.is_private = (1==feedHash.is_private);
+    feedHash.feed_id = feedHash.id;
+    console.log(feedHash);
+    var feed = Wprss.Feed.create(feedHash);
+    //var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
   createFeeds: function(feeds){
-    //var feeds = JSON.parse(jsonFeeds);
-    Wprss.feedsController.createFeed('','','Fresh Entries',null,'lots');
+    Wprss.feedsController.createFeed({feed_url:'',site_url:'',feed_name:'Fresh Entries',feed_id:null,unread_count:'lots', is_private:true});
     feeds.forEach(function(value){
-      Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
+      Wprss.feedsController.createFeed(value);
+      //Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
   //does the actual work of finding an unread feed in an array
@@ -88,7 +93,7 @@ Wprss.feedsController = Em.ArrayController.create({
     var feed = this.findProperty('feed_id',feed_id);
     this.removeObject(feed);
   },
-  saveFeed: function(feed){
+  saveFeed: function(feed,successFunction){
     var data = {
       action: 'wprss_save_feed',
       feed_id: feed.feed_id,
@@ -106,8 +111,10 @@ Wprss.feedsController = Em.ArrayController.create({
         //the main window should update the list of feeds.
         //and close the subscribe window
         //the feed management window should also update the feed list
-        jQuery('#subscribe-window').toggleClass('invisible');
-        
+        if(successFunction){
+          successFunction(response);
+        }
+        Wprss.feedsController.createFeed(response);
       }
       else{
         //TODO Alert the user?
@@ -357,7 +364,9 @@ Wprss.selectedFeedController = Em.Object.create({
     Wprss.feedsController.unsubscribe(this.get('content').feed_id);
   },
   saveFeed: function(){
-    Wprss.feedsController.saveFeed(this.get('content'));
+    Wprss.feedsController.saveFeed(this.get('content'),function(response){
+      alert(response.feed_name + ' saved')
+    });
   },
   select:function(feed){
     this.set('content',feed);
@@ -462,7 +471,9 @@ Wprss.feedFinder= Em.Object.create({
   possibleFeeds: null,
   feedCandidate: null,
   saveFeed: function(){
-    Wprss.feedsController.saveFeed(this.get('feedCandidate'));
+    Wprss.feedsController.saveFeed(this.get('feedCandidate'),function(){
+      jQuery('#subscribe-window').toggleClass('invisible');
+    });
   },
   findFeed: function(){
     // First get the feed url or site url from the link
