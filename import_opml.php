@@ -63,11 +63,11 @@ function uploadOpml(){
             feed.feed_url = el.attr('xmlUrl');
             feed.site_url = el.attr('htmlUrl');
             Wprss.feedsController.saveFeed(feed);
-
           });
         }
         catch(ex){
           alert('Sorry, we had trouble reading this file through.');
+          console.log(ex);
         }
         jQuery('#opml-dialog').toggleClass('invisible')
         jQuery('#import-opml').attr('value','');
