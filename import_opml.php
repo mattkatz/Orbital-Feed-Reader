@@ -3,7 +3,7 @@
     <!--<form id="upload_form" enctype="multipart/form-data" method="post" onsubmit='uploadOpml()'>-->
       <label>
         Select an OPML file to import
-        <input type="file" name="import_opml" value="" id="import_opml" placeholder="Select an OPML file" onchange="fileSelected()"/>
+        <input type="file" name="import-opml" value="" id="import-opml" placeholder="Select an OPML file" onchange="fileSelected()"/>
       </label>
 <div id="fileName">
   
@@ -15,23 +15,15 @@
         Upload
       </button>
     <!--</form>-->
-
-      <script type="text/x-handlebars">
-        {{view Wprss.AddFeedView 
-          name="addFeedView" 
-          placeholder="Drag or copy paste a feed here" 
-          valueBinding="Wprss.feedFinder.url" }}
-    </script>
-    
   </div>
 </div>
+
 <script type="text/javascript" language="javascript" charset="utf-8">
 function getFile(){
-  var file = document.getElementById('import_opml').files[0];
+  var file = document.getElementById('import-opml').files[0];
   return file;
-
-
 }
+
 function fileSelected(){
   //var file = jQuery('#import_opml').files[0];
   var file = getFile();
@@ -46,30 +38,39 @@ function fileSelected(){
   jQuery('#fileSize').html('Size: '+ fileSize);
   jQuery('#uploadButton').removeProp('disabled');
 }
+
+
 function uploadOpml(){
   // Check for the various File API support.
   if (window.File && window.FileReader && window.FileList && window.Blob) {
   // Great success! All the File APIs are supported.
     var f = getFile();
     var reader = new FileReader();
+    //reader.onprogress = updateProgress;
     reader.onload = (function (theFile){
       return function (e){
         //parse the opml and upload it
         //console.log(e.target.result);
-        var opml =  jQuery.parseXML(e.target.result);
-        jQuery(opml).find('outline[xmlUrl]').each(function(index){
-          var el = jQuery(this);
-          var feed = {};
-          feed.feed_id = null;
-          //TODO later we should let people choose before we upload.
-          feed.is_private = false;
-          feed.feed_name = el.attr('text'); 
-          feed.feed_url = el.attr('xmlUrl');
-          feed.site_url = el.attr('htmlUrl');
-          Wprss.feedsController.saveFeed(feed);
+        try{
+          var opml =  jQuery.parseXML(e.target.result);
+          jQuery(opml).find('outline[xmlUrl]').each(function(index){
+            var el = jQuery(this);
+            var feed = {};
+            feed.feed_id = null;
+            //TODO later we should let people choose before we upload.
+            feed.is_private = false;
+            feed.feed_name = el.attr('text'); 
+            feed.feed_url = el.attr('xmlUrl');
+            feed.site_url = el.attr('htmlUrl');
+            Wprss.feedsController.saveFeed(feed);
 
-        });
-        //console.log(opml);
+          });
+        }
+        catch(ex){
+          alert('Sorry, we had trouble reading this file through.');
+        }
+        jQuery('#opml-dialog').toggleClass('invisible')
+        jQuery('#import-opml').attr('value','');
 
       };
     })(f);
@@ -79,7 +80,7 @@ function uploadOpml(){
     return false;
     
   } else {
-  alert('The File APIs are not fully supported in this browser.');
+  alert('Unfortunately, this browser is a bit busted.  File reading will not work, and I have not written a different way to upload opml.  Try using the latest firefox or chrome');
   }
 }
 </script>
