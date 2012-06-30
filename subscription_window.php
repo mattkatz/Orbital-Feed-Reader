@@ -1,6 +1,12 @@
 
   <div id="subscribe-window" class="modal-window invisible">
   <script type="text/x-handlebars">
+    {{#view Wprss.FeedsForm}}
+      {{view Em.TextField 
+        placeholder="Drag or copy paste a feed here" 
+        viewName="textField"}}
+      <button type='submit'>Add Feed</button>
+    {{/view}}
     {{view Wprss.AddFeedView 
       name="addFeedView" 
       placeholder="Drag or copy paste a feed here" 

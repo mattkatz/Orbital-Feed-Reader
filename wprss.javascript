@@ -518,6 +518,58 @@ Wprss.feedFinder= Em.Object.create({
   },
 
 });
+Wprss.FeedsForm = Em.View.extend({
+  tagName: 'form',
+  urlField: null,
+  feedCandidate:null,
+  possibleFields:null,
+  submit: function(event){
+    event.preventDefault();
+    //actually begin the submission
+    console.log('begin the submission');
+    this.findFeed();
+  },
+  findFeed: function(){
+    // First get the feed url or site url from the link
+    //TODO: then ask the backend to validate the feed details
+    var data = {
+      action: 'wprss_find_feed',
+      url: this.getPath('urlField.value'),
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //alert(response);
+      //TODO if this was a feed, let's make it save!
+      if("feed" == response.url_type){
+        console.log('a feed!');
+        console.log(response.orig_url);
+        console.log(response.site_url);
+        console.log(response.feed_name);
+        var feed  =  Wprss.Feed.create(
+          { feed_url: response.orig_url, 
+            site_url: response.site_url, 
+            feed_id: null, 
+            feed_name: response.feed_name,
+            unread_count:0,
+            is_private:false
+          });
+        console.log("feed " + feed);
+        Wprss.feedFinder.set('feedCandidate',feed);
+        console.log( "candidate " + Wprss.feedFinder.feedCandidate);
+
+
+      }
+      else{
+        //TODO if this was a page, let the user choose feeds and then save them.
+        Wprss.feedFinder.set('feedCandidate', null);
+        Wprss.feedFinder.set('possibleFeeds', response.feeds);
+      }
+    },"json");
+    
+    //TODO: Allow the user to edit the feed details
+  },
+
+});
 Wprss.AddFeedView = Em.TextField.extend({
   focusOut: function(){
   },
