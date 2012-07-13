@@ -45,7 +45,7 @@ function wprss_plugin_menu(){
  */
 function wprss_admin_init(){
   //Register the js that we need
-  wp_register_script( 'emberjs_script', plugins_url('/ember-0.9.3.min.js', __FILE__) ,array('jquery'));
+  wp_register_script( 'emberjs_script', plugins_url('/js/ember-0.9.8.1.min.js', __FILE__) ,array('jquery'));
   wp_register_script( 'wordprss_script', plugins_url('/wprss.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
   wp_register_script( 'feedmgmt_script', plugins_url('/feed_management.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
   //keyboard shortcut handling
@@ -132,9 +132,7 @@ function wprss_update_job(){
   _log('wprss_update_job called');
   wprss_update_feeds();
   
-  //somehow signal a pop to the front end that the job, it is done.
-  
-
+  //TODO somehow signal a pop to the front end that the job, it is done.
 }
 
 function wprss_install_db_and_data(){
@@ -143,6 +141,19 @@ function wprss_install_db_and_data(){
   wprss_install_data();
   wprss_set_up_cron();
 
+}
+add_filter('query_vars','plugin_add_trigger');
+function plugin_add_trigger($vars) {
+      $vars[] = 'export_opml';
+          return $vars;
+}
+
+add_action('template_redirect', 'plugin_trigger_check');
+function plugin_trigger_check() {
+  if(intval(get_query_var('export_opml')) == wp_get_current_user()->ID) {
+    require_once 'export_opml.php';
+    exit;
+  }
 }
 add_action('admin_menu', 'wprss_plugin_menu');
 add_action( 'admin_init', 'wprss_admin_init' );

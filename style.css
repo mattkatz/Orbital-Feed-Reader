@@ -93,6 +93,7 @@
   color: #dddddd;
   background-color: #343434;
   background-color: rgba(20,20,20,.8);
+  background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(20, 20, 20, 0.6) 50px);
   position: fixed;
   top: 50px;
   left: 200px;
@@ -119,6 +120,15 @@
 #commandbar ul{
   display: inline; 
 
+}
+#commandbar li:hover,
+.feed:hover,
+.ember-button:hover
+{
+  cursor: pointer;
+  text-shadow: 0 0 3px #fff;
+  color: #D54E21;
+  background: #E4E4E4;
 }
 #commandbar li{
   float: left;

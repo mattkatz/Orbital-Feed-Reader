@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: upgrade to latest ember
+desc: has the action helper, means we might not need to use styled buttons
+type: :task
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-06-26 13:05:20.369620 Z
+references: []
+
+id: 8ed5706056c0607b64dfeaa2ebec37bcac9f16a0
+log_events: 
+- - 2012-06-26 13:05:22.529631 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

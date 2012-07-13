@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix stupid non working dialogs
+desc: |-
+  need to have enter actually work in a dialog
+  like add feed view, etc.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-06-21 00:54:33.280526 Z
+references: []
+
+id: 6b96c9958788f8368d98bcaa8d7cd2b14e95de08
+log_events: 
+- - 2012-06-21 00:54:34.486982 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
