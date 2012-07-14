@@ -5,6 +5,32 @@
       placeholder="Drag or copy paste a feed here" 
       viewName="urlField"}}
     <button type='submit'>Add Feed</button>
+    {{ feedCandidate.feed_url }}
+    {{#if feedCandidate}}
+      <div class="horizontal-form">
+        {{#with feedCandidate}}
+              {{view Em.TextField valueBinding="feed_name" class="heading" }}
+              <label>Feed Url
+              {{view Em.TextField valueBinding="feed_url" }}
+              </label>
+              <label>Site Url
+                {{view Em.TextField valueBinding="site_url" }}
+              </label>
+              <label>
+                {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it to other people."}}
+              </label>
+              {{#if  feed_id}}
+                <label>
+                  Get rid of this feed! Seriously! 
+                  {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
+                </label>
+              {{/if}}
+              <div>
+              {{#view Em.Button target="Wprss.feedFinder" action="saveFeed" }}Save{{/view}}
+              </div>
+        {{/with }}
+      </div>
+    {{/if}}
   {{/view}}
 
     <div class="horizontal-form">

@@ -538,6 +538,7 @@ Wprss.FeedsForm = Em.View.extend({
       nonce_a_donce:get_url.nonce_a_donce 
     };
     console.log(this.getPath('urlField.value'));
+    var view = this;
     jQuery.get(get_url.ajaxurl, data, function(response){
       //alert(response);
       //TODO if this was a feed, let's make it save!
@@ -555,8 +556,11 @@ Wprss.FeedsForm = Em.View.extend({
             is_private:false
           });
         console.log("feed " + feed);
-        Wprss.feedFinder.set('feedCandidate',feed);
-        console.log( "candidate " + Wprss.feedFinder.feedCandidate);
+        view.set('feedCandidate', feed);
+        console.log(view);
+        console.log( "candidate " + view.feedCandidate);
+        //Wprss.feedFinder.set('feedCandidate',feed);
+        //console.log( "candidate " + Wprss.feedFinder.feedCandidate);
 
 
       }
