@@ -580,11 +580,8 @@ Wprss.PossibleFeedView  = Em.View.extend({
     //instead we will pull the feed url and then call the click handler on it.
     Wprss.feedFinder.set('url',content.url);
     Wprss.feedFinder.findFeed();
-
-
     //clean up the form by erasing the old feedlist
     Wprss.feedFinder.set('possibleFeeds',null);
-    
   },
 });
 Em.Handlebars.registerHelper('checkable', function(path,options){
