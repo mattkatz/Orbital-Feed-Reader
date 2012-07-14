@@ -4,19 +4,10 @@
     {{#view Wprss.FeedsForm}}
       {{view Em.TextField 
         placeholder="Drag or copy paste a feed here" 
-        viewName="textField"}}
+        viewName="urlField"}}
       <button type='submit'>Add Feed</button>
     {{/view}}
-    {{view Wprss.AddFeedView 
-      name="addFeedView" 
-      placeholder="Drag or copy paste a feed here" 
-      valueBinding="Wprss.feedFinder.url" }}
 
-      {{#view Em.Button classBinding="isActive"
-        target="Wprss.feedFinder"
-        action="findFeed" }}
-        Add Feed
-      {{/view}}
       <div class="horizontal-form">
         
         {{#if Wprss.feedFinder.feedCandidate}}

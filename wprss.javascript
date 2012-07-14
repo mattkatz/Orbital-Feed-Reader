@@ -537,6 +537,7 @@ Wprss.FeedsForm = Em.View.extend({
       url: this.getPath('urlField.value'),
       nonce_a_donce:get_url.nonce_a_donce 
     };
+    console.log(this.getPath('urlField.value'));
     jQuery.get(get_url.ajaxurl, data, function(response){
       //alert(response);
       //TODO if this was a feed, let's make it save!
@@ -567,14 +568,6 @@ Wprss.FeedsForm = Em.View.extend({
     },"json");
     
     //TODO: Allow the user to edit the feed details
-  },
-
-});
-Wprss.AddFeedView = Em.TextField.extend({
-  focusOut: function(){
-  },
-  insertNewLine: function(){
-    console.log('rah');
   },
 
 });
