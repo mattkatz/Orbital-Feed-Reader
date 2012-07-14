@@ -6,8 +6,8 @@
       viewName="urlField"}}
     <button type='submit'>Add Feed</button>
     {{ feedCandidate.feed_url }}
-    {{#if feedCandidate}}
-      <div class="horizontal-form">
+    <div class="horizontal-form">
+      {{#if feedCandidate}}
         {{#with feedCandidate}}
               {{view Em.TextField valueBinding="feed_name" class="heading" }}
               <label>Feed Url
@@ -29,42 +29,12 @@
               {{#view Em.Button target="Wprss.feedFinder" action="saveFeed" }}Save{{/view}}
               </div>
         {{/with }}
-      </div>
-    {{/if}}
-  {{/view}}
-
-    <div class="horizontal-form">
-      
-      {{#if Wprss.feedFinder.feedCandidate}}
-        {{#view Wprss.FeedView }}
-        {{#with Wprss.feedFinder.feedCandidate}}
-            {{view Em.TextField valueBinding="feed_name" class="heading" }}
-            <label>Feed Url
-            {{view Em.TextField valueBinding="feed_url" }}
-            </label>
-            <label>Site Url
-              {{view Em.TextField valueBinding="site_url" }}
-            </label>
-            <label>
-              {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it to other people."}}
-            </label>
-            {{#if  feed_id}}
-              <label>
-                Get rid of this feed! Seriously! 
-                {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
-              </label>
-            {{/if}}
-            <div>
-            {{#view Em.Button target="Wprss.feedFinder" action="saveFeed" }}Save{{/view}}
-            </div>
-        {{/with }}
-        {{/view}}
       {{/if}}
-      {{#if Wprss.feedFinder.possibleFeeds }}
+      {{#if possibleFeeds }}
         <div>
-          We found {{Wprss.feedFinder.possibleFeeds.length }} feeds:
+          We found {{possibleFeeds.length }} feeds:
         </div>
-        {{#each Wprss.feedFinder.possibleFeeds}}
+        {{#each possibleFeeds}}
           {{#view Wprss.PossibleFeedView contentBinding="this"}}
             {{#with content}}
               <div class="possibleFeed">
@@ -75,5 +45,7 @@
         {{/each}}
       {{/if}}
     </div>
+  {{/view}}
+
 </script>
 </div>

@@ -559,15 +559,11 @@ Wprss.FeedsForm = Em.View.extend({
         view.set('feedCandidate', feed);
         console.log(view);
         console.log( "candidate " + view.feedCandidate);
-        //Wprss.feedFinder.set('feedCandidate',feed);
-        //console.log( "candidate " + Wprss.feedFinder.feedCandidate);
-
-
       }
       else{
         //TODO if this was a page, let the user choose feeds and then save them.
-        Wprss.feedFinder.set('feedCandidate', null);
-        Wprss.feedFinder.set('possibleFeeds', response.feeds);
+        view.set('feedCandidate', null);
+        view.set('possibleFeeds', response.feeds);
       }
     },"json");
     
@@ -582,10 +578,11 @@ Wprss.PossibleFeedView  = Em.View.extend({
     console.log(content);
     //TODO it would be best if we were pulling the actual feed info bc we could create a feed...  
     //instead we will pull the feed url and then call the click handler on it.
-    Wprss.feedFinder.set('url',content.url);
-    Wprss.feedFinder.findFeed();
+    this.parentView.set('url',content.url);
+    //Wprss.feedFinder.set('url',content.url);
+    this.parentView.findFeed();
     //clean up the form by erasing the old feedlist
-    Wprss.feedFinder.set('possibleFeeds',null);
+    this.parentView.set('possibleFeeds',null);
   },
 });
 Em.Handlebars.registerHelper('checkable', function(path,options){
