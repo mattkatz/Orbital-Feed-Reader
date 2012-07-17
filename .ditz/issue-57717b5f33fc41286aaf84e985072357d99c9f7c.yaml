@@ -3,7 +3,7 @@ title: Simplepie doesn't autodiscover some feeds
 desc: for example, http://mattkatz.github.com/Wordprss/
 type: :bugfix
 component: Wordprss
-release: 
+release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-07-17 22:42:27.624671 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2 Wordpress integration from unassigned
+  - need to make sure this works before folks use it.
