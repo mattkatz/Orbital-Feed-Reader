@@ -24,8 +24,8 @@
                   {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
                 </label>
               {{/if}}
-              <div>
-              {{#view Em.Button target="Wprss.feedFinder" action="saveFeed" }}Save{{/view}}
+              <div class="clickable" {{action "saveFeed" }}>
+              Save {{feed_name}}
               </div>
         {{/with }}
       {{/if}}

@@ -5,8 +5,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-05-20 14:44:49.143912 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2012-05-20 14:44:49.144264 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2012-07-17 12:25:17.291250 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""

@@ -123,6 +123,7 @@
 }
 #commandbar li:hover,
 .feed:hover,
+.clickable,
 .ember-button:hover
 {
   cursor: pointer;
