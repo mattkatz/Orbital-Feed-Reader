@@ -529,24 +529,24 @@ Wprss.FeedsForm = Em.View.extend({
     console.log('begin the submission');
     this.findFeed();
   },
-  findFeed: function(){
+  findFeed: function(evt){
     // First get the feed url or site url from the link
+    var url = this.getPath('urlField.value');
+    if(evt){
+      url = evt.context;
+    }
+      
     //TODO: then ask the backend to validate the feed details
     var data = {
       action: 'wprss_find_feed',
-      url: this.getPath('urlField.value'),
+      url: url,
       nonce_a_donce:get_url.nonce_a_donce 
     };
     console.log(this.getPath('urlField.value'));
     var view = this;
     jQuery.get(get_url.ajaxurl, data, function(response){
-      //alert(response);
-      //TODO if this was a feed, let's make it save!
+      //if this was a feed, let's make it saveable!
       if("feed" == response.url_type){
-        console.log('a feed!');
-        console.log(response.orig_url);
-        console.log(response.site_url);
-        console.log(response.feed_name);
         var feed  =  Wprss.Feed.create(
           { feed_url: response.orig_url, 
             site_url: response.site_url, 
@@ -555,19 +555,15 @@ Wprss.FeedsForm = Em.View.extend({
             unread_count:0,
             is_private:false
           });
-        console.log("feed " + feed);
         view.set('feedCandidate', feed);
-        console.log(view);
-        console.log( "candidate " + view.feedCandidate);
+        
       }
       else{
-        //TODO if this was a page, let the user choose feeds and then save them.
+        //if this was a page, let the user choose feeds and then save them.
         view.set('feedCandidate', null);
         view.set('possibleFeeds', response.feeds);
       }
     },"json");
-    
-    //TODO: Allow the user to edit the feed details
   },
 
 });
@@ -575,16 +571,25 @@ Wprss.PossibleFeedView  = Em.View.extend({
   click: function(evt){
     var content = this.get('content');
     //TODO now we pull the feed here and smack it into the feed url etc.
-    console.log(content);
+    console.log(evt);
     //TODO it would be best if we were pulling the actual feed info bc we could create a feed...  
     //instead we will pull the feed url and then call the click handler on it.
-    this.parentView.set('url',content.url);
+    console.log(this._parentView);
+    this._parentView.set('url',content.url);
     //Wprss.feedFinder.set('url',content.url);
-    this.parentView.findFeed();
+    this._parentView.findFeed();
     //clean up the form by erasing the old feedlist
-    this.parentView.set('possibleFeeds',null);
+    this._parentView.set('possibleFeeds',null);
   },
 });
+/*
+          {{#view Wprss.PossibleFeedView contentBinding="this"}}
+            {{#with content}}
+              {{url}}
+              </div>
+            {{/with}}
+          {{/view}}
+*/
 Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
   return Em.Handlebars.helpers.view.call(this, Wprss.ReadView,options);

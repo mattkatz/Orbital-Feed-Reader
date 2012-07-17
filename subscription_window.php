@@ -5,7 +5,6 @@
       placeholder="Drag or copy paste a feed here" 
       viewName="urlField"}}
     <button type='submit'>Add Feed</button>
-    {{ feedCandidate.feed_url }}
     <div class="horizontal-form">
       {{#if feedCandidate}}
         {{#with feedCandidate}}
@@ -35,13 +34,9 @@
           We found {{possibleFeeds.length }} feeds:
         </div>
         {{#each possibleFeeds}}
-          {{#view Wprss.PossibleFeedView contentBinding="this"}}
-            {{#with content}}
-              <div class="possibleFeed">
-              {{url}}
+              <div class="possibleFeed" {{action "findFeed" target="parentView.parentView.parentView" context="url" }} >
+                {{url}} 
               </div>
-            {{/with}}
-          {{/view}}
         {{/each}}
       {{/if}}
     </div>
