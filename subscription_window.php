@@ -5,6 +5,9 @@
       placeholder="Drag or copy paste a feed here" 
       viewName="urlField"}}
     <button type='submit'>Add Feed</button>
+    <div class="clickable dismiss" {{action "dismiss"}}>
+      X
+    </div>
     <div class="horizontal-form">
       {{#if feedCandidate}}
         {{#with feedCandidate}}

@@ -121,9 +121,16 @@
   display: inline; 
 
 }
+.clickable{
+  cursor: pointer;
+  text-shadow: 0 0 3px #fff;
+}
+.dismiss{
+  float:right;
+}
+
 #commandbar li:hover,
 .feed:hover,
-.clickable,
 .ember-button:hover
 {
   cursor: pointer;

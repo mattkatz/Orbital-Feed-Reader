@@ -528,11 +528,16 @@ Wprss.FeedsForm = Em.View.extend({
   saveFeed: function(){
     var view = this;
     Wprss.feedsController.saveFeed(this.get('feedCandidate'),function(){
-      jQuery('#subscribe-window').toggleClass('invisible');
-      view.set('feedCandidate',null);
-      view.set('possibleFeeds',null);
-      view.urlField.set('value',null);
+      view.dismiss();
     });
+  },
+  dismiss: function(){
+    var view = this;
+    view.set('feedCandidate',null);
+    view.set('possibleFeeds',null);
+    view.urlField.set('value',null);
+    jQuery('#subscribe-window').toggleClass('invisible');
+
   },
   findFeed: function(evt){
     // First get the feed url or site url from the link
