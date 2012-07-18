@@ -131,11 +131,11 @@ function wprss_uninstall_db()
 }
 add_filter('cron_schedules', 'one_hour');
 function one_hour( $schedules ) {
-    $schedules['1hour'] = array(
-          'interval' => 36000, //that's how many seconds in 1 hour, for the unix timestamp
-              'display' => __('60 Minutes')
-                );
-      return $schedules;
+  $schedules['1hour'] = array(
+    'interval' => 36000, //that's how many seconds in 1 hour, for the unix timestamp
+    'display' => __('60 Minutes')
+  );
+  return $schedules;
 }
 add_action('wprss_update_event', 'wprss_update_job');
 function wprss_set_up_cron(){
@@ -146,7 +146,6 @@ function wprss_update_job(){
   //call feeds update.
   _log('wprss_update_job called');
   wprss_update_feeds();
-  
   //TODO somehow signal a pop to the front end that the job, it is done.
 }
 
@@ -154,12 +153,12 @@ function wprss_activate(){
   wprss_update_db_check();
   wprss_sample_data_check();
   wprss_set_up_cron();
-
 }
+
 add_filter('query_vars','plugin_add_trigger');
 function plugin_add_trigger($vars) {
-      $vars[] = 'export_opml';
-          return $vars;
+  $vars[] = 'export_opml';
+  return $vars;
 }
 
 add_action('template_redirect', 'plugin_trigger_check');
