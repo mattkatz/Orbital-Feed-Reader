@@ -139,9 +139,7 @@ function one_hour( $schedules ) {
 }
 add_action('wprss_update_event', 'wprss_update_job');
 function wprss_set_up_cron(){
-
-  
-wp_schedule_event( current_time( 'timestamp' ), '1hour', 'wprss_update_event');
+  wp_schedule_event( current_time( 'timestamp' ), '1hour', 'wprss_update_event');
 }
 
 function wprss_update_job(){
