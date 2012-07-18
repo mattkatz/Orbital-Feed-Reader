@@ -39,8 +39,6 @@ function wprss_install_db()
     site_url varchar(250) ,
     unread_count integer NOT NULL,
     private bool NOT NULL DEFAULT false,
-    auth_login varchar(250) NOT NULL DEFAULT '',
-    auth_pass varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);

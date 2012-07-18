@@ -28,6 +28,8 @@ require_once 'backend.php';
 add_action('plugins_loaded', 'wprss_update_db_check');
 function wprss_update_db_check(){
   global $wprss_db_version;
+  global $wrss_db_v_opt_string;
+  _log(get_site_option($wrss_db_v_opt_string) );
   if(get_site_option($wrss_db_v_opt_string) != $wprss_db_version){
     //upgrade the db
     require_once 'install_upgrade.php';
@@ -119,6 +121,7 @@ function feed_management(){
 }
 function wprss_uninstall_db()
 {
+
   //We should remove the DB option for the db version
   delete_option($wrss_db_v_opt_string);
   //clean up all the tables
@@ -172,6 +175,7 @@ function plugin_trigger_check() {
 }
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
 register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_activate');
-register_deactivation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_uninstall_db');
+
+register_uninstall_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_uninstall_db');
 
 ?>
