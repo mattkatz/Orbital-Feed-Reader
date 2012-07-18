@@ -20,8 +20,8 @@ global $tbl_prefix;
 $tbl_prefix = 'wprss_' ;
 
 if ( !function_exists( 'add_action' ) ) {
-    echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
-      exit;
+  echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
+  exit;
 }
 require_once 'backend.php';
 
@@ -45,6 +45,7 @@ function wprss_sample_data_check(){
   }
 }
 
+add_action('admin_menu', 'wprss_plugin_menu');
 function wprss_plugin_menu(){
   //We add the hook for our menu item on the main menu
   $main = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
@@ -59,6 +60,7 @@ function wprss_plugin_menu(){
 
 }
 
+add_action( 'admin_init', 'wprss_admin_init' );
 /* Reqister our scripts so they can be enqueued
  */
 function wprss_admin_init(){
@@ -168,8 +170,6 @@ function plugin_trigger_check() {
     exit;
   }
 }
-add_action('admin_menu', 'wprss_plugin_menu');
-add_action( 'admin_init', 'wprss_admin_init' );
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
 register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_activate');
 register_deactivation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_uninstall_db');
