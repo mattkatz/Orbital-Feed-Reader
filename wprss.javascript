@@ -569,8 +569,14 @@ Wprss.FeedsForm = Em.View.extend({
       }
       else{
         //if this was a page, let the user choose feeds and then save them.
-        view.set('feedCandidate', null);
-        view.set('possibleFeeds', response.feeds);
+        if( response.feeds.length >1){
+          view.set('feedCandidate', null);
+          view.set('possibleFeeds', response.feeds);
+        }else
+        {
+          view.urlField.set('value',response.feeds[0].url);
+          view.findFeed();
+        }
       }
     },"json");
   },
