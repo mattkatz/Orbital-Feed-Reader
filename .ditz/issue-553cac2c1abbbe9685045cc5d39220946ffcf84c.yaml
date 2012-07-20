@@ -23,3 +23,7 @@ log_events:
     Seems to occur only when you are trying to upgrade your db.
     post DB upgrade issue goes away.
     WTF, I don't know.
+- - 2012-07-20 19:50:04.305696 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - If you aren't logged in, all you get is the opml export
