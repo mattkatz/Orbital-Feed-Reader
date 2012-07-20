@@ -5,8 +5,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-07-19 01:09:20.085417 Z
 references: []
 
@@ -23,3 +23,11 @@ log_events:
     Seems to occur only when you are trying to upgrade your db.
     post DB upgrade issue goes away.
     WTF, I don't know.
+- - 2012-07-20 19:50:04.305696 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - If you aren't logged in, all you get is the opml export
+- - 2012-07-20 19:57:14.162321 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - fixed by detecting logout

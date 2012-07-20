@@ -65,7 +65,8 @@ Wprss.feedsController = Em.ArrayController.create({
       //TODO: put in error checks for bad responses, errors,etc.
       var resp = JSON.parse(response);
       Wprss.feedsController.changeUnreadCount(resp.feed_id,-1* resp.updated);
-      //TODO move onto next feed?
+      //move onto next feed?
+      Wprss.feedsController.nextUnreadFeed();
     });
 
   },

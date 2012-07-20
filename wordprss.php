@@ -168,6 +168,10 @@ function plugin_add_trigger($vars) {
 
 add_action('template_redirect', 'plugin_trigger_check');
 function plugin_trigger_check() {
+  if(0 == wp_get_current_user()->ID){
+    //not logged in - return;
+    return;
+  }
   if(intval(get_query_var('export_opml')) == wp_get_current_user()->ID) {
     require_once 'export_opml.php';
     exit;
