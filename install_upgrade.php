@@ -124,6 +124,21 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
+  for ($i = 1; $i <= 120; $i++) {
+    //Insert a sample entry
+    WprssEntries::save(array(
+      'feed_id'=> $wprssfeed->feed_id,
+      'title'=>'Entry number ' . $i,
+      'guid'=>'FAKEGUID'.$i,
+      'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
+      'updated'=>date ("Y-m-d H:m:s"),
+      'content'=>"Here is where I'll put in some helpful stuff to look at\n \n Lorem Ipusm and so forth\n and so on.",//TODO
+      'entered' =>date ("Y-m-d H:m:s"), 
+      'author' => 'Matt Katz'
+    ));
+    $i++;
+
+  }
   WprssEntries::save(array(
   //$wpdb->insert($table_name, array(
     'feed_id'=> $bb->feed_id,

@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :reorg
 creation_time: 2012-07-20 13:23:06.711223 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-07-20 13:29:03.826016 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition reorg
+  - it's a dupe!
