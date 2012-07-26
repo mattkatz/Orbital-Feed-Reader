@@ -8,7 +8,7 @@
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
 * */
-$page_title = "WordPrss";
+$page_title = "Voracious Reader";
 $menu_title = "CONSUME";
 $capability = 'edit_posts';
 $slug = 'wordprss.php';
@@ -31,16 +31,18 @@ function wprss_update_db_check(){
   global $wrss_db_v_opt_string;
   _log(get_site_option($wrss_db_v_opt_string) );
   if(get_site_option($wrss_db_v_opt_string) != $wprss_db_version){
-    //upgrade the db
+    //upgrayedd the db
+    _log("Wordprss: Installing or Upgrayedding Database");
+    //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
     wprss_install_db();
     update_option($wrss_db_v_opt_string, $wprss_db_version);
   }
-
 }
 function wprss_sample_data_check(){
   if(get_site_option('wprss_sample_data_loaded') != true)
   {
+    _log("Wordprss: Installing Sample Data");
     require_once 'install_upgrade.php';
     wprss_install_data();
     update_option('wprss_sample_data_loaded', true);
