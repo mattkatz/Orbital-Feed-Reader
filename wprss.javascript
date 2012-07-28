@@ -306,8 +306,12 @@ Wprss.entriesController = Em.ArrayController.create({
       //if there is an item selected, select the next one.
       console.log('current item');
       var idx = array.indexOf(currentItem);
+      var bottom = false;
       if(++idx == array.length){
-        currentItem = array.get('firstObject');
+        //currentItem = array.get('firstObject');
+        //if we have reached the end, we should just wait for the endless loader
+        //to handle this.  
+        bottom = true;
       }
       else{
         currentItem = array.get(idx);
@@ -315,7 +319,7 @@ Wprss.entriesController = Em.ArrayController.create({
     }
     Wprss.selectedEntryController.set('content',currentItem);
     //scroll to this element.
-    scrollToEntry(currentItem);
+    scrollToEntry(currentItem,bottom);
     Wprss.entriesController.setEntryIsRead(currentItem.id,true);
 
   },
@@ -589,7 +593,7 @@ Em.Handlebars.registerHelper('checkable', function(path,options){
 });
 
 
-function scrollToEntry(currentItem){
+function scrollToEntry(currentItem, bottom){
 
     var body = jQuery('html');
     var adminbar = jQuery('#wpadminbar');
@@ -607,6 +611,12 @@ function scrollToEntry(currentItem){
     }
     //position is the offset from the parent scrollable element
     var scrollAmount = row.position().top;
+    if(bottom){
+      console.log('trying to get to the bottom');
+      scrollAmount += row.height();
+    }
+
+
     var currentScroll = jQuery('#wprss-content').scrollTop();
     
     jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
