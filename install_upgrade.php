@@ -25,6 +25,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
   //User_feeds
   //This is the users view of a feed. 
   //Any value here overrides the feeds value.
@@ -42,6 +43,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
 
   //user entries
   //TODO add the foreign key refs from ref id to entries id and feed id
@@ -59,6 +61,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
   //entries
   $table_name = $wpdb->prefix.$tbl_prefix."entries";
 
@@ -77,6 +80,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
 }
 
 //TODO load in everything with admin as owner, 

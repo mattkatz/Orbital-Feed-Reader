@@ -29,8 +29,8 @@ add_action('plugins_loaded', 'wprss_update_db_check');
 function wprss_update_db_check(){
   global $wprss_db_version;
   global $wrss_db_v_opt_string;
-  _log(get_site_option($wrss_db_v_opt_string) );
   if(get_site_option($wrss_db_v_opt_string) != $wprss_db_version){
+    _log(get_site_option($wrss_db_v_opt_string) );
     //upgrayedd the db
     _log("Wordprss: Installing or Upgrayedding Database");
     //Two D's for a double dose of that primping.
@@ -40,12 +40,14 @@ function wprss_update_db_check(){
   }
 }
 function wprss_sample_data_check(){
-  if(get_site_option('wprss_sample_data_loaded') != true)
+  $samples_loaded = get_site_option('wprss_sample_data_loaded');
+  _log("Are the samples loaded: $samples_loaded ");
+  if( $samples_loaded != 1)
   {
     _log("Wordprss: Installing Sample Data");
     require_once 'install_upgrade.php';
     wprss_install_data();
-    update_option('wprss_sample_data_loaded', true);
+    update_option('wprss_sample_data_loaded', 1);
   }
 }
 
