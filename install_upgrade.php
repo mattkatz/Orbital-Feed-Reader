@@ -25,6 +25,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
   //User_feeds
   //This is the users view of a feed. 
   //Any value here overrides the feeds value.
@@ -39,11 +40,10 @@ function wprss_install_db()
     site_url varchar(250) ,
     unread_count integer NOT NULL,
     private bool NOT NULL DEFAULT false,
-    auth_login varchar(250) NOT NULL DEFAULT '',
-    auth_pass varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
 
   //user entries
   //TODO add the foreign key refs from ref id to entries id and feed id
@@ -61,6 +61,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
   //entries
   $table_name = $wpdb->prefix.$tbl_prefix."entries";
 
@@ -79,6 +80,7 @@ function wprss_install_db()
     UNIQUE KEY id (id)
   );";
   dbDelta($sql);
+  _log("Added $table_name");
 }
 
 //TODO load in everything with admin as owner, 
@@ -126,6 +128,21 @@ function wprss_install_data(){
     'entered' =>date ("Y-m-d H:m:s"), 
     'author' => 'Matt Katz'
   ));
+  for ($i = 1; $i <= 120; $i++) {
+    //Insert a sample entry
+    WprssEntries::save(array(
+      'feed_id'=> $wprssfeed->feed_id,
+      'title'=>'Entry number ' . $i,
+      'guid'=>'FAKEGUID'.$i,
+      'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
+      'updated'=>date ("Y-m-d H:m:s"),
+      'content'=>"Here is where I'll put in some helpful stuff to look at\n \n Lorem Ipusm and so forth\n and so on.",//TODO
+      'entered' =>date ("Y-m-d H:m:s"), 
+      'author' => 'Matt Katz'
+    ));
+    $i++;
+
+  }
   WprssEntries::save(array(
   //$wpdb->insert($table_name, array(
     'feed_id'=> $bb->feed_id,

@@ -570,8 +570,6 @@ class WprssEntries{
     return $myrows;
 
   }
-
-
 }
 
 function nonce_dance(){
@@ -616,19 +614,15 @@ function wprss_find_feed(){
   $orig_url = filter_input(INPUT_GET, 'url',FILTER_SANITIZE_URL);
   $contents = "";
   $resp->orig_url = $orig_url;
-  //go curl that url.
-  if(function_exists('curl_init')){
-    $ch = curl_init($orig_url);
-    //TODO set any needed curl options
-    $contents = @curl_exec($ch);
-    curl_close($ch);
+  if( !class_exists( 'WP_Http' ) )
+    include_once( ABSPATH . WPINC. '/class-http.php' );
+
+  $request = new WP_Http;
+  $result = $request->request( $orig_url);
+  $contents= $result['body'];
+  
 
 
-  }
-  else{
-    $contents = file_get_contents($orig_url);
-
-  }
     require_once('simplepie.inc');
     $feed = new SimplePie();
     $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: selectedFeedController should know read/unread pref
+desc: We should keep that info in the controller. or the view.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-07-28 22:53:28.514736 Z
+references: []
+
+id: 28420f28aca827bba4a195826ea2c94087be5a31
+log_events: 
+- - 2012-07-28 22:53:29.759512 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

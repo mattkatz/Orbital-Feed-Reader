@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Import OPML
+desc: Start simple, just import without folders or tags
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-06-13 23:31:02.425853 Z
+references: []
+
+id: 88e8c90d09b05462ac6cde7cecfc21e057e98d2e
+log_events: 
+- - 2012-06-13 23:31:03.666506 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-06-14 16:29:37.037331 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2012-06-26 12:50:17.416937 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - don't handle bad xml very well...

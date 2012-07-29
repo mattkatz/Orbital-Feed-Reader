@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: j on first load should select the first item
+desc: |-
+  We want the scroll to entry to push us to the first item.  Even want to look like this item is selected.
+  but we don't want to mark it as read yet.  First time you "j" it should mark as read the first item and select it.  Then it should move on with the next 'j'
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-06-02 11:07:04.279098 Z
+references: []
+
+id: 2f44136ac99b623dd4f2dc3c669157f4d08a3928
+log_events: 
+- - 2012-06-02 11:07:04.279590 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

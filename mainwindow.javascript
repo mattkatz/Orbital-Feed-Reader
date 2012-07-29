@@ -60,9 +60,11 @@ function setupInfiniteScroll(){
     loader: '<div class="loading_indicator">LOADING MORE POSTS, BOSS!</div>',
     ceaseFireOnEmpty: false,
     fireOnce:false,
+    fireDelay: 20,
     callback: function(fireSequence,pageSequence,scrollDirection){
       console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
       if("next" == scrollDirection){
+        console.log('ok, firing again!');
         var data = {
           action: 'wprss_get_entries',
           show_read: 0,
@@ -80,13 +82,23 @@ function setupInfiniteScroll(){
         jQuery.get(get_url.ajaxurl, data, function(response){
           Wprss.entriesController.createEntries(response);
           Wprss.selectedFeedController.get('content').set('is_loading',false);
-          jQuery('.loading').remove();
+          jQuery('.loading_indicator').remove();
           //scrollToEntry(Wprss.selectedEntryController.get('content'));
-        });
-        return true;
+        },'json');
+        //return true;
       }
-      return true;
-    }
+      else{
+          jQuery('.loading_indicator').remove();
+      }
+      //return true;
+    },
+    /* this won't work because the feedController doesn't know
+     * if we are looking for unread or not, hence how many items are left to view
+    ceaseFire: function(fireSequence, pageSequence, scrollDirection){
+      var feed = Wprss.selectedFeedController.get('content') ;
+      return feed.hasUnread();
+    },*/
+
   });
 }
 

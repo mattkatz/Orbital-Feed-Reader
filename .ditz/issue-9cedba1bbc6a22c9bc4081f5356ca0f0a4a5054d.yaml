@@ -3,7 +3,7 @@ title: "Add feed Title discovery to simplepie "
 desc: Not sure why it isn't in there already, but let's make it work.
 type: :bugfix
 component: Wordprss
-release: 
+release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-07-17 22:43:09.979337 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2 Wordpress integration from unassigned
+  - People should be clicking on explanatory names, not feed urls.

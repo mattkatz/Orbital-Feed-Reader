@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Menu Title should have total unread number
+desc: in the main menu on the right we should put unread after the title.
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :reorg
+creation_time: 2012-07-20 13:23:06.711223 Z
+references: []
+
+id: fa52b19f30107bd3b407a9b519ea6d4914ff3882
+log_events: 
+- - 2012-07-20 13:23:08.674616 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-07-20 13:29:03.826016 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition reorg
+  - it's a dupe!

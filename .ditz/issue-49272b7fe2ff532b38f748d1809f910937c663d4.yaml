@@ -3,7 +3,7 @@ title: Add NONCE and Permission valdation to ajax calls
 desc: insecurity is lame yall.
 type: :feature
 component: Wordprss
-release: 0.1 - Feeds, Subscribed
+release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -26,3 +26,9 @@ log_events:
   - |-
     Ok - so looks like we should add a nonce per ACTION. That way we can be sure user is performing the action they intend.  
     Also hearing that wordpress lets you use nonce more than once, which is confusing.
+- - 2012-07-17 22:32:21.429878 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2 Wordpress integration from 0.1 - Feeds, Subscribed
+  - |-
+    it's alpha. this can wait till we get some testing.
+    hope this doesn't bite me in the ass.

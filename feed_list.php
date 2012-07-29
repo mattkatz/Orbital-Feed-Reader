@@ -37,6 +37,9 @@
 
     </ul>
   </div>
+<?php
+require_once('subscription_window.php');
+?>
 <script type="text/javascript">
   var feeds= <?php
     require_once('backend.php');
