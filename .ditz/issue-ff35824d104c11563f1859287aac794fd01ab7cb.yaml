@@ -7,8 +7,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-07-19 12:12:05.228399 Z
 references: []
 
@@ -22,3 +22,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from unstarted to in_progress
   - starting
+- - 2012-07-29 01:28:49.255364 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - sucks less now!
