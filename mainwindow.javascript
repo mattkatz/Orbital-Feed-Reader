@@ -19,17 +19,21 @@ jQuery(document).ready(function($){
   feedTimer();
   setupInfiniteScroll();
   setupScrollToRead();
+  Wprss.cache.set('indicator',jQuery('#y-indicator'));
 });
 
 function setupScrollToRead(){
   jQuery('#wprss-content').mousemove(function(evt){
     //console.log(evt.pageY);
     Wprss.cache.set('mouseY',  evt.pageY);
+    Wprss.cache.indicator.offset({top:evt.pageY, left:150}) ;
+
 
   });
   jQuery('#wprss-content').mouseout(function(evt){
-    console.log('mouseout');
-    Wprss.cache.mouseY = null;
+    //Mouseout seems to fire ALL THE TIME
+    //console.log('mouseout');
+    //Wprss.cache.mouseY = null;
   });
 
   jQuery('#wprss-content').scroll(function(evt){

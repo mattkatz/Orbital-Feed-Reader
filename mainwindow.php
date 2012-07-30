@@ -37,6 +37,9 @@
   </ul>
     </script>
   </div>
+  <div id="y-indicator" class="does not provide funding" >
+  </div>
+  
   <div id="wprss-content">
     <script type="text/x-handlebars">
     {{#if Wprss.selectedFeedController.content}}
