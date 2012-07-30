@@ -22,7 +22,7 @@ jQuery(document).ready(function($){
 });
 
 function setupScrollToRead(){
-  /*jQuery('#wprss-content').mousemove(function(evt){
+  jQuery('#wprss-content').mousemove(function(evt){
     //console.log(evt.pageY);
     Wprss.cache.set('mouseY',  evt.pageY);
 
@@ -36,10 +36,11 @@ function setupScrollToRead(){
     //Where is the mouse cursor?
     console.log(Wprss.cache.get('mouseY'));
     //Which element is underneath the mouse cursor?
+    
     //where is the top of that element?
     //Where is the bottom of that element?
   });
-  */
+  /*
   console.log('setting up waypoints');
   Ember.run.next(this,function(){
     jQuery('li .entry').waypoint({
@@ -52,6 +53,7 @@ function setupScrollToRead(){
     });
   });
   console.log('set up waypoints');
+  */
 }
 
 function setupInfiniteScroll(){
@@ -82,13 +84,13 @@ function setupInfiniteScroll(){
         jQuery.get(get_url.ajaxurl, data, function(response){
           Wprss.entriesController.createEntries(response);
           Wprss.selectedFeedController.get('content').set('is_loading',false);
-          jQuery('.loading_indicator').remove();
+          jQuery('.loading_indicator').each(function(i){ this.remove()});
           //scrollToEntry(Wprss.selectedEntryController.get('content'));
         },'json');
         //return true;
       }
       else{
-          jQuery('.loading_indicator').remove();
+          jQuery('.loading_indicator').each(function(i){ this.remove()});
       }
       //return true;
     },
