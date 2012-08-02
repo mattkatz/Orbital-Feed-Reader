@@ -424,7 +424,7 @@ Wprss.FeedView = Em.View.extend({
 });
 
 Wprss.EntriesView = Em.View.extend({
-  //templateName: 'entry',
+  templateName: 'entry',
   click: function(evt){
     var content = this.get('content');
     Wprss.selectedEntryController.set('content', content);
@@ -441,7 +441,7 @@ Wprss.EntriesView = Em.View.extend({
     Wprss.entriesController.toggleEntryRead(contentId);
     return false;
   },
-  //classNameBindings:['isCurrent']
+  classNameBindings:['isCurrent', 'content.isRead']
 });
 
 Wprss.commandController = Em.ArrayController.create({
