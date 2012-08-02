@@ -424,7 +424,7 @@ Wprss.FeedView = Em.View.extend({
 });
 
 Wprss.EntriesView = Em.View.extend({
-  //templateName: feedsView,
+  //templateName: 'entry',
   click: function(evt){
     var content = this.get('content');
     Wprss.selectedEntryController.set('content', content);
