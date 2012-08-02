@@ -42,29 +42,7 @@
     {{#if Wprss.selectedFeedController.content}}
       <ul class="entries">
         {{#each Wprss.entriesController}}
-          {{#view Wprss.EntriesView contentBinding="this" classBinding="content.isRead isCurrent" }}
-            <li class="entry" {{bindAttr id="content.entryID"}} >
-              <a {{bindAttr href="content.link"}} target="_blank">
-                <h2>{{content.title}}</h2>
-              </a> 
-              {{#if content.author}}
-                <span class="attribution">by {{{content.author}}}</span>
-              {{/if}} 
-              {{#if content.entered}}
-                <span class="entry-time"> {{{content.entered}}}</span>
-              {{/if}}
-              <div class="entry-content">
-                {{{content.content}}}
-                
-              </div>
-              <div class="attributes">
-                {{checkable  "content" contentBinding="content"}}
-                <div class="entry-isloading" style="display:none;">
-                 loading 
-                </div>
-              </div>
-            </li>
-          {{/view}}
+          {{view  Wprss.EntriesView contentBinding="this"}}
         {{/each}}
       </ul>
       <div id="load-more">
@@ -89,6 +67,31 @@ require_once('feed_list.php');
 
     
   </script>
+<script type="text/x-handlebars" data-template-name="entry" >
+  {{#with content}}
+  <li class="entry" {{bindAttr id="entryID"}} >
+    <a {{bindAttr href="link"}} target="_blank">
+      <h2>{{title}}</h2>
+    </a> 
+    {{#if author}}
+      <span class="attribution">by {{{author}}}</span>
+    {{/if}} 
+    {{#if entered}}
+      <span class="entry-time"> {{{entered}}}</span>
+    {{/if}}
+    <div class="entry-content">
+      {{{content}}}
+      
+    </div>
+    <div class="attributes">
+      {{checkable  "content" contentBinding="this"}}
+      <div class="entry-isloading" style="display:none;">
+       loading 
+      </div>
+    </div>
+  </li>
+  {{/with}}
+</script>
   <script type="text/x-handlebars" data-template-name="command-item">
     {{commandName}}
   </script>
