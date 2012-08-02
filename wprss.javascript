@@ -437,7 +437,7 @@ Wprss.EntriesView = Em.View.extend({
     Wprss.entriesController.toggleEntryRead(contentId);
     return false;
   },
-  //classNameBindings:['isCurrent']
+  classNameBindings:['isCurrent', 'content.isRead']
 });
 
 Wprss.commandController = Em.ArrayController.create({
