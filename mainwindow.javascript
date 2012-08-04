@@ -19,7 +19,7 @@ jQuery(document).ready(function($){
   feedTimer();
   setupInfiniteScroll();
   console.log('document ready');
-  Em.run.schedule('sync', function(){console.log('render');setupScrollToRead();});
+  //Em.run.schedule('sync', function(){console.log('render');setupScrollToRead();});
 
   Wprss.cache.set('indicator',jQuery('#y-indicator'));
 });
@@ -52,12 +52,12 @@ function setupScrollToRead(){
   
   Ember.run.next(this,function(){
     console.log('nextrun');
-    jQuery('.entry').waypoint();
+   // jQuery('.entry').waypoint();
     Ember.run.next(this,function(){
-      jQuery('.entry').bind('waypoint.reached',function(evt,direction){
+      /*jQuery('.entry').bind('waypoint.reached',function(evt,direction){
           console.log(evt.target.id);
           console.log(direction);
-      });
+      });*/
 
     });
     /*jQuery('.entry').waypoint({

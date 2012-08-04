@@ -441,6 +441,23 @@ Wprss.EntriesView = Em.View.extend({
     Wprss.entriesController.toggleEntryRead(contentId);
     return false;
   },
+  didInsertElement: function(){
+    this._super();
+    console.log('waypointing ' + this.$().context.id);
+    this.$().waypoint( function(evt, direction){
+        //if(direction == 'down'){
+          var active = jQuery(this);
+          console.log(evt.target.id);
+          console.log(direction);
+        //}
+      },
+      {
+      offset: 'bottom-in-view',
+      }
+    );
+    console.log('inserted '+ this.content.id);
+  },
+
   classNameBindings:['isCurrent', 'content.isRead']
 });
 
