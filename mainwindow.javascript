@@ -117,6 +117,7 @@ function setupInfiniteScroll(){
     },
     /* this won't work because the feedController doesn't know
      * if we are looking for unread or not, hence how many items are left to view
+     * So the controller should know that, right?
     ceaseFire: function(fireSequence, pageSequence, scrollDirection){
       var feed = Wprss.selectedFeedController.get('content') ;
       return feed.hasUnread();
