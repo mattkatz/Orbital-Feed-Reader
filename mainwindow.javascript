@@ -18,14 +18,15 @@ jQuery(document).ready(function($){
   setupKeys();
   feedTimer();
   setupInfiniteScroll();
+  setupYIndicator();
   console.log('document ready');
   //Em.run.schedule('sync', function(){console.log('render');setupScrollToRead();});
 
   Wprss.cache.set('indicator',jQuery('#y-indicator'));
 });
 
-function setupScrollToRead(){
-  /*
+function setupYIndicator(){
+  
   jQuery('#wprss-content').mousemove(function(evt){
     //console.log(evt.pageY);
     Wprss.cache.set('mouseY',  evt.pageY);
@@ -38,6 +39,7 @@ function setupScrollToRead(){
     //console.log('mouseout');
     //Wprss.cache.mouseY = null;
   });
+  /*
 
   jQuery('#wprss-content').scroll(function(evt){
     //Where is the mouse cursor?
@@ -48,19 +50,18 @@ function setupScrollToRead(){
     //Where is the bottom of that element?
   });
   */
-  console.log('setting up waypoints');
   
-  Ember.run.next(this,function(){
-    console.log('nextrun');
-   // jQuery('.entry').waypoint();
-    Ember.run.next(this,function(){
-      jQuery.waypoints('refresh');
-      /*jQuery('.entry').bind('waypoint.reached',function(evt,direction){
-          console.log(evt.target.id);
-          console.log(direction);
-      });*/
+  //Ember.run.next(this,function(){
+  //  console.log('nextrun');
+  // // jQuery('.entry').waypoint();
+  //  Ember.run.next(this,function(){
+  //    jQuery.waypoints('refresh');
+  //    /*jQuery('.entry').bind('waypoint.reached',function(evt,direction){
+  //        console.log(evt.target.id);
+  //        console.log(direction);
+  //    });*/
 
-    });
+  //  });
     /*jQuery('.entry').waypoint({
 //      context: 'ul #wprss-content',
       offset: '50%',
@@ -73,8 +74,7 @@ function setupScrollToRead(){
       }
     });
     */
-  });
-  console.log('set up waypoints');
+  //});
 }
 
 function setupInfiniteScroll(){

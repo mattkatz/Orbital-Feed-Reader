@@ -444,12 +444,9 @@ Wprss.EntriesView = Em.View.extend({
   didInsertElement: function(){
     this._super();
     var viewElem = this;
-    console.log('waypointing ' + this.$().context.id);
     this.$().waypoint( function(evt, direction){
         if(direction == 'down'){
-          var active = jQuery(this);
-          //console.log(evt.target.id);
-          //console.log(direction);
+          //var active = jQuery(this);
           var content = viewElem.get('content');
           Wprss.entriesController.setEntryIsRead(content.id,true);
           
@@ -469,7 +466,6 @@ Wprss.EntriesView = Em.View.extend({
         
       }
     );
-    console.log('inserted '+ this.content.id);
   },
 
   classNameBindings:['isCurrent', 'content.isRead']
