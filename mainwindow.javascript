@@ -54,6 +54,7 @@ function setupScrollToRead(){
     console.log('nextrun');
    // jQuery('.entry').waypoint();
     Ember.run.next(this,function(){
+      jQuery.waypoints('refresh');
       /*jQuery('.entry').bind('waypoint.reached',function(evt,direction){
           console.log(evt.target.id);
           console.log(direction);
@@ -200,7 +201,7 @@ function setupInfiniteScroll(){
           Wprss.selectedFeedController.get('content').set('is_loading',false);
           jQuery('.loading').remove();
           //scrollToEntry(Wprss.selectedEntryController.get('content'));
-        });
+        },'json');
         console.log('called for more posts');
       }
     }

@@ -443,16 +443,30 @@ Wprss.EntriesView = Em.View.extend({
   },
   didInsertElement: function(){
     this._super();
+    var viewElem = this;
     console.log('waypointing ' + this.$().context.id);
     this.$().waypoint( function(evt, direction){
-        //if(direction == 'down'){
+        if(direction == 'down'){
           var active = jQuery(this);
-          console.log(evt.target.id);
-          console.log(direction);
-        //}
+          //console.log(evt.target.id);
+          //console.log(direction);
+          var content = viewElem.get('content');
+          Wprss.entriesController.setEntryIsRead(content.id,true);
+          
+          console.log(content.id);
+        }
       },
       {
-      offset: 'bottom-in-view',
+        context: '#wprss-content',
+        onlyOnScroll: true,
+        offset: 'bottom-in-view',
+        //offset: '50%',
+        //offset: function(){
+        //  var offs = jQuery.waypoints('viewportHeight') - jQuery(this).outerHeight();
+        //  console.log('offs: ' + offs);
+        //  return offs;
+        //},
+        
       }
     );
     console.log('inserted '+ this.content.id);
