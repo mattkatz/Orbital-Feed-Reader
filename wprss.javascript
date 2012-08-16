@@ -338,7 +338,7 @@ Wprss.entriesController = Em.ArrayController.create({
       nonce_a_donce:get_url.nonce_a_donce 
     };
     jQuery.post(get_url.ajaxurl,data, function(response){
-      response = JSON.parse(response);
+      //response = JSON.parse(response);
       jQuery('#'+entry.entry_id+">.entry_isloading").hide();
       if(response.updated >0){
         //console.log("updating");
@@ -349,7 +349,7 @@ Wprss.entriesController = Em.ArrayController.create({
         console.log("update of " + response.updated);
         //TODO: alert the user?
       }
-    });
+    },'json');
 
   },
   toggleEntryRead: function(id){
