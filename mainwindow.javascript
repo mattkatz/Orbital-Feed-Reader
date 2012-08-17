@@ -31,13 +31,16 @@ function setupYIndicator(){
     //console.log(evt.pageY);
     Wprss.cache.set('mouseY',  evt.pageY);
     Wprss.cache.indicator.offset({top:evt.pageY, left:150}) ;
+    Wprss.cache.indicator.css('background','rgba(20,20,200, .5)');
+    //Wprss.cache.indicator.show();
 
 
   });
   jQuery('#wprss-content').mouseout(function(evt){
     //Mouseout seems to fire ALL THE TIME
     //console.log('mouseout');
-    //Wprss.cache.mouseY = null;
+    //Wprss.cache.set('mouseY',null);
+    Wprss.cache.indicator.css('background','rgba(20,20,200, .1)');
   });
   /*
 

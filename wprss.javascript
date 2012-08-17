@@ -338,7 +338,6 @@ Wprss.entriesController = Em.ArrayController.create({
       nonce_a_donce:get_url.nonce_a_donce 
     };
     jQuery.post(get_url.ajaxurl,data, function(response){
-      //response = JSON.parse(response);
       jQuery('#'+entry.entry_id+">.entry_isloading").hide();
       if(response.updated >0){
         //console.log("updating");
@@ -449,8 +448,6 @@ Wprss.EntriesView = Em.View.extend({
           //var active = jQuery(this);
           var content = viewElem.get('content');
           Wprss.entriesController.setEntryIsRead(content.id,true);
-          
-          console.log(content.id);
         }
       },
       {
