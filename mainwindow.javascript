@@ -20,11 +20,12 @@ jQuery(document).ready(function($){
   setupInfiniteScroll();
   setupYIndicator();
   console.log('document ready');
-  //Em.run.schedule('sync', function(){console.log('render');setupScrollToRead();});
 
   Wprss.cache.set('indicator',jQuery('#y-indicator'));
 });
 
+//This little carat is inspired by Newsblur
+//Indicates where the read/not read line is.
 function setupYIndicator(){
   
   jQuery('#wprss-content').mousemove(function(evt){
@@ -42,42 +43,6 @@ function setupYIndicator(){
     //Wprss.cache.set('mouseY',null);
     Wprss.cache.indicator.css('background','rgba(20,20,200, .1)');
   });
-  /*
-
-  jQuery('#wprss-content').scroll(function(evt){
-    //Where is the mouse cursor?
-    console.log(Wprss.cache.get('mouseY'));
-    //Which element is underneath the mouse cursor?
-    
-    //where is the top of that element?
-    //Where is the bottom of that element?
-  });
-  */
-  
-  //Ember.run.next(this,function(){
-  //  console.log('nextrun');
-  // // jQuery('.entry').waypoint();
-  //  Ember.run.next(this,function(){
-  //    jQuery.waypoints('refresh');
-  //    /*jQuery('.entry').bind('waypoint.reached',function(evt,direction){
-  //        console.log(evt.target.id);
-  //        console.log(direction);
-  //    });*/
-
-  //  });
-    /*jQuery('.entry').waypoint({
-//      context: 'ul #wprss-content',
-      offset: '50%',
-      handler: function(evt, direction){
-        if(direction == 'down'){
-          var active = jQuery(this);
-          console.log(evt.target.id);
-          console.log(direction);
-        }
-      }
-    });
-    */
-  //});
 }
 
 function setupInfiniteScroll(){
