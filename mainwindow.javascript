@@ -29,11 +29,9 @@ jQuery(document).ready(function($){
 function setupYIndicator(){
   
   jQuery('#wprss-content').mousemove(function(evt){
-    //console.log(evt.pageY);
     Wprss.cache.set('mouseY',  evt.pageY);
     Wprss.cache.indicator.offset({top:evt.pageY, left:150}) ;
     Wprss.cache.indicator.css('background','rgba(20,20,200, .5)');
-    //Wprss.cache.indicator.show();
 
 
   });
