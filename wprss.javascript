@@ -453,8 +453,13 @@ Wprss.EntriesView = Em.View.extend({
       {
         context: '#wprss-content',
         onlyOnScroll: true,
-        offset: 'bottom-in-view',
+        //offset: 'bottom-in-view',
         //offset: '50%',
+        offset: function(){
+          var y = Wprss.cache.mouseY;
+          return y - jQuery(this).outerHeight();
+
+        }
         //offset: function(){
         //  var offs = jQuery.waypoints('viewportHeight') - jQuery(this).outerHeight();
         //  console.log('offs: ' + offs);

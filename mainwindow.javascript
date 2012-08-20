@@ -32,6 +32,7 @@ function setupYIndicator(){
     Wprss.cache.set('mouseY',  evt.pageY);
     Wprss.cache.indicator.offset({top:evt.pageY, left:150}) ;
     Wprss.cache.indicator.css('background','rgba(20,20,200, .5)');
+    jQuery.waypoints('refresh');
 
 
   });
