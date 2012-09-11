@@ -10,15 +10,15 @@ Instead, I'd like to bring a feed reader into Wordpress that lets you blog from 
 
 Goals
 -----
-* Let you subscribe to blogs via RSS or Atom
+* ~~Let you subscribe to blogs via RSS or Atom~~ DONE!
 * Create a blogroll dynamically from your feeds.
-* Import from OPML.
-* Export OPML.
+* ~~Import from OPML.~~ DONE!
+* ~~Export OPML.~~ DONE!
 * Let you share your OPML dynamically.
 * Integrate into Firefox as a feed handler.
 * Let you mark feeds as Private
 * Tag/Categorize feeds
-* Support keyboard shortcuts
+* ~~Support keyboard shortcuts~~ DONE!
 
 That's a lot of work to do.  I'm going to take a stab at it, but I'd love your help. Let's make wordpress even better. 
 
