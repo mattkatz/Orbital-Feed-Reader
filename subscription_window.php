@@ -9,6 +9,16 @@
       X
     </div>
     <div class="horizontal-form">
+      {{#if possibleFeeds }}
+        <div>
+          We found {{possibleFeeds.length }} feeds:
+        </div>
+        {{#each possibleFeeds}}
+              <div class="possibleFeed clickable" {{action "findFeed" target="parentView.parentView.parentView" context="url" }} >
+                {{url}} 
+              </div>
+        {{/each}}
+      {{/if}}
       {{#if feedCandidate}}
         {{#with feedCandidate}}
               {{view Em.TextField valueBinding="feed_name" class="heading" }}
@@ -27,20 +37,10 @@
                   {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
                 </label>
               {{/if}}
-              <div class="clickable" {{action "saveFeed" }}>
+              <div class="clickable button" {{action "saveFeed" }}>
               Save {{feed_name}}
               </div>
         {{/with }}
-      {{/if}}
-      {{#if possibleFeeds }}
-        <div>
-          We found {{possibleFeeds.length }} feeds:
-        </div>
-        {{#each possibleFeeds}}
-              <div class="possibleFeed" {{action "findFeed" target="parentView.parentView.parentView" context="url" }} >
-                {{url}} 
-              </div>
-        {{/each}}
       {{/if}}
     </div>
   {{/view}}
