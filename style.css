@@ -110,6 +110,7 @@
   top: 50px;
   left: 200px;
   border-radius: 20px;
+  box-shadow: 2px 2px 8px #fff inset;
 }
 .invisible{
   display: none;
