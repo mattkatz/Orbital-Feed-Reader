@@ -3,10 +3,10 @@ title: Export OPML
 desc: produce a view/file of OPML.  .
 type: :feature
 component: Wordprss
-release: 
+release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-16 00:50:08.520576 Z
 references: []
 
@@ -15,4 +15,12 @@ log_events:
 - - 2011-12-16 00:50:08.521058 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2012-07-17 22:32:53.958173 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1 - Feeds, Subscribed from unassigned
+  - ""
+- - 2012-07-17 22:33:14.982370 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""

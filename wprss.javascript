@@ -1,5 +1,9 @@
 
 Wprss = Ember.Application.create();
+Wprss.cache = Ember.Object.create({
+  mouseX: null,
+  mouseY: null,
+});
 Wprss.Feed = Em.Object.extend({
   feed_url : null,
   feed_name: null,
@@ -65,7 +69,8 @@ Wprss.feedsController = Em.ArrayController.create({
       //TODO: put in error checks for bad responses, errors,etc.
       var resp = JSON.parse(response);
       Wprss.feedsController.changeUnreadCount(resp.feed_id,-1* resp.updated);
-      //TODO move onto next feed?
+      //move onto next feed?
+      Wprss.feedsController.nextUnreadFeed();
     });
 
   },
@@ -305,8 +310,12 @@ Wprss.entriesController = Em.ArrayController.create({
       //if there is an item selected, select the next one.
       console.log('current item');
       var idx = array.indexOf(currentItem);
+      var bottom = false;
       if(++idx == array.length){
-        currentItem = array.get('firstObject');
+        //currentItem = array.get('firstObject');
+        //if we have reached the end, we should just wait for the endless loader
+        //to handle this.  
+        bottom = true;
       }
       else{
         currentItem = array.get(idx);
@@ -314,7 +323,7 @@ Wprss.entriesController = Em.ArrayController.create({
     }
     Wprss.selectedEntryController.set('content',currentItem);
     //scroll to this element.
-    scrollToEntry(currentItem);
+    scrollToEntry(currentItem,bottom);
     Wprss.entriesController.setEntryIsRead(currentItem.id,true);
 
   },
@@ -329,7 +338,6 @@ Wprss.entriesController = Em.ArrayController.create({
       nonce_a_donce:get_url.nonce_a_donce 
     };
     jQuery.post(get_url.ajaxurl,data, function(response){
-      response = JSON.parse(response);
       jQuery('#'+entry.entry_id+">.entry_isloading").hide();
       if(response.updated >0){
         //console.log("updating");
@@ -340,7 +348,7 @@ Wprss.entriesController = Em.ArrayController.create({
         console.log("update of " + response.updated);
         //TODO: alert the user?
       }
-    });
+    },'json');
 
   },
   toggleEntryRead: function(id){
@@ -366,6 +374,7 @@ Wprss.selectedFeedController = Em.Object.create({
     Wprss.feedsController.unsubscribe(this.get('content').feed_id);
   },
   saveFeed: function(){
+
     Wprss.feedsController.saveFeed(this.get('content'),function(response){
       alert(response.feed_name + ' saved')
     });
@@ -414,7 +423,7 @@ Wprss.FeedView = Em.View.extend({
 });
 
 Wprss.EntriesView = Em.View.extend({
-  //templateName: feedsView,
+  templateName: 'entry',
   click: function(evt){
     var content = this.get('content');
     Wprss.selectedEntryController.set('content', content);
@@ -431,7 +440,37 @@ Wprss.EntriesView = Em.View.extend({
     Wprss.entriesController.toggleEntryRead(contentId);
     return false;
   },
-  //classNameBindings:['isCurrent']
+  didInsertElement: function(){
+    this._super();
+    var viewElem = this;
+    this.$().waypoint( function(evt, direction){
+        if(direction == 'down'){
+          //var active = jQuery(this);
+          var content = viewElem.get('content');
+          Wprss.entriesController.setEntryIsRead(content.id,true);
+        }
+      },
+      {
+        context: '#wprss-content',
+        onlyOnScroll: true,
+        //offset: 'bottom-in-view',
+        //offset: '50%',
+        offset: function(){
+          var y = Wprss.cache.mouseY;
+          return y - jQuery(this).outerHeight();
+
+        }
+        //offset: function(){
+        //  var offs = jQuery.waypoints('viewportHeight') - jQuery(this).outerHeight();
+        //  console.log('offs: ' + offs);
+        //  return offs;
+        //},
+        
+      }
+    );
+  },
+
+  classNameBindings:['isCurrent', 'content.isRead']
 });
 
 Wprss.commandController = Em.ArrayController.create({
@@ -472,11 +511,6 @@ Wprss.feedFinder= Em.Object.create({
   url: null,
   possibleFeeds: null,
   feedCandidate: null,
-  saveFeed: function(){
-    Wprss.feedsController.saveFeed(this.get('feedCandidate'),function(){
-      jQuery('#subscribe-window').toggleClass('invisible');
-    });
-  },
   findFeed: function(){
     // First get the feed url or site url from the link
     //TODO: then ask the backend to validate the feed details
@@ -518,29 +552,73 @@ Wprss.feedFinder= Em.Object.create({
   },
 
 });
-Wprss.AddFeedView = Em.TextField.extend({
-  focusOut: function(){
+Wprss.FeedsForm = Em.View.extend({
+  tagName: 'form',
+  urlField: null,
+  feedCandidate:null,
+  possibleFields:null,
+  submit: function(event){
+    event.preventDefault();
+    //actually begin the submission
+    console.log('begin the submission');
+    this.findFeed();
   },
-  insertNewLine: function(){
-    console.log('rah');
+  saveFeed: function(){
+    var view = this;
+    Wprss.feedsController.saveFeed(this.get('feedCandidate'),function(){
+      view.dismiss();
+    });
+  },
+  dismiss: function(){
+    var view = this;
+    view.set('feedCandidate',null);
+    view.set('possibleFeeds',null);
+    view.urlField.set('value',null);
+    jQuery('#subscribe-window').toggleClass('invisible');
+
+  },
+  findFeed: function(evt){
+    // First get the feed url or site url from the link
+    var url = this.getPath('urlField.value');
+    if(evt){
+      url = evt.context;
+    }
+      
+    //then ask the backend to validate the feed details
+    var data = {
+      action: 'wprss_find_feed',
+      url: url,
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    var view = this;
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //if this was a feed, let's make it saveable!
+      if("feed" == response.url_type){
+        var feed  =  Wprss.Feed.create(
+          { feed_url: response.orig_url, 
+            site_url: response.site_url, 
+            feed_id: null, 
+            feed_name: response.feed_name,
+            unread_count:0,
+            is_private:false
+          });
+        view.set('feedCandidate', feed);
+        
+      }
+      else{
+        //if this was a page, let the user choose feeds and then save them.
+        if( response.feeds.length >1){
+          view.set('feedCandidate', null);
+          view.set('possibleFeeds', response.feeds);
+        }else
+        {
+          view.urlField.set('value',response.feeds[0].url);
+          view.findFeed();
+        }
+      }
+    },"json");
   },
 
-});
-Wprss.PossibleFeedView  = Em.View.extend({
-  click: function(evt){
-    var content = this.get('content');
-    //TODO now we pull the feed here and smack it into the feed url etc.
-    console.log(content);
-    //TODO it would be best if we were pulling the actual feed info bc we could create a feed...  
-    //instead we will pull the feed url and then call the click handler on it.
-    Wprss.feedFinder.set('url',content.url);
-    Wprss.feedFinder.findFeed();
-
-
-    //clean up the form by erasing the old feedlist
-    Wprss.feedFinder.set('possibleFeeds',null);
-    
-  },
 });
 Em.Handlebars.registerHelper('checkable', function(path,options){
   options.hash.valueBinding = path;
@@ -548,7 +626,7 @@ Em.Handlebars.registerHelper('checkable', function(path,options){
 });
 
 
-function scrollToEntry(currentItem){
+function scrollToEntry(currentItem, bottom){
 
     var body = jQuery('html');
     var adminbar = jQuery('#wpadminbar');
@@ -566,6 +644,12 @@ function scrollToEntry(currentItem){
     }
     //position is the offset from the parent scrollable element
     var scrollAmount = row.position().top;
+    if(bottom){
+      console.log('trying to get to the bottom');
+      scrollAmount += row.height();
+    }
+
+
     var currentScroll = jQuery('#wprss-content').scrollTop();
     
     jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 

@@ -17,14 +17,44 @@ jQuery(document).ready(function($){
   };
   setupKeys();
   feedTimer();
+  setupInfiniteScroll();
+  setupYIndicator();
+  console.log('document ready');
+
+  Wprss.cache.set('indicator',jQuery('#y-indicator'));
+});
+
+//This little carat is inspired by Newsblur
+//Indicates where the read/not read line is.
+function setupYIndicator(){
+  
+  jQuery('#wprss-content').mousemove(function(evt){
+    Wprss.cache.set('mouseY',  evt.pageY);
+    Wprss.cache.indicator.offset({top:evt.pageY, left:150}) ;
+    Wprss.cache.indicator.css('background','rgba(20,20,200, .5)');
+    jQuery.waypoints('refresh');
+
+
+  });
+  jQuery('#wprss-content').mouseout(function(evt){
+    //Mouseout seems to fire ALL THE TIME
+    //console.log('mouseout');
+    //Wprss.cache.set('mouseY',null);
+    Wprss.cache.indicator.css('background','rgba(20,20,200, .1)');
+  });
+}
+
+function setupInfiniteScroll(){
   //put in some infinite scrolling logic
   jQuery('#wprss-content').endlessScroll({
     loader: '<div class="loading_indicator">LOADING MORE POSTS, BOSS!</div>',
     ceaseFireOnEmpty: false,
     fireOnce:false,
+    fireDelay: 20,
     callback: function(fireSequence,pageSequence,scrollDirection){
       console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
       if("next" == scrollDirection){
+        console.log('ok, firing again!');
         var data = {
           action: 'wprss_get_entries',
           show_read: 0,
@@ -42,16 +72,26 @@ jQuery(document).ready(function($){
         jQuery.get(get_url.ajaxurl, data, function(response){
           Wprss.entriesController.createEntries(response);
           Wprss.selectedFeedController.get('content').set('is_loading',false);
-          jQuery('.loading').remove();
+          jQuery('.loading_indicator').each(function(i){ this.remove()});
           //scrollToEntry(Wprss.selectedEntryController.get('content'));
-        });
-        return true;
+        },'json');
+        //return true;
       }
-      return true;
-    }
+      else{
+          jQuery('.loading_indicator').each(function(i){ this.remove()});
+      }
+      //return true;
+    },
+    /* this won't work because the feedController doesn't know
+     * if we are looking for unread or not, hence how many items are left to view
+     * So the controller should know that, right?
+    ceaseFire: function(fireSequence, pageSequence, scrollDirection){
+      var feed = Wprss.selectedFeedController.get('content') ;
+      return feed.hasUnread();
+    },*/
 
   });
-});
+}
 
 function feedTimer(){
     setTimeout(function(){  
@@ -99,6 +139,41 @@ function setupKeys(){
     if(null == currentItem)
       return;
     Wprss.entriesController.toggleEntryRead(currentItem.id);
+  });
+}
+function setupInfiniteScroll(){
+  //put in some infinite scrolling logic
+  jQuery('#wprss-content').endlessScroll({
+    loader: '<div class="loading">LOADING UP MORE POSTS BOSS!</div>',
+    ceaseFireOnEmpty: false,
+    fireOnce:false,
+    callback: function(fireSequence,pageSequence,scrollDirection){
+      console.log(fireSequence + " page: " + pageSequence + " scroll: " + scrollDirection);
+      if("next" == scrollDirection){
+        var data = {
+          action: 'wprss_get_entries',
+          show_read: 0,
+          nonce_a_donce:get_url.nonce_a_donce 
+          
+        };
+        var feed = Wprss.selectedFeedController.get('content') ;
+        if(feed){
+          data['feed_id']=feed.feed_id;
+          feed.set('is_loading',true);
+        }
+
+        //how are you going to handle the failure?
+        //TODO whaddya do when there are no more posts?
+        jQuery.get(get_url.ajaxurl, data, function(response){
+          Wprss.entriesController.createEntries(response);
+          Wprss.selectedFeedController.get('content').set('is_loading',false);
+          jQuery('.loading').remove();
+          //scrollToEntry(Wprss.selectedEntryController.get('content'));
+        },'json');
+        console.log('called for more posts');
+      }
+    }
+
   });
 }
 

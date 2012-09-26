@@ -25,8 +25,9 @@
 }
 
 .entries .is-read{
-  background-color: #fafafa;
-  font-style:italic;
+  /*background-color: #fafafa;*/
+  /*font-style:italic;*/
+  color: #999;
 }
 
 .entries .is-current{
@@ -34,6 +35,9 @@
   background-color: #ffffff;
   box-shadow: 2px 2px 4px #666;
   color: #333;
+}
+.is-current > h2{
+  text-shadow: 0 1px 2px #333;
 }
 
 .entry{
@@ -45,7 +49,7 @@
 }
 
 .entry h2{
-  text-shadow: 0px 1px 1px #eee;
+  text-shadow: 0px 1px 1px #aaa;
 }
 
 .ember-button{
@@ -88,6 +92,18 @@
   color: #FFFFFF;
   text-shadow: 0 -1px 0 #333333;
 }
+#y-indicator{
+  background-color: rgba(20,20,200, .5);
+  height: 5px;
+  width: 20px;
+  position: absolute;
+  left:-10px;
+  top: 200px;
+  border-radius: 0 50px 50px 0;
+}
+
+
+
 .modal-window{
   padding: 20px;
   color: #dddddd;
@@ -98,6 +114,7 @@
   top: 50px;
   left: 200px;
   border-radius: 20px;
+  box-shadow: 2px 2px 8px #fff inset;
 }
 .invisible{
   display: none;
@@ -121,6 +138,16 @@
   display: inline; 
 
 }
+.clickable{
+  cursor: pointer;
+  text-shadow: 0 0 3px #fff;
+}
+.dismiss{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 #commandbar li:hover,
 .feed:hover,
 .ember-button:hover

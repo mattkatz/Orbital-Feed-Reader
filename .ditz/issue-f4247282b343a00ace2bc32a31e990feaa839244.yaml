@@ -3,7 +3,7 @@ title: Allow secret key url for triggering feed update
 desc: do something like tt-rss to get unattended updates.
 type: :feature
 component: Wordprss
-release: 0.1 - Feeds, Subscribed
+release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-08-20 21:54:37.663869 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - unassigned from release 0.1 - Feeds, Subscribed
+  - nevermind, another day

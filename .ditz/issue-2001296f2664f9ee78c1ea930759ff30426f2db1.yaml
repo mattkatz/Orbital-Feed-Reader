@@ -5,11 +5,11 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-05-27 00:45:25.408219 Z
-references: []
-
+references: 
+- wordprss-96
 id: 2001296f2664f9ee78c1ea930759ff30426f2db1
 log_events: 
 - - 2012-05-27 00:45:25.445505 Z
@@ -20,3 +20,15 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - edited description
   - adding more specific idea.
+- - 2012-05-31 16:43:20.149797 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2012-07-19 12:20:55.820441 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - added reference 1
+  - We should fix these both at the same time.
+- - 2012-08-20 21:52:35.439848 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - oops I meant Y position

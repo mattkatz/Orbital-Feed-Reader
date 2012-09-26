@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: unsubscribe should clear the feed and reset the field chooser
+desc: ""
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-09-22 22:07:41.914090 Z
+references: []
+
+id: a2ceda3e57333570b2e8f2d2549c6fdb4a1c382f
+log_events: 
+- - 2012-09-22 22:07:43.778150 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""

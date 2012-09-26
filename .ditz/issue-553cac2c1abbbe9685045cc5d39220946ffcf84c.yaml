@@ -1,0 +1,33 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: loading the home page just exports OPML?!
+desc: for crying out loud
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-07-19 01:09:20.085417 Z
+references: []
+
+id: 553cac2c1abbbe9685045cc5d39220946ffcf84c
+log_events: 
+- - 2012-07-19 01:09:21.238619 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-07-19 01:47:49.752449 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - |-
+    Seems to occur only when you are trying to upgrade your db.
+    post DB upgrade issue goes away.
+    WTF, I don't know.
+- - 2012-07-20 19:50:04.305696 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - If you aren't logged in, all you get is the opml export
+- - 2012-07-20 19:57:14.162321 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - fixed by detecting logout

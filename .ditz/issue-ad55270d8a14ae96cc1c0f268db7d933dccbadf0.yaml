@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Feed Save not working on main screen.
+desc: I get () and nothing instead of the feed showing up in the main window.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-07-20 21:40:17.996475 Z
+references: []
+
+id: ad55270d8a14ae96cc1c0f268db7d933dccbadf0
+log_events: 
+- - 2012-07-20 21:40:19.200564 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

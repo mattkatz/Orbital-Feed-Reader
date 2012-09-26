@@ -1,0 +1,28 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Endless Scroll sucks
+desc: |-
+  I have implemented this wrong. For some reason, I can't get this thing to work properly.
+  might need to rip it out and start over.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-07-19 12:12:05.228399 Z
+references: []
+
+id: ff35824d104c11563f1859287aac794fd01ab7cb
+log_events: 
+- - 2012-07-19 12:12:06.901917 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-07-19 12:23:14.717130 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - starting
+- - 2012-07-29 01:28:49.255364 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - sucks less now!

@@ -570,8 +570,6 @@ class WprssEntries{
     return $myrows;
 
   }
-
-
 }
 
 function nonce_dance(){

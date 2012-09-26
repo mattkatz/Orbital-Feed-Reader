@@ -1,19 +1,22 @@
 <div id="opml-dialog" class="modal-window invisible">
+    <div class="clickable dismiss" onclick="opml_dismiss()">
+      X
+    </div>
   <div class="horizontal-form">
     <!--<form id="upload_form" enctype="multipart/form-data" method="post" onsubmit='uploadOpml()'>-->
-      <label>
-        Select an OPML file to import
-        <input type="file" name="import-opml" value="" id="import-opml" placeholder="Select an OPML file" onchange="fileSelected()"/>
-      </label>
-<div id="fileName">
-  
-</div>
-<div id="fileSize">
-  
-</div>
-      <button type='submit' id="uploadButton"  disabled=true  onclick='uploadOpml()'>
-        Upload
-      </button>
+    <label>
+      Select an OPML file to import
+      <input type="file" name="import-opml" value="" id="import-opml" placeholder="Select an OPML file" onchange="fileSelected()"/>
+    </label>
+    <div id="fileName">
+      
+    </div>
+    <div id="fileSize">
+      
+    </div>
+    <button type='submit' id="uploadButton"  disabled=true  onclick='uploadOpml()'>
+      Upload
+    </button>
     <!--</form>-->
   </div>
 </div>
@@ -22,6 +25,11 @@
 function getFile(){
   var file = document.getElementById('import-opml').files[0];
   return file;
+}
+function opml_dismiss(){
+  console.log('OK!');
+  jQuery('#opml-dialog').toggleClass('invisible');
+  jQuery('#import-opml').attr('value','');
 }
 
 function fileSelected(){
@@ -69,8 +77,7 @@ function uploadOpml(){
           alert('Sorry, we had trouble reading this file through.');
           console.log(ex);
         }
-        jQuery('#opml-dialog').toggleClass('invisible')
-        jQuery('#import-opml').attr('value','');
+        opml_dismiss();
 
       };
     })(f);

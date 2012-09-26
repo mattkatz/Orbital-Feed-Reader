@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Public OPML export for not logged in users
+desc: display only feeds not marked as private.
+type: :feature
+component: Wordprss
+release: 
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-09-22 22:29:12.229116 Z
+references: []
+
+id: 97921dcc94523d7174a75448c7083c0db883bc03
+log_events: 
+- - 2012-09-22 22:29:13.901787 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
