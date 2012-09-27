@@ -19,7 +19,6 @@ jQuery(document).ready(function($){
   feedTimer();
   setupInfiniteScroll();
   setupYIndicator();
-  console.log('document ready');
 
   Wprss.cache.set('indicator',jQuery('#y-indicator'));
 });
