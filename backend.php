@@ -127,7 +127,7 @@ class WprssFeeds {
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $sql = "
         select 
-        feeds.id,
+        feeds.id as feed_id,
         COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
         feeds.feed_url, 
         COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,

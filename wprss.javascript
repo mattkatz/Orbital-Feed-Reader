@@ -31,7 +31,9 @@ Wprss.feedsController = Em.ArrayController.create({
   //createFeed: function(feed,domain,name,id,unread,priv){
   createFeed: function(feedHash){
     feedHash.is_private = (1==feedHash.is_private);
-    feedHash.feed_id = feedHash.id;
+    //feedHash.feed_id = feedHash.id;
+    console.log('feedHash in createFeed');
+    console.log(feedHash);
     var feed = Wprss.Feed.create(feedHash);
     //var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
@@ -39,6 +41,8 @@ Wprss.feedsController = Em.ArrayController.create({
   createFeeds: function(feeds){
     Wprss.feedsController.createFeed({feed_url:'',site_url:'',feed_name:'Fresh Entries',feed_id:null,unread_count:'lots', is_private:true});
     feeds.forEach(function(value){
+      console.log('value in createFeeds');
+      console.log(value);
       Wprss.feedsController.createFeed(value);
       //Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
@@ -90,8 +94,11 @@ Wprss.feedsController = Em.ArrayController.create({
     };
     jQuery.get(get_url.ajaxurl, data, function(response){
       //TODO: put in error checks for bad responses, errors,etc.
-      Wprss.feedsController.createFeeds(response);
-    },'json');
+      var resp = JSON.parse(response);
+      console.log('refreshFeeds payload');
+      console.log(resp);
+      Wprss.feedsController.createFeeds(resp);
+    });
   },
   removeFeed: function(feed_id){
     var feed = this.findProperty('feed_id',feed_id);
@@ -165,14 +172,16 @@ Wprss.feedsController = Em.ArrayController.create({
     });
   }.property(),
   updateFeeds: function(feeds){
+  
     var content = Wprss.feedsController.get('content');
-    feeds.forEach(function(value){
-      if(Wprss.feedsController.set(value.id,'unread_count',value.unread_count)){
+    feeds.forEach(function(feed){
+      if(Wprss.feedsController.set(feed.feed_id,'unread_count',feed.unread_count)){
         //great!
       }
       else
       {
-        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
+        Wprss.feedsController.createFeed(feed);
+        //Wprss.feedsController.createFeed(feed.feed_url,feed.site_url,feed.feed_name,value.id, value.unread_count,value.private);
       }
     });
   },
