@@ -107,11 +107,12 @@ class WprssFeeds {
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
-    $resp->feed_id = $feed_id;
+    $resp->feed_id = "".$feed_id;
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
-    //$resp->is_private = $feed['is_private'];
+    $resp->is_private = $feed['is_private'];
+    $resp->unread_count ="0";
     return $resp;
   }
 
@@ -127,7 +128,7 @@ class WprssFeeds {
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $sql = "
         select 
-        feeds.id,
+        feeds.id as feed_id,
         COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
         feeds.feed_url, 
         COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,

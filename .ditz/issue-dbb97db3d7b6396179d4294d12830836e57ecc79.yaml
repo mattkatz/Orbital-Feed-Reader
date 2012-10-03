@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add feed should fail better
+desc: when there is no feed we should let peeps know.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-09-26 23:33:25.442912 Z
+references: []
+
+id: dbb97db3d7b6396179d4294d12830836e57ecc79
+log_events: 
+- - 2012-09-26 23:33:27.545544 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""

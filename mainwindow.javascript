@@ -19,7 +19,6 @@ jQuery(document).ready(function($){
   feedTimer();
   setupInfiniteScroll();
   setupYIndicator();
-  console.log('document ready');
 
   Wprss.cache.set('indicator',jQuery('#y-indicator'));
 });
@@ -94,18 +93,17 @@ function setupInfiniteScroll(){
 }
 
 function feedTimer(){
-    setTimeout(function(){  
-      var data = {
-        action: 'wprss_get_feeds',
-        nonce_a_donce:get_url.nonce_a_donce 
-        
-      };
-      jQuery.get(get_url.ajaxurl, data, function(response){
-        //TODO: put in error checks for bad responses, errors,etc.
-        Wprss.feedsController.updateFeeds(response);
-        feedTimer();
-      },'json');
-    }, 60000);
+  setTimeout(function(){  
+    var data = {
+      action: 'wprss_get_feeds',
+      nonce_a_donce:get_url.nonce_a_donce 
+    };
+    jQuery.get(get_url.ajaxurl, data, function(response){
+      //TODO: put in error checks for bad responses, errors,etc.
+      Wprss.feedsController.updateFeeds(response);
+      feedTimer();
+    },'json');
+  }, 60000);
 }
 
 function setupKeys(){

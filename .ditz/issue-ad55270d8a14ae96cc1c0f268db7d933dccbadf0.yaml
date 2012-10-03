@@ -5,8 +5,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-07-20 21:40:17.996475 Z
 references: []
 
@@ -16,3 +16,11 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2012-09-26 23:18:56.112383 Z
+  - matt <matt@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - starting.
+- - 2012-10-03 23:21:59.424399 Z
+  - matt <matt@morelightmorelight.com>
+  - closed with disposition fixed
+  - didn't handle feed.feed_id consistently across functions in php and javascript

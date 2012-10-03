@@ -24,23 +24,17 @@ Wprss.feedsController = Em.ArrayController.create({
   onInit: null,
   changeUnreadCount:function(id,delta){
     var feed = this.get('content').findProperty('feed_id',id);
-    //console.log(feed.feed_name + "("+feed.unread_count+")");
     feed.set('unread_count', +feed.unread_count + delta);
-    //console.log(feed.unread_count);
   },
-  //createFeed: function(feed,domain,name,id,unread,priv){
   createFeed: function(feedHash){
     feedHash.is_private = (1==feedHash.is_private);
-    feedHash.feed_id = feedHash.id;
     var feed = Wprss.Feed.create(feedHash);
-    //var feed = Wprss.Feed.create({ feed_url: feed, site_url:domain, feed_id:id,feed_name:name,unread_count:unread,is_private:priv==1});
     this.pushObject(feed);
   },
   createFeeds: function(feeds){
     Wprss.feedsController.createFeed({feed_url:'',site_url:'',feed_name:'Fresh Entries',feed_id:null,unread_count:'lots', is_private:true});
     feeds.forEach(function(value){
       Wprss.feedsController.createFeed(value);
-      //Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
     });
   },
   //does the actual work of finding an unread feed in an array
@@ -165,14 +159,15 @@ Wprss.feedsController = Em.ArrayController.create({
     });
   }.property(),
   updateFeeds: function(feeds){
+  
     var content = Wprss.feedsController.get('content');
-    feeds.forEach(function(value){
-      if(Wprss.feedsController.set(value.id,'unread_count',value.unread_count)){
+    feeds.forEach(function(feed){
+      if(Wprss.feedsController.set(feed.feed_id,'unread_count',feed.unread_count)){
         //great!
       }
       else
       {
-        Wprss.feedsController.createFeed(value.feed_url,value.site_url,value.feed_name,value.id, value.unread_count,value.private);
+        Wprss.feedsController.createFeed(feed);
       }
     });
   },
@@ -303,12 +298,10 @@ Wprss.entriesController = Em.ArrayController.create({
     var currentItem = Wprss.selectedEntryController.get('content');
     //if there is no item selected, select the first one.
     if (null == currentItem ){
-      console.log('no current item');
       currentItem = array.get('firstObject');
 
     }else{
       //if there is an item selected, select the next one.
-      console.log('current item');
       var idx = array.indexOf(currentItem);
       var bottom = false;
       if(++idx == array.length){
@@ -340,7 +333,6 @@ Wprss.entriesController = Em.ArrayController.create({
     jQuery.post(get_url.ajaxurl,data, function(response){
       jQuery('#'+entry.entry_id+">.entry_isloading").hide();
       if(response.updated >0){
-        //console.log("updating");
         entry.set('isRead', isRead);
         Wprss.feedsController.changeUnreadCount(entry.feed_id,isRead?-1:1);
       }
@@ -523,10 +515,6 @@ Wprss.feedFinder= Em.Object.create({
       //alert(response);
       //TODO if this was a feed, let's make it save!
       if("feed" == response.url_type){
-        console.log('a feed!');
-        console.log(response.orig_url);
-        console.log(response.site_url);
-        console.log(response.feed_name);
         var feed  =  Wprss.Feed.create(
           { feed_url: response.orig_url, 
             site_url: response.site_url, 
@@ -535,11 +523,7 @@ Wprss.feedFinder= Em.Object.create({
             unread_count:0,
             is_private:false
           });
-        console.log("feed " + feed);
         Wprss.feedFinder.set('feedCandidate',feed);
-        console.log( "candidate " + Wprss.feedFinder.feedCandidate);
-
-
       }
       else{
         //TODO if this was a page, let the user choose feeds and then save them.
@@ -560,7 +544,6 @@ Wprss.FeedsForm = Em.View.extend({
   submit: function(event){
     event.preventDefault();
     //actually begin the submission
-    console.log('begin the submission');
     this.findFeed();
   },
   saveFeed: function(){
@@ -631,13 +614,7 @@ function scrollToEntry(currentItem, bottom){
     var body = jQuery('html');
     var adminbar = jQuery('#wpadminbar');
     var commandbar = jQuery('#commandbar');
-    //console.log(window.scrollTop());
-    //TODO why is entryID coming up undefined in this context?
-    //var row = jQuery('#'+currentItem.entryID);
-    //console.log('current entry id: ' + currentItem.feed_id + "_" +currentItem.id);
     var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
-    //console.log('current row: ' + row.offset().top);
-    //body.scrollTop(row.offset().top - adminbar.height());
     if(null === row.offset()){
       console.log('row.offset() was null');
       return;
