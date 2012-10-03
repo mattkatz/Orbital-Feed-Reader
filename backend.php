@@ -107,11 +107,12 @@ class WprssFeeds {
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
-    $resp->feed_id = $feed_id;
+    $resp->feed_id = "".$feed_id;
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
-    //$resp->is_private = $feed['is_private'];
+    $resp->is_private = $feed['is_private'];
+    $resp->unread_count ="0";
     return $resp;
   }
 
