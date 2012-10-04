@@ -205,6 +205,7 @@ Wprss.feedsController = Em.ArrayController.create({
     jQuery.post(get_url.ajaxurl,data, function(data){
       if(data.result)//TODO: test to see if the feed actually got deleted
       {
+        console.log(data);
         //remove the feed from the list
         Wprss.feedsController.removeFeed(data.feed_id);
         Wprss.selectedFeedController.set('content',null);
@@ -410,8 +411,13 @@ Wprss.selectedEntryController = Em.Object.create({
 
 });
 
+//view for looking at a single feed
 Wprss.FeedView = Em.View.extend({
   contentBinding: 'Wprss.selectedFeedController.content',
+  unsubscribe: function(){
+    console.log('clicked unsubscribe');
+    Wprss.selectedFeedController.unsubscribe();
+  },
 });
 
 Wprss.EntriesView = Em.View.extend({

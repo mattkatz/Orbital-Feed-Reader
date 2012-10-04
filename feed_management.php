@@ -34,7 +34,7 @@
           {{#if  feed_id}}
             <label>
               Get rid of this feed! Seriously! 
-              {{#view Em.Button target="Wprss.selectedFeedController" action="unsubscribe"}} Unsubscribe {{/view}}
+              {{#view Em.Button target="parentView" action="unsubscribe"}} Unsubscribe {{/view}}
             </label>
           {{/if}}
           <div>
