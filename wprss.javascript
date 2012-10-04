@@ -413,10 +413,16 @@ Wprss.selectedEntryController = Em.Object.create({
 
 //view for looking at a single feed
 Wprss.FeedView = Em.View.extend({
+  
   contentBinding: 'Wprss.selectedFeedController.content',
-  unsubscribe: function(){
+  unsubscribe: function(event){
     console.log('clicked unsubscribe');
-    Wprss.selectedFeedController.unsubscribe();
+    jQuery('#feedViewSpinner').fadeToggle();
+    jQuery('#feedViewUnsubscribeButton > button').fadeToggle()
+    jQuery('#feedViewSaveButton > button').fadeToggle()
+    console.log(event.view);
+    console.log(this);
+    //Wprss.selectedFeedController.unsubscribe();
   },
 });
 
