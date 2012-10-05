@@ -196,21 +196,32 @@ Wprss.feedsController = Em.ArrayController.create({
     }
     this.selectFeed(next_feed);
   },
-  unsubscribe: function(feed_id){
+  unsubscribe: function(feed_id,successFunc,failFunc){
     var data = {
       action: 'wprss_unsubscribe_feed',
       feed_id: feed_id,
       nonce_a_donce:get_url.nonce_a_donce 
     };
-    jQuery.post(get_url.ajaxurl,data, function(data){
-      if(data.result)//TODO: test to see if the feed actually got deleted
-      {
-        console.log(data);
-        //remove the feed from the list
-        Wprss.feedsController.removeFeed(data.feed_id);
-        Wprss.selectedFeedController.set('content',null);
-      }
-    },'json');
+    jQuery.ajax(
+      url:get_url.ajaxurl,
+      data: data, 
+      success: function(data){
+        if(data.result)//TODO: test to see if the feed actually got deleted
+        {
+          successFunc();
+          //remove the feed from the list
+          Wprss.feedsController.removeFeed(data.feed_id);
+          Wprss.selectedFeedController.set('content',null);
+          
+        }
+        else{
+          failFunc();
+        }
+
+      },
+      error: failFunc,
+      accepts:'json',
+    );
   },
   update: function(id){
     var data = {
@@ -363,8 +374,9 @@ Wprss.selectedFeedController = Em.Object.create({
     //should change this to show next available feed with unread items
     Wprss.entriesController.selectFeed(id);
   },
-  unsubscribe: function(){
-    Wprss.feedsController.unsubscribe(this.get('content').feed_id);
+  unsubscribe: function(successFunc,failFunc){
+    Wprss.feedsController.unsubscribe(this.get('content').feed_id,
+                                      successFunc,failFunc);
   },
   saveFeed: function(){
 
@@ -416,13 +428,17 @@ Wprss.FeedView = Em.View.extend({
   
   contentBinding: 'Wprss.selectedFeedController.content',
   unsubscribe: function(event){
-    console.log('clicked unsubscribe');
+    //the event object is currently the button that got pushed.
+    //event.set('disabled',true);
+    //this seems to be the view itself
+    this.toggleHideButtonsAndSpinner();
+    Wprss.selectedFeedController.unsubscribe();
+  },
+  toggleHideButtonsAndSpinner: function(){
     jQuery('#feedViewSpinner').fadeToggle();
     jQuery('#feedViewUnsubscribeButton > button').fadeToggle()
     jQuery('#feedViewSaveButton > button').fadeToggle()
-    console.log(event.view);
-    console.log(this);
-    //Wprss.selectedFeedController.unsubscribe();
+
   },
 });
 
