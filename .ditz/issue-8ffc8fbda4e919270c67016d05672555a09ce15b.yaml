@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fix Save feed workflow
+desc: Need the same blurring and whatnot for a feed save.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-05 21:40:06.072315 Z
+references: []
+
+id: 8ffc8fbda4e919270c67016d05672555a09ce15b
+log_events: 
+- - 2012-10-05 21:40:07.416530 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
