@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-10-05 21:40:06.072315 Z
 references: []
 
@@ -19,4 +19,8 @@ log_events:
 - - 2012-10-08 17:50:54.840471 Z
   - matt <matt@morelightmorelight.com>
   - changed status from unstarted to in_progress
+  - ""
+- - 2012-10-08 20:46:30.171979 Z
+  - matt <matt@morelightmorelight.com>
+  - closed with disposition fixed
   - ""
