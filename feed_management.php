@@ -38,7 +38,7 @@
             </label>
           {{/if}}
           <div id="feedViewSaveButton">
-          {{#view Em.Button target="Wprss.selectedFeedController" action="saveFeed" }}Save{{/view}}
+          {{#view Em.Button target="parentView" action="save" }}Save{{/view}}
           </div>
       {{/with }}
 

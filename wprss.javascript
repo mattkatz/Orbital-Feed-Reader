@@ -204,6 +204,7 @@ Wprss.feedsController = Em.ArrayController.create({
     };
     jQuery.ajax({
       url:get_url.ajaxurl,
+      type:'POST',
       data: data, 
       success: function(data){
         if( data.result)//TODO: test to see if the feed actually got deleted
@@ -220,7 +221,7 @@ Wprss.feedsController = Em.ArrayController.create({
 
       },
       error: failFunc,
-      accepts:'json',
+      datatype:'json',
     });
   },
   update: function(id){
@@ -378,11 +379,9 @@ Wprss.selectedFeedController = Em.Object.create({
     Wprss.feedsController.unsubscribe(this.get('content').feed_id,
                                       successFunc,failFunc);
   },
-  saveFeed: function(){
+  saveFeed: function(successFunction, failFunction){
 
-    Wprss.feedsController.saveFeed(this.get('content'),function(response){
-      alert(response.feed_name + ' saved')
-    });
+    Wprss.feedsController.saveFeed(this.get('content'),successFunction, failFunction);
   },
   select:function(feed){
     this.set('content',feed);
@@ -427,14 +426,18 @@ Wprss.selectedEntryController = Em.Object.create({
 Wprss.FeedView = Em.View.extend({
   
   contentBinding: 'Wprss.selectedFeedController.content',
+  save: function(event){
+    this.toggleHideButtonsAndSpinner();
+    Wprss.selectedFeedController.saveFeed(this.toggleHideButtonsAndSpinner,this.failed);
+  },
   unsubscribe: function(event){
     //the event object is currently the button that got pushed.
     //event.set('disabled',true);
     //this seems to be the view itself
     this.toggleHideButtonsAndSpinner();
-    Wprss.selectedFeedController.unsubscribe(null,this.unsubscribeFailed);
+    Wprss.selectedFeedController.unsubscribe(null,this.failed);
   },
-  unsubscribeFailed: function()
+  failed: function()
   {
     alert("Sorry - there was a problem unsubscribing. Give it another shot." +
           "If this continues, please contact me and let me know so I can troubleshoot. - Matt");
