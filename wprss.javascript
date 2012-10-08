@@ -202,11 +202,11 @@ Wprss.feedsController = Em.ArrayController.create({
       feed_id: feed_id,
       nonce_a_donce:get_url.nonce_a_donce 
     };
-    jQuery.ajax(
+    jQuery.ajax({
       url:get_url.ajaxurl,
       data: data, 
       success: function(data){
-        if(data.result)//TODO: test to see if the feed actually got deleted
+        if( data.result)//TODO: test to see if the feed actually got deleted
         {
           successFunc();
           //remove the feed from the list
@@ -221,7 +221,7 @@ Wprss.feedsController = Em.ArrayController.create({
       },
       error: failFunc,
       accepts:'json',
-    );
+    });
   },
   update: function(id){
     var data = {
@@ -432,7 +432,15 @@ Wprss.FeedView = Em.View.extend({
     //event.set('disabled',true);
     //this seems to be the view itself
     this.toggleHideButtonsAndSpinner();
-    Wprss.selectedFeedController.unsubscribe();
+    Wprss.selectedFeedController.unsubscribe(null,this.unsubscribeFailed);
+  },
+  unsubscribeFailed: function()
+  {
+    alert("Sorry - there was a problem unsubscribing. Give it another shot." +
+          "If this continues, please contact me and let me know so I can troubleshoot. - Matt");
+    jQuery('#feedViewSpinner').fadeToggle();
+    jQuery('#feedViewUnsubscribeButton > button').fadeToggle()
+    jQuery('#feedViewSaveButton > button').fadeToggle()
   },
   toggleHideButtonsAndSpinner: function(){
     jQuery('#feedViewSpinner').fadeToggle();
