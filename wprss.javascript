@@ -101,27 +101,36 @@ Wprss.feedsController = Em.ArrayController.create({
       is_private: feed.is_private,
       nonce_a_donce:get_url.nonce_a_donce 
     };
-    jQuery.post(get_url.ajaxurl,data, function(response){
-      if(response.updated || response.inserted )// test to see if the feed actually got saved
-      {
-        //this should be agnostic per screen.
-        //So whoever calls save feed can have something trigger on yay
-        if(successFunction){
-          successFunction(response);
+    jQuery.ajax(
+      get_url.ajaxurl,{
+      type: 'POST',
+      data: data, 
+      dataType:'json',
+      success: function(response){
+        if(response.updated || response.inserted )// test to see if the feed actually got saved
+        {
+          if(response.inserted){
+            Wprss.feedsController.createFeed(response);
+          }
+          //this should be agnostic per screen.
+          //So whoever calls save feed can have something trigger on yay
+          if(successFunction){
+            successFunction(response);
+          }
         }
-        if(response.inserted){
-          Wprss.feedsController.createFeed(response);
+        else{
+          if(failFunction){
+            failFunction(response);
+            console.log(response);
+          }else{
+            //TODO Alert the user?
+            console.log(response);
+          }
         }
-      }
-      else{
-        if(failFunction){
-          failFunction(response);
-        }else{
-          //TODO Alert the user?
-          console.log(response);
-        }
-      }
-    },'json');
+      },
+      error: failFunction,
+
+    });
 
   },
   //select a feed
@@ -207,21 +216,23 @@ Wprss.feedsController = Em.ArrayController.create({
       type:'POST',
       data: data, 
       success: function(data){
-        if( data.result)//TODO: test to see if the feed actually got deleted
+        if( data.feed_id)//TODO: test to see if the feed actually got deleted
         {
-          successFunc();
           //remove the feed from the list
           Wprss.feedsController.removeFeed(data.feed_id);
           Wprss.selectedFeedController.set('content',null);
+          if(successFunc)
+            successFunc();
           
         }
         else{
+          console.log(data);
           failFunc();
         }
 
       },
       error: failFunc,
-      datatype:'json',
+      dataType:'json',
     });
   },
   update: function(id){
@@ -380,8 +391,8 @@ Wprss.selectedFeedController = Em.Object.create({
                                       successFunc,failFunc);
   },
   saveFeed: function(successFunction, failFunction){
-
-    Wprss.feedsController.saveFeed(this.get('content'),successFunction, failFunction);
+    var feed = Wprss.selectedFeedController.get('content');
+    Wprss.feedsController.saveFeed(feed,successFunction, failFunction);
   },
   select:function(feed){
     this.set('content',feed);
@@ -589,7 +600,7 @@ Wprss.FeedsForm = Em.View.extend({
     var view = this;
     Wprss.feedsController.saveFeed(this.get('feedCandidate'),function(){
       view.dismiss();
-    });
+    },null);
   },
   dismiss: function(){
     var view = this;
