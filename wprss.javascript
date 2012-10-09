@@ -1,4 +1,3 @@
-
 Wprss = Ember.Application.create();
 Wprss.cache = Ember.Object.create({
   mouseX: null,
