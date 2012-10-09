@@ -437,6 +437,7 @@ Wprss.FeedView = Em.View.extend({
   
   contentBinding: 'Wprss.selectedFeedController.content',
   save: function(event){
+    console.log('save');
     this.toggleHideButtonsAndSpinner();
     Wprss.selectedFeedController.saveFeed(this.toggleHideButtonsAndSpinner,this.failed);
   },
@@ -444,6 +445,7 @@ Wprss.FeedView = Em.View.extend({
     //the event object is currently the button that got pushed.
     //event.set('disabled',true);
     //this seems to be the view itself
+    console.log('unsub');
     this.toggleHideButtonsAndSpinner();
     Wprss.selectedFeedController.unsubscribe(null,this.failed);
   },
