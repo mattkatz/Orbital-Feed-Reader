@@ -71,7 +71,7 @@ add_action( 'admin_init', 'wprss_admin_init' );
  */
 function wprss_admin_init(){
   //Register the js that we need
-  wp_register_script( 'emberjs_script', plugins_url('/js/ember-0.9.8.1.min.js', __FILE__) ,array('jquery'));
+  wp_register_script( 'emberjs_script', plugins_url('/js/ember-1.0.pre.min.js', __FILE__) ,array('jquery'));
   wp_register_script( 'wordprss_script', plugins_url('/wprss.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
   wp_register_script( 'feedmgmt_script', plugins_url('/feed_management.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
   //keyboard shortcut handling
