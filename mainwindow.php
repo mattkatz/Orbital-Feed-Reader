@@ -71,7 +71,7 @@ require_once('feed_list.php');
     
   </script>
 <script type="text/x-handlebars" data-template-name="entry" >
-  {{#with content}}
+  {{#with view.content}}
   <li class="entry" {{bindAttr id="entryID"}} >
     <a {{bindAttr href="link"}} target="_blank">
       <h2>{{title}}</h2>

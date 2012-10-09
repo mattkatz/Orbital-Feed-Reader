@@ -23,7 +23,7 @@
     <script type="text/x-handlebars" >
     {{#each Wprss.feedsController}}
       {{#view Wprss.FeedsView contentBinding="this"}}
-      {{#with content}}
+      {{#with view.content}}
         <li class="feed" {{bindAttr id="feed_id" }}>
           {{#if is_loading}}
             <img src="<?php echo plugins_url("ajax-loader.gif", __FILE__); ?>">
