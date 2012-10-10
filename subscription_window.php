@@ -29,7 +29,8 @@
                 {{view Em.TextField valueBinding="site_url" }}
               </label>
               <label>
-                {{view Em.Checkbox valueBinding="is_private" title="This Feed is Private! Don't show it to other people."}}
+                {{view Em.Checkbox valueBinding="is_private" title=""}}
+                This Feed is Private! Don't show it to other people.
               </label>
               {{#if  feed_id}}
                 <label>
