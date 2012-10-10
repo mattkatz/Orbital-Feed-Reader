@@ -4,23 +4,23 @@
     {{view Em.TextField 
       placeholder="Drag or copy paste a feed here" 
       viewName="urlField"}}
-    <button type='submit'>Add Feed</button>
+    <a class='button' {{action submit}} >Add Feed</a>
     <div class="clickable dismiss" {{action "dismiss"}}>
       X
     </div>
     <div class="horizontal-form">
-      {{#if possibleFeeds }}
+      {{#if view.possibleFeeds }}
         <div>
-          We found {{possibleFeeds.length }} feeds:
+          We found {{view.possibleFeeds.length }} feeds:
         </div>
-        {{#each possibleFeeds}}
-              <div class="possibleFeed clickable" {{action "findFeed" target="parentView.parentView.parentView" context="url" }} >
+        {{#each view.possibleFeeds}}
+              <div class="possibleFeed clickable" {{action findFeed "url" target="parentView" }} >
                 {{url}} 
               </div>
         {{/each}}
       {{/if}}
-      {{#if feedCandidate}}
-        {{#with feedCandidate}}
+      {{#if view.feedCandidate}}
+        {{#with view.feedCandidate}}
               {{view Em.TextField valueBinding="feed_name" class="heading" }}
               <label>Feed Url
               {{view Em.TextField valueBinding="feed_url" }}

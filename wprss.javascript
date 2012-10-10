@@ -642,8 +642,11 @@ Wprss.FeedsForm = Em.View.extend({
       else{
         //if this was a page, let the user choose feeds and then save them.
         if( response.feeds.length >1){
+          
+          console.log(view);
           view.set('feedCandidate', null);
           view.set('possibleFeeds', response.feeds);
+          console.log(view.possibleFeeds);
         }else
         {
           view.urlField.set('value',response.feeds[0].url);
