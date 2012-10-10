@@ -34,11 +34,11 @@
           {{#if  feed_id}}
             <label id="feedViewUnsubscribeButton">
               Get rid of this feed! Seriously! 
-              <a {{action unsubscribe}} class="button" > Unsubscribe</a>
+              <a {{action unsubscribe}} class="button" >Unsubscribe</a>
             </label>
           {{/if}}
           <div id="feedViewSaveButton">
-          <a {{action save}} class="button"> SAVE ME</a>
+          <a {{action save}} class="button">Save</a>
           </div>
       {{/with }}
 

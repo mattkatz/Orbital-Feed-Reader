@@ -62,13 +62,11 @@ require_once('feed_list.php');
   
 </div>
   <script type="text/x-handlebars" data-template-name="read-check">
-              {{#if content.isRead}}
+              {{#if isRead}}
                 Read  
               {{else }}
                 Unread  
               {{/if}}
-
-    
   </script>
 <script type="text/x-handlebars" data-template-name="entry" >
   {{#with view.content}}
@@ -87,7 +85,7 @@ require_once('feed_list.php');
       
     </div>
     <div class="attributes">
-      {{checkable  "content" contentBinding="this"}}
+      {{checkable  view.content }}
       <div class="entry-isloading" style="display:none;">
        loading 
       </div>
