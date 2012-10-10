@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Import your google reader followers or following.json
+desc: |-
+  Big list of people in json format.  Should be able to do something with that, right?
+  Maybe go look up all their urls, and discover feeds for them?
+  Maybe try to follow their google reader whatsits?
+type: :feature
+component: Wordprss
+release: 
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-10 23:55:20.507229 Z
+references: []
+
+id: 16bae383b17ad05b9c9dc2d6f79c6ced8714af8c
+log_events: 
+- - 2012-10-10 23:55:24.012241 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
