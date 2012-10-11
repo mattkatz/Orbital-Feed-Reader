@@ -5,8 +5,8 @@ type: :task
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-10-04 00:19:19.671181 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - matt <matt@morelightmorelight.com>
   - created
   - ""
+- - 2012-10-11 00:08:37.992380 Z
+  - matt <matt@morelightmorelight.com>
+  - closed with disposition fixed
+  - Done, and not as hard as I'd imagined.
