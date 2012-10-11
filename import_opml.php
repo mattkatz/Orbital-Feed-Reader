@@ -30,6 +30,10 @@ function opml_dismiss(){
   console.log('OK!');
   jQuery('#opml-dialog').toggleClass('invisible');
   jQuery('#import-opml').attr('value','');
+  jQuery('#fileName').html('');
+  jQuery('#fileSize').html('');
+  jQuery('#uploadButton').addProp('disabled');
+
 }
 
 function fileSelected(){
