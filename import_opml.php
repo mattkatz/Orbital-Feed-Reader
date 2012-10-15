@@ -64,9 +64,11 @@ function uploadOpml(){
         //parse the opml and upload it
         //console.log(e.target.result);
         try{
-          var opml =  jQuery.parseXML(e.target.result);
+          var opml = jQuery(e.target.result);
+          //var opml =  jQuery.parseXML(e.target.result);
           jQuery(opml).find('outline[xmlUrl]').each(function(index){
             var el = jQuery(this);
+            console.log(el);
             var feed = {};
             feed.feed_id = null;
             //TODO later we should let people choose before we upload.
