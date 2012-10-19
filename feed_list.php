@@ -11,12 +11,13 @@
     <div id='feed-head'>
       <h2>The Feeds</h2>
     <script type="text/x-handlebars" >
-      {{#view Em.Button className="button"
+      <a href="#" 
+      {{action showFeed className="button"
         tagName="span"
         target="Wprss.feedsController"
-        action="showFeed" }}
+        }} title="Add and Subscribe to a Feed" >
          +
-      {{/view}}
+       </a>
     </script>
     </div>
     <ul id="feeds" >
