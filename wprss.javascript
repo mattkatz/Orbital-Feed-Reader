@@ -592,10 +592,18 @@ Wprss.FeedsForm = Em.View.extend({
   urlField: null,
   feedCandidate:null,
   possibleFields:null,
+  showHelp: false,
   submit: function(event){
     event.preventDefault();
     //actually begin the submission
     this.findFeed();
+  },
+  resetDisplay: function(){
+    view.set('feedcandidate',null);
+    view.set('possibleFeeds',null);
+    view.set('showHelp', false);
+    
+
   },
   saveFeed: function(){
     var view = this;
@@ -603,6 +611,7 @@ Wprss.FeedsForm = Em.View.extend({
       view.dismiss();
     },null);
   },
+  
   dismiss: function(){
     var view = this;
     view.set('feedCandidate',null);
@@ -638,24 +647,41 @@ Wprss.FeedsForm = Em.View.extend({
         
       }
       else if("html" == response.url_type){
+        if(null == response.feeds){
+          //No feeds discovered!
+          //TODO Tell them no feeds found
+          //TODO Tell them how to discover more feeds
+          view.set('showHelp',true);
+          //TODO Tell them what rss icons look like
+          
+          console.log(response);
+
+        }
         //if this was a page, let the user choose feeds and then save them.
-        if( response.feeds.length >1){
+        else if(1 < response.feeds.length ){
           
           console.log(view);
           view.set('feedCandidate', null);
           view.set('possibleFeeds', response.feeds);
           console.log(view.possibleFeeds);
-        }else
+        }else if( 1==response.feeds.length )
         {
           view.urlField.set('value',response.feeds[0].url);
           view.findFeed();
         }
+        else{
+          //No feeds discovered!
+          //TODO Tell them no feeds found
+          //TODO Tell them how to discover more feeds
+          view.set('showHelp',true);
+          //TODO Tell them what rss icons look like
+          
+          console.log(response);
+        }
       }
       else{
         //we didn't get a feed response back!
-        //run and tell that
-
-
+        //TODO run and tell that
       }
     },"json");
   },

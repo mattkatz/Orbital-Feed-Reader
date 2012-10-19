@@ -44,6 +44,19 @@
         {{/with }}
       {{/if}}
     </div>
+    {{#if view.showHelp}}
+    <div id="subscriptions_help" >
+      <h2>We couldn't find any feeds!</h2>
+      <div>
+        Looks like we couldn't find a feed - all is not lost! Try these tips.
+        <ul>
+          <li>Look for a feed icon somewhere on the site - it looks like this:</li>
+          <li>Look for a hyperlink with the words "feed" or "atom" or "rss" somewhere on the site</li>
+          <li>If all else fails, click here to tell me what website isn't working</li>
+        </ul>
+        </div>
+    </div>
+    {{/if}}
   {{/view}}
 
 </script>
