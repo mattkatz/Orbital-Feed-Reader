@@ -609,7 +609,6 @@ Wprss.FeedsForm = Em.View.extend({
     view.set('possibleFeeds',null);
     view.urlField.set('value',null);
     jQuery('#subscribe-window').toggleClass('invisible');
-
   },
   findFeed: function(evt){
     // First get the feed url or site url from the link
@@ -617,7 +616,6 @@ Wprss.FeedsForm = Em.View.extend({
     if(evt){
       url = evt.context;
     }
-      
     //then ask the backend to validate the feed details
     var data = {
       action: 'wprss_find_feed',
@@ -639,7 +637,7 @@ Wprss.FeedsForm = Em.View.extend({
         view.set('feedCandidate', feed);
         
       }
-      else{
+      else if("html" == response.url_type){
         //if this was a page, let the user choose feeds and then save them.
         if( response.feeds.length >1){
           
@@ -652,6 +650,12 @@ Wprss.FeedsForm = Em.View.extend({
           view.urlField.set('value',response.feeds[0].url);
           view.findFeed();
         }
+      }
+      else{
+        //we didn't get a feed response back!
+        //run and tell that
+
+
       }
     },"json");
   },
