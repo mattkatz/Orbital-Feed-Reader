@@ -599,9 +599,9 @@ Wprss.FeedsForm = Em.View.extend({
     this.findFeed();
   },
   resetDisplay: function(){
-    view.set('feedcandidate',null);
-    view.set('possibleFeeds',null);
-    view.set('showHelp', false);
+    this.set('feedcandidate',null);
+    this.set('possibleFeeds',null);
+    this.set('showHelp', false);
     
 
   },
@@ -614,12 +614,14 @@ Wprss.FeedsForm = Em.View.extend({
   
   dismiss: function(){
     var view = this;
-    view.set('feedCandidate',null);
-    view.set('possibleFeeds',null);
+    view.resetDisplay();
     view.urlField.set('value',null);
     jQuery('#subscribe-window').toggleClass('invisible');
   },
   findFeed: function(evt){
+    var view = this;
+    view.resetDisplay();
+    
     // First get the feed url or site url from the link
     var url = this.getPath('urlField.value');
     if(evt){
@@ -631,7 +633,6 @@ Wprss.FeedsForm = Em.View.extend({
       url: url,
       nonce_a_donce:get_url.nonce_a_donce 
     };
-    var view = this;
     jQuery.get(get_url.ajaxurl, data, function(response){
       //if this was a feed, let's make it saveable!
       if("feed" == response.url_type){
