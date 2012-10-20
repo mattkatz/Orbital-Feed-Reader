@@ -50,7 +50,7 @@
       <div>
         Looks like we couldn't find a feed - all is not lost! Try these tips.
         <ul>
-          <li>Look for a feed icon somewhere on the site - it looks like this:img</li>
+          <li>Look for a feed icon somewhere on the site - it looks like this:<img src="http://feedicons.com/images/feed-icon-14x14.png" alt="" /></li>
           <li>Look for a hyperlink with the words "feed" or "atom" or "rss" somewhere on the site</li>
           <li>If all else fails, click here to tell me what website isn't working</li>
         </ul>
