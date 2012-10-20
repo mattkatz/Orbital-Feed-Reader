@@ -599,7 +599,7 @@ Wprss.FeedsForm = Em.View.extend({
     this.findFeed();
   },
   resetDisplay: function(){
-    this.set('feedcandidate',null);
+    this.set('feedCandidate',null);
     this.set('possibleFeeds',null);
     this.set('showHelp', false);
     
