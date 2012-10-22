@@ -5,8 +5,8 @@ type: :task
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-10-16 02:10:16.208948 Z
 references: []
 
@@ -16,3 +16,15 @@ log_events:
   - matt <matt@morelightmorelight.com>
   - created
   - ""
+- - 2012-10-22 12:23:53.337773 Z
+  - matt <matt@morelightmorelight.com>
+  - closed with disposition fixed
+  - logging pretty well cleaned up
+- - 2012-10-22 12:24:37.185408 Z
+  - matt <matt@morelightmorelight.com>
+  - unassigned from release 0.1 - Feeds, Subscribed
+  - ""
+- - 2012-10-22 12:25:08.539057 Z
+  - matt <matt@morelightmorelight.com>
+  - assigned to release 0.1 - Feeds, Subscribed from unassigned
+  - ditz assign {issue 28420f28aca827bba4a195826ea2c94087be5a31}
