@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: figure out sort order
+desc: we should get the sort order to make sense - unread, oldest first.
+type: :bugfix
+component: Wordprss
+release: 0.2 Wordpress integration
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-22 12:22:42.212106 Z
+references: []
+
+id: 72671a88f8f990e085f9acf4f83f2fd21996c343
+log_events: 
+- - 2012-10-22 12:22:48.587264 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""

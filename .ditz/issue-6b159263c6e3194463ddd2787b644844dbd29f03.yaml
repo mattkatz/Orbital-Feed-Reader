@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Email this/share this
+desc: |-
+  if you don't want to write a blog entry, we should have easy links to email the post.
+  also, should have easy/modularizable share function.  
+  For each token of the post, you should be able to create an easy plugin/template to share something by including the bits in a URL.
+type: :feature
+component: Wordprss
+release: 0.2 Wordpress integration
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-22 12:19:55.201730 Z
+references: []
+
+id: 6b159263c6e3194463ddd2787b644844dbd29f03
+log_events: 
+- - 2012-10-22 12:19:56.348662 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix the display of dates
+desc: right now they are just the big string - should change it to be simpler, clearer
+type: :bugfix
+component: Wordprss
+release: 0.2 Wordpress integration
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-22 12:21:32.616183 Z
+references: []
+
+id: e3b2812201a29c36016d10e910d3516d8f833f1f
+log_events: 
+- - 2012-10-22 12:21:36.239198 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
