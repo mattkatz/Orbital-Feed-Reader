@@ -16,3 +16,7 @@ log_events:
   - matt <matt@morelightmorelight.com>
   - created
   - ""
+- - 2012-10-22 12:28:16.101680 Z
+  - matt <matt@morelightmorelight.com>
+  - commented
+  - also, we should be using the rss feeds published time, not the time we pulled the feed.
