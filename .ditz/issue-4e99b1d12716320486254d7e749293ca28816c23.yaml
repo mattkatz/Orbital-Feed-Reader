@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Embedded youtube videos should display
+desc: that's pretty simple, eh what?
+type: :feature
+component: Wordprss
+release: 
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-25 01:22:09.720349 Z
+references: []
+
+id: 4e99b1d12716320486254d7e749293ca28816c23
+log_events: 
+- - 2012-10-25 01:22:11.395025 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
