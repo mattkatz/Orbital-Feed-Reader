@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add comment link
+desc: |-
+  if there is a comment link in the feed, store it
+  if the comment link is there, display it unobtrusively.
+type: :feature
+component: Wordprss
+release: 
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-25 01:17:41.981285 Z
+references: []
+
+id: f247c4360c08053dc78e5a08afc7dedceea21445
+log_events: 
+- - 2012-10-25 01:17:43.851934 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
