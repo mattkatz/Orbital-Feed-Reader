@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Error installing due to mysql size limits
+desc: |-
+  need to use wordpress charset so that we don't blow up.
+  utf-32 makes even small column sizes blow up
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2012-10-25 00:52:57.653546 Z
+references: []
+
+id: f563a84208ffdcf410cd5fe8e389b19558ce6aa9
+log_events: 
+- - 2012-10-25 00:53:00.156140 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
+- - 2012-10-25 00:59:19.774523 Z
+  - matt <matt@morelightmorelight.com>
+  - closed with disposition fixed
+  - boom
