@@ -2,6 +2,7 @@
 
 require_once 'backend.php';
 
+
 # create the database tables.
 function wprss_install_db()
 {
@@ -9,6 +10,13 @@ function wprss_install_db()
   global $wordprss_db_version;
   global $wordprss_db_version_opt_string;
   global $tbl_prefix;
+  $charset_collate = '';
+
+  if ( ! empty( $wpdb->charset ) )
+    $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+  if ( ! empty( $wpdb->collate ) )
+    $charset_collate .= " COLLATE $wpdb->collate";
+
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
   add_option($wordprss_db_version_opt_string,$wordprss_db_version);
   //feeds
@@ -23,7 +31,7 @@ function wprss_install_db()
     last_updated datetime DEFAULT 0,
     last_error varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
-  );";
+  ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
   //User_feeds
@@ -41,9 +49,10 @@ function wprss_install_db()
     unread_count integer NOT NULL,
     private bool NOT NULL DEFAULT false,
     UNIQUE KEY id (id)
-  );";
+  ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
+  
 
   //user entries
   //TODO add the foreign key refs from ref id to entries id and feed id
@@ -59,11 +68,13 @@ function wprss_install_db()
     marked bool NOT NULL DEFAULT false,
     isRead bool NOT NULL DEFAULT false,
     UNIQUE KEY id (id)
-  );";
+  ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
+
   //entries
   $table_name = $wpdb->prefix.$tbl_prefix."entries";
+  _log("Adding $table_name");
 
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
@@ -78,11 +89,10 @@ function wprss_install_db()
     entered datetime NOT NULL,
     author varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
-  );";
+  ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
 }
-
 //TODO load in everything with admin as owner, 
 # load all the first installation data in.
 function wprss_install_data(){
