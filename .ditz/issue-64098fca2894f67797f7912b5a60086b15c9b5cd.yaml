@@ -3,10 +3,10 @@ title: link titles should display html encoding
 desc: what's all this &quot business in my titles?
 type: :bugfix
 component: Wordprss
-release: 
+release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-10-25 01:23:22.871637 Z
 references: []
 
@@ -16,3 +16,11 @@ log_events:
   - matt <matt@morelightmorelight.com>
   - created
   - ""
+- - 2012-10-25 01:57:15.404951 Z
+  - matt <matt@morelightmorelight.com>
+  - assigned to release 0.1 - Feeds, Subscribed from unassigned
+  - done
+- - 2012-10-25 01:57:34.534309 Z
+  - matt <matt@morelightmorelight.com>
+  - closed with disposition fixed
+  - triple mustache fixes it!
