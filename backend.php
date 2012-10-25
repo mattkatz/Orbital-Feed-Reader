@@ -26,7 +26,7 @@ if(!function_exists('_log')){
 class WprssFeeds {
 
 /* Method to save a feed
- *   - check to see if there is a feed_id. 
+ *   - check to see if there is a feed_id.
  *     - Yes means we are updating
  *       - Just update user_feeds
  *     - No means we are inserting
