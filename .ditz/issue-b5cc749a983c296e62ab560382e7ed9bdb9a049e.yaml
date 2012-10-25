@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Sometimes read/unread status doesn't update
+desc: No failure, just doesn't return a change
+type: :bugfix
+component: Wordprss
+release: 
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-25 01:33:48.104240 Z
+references: []
+
+id: b5cc749a983c296e62ab560382e7ed9bdb9a049e
+log_events: 
+- - 2012-10-25 01:33:49.337223 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
