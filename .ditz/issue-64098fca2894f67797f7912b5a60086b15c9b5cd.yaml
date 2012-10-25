@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: link titles should display html encoding
+desc: what's all this &quot business in my titles?
+type: :bugfix
+component: Wordprss
+release: 
+reporter: matt <matt@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2012-10-25 01:23:22.871637 Z
+references: []
+
+id: 64098fca2894f67797f7912b5a60086b15c9b5cd
+log_events: 
+- - 2012-10-25 01:23:23.940857 Z
+  - matt <matt@morelightmorelight.com>
+  - created
+  - ""
