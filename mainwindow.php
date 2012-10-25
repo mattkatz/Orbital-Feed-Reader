@@ -72,7 +72,7 @@ require_once('feed_list.php');
   {{#with view.content}}
   <li class="entry" {{bindAttr id="entryID"}} >
     <a {{bindAttr href="link"}} target="_blank">
-      <h2>{{title}}</h2>
+      <h2>{{{title}}}</h2>
     </a> 
     {{#if author}}
       <span class="attribution">by {{{author}}}</span>
@@ -82,7 +82,6 @@ require_once('feed_list.php');
     {{/if}}
     <div class="entry-content">
       {{{content}}}
-      
     </div>
     <div class="attributes">
       {{checkable  view.content }}
