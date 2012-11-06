@@ -9,7 +9,7 @@ I think that you should reduce the distance between reading and writing. Tumblr,
 Instead, I'd like to bring a feed reader into Wordpress that lets you blog from your blogroll.
 
 Goals
------
+=====
 
 * Create a blogroll dynamically from your feeds.
 * Let you share your OPML dynamically.
@@ -28,7 +28,27 @@ Goals that are DONE!
 * Autofeed Discovery
 
 
-That's a lot of work to do.  I'm going to take a stab at it, but I'd love your help. Let's make wordpress even better. 
+That's a lot of work to do.  I'm going to take a stab at it, but I'd love your help. Let's make wordpress even better.
+
+How to Contribute
+=================
+
+## Non - Coding ##
+* File an issue! Getting feedback from people really helps.  Bugs and feature requests are super helpful
+* Write a howto! Tell people how to use the app - I'm working on building a good user experience and good first time experience.
+
+## Coding ##
+I'd love to collaborate with you.  Here are the steps to get set up.
+* Fork this repository and then clone your fork on your machine
+* gem install ditz - I'm using ditz to track most bugs and bug status. Type ditz in the repo and specify that bugs are stored in the .ditz directory.
+* Pick a bug from ditz and send me a message!  I'd love to help you get started.
+* Easy first steps might be helping out with the intro tutorial feeds in install_upgrade.php or improving the infinite scroll
+
+## Buy me a drink! ##
+I'm tippable on GitTip
+
+https://www.gittip.com/mattkatz/
+
 
 Other Projects
 --------------
