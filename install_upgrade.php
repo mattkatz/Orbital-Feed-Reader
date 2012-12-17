@@ -133,9 +133,9 @@ function wprss_install_data(){
     'title'=>'Welcome to Wordprss!',
     'guid'=>'FAKEGUID',
     'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
-    'updated'=>date ("Y-m-d H:m:s"),
+    'updated'=>date ("Y-m-d H:i:s"),
     'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
-    'entered' =>date ("Y-m-d H:m:s"), 
+    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   for ($i = 1; $i <= 120; $i++) {
@@ -145,9 +145,9 @@ function wprss_install_data(){
       'title'=>'Entry number ' . $i,
       'guid'=>'FAKEGUID'.$i,
       'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
-      'updated'=>date ("Y-m-d H:m:s"),
+      'updated'=>date ("Y-m-d H:i:s"),
       'content'=>"Here is where I'll put in some helpful stuff to look at\n \n Lorem Ipusm and so forth\n and so on.",//TODO
-      'entered' =>date ("Y-m-d H:m:s"), 
+      'entered' =>date ("Y-m-d H:i:s"),
       'author' => 'Matt Katz'
     ));
     $i++;
@@ -159,9 +159,9 @@ function wprss_install_data(){
     'title'=>'Look at this fake post about a banana',
     'guid'=>'FAKEGUID2',
     'link'=>'http://boingboing.net/',//TODO 
-    'updated'=>date ("Y-m-d H:m:s"),
+    'updated'=>date ("Y-m-d H:i:s"),
     'content'=>"just LOOK AT IT.<br/>Amazing, really how this meme caught on.",//TODO
-    'entered' =>date ("Y-m-d H:m:s"), 
+    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Cory Doctorow'
   ));
 
