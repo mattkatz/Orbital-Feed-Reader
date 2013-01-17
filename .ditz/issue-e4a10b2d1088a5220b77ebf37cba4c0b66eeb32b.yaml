@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Switch to ember pre 2
+desc: upgrade, rewrite relevant bits
+type: :task
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-01-17 00:26:10.918401 Z
+references: []
+
+id: e4a10b2d1088a5220b77ebf37cba4c0b66eeb32b
+log_events: 
+- - 2013-01-17 00:26:12.137940 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
