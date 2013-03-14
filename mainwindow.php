@@ -1,4 +1,5 @@
-<div id='wprss-container'>
+<div id='wprss-container' ng-app>
+
   <div id="commandbar" class="quicklinks">
     <script type="text/x-handlebars" >
   <ul>
@@ -56,18 +57,15 @@
     {{/if}}
     </script>
   </div>
-<?php
-require_once('feed_list.php');
-?>
-  
+<div id="wprss-feedlist" ng-controller="FeedListCtrl" >
+    <div id='feed-head'>
+      <h2>The Feeds</h2>
+    </div>
+  <ul id='feeds' >
+    <li class="feed" ng-repeat="feed in feeds">{{feed.feed_name}}<span class="feedcounter">{{feed.unread_count}}</span></li>
+  </ul>
 </div>
-  <script type="text/x-handlebars" data-template-name="read-check">
-              {{#if isRead}}
-                Read  
-              {{else }}
-                Unread  
-              {{/if}}
-  </script>
+</div>
 <script type="text/x-handlebars" data-template-name="entry" >
   {{#with view.content}}
   <li class="entry" {{bindAttr id="entryID"}} >
