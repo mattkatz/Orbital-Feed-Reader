@@ -1,4 +1,4 @@
-<div id='wprss-container' ng-app>
+<div id='wprss-container' ng-app="wprss">
 
   <div id="commandbar" class="quicklinks">
     <script type="text/x-handlebars" >
@@ -41,22 +41,16 @@
   <div id="y-indicator" class="does not provide funding" >
   </div>
   
-  <div id="wprss-content">
-    <script type="text/x-handlebars">
-    {{#if Wprss.selectedFeedController.content}}
-      <ul class="entries">
-        {{#each Wprss.entriesController}}
-          {{view  Wprss.EntriesView contentBinding="this"}}
-        {{/each}}
-      </ul>
-      <div id="load-more">
-        The magic elves are busily shoveling more info into the pipes right now.
-      </div>
-    {{else}}
-      <div class="no-feed-displayed"><p>Whoa - there's nothing to show right now.</p> <p>Try clicking on one of the feeds on the right.</p></div>
-    {{/if}}
-    </script>
-  </div>
+<div id="wprss-content" ng-controller="EntriesCtrl" >
+    <ul class="entries">
+      <li class="entry" ng-repeat="entry in entries" >
+        <h2>{{entry.title}}</h2>
+        <div class="entry-content">
+          {{entry.content}}
+        </div>
+      </li>
+    </ul>
+</div>
 <div id="wprss-feedlist" ng-controller="FeedListCtrl" >
     <div id='feed-head'>
       <h2>The Feeds</h2>
