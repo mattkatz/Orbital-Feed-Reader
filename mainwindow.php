@@ -66,6 +66,7 @@
   </ul>
 </div>
 </div>
+
 <script type="text/x-handlebars" data-template-name="entry" >
   {{#with view.content}}
   <li class="entry" {{bindAttr id="entryID"}} >

@@ -75,6 +75,7 @@ function wprss_admin_init(){
   //wp_register_script( 'emberjs_script', plugins_url('/js/ember-1.0.pre.min.js', __FILE__) ,array('jquery','handlebars_script'));
   wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
   wp_register_script( 'angular_controllers_script', plugins_url('/js/controllers.js', __FILE__) ,array('jquery','angular_script'));
+  //wp_register_script( 'geturl_script', plugins_url('/js/geturl.js', __FILE__) ,array());
   //wp_register_script( 'wordprss_script', plugins_url('/wprss.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
   //wp_register_script( 'feedmgmt_script', plugins_url('/feed_management.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
   //keyboard shortcut handling
@@ -99,7 +100,7 @@ function wprss_enqueue_scripts()
   //wp_enqueue_script('handlebars_script');
   //wp_enqueue_script('wordprss_script');
 
-  wp_localize_script( 'wordprss_script', 'get_url', array( 
+  wp_localize_script( 'angular_controllers_script', 'get_url', array( 
     'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
     // generate a nonce with a unique ID "myajax-post-comment-nonce"
     // so that you can check it later when an AJAX request is sent
