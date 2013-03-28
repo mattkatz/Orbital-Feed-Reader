@@ -1,20 +1,25 @@
 /* Controllers */
 
-function FeedListCtrl($scope, $http){
+function FeedListCtrl($scope, $http, $routeParams,$location,$log){
+  $log.log('in feedscontrol');
+  $log.log('location is '+ $location.path());
+  $log.log($routeParams);
   $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
   .success(function(data){ 
     $scope.feeds = data;
   });
 }
 
-function EntriesCtrl($scope, $http){
+function EntriesCtrl($scope, $http,$routeParams, $log){
   $scope.refresh = function(id){
-    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+id)
-    .success(function(data){
-      $scope.entries = data;
-    });
 
   };
+  $scope.log = $log;
+  $log.log('in entriescontrol');
+  $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$routeParams.feedId)
+  .success(function(data){
+    $scope.entries = data;
+  });
   /*
   $scope.entries= [
     {"title": "Lorem Ipsum",
@@ -28,7 +33,11 @@ function EntriesCtrl($scope, $http){
       "content": "blah blah blah",},
   ];
   */
- $scope.refresh(2);
+ /*$scope.refresh($routeParams.feedId);*/
+}
+
+function TestCtrl($scope, $http,$routeParams,$log) {
+  $log.log('in test ctrl');
 }
 
 

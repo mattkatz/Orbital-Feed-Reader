@@ -95,6 +95,7 @@ function wprss_enqueue_scripts()
   wp_enqueue_script( 'json2' );
   //wp_enqueue_script('emberjs_script');
   wp_enqueue_script('angular_script');
+  wp_enqueue_script('angular_app_script');
   wp_enqueue_script('angular_controllers_script');
   
 
