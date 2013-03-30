@@ -1,39 +1,31 @@
 /* Controllers */
 
-function FeedListCtrl($scope, $http, $routeParams,$location,$log){
+function FeedListCtrl($scope, $http, $log){
   $log.log('in feedscontrol');
-  $log.log('location is '+ $location.path());
-  $log.log($routeParams);
-  $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
-  .success(function(data){ 
-    $scope.feeds = data;
-  });
+  $scope.log = $log.log;
+  $scope.refresh = function (){
+    $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
+    .success(function(data){ 
+      $scope.feeds = data;
+    });
+  };
+  $scope.select = function($event){
+    $scope.log($event);
+  };
+  $scope.refresh();
 }
 
-function EntriesCtrl($scope, $http,$routeParams, $log){
+function EntriesCtrl($scope, $http, $log){
+  $scope.log = $log.log;
+  $scope.log("in EntriesCtrl");
   $scope.refresh = function(id){
-
+    $scope.log('Getting feed '+id);
+    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+id)
+    .success(function(data){
+      $scope.entries = data;
+    });
   };
-  $scope.log = $log;
-  $log.log('in entriescontrol');
-  $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$routeParams.feedId)
-  .success(function(data){
-    $scope.entries = data;
-  });
-  /*
-  $scope.entries= [
-    {"title": "Lorem Ipsum",
-      "is_read":0,
-      "content": "blah blah blah",},
-    {"title": "Lorem Ipsum",
-      "is_read":0,
-      "content": "blah blah blah",},
-    {"title": "Lorem Ipsum",
-      "is_read":0,
-      "content": "blah blah blah",},
-  ];
-  */
- /*$scope.refresh($routeParams.feedId);*/
+  $scope.refresh();
 }
 
 function TestCtrl($scope, $http,$routeParams,$log) {
