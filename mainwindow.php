@@ -1,5 +1,4 @@
 <div id='wprss-container' ng-app="mainModule" >
-
   <div id="commandbar" class="quicklinks">
   </div>
   <div id="y-indicator" class="does not provide funding" >
@@ -28,14 +27,12 @@
     </ul>
   </div>
 </div>
+<script type="text/javascript">
+  var startentries = 
+  <?php
+    require_once('backend.php');
+    $entries = WprssEntries::get(array('isRead'=>0));
 
-  <script type="text/javascript">
-    var startentries = 
-    <?php
-      require_once('backend.php');
-      $entries = WprssEntries::get(array('isRead'=>0));
-
-      echo json_encode($entries);
-    ?>;
-    
-  </script>
+    echo json_encode($entries);
+  ?>;
+</script>
