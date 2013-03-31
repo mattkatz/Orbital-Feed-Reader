@@ -23,9 +23,9 @@
     </div>
   <ul id='feeds' >
     <li class="feed" ng-repeat="feed in feeds">
-      <span ng-click="select({{feed.feed_id}})" >{{feed.feed_name}}
+      <a ng-click="select(feed.feed_id)" >{{feed.feed_name}}
         <span class="feedcounter">{{feed.unread_count}}</span>
-      </span>
+      </a>
     </li>
   </ul>
 </div>
