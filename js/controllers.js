@@ -30,6 +30,7 @@ function EntriesCtrl($scope, $http, $log){
   $scope.refresh();
   $scope.$on('feedSelected',function(event,args){
     $scope.log('feedSelected in Entries!');
+    $scope.refresh(args.feed_id);
   });
 }
 
