@@ -9,8 +9,7 @@
         <ul class="entries">
           <li class="entry" ng-repeat="entry in entries" >
             <h2>{{entry.title}}</h2>
-            <div class="entry-content">
-              {{entry.content}}
+            <div class="entry-content" ng-bind-html="entry.content">
             </div>
           </li>
         </ul>

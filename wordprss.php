@@ -74,6 +74,8 @@ function wprss_admin_init(){
   wp_register_script( 'handlebars_script', plugins_url('/js/handlebars-1.0.rc.1.js', __FILE__) ,array('jquery'));
   //wp_register_script( 'emberjs_script', plugins_url('/js/ember-1.0.pre.min.js', __FILE__) ,array('jquery','handlebars_script'));
   wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
+  wp_register_script( 'angular_sanitize', plugins_url('/js/angular-sanitize.js', __FILE__) ,array('angular_script',));
+
   wp_register_script( 'angular_app_script', plugins_url('/js/app.js', __FILE__) ,array('jquery','angular_script'));
   wp_register_script( 'angular_controllers_script', plugins_url('/js/controllers.js', __FILE__) ,array('jquery','angular_app_script','angular_script'));
   //wp_register_script( 'geturl_script', plugins_url('/js/geturl.js', __FILE__) ,array());
@@ -95,6 +97,7 @@ function wprss_enqueue_scripts()
   wp_enqueue_script( 'json2' );
   //wp_enqueue_script('emberjs_script');
   wp_enqueue_script('angular_script');
+  wp_enqueue_script('angular_sanitize');
   wp_enqueue_script('angular_app_script');
   wp_enqueue_script('angular_controllers_script');
   

@@ -1,4 +1,4 @@
-var mainModule= angular.module('mainModule', []);
+var mainModule= angular.module('mainModule', ['ngSanitize']);
 mainModule.run(function($rootScope){
 
   /* 
