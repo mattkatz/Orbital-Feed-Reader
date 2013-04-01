@@ -1,6 +1,5 @@
   
 #wprss-feedlist{
-  top:28px;
   overflow-y:auto;
 
   border-left: 1px solid #dddddd;
@@ -8,10 +7,10 @@
   padding-right: 0px;
   background-color: #ECECEC;
   border-color: #CCCCCC;
-  position: fixed;
+  position: absolute;
   right: 0;
   min-width:100px;
-  width:180px;
+  max-width:20%;
 }
 .no-feed-displayed{
   font-weight: lighter;
@@ -120,7 +119,8 @@
   display: none;
 }
 #wprss-content{
-  float:left;
+  position:absolute;
+  width:80%;
  /* background:#dedede;*/
   overflow-y:auto;
 }
@@ -194,7 +194,7 @@
   font-size: large;
 }
 /*hey it doesn't really work for this */
-#footer {
+#wpfooter {
   display:none;
 }
 .update-nag {
