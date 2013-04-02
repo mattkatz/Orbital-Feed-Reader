@@ -7,7 +7,7 @@
     <div id="wprss-content" >
         <ul class="entries">
           <li class="entry" ng-repeat="entry in entries" >
-              <h2 class="entry-title" ng-bind-html="entry.title"></h2>
+              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
               <div class="entry-content" ng-bind-html="entry.content">
             </div>
           </li>
