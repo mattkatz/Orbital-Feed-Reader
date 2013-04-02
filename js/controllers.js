@@ -8,6 +8,7 @@ function FeedListCtrl($scope, $http, $log){
    * let the world know a feed has been CHOSEN
    * Mightily emit a roar up the scope chain
    */
+
   $scope.select = function(id){
     $scope.log(id);
     $scope.$emit('feedSelect', {feed_id: id});
@@ -15,7 +16,7 @@ function FeedListCtrl($scope, $http, $log){
   /*
    * get the list of feeds and store it
    */
-  $scope.refresh = function (){
+  $scope.refresh = function(){
     $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
     .success(function(data){ 
       $scope.feeds = data;
