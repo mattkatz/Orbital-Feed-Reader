@@ -7,7 +7,7 @@
     <div id="wprss-content" >
         <ul class="entries">
           <li class="entry" ng-repeat="entry in entries" >
-              <div ng-class="{read: entry.isRead == 1}" >
+              <div ng-class="{'is-read': entry.isRead == 1}" >
                 <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
                 <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               </div>
