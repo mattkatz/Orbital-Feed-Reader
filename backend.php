@@ -831,6 +831,10 @@ function wprss_mark_item_read($entry_id,$read_status=true){
   global $current_user;
   //$entry_id = $_POST['entry_id'];
   //$unread_status = $_POST['unread_status'];
+  _log($_POST);
+  //Seems that we are only GETTING this instead of posting!
+  _log($_GET);
+  _log($entry_id);
   $entry_id = $_POST['entry_id'];
   if($entry_id == null){
     $entry_id = $_GET['entry_id'];
