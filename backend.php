@@ -321,9 +321,9 @@ class WprssFeeds {
         'title'=>$item->get_title(),
         'guid'=>$item->get_id(),
         'link'=>$item->get_link(),//TODO 
-        'updated'=>date ("Y-m-d H:m:s"),
+        'updated'=>date ("Y-m-d H:i:s"),
         'content'=>$item->get_content(),//TODO
-        'entered' =>date ("Y-m-d H:m:s"), 
+        'entered' =>date ("Y-m-d H:i:s"),
         'author' => $name
       ));
     }
@@ -336,7 +336,7 @@ class WprssFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
       $ret = $wpdb->update(
         $feeds,//the table
-        array('last_updated'=>date("Y-m-d H:m:s")),//columns to update
+        array('last_updated'=>date("Y-m-d H:i:s")),//columns to update
         array('id'=>$feed_id)//where filters
       );
     //echo $feedrow->feed_url;
@@ -493,9 +493,9 @@ class WprssEntries{
       'title'=>$entry['title'],
       'guid'=>$entry['guid'],
       'link'=>$entry['link'],//TODO 
-      'updated'=>date ("Y-m-d H:m:s"),
+      'updated'=>date ("Y-m-d H:i:s"),
       'content'=>$entry['content'],//TODO
-      'entered' =>date ("Y-m-d H:m:s"), 
+      'entered' =>date ("Y-m-d H:i:s"),
       'author' => $entry['author']
     ));
     $entry_id = $wpdb->insert_id;
@@ -513,7 +513,7 @@ class WprssEntries{
     //update the last updated time for the feed
     $resp->last_update = $wpdb->update(
       $feeds,//the table
-      array('last_updated' => date ("Y-m-d H:m:s")),//columns to update
+      array('last_updated' => date ("Y-m-d H:i:s")),//columns to update
       array(//where filters
         'id' =>$entry['feed_id'] //current feed
       )
