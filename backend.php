@@ -364,31 +364,31 @@ class WprssEntries{
  */
   static function save($entry){
     //_log('in save');
-    //_log($entry);
+    _log($entry);
 
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
+      _log('sending to update');
       $resp = WprssEntries::update($entry);
-      //_log('sending to update');
     }
     else{
       $entry_id = null;
       //TODO see if the entry exists using entry hash or guid?
       if(array_key_exists('guid', $entry) && $entry['guid']){
         $entry_id = WprssEntries::check_guid($entry['guid']);
-        //_log('check guid says entry id is');
-        //_log($entry_id);
+        _log('check guid says entry id is');
+        _log($entry_id);
       }
 
       if(null === $entry_id){
-        //_log('sending to insert');
+        _log('sending to insert');
         //insert the entry, get the ID for the feed
         $resp = WprssEntries::insert($entry);
       }
       else {
         //this is an update - let's do it.
         $entry['entry_id'] = $entry_id;
-        //_log("found an $entry_id  and sending to update");
+        _log("found an $entry_id  and sending to update");
         $resp = WprssEntries::update($entry);
       }
     }
@@ -444,6 +444,8 @@ class WprssEntries{
     $filter_fields = array(
         'owner_uid'=>$current_user->ID //logged in user
     );
+    _log('entry is ');
+    _log($entry);
     foreach ($entry as $key => $value){
       if(array_key_exists($key,$update_whitelist)){
         $update_fields[$update_whitelist[$key]] = $value;
@@ -825,7 +827,7 @@ function wprss_mark_items_read($feed_id){
 add_action('wp_ajax_wprss_mark_items_read','wprss_mark_items_read');
 
 //Mark item as read
-function wprss_mark_item_read($entry_id,$read_status=true){
+function wprss_mark_item_read(){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
@@ -834,17 +836,12 @@ function wprss_mark_item_read($entry_id,$read_status=true){
   _log($_POST);
   //Seems that we are only GETTING this instead of posting!
   _log($_GET);
-  _log($entry_id);
-  $entry_id = $_POST['entry_id'];
-  if($entry_id == null){
-    $entry_id = $_GET['entry_id'];
-  }
-  $read_status = $_POST['read_status'];
-  if($read_status == null){
-    $read_status = $_GET['read_status'];
-  }
+  //$entry_id = $_POST['entry_id'];
+  $entry_id = $_GET['entry_id'];
+  //$read_status = $_POST['read_status'];
+  $read_status = $_GET['read_status'];
   $resp = WprssEntries::save(array(
-    'isRead' =>($read_status=="true"?1:0),//columns to update
+    'isRead' =>$read_status,//columns to update
     'entry_id' =>$entry_id, //current entry
   ));
   echo json_encode($resp);
