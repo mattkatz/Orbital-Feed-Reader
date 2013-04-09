@@ -120,7 +120,7 @@ function EntriesCtrl($scope, $http, $log){
     if(null != currentEntry){ //if there is a current entry, get the index after it
       var index = $scope.entries.indexOf(currentEntry);
       //If we are at the last entry just go to the first
-      index = (index +1) % $scope.entries.length;
+      index = Math.max((index -1),0) ;
     }
     $scope.selectEntry($scope.entries[index]);
     //TODO scroll to the entry
@@ -148,10 +148,10 @@ function EntriesCtrl($scope, $http, $log){
   });
   //u should toggle the current item's read status
   key('u',function(event,handler){
-    var currentItem = Wprss.selectedEntryController.content;
-    if(null == currentItem)
+    var entry = $scope.selectedEntry;
+    if(null == entry)
       return;
-    Wprss.entriesController.toggleEntryRead(currentItem.id);
+    $scope.selectEntry(entry);
   });
 }
 
