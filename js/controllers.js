@@ -108,8 +108,10 @@ function EntriesCtrl($scope, $http, $log){
       //If we are at the last entry just go to the first
       index = (index +1) % $scope.entries.length;
     }
-    $scope.selectEntry($scope.entries[index]);
-    //TODO scroll to the entry
+    var next = $scope.entries[index];
+    $scope.selectEntry(next);
+    //scroll to the entry
+    scrollToEntry(next);
   };
   $scope.previousEntry = function (currentEntry) {
     $scope.info('prev entry finds the entry before the current entry, selects it');
@@ -124,6 +126,7 @@ function EntriesCtrl($scope, $http, $log){
     }
     $scope.selectEntry($scope.entries[index]);
     //TODO scroll to the entry
+    scrollToEntry(entry);
   };
 
   /* Set up keyboard shortcuts

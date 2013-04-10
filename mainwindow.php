@@ -7,7 +7,7 @@
     <div id="wprss-content" >
         <ul class="entries">
           <li class="entry" ng-repeat="entry in entries" >
-              <div ng-class="{'is-read': entry.isRead == 1}" >
+              <div id="{{entry.feed_id}}_{{entry.entry_id}}"ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
                 <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
                 <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               </div>
@@ -20,10 +20,8 @@
         <h2>The Feeds</h2>
       </div>
     <ul id='feeds' >
-      <li class="feed" ng-repeat="feed in feeds">
-        <a ng-click="select(feed)" >{{feed.feed_name}}
-          <span class="feedcounter">{{feed.unread_count}}</span>
-        </a>
+      <li class="feed" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
+        {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
       </li>
     </ul>
   </div>
