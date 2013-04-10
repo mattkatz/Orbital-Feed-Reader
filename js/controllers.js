@@ -124,9 +124,10 @@ function EntriesCtrl($scope, $http, $log){
       //If we are at the last entry just go to the first
       index = Math.max((index -1),0) ;
     }
-    $scope.selectEntry($scope.entries[index]);
+    var previous = $scope.entries[index];
+    $scope.selectEntry(previous);
     //TODO scroll to the entry
-    scrollToEntry(entry);
+    scrollToEntry(previous);
   };
 
   /* Set up keyboard shortcuts
