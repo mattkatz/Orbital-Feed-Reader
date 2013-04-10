@@ -9,8 +9,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-01-10 00:27:56.442999 Z
 references: []
 
@@ -20,3 +20,9 @@ log_events:
   - matt <matt@kingofrats>
   - created
   - ""
+- - 2013-04-10 23:29:04.481317 Z
+  - matt <matt@kingofrats>
+  - closed with disposition fixed
+  - |-
+    1
+    mark as read works reliably now
