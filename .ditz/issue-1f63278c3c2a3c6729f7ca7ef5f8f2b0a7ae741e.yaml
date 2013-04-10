@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Subscription window
+desc: add the subscription workflow back in.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-10 23:31:44.111724 Z
+references: []
+
+id: 1f63278c3c2a3c6729f7ca7ef5f8f2b0a7ae741e
+log_events: 
+- - 2013-04-10 23:31:45.558669 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""

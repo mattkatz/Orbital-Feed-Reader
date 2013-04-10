@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Command bar across the top
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-10 23:33:10.445739 Z
+references: []
+
+id: 34bf891ac704c1632852bb7a602f58881c1fe58d
+log_events: 
+- - 2013-04-10 23:33:12.338883 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""

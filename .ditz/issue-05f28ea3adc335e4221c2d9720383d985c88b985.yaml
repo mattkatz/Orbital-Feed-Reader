@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Mark all as read
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-10 23:32:47.556618 Z
+references: []
+
+id: 05f28ea3adc335e4221c2d9720383d985c88b985
+log_events: 
+- - 2013-04-10 23:32:49.654602 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
