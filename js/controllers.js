@@ -120,13 +120,13 @@ function EntriesCtrl($scope, $http, $log){
       return;//can't select anything
     }
     if(null != currentEntry){ //if there is a current entry, get the index after it
-      var index = $scope.entries.indexOf(currentEntry);
+      index = $scope.entries.indexOf(currentEntry);
       //If we are at the last entry just go to the first
       index = Math.max((index -1),0) ;
     }
     var previous = $scope.entries[index];
     $scope.selectEntry(previous);
-    //TODO scroll to the entry
+    //scroll to the entry
     scrollToEntry(previous);
   };
 
