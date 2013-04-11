@@ -175,20 +175,43 @@ function SubsCtrl($scope,$http,$log){
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
   $scope.possibleFeeds = [{url:'blart'},];
-  $scope.feedCandidate = '';
+  $scope.urlCandidate = '';
+  $scope.feedCandidate = null;
   $scope.toggle = function(){
     $scope.reveal = !$scope.reveal;
   }
 
-  $scope.checkUrl = function(urlCandidate){
-    if(urlCandidate){
-      $scope.feedCandidate = urlCandidate;
+  $scope.checkUrl = function(url){
+    if(url){
+      $scope.urlCandidate = url;
     }
-    //now we should check the feedCandidate
-    //ask the backend to look at it
-    //if it returns possibleFeeds, display them.
-    //if it returns a feed detail, display that.
+    //now we should check the candidate
 
+    //ask the backend to look at it
+    $http.post(get_url.ajaxurl+'?action=wprss_find_feed&url='+$scope.urlCandidate)
+    .success(function(data){
+      response = data;
+      if("feed" == response.url_type){
+        console.log('found a feed!');
+        //if it returns a feed detail, display that.
+        $scope.feedCandidate = { 
+          feed_url: response.orig_url, 
+          site_url: response.site_url, 
+          feed_id: null, 
+          feed_name: response.feed_name,
+          unread_count:0,
+          is_private:false
+        };
+        $scope.possibleFeeds=null;
+      }
+      else{
+        //if it returns possibleFeeds, display them.
+        $scope.possibleFeeds = response.feeds;
+        //remove the old feedCandidate if there is one
+        $scope.feedCandidate = null;
+      }
+
+    });
   }
 
   //this window has been requested or dismissed
