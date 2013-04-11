@@ -3,6 +3,7 @@
 function FeedListCtrl($scope, $http, $log){
   $log.log('in feedscontrol');
   $scope.log = $log.log;
+  $scope.info = $log.info;
 
   /*
    * let the world know a feed has been CHOSEN
@@ -18,6 +19,10 @@ function FeedListCtrl($scope, $http, $log){
     });
     //Mark feed as loading
   };
+  $scope.requestNewFeed = function () {
+    $scope.info('new feed requested');
+    $scope.$emit('newFeedRequested');
+  }
   /*
    * get the list of feeds and store it
    */
@@ -159,3 +164,39 @@ function EntriesCtrl($scope, $http, $log){
   });
 }
 
+/*
+ * Subscription control
+ * This should manage the workflow of adding a new feed
+ */
+function SubsCtrl($scope,$http,$log){
+  $scope.log = $log.log;
+  $scope.info = $log.info;
+
+  //The normal status of this window is to be hidden.
+  $scope.reveal = false;
+  $scope.possibleFeeds = [{url:'blart'},];
+  $scope.feedCandidate = '';
+  $scope.toggle = function(){
+    $scope.reveal = !$scope.reveal;
+  }
+
+  $scope.checkUrl = function(urlCandidate){
+    if(urlCandidate){
+      $scope.feedCandidate = urlCandidate;
+    }
+    //now we should check the feedCandidate
+    //ask the backend to look at it
+    //if it returns possibleFeeds, display them.
+    //if it returns a feed detail, display that.
+
+  }
+
+  //this window has been requested or dismissed
+  $scope.$on('subscriptionsWindow',function(event,args){
+    $scope.info('subscriptionsWindow');
+    //$scope.info(event);
+    $scope.toggle();
+  });
+
+
+}

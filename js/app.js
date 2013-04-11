@@ -13,4 +13,8 @@ mainModule.run(function($rootScope){
     console.log('caught entryChange!');
     $rootScope.$broadcast('entryChanged', args);
   });
+  $rootScope.$on('newFeedRequested', function(event,args){
+    console.log('caught newFeedRequested');
+    $rootScope.$broadcast('subscriptionsWindow',args);
+  });
 });
