@@ -183,12 +183,11 @@
 .horizontal-form input {
    display: block;
    padding: 5px;
+   width: 80%;
 }
 .horizontal-form input[type='checkbox'] {
    display: inline-block;
-}
-.horizontal-form input[type='text'] {
-  width: 80%;
+   width:auto;
 }
 .heading {
   font-size: large;
