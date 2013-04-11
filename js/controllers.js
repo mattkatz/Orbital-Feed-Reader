@@ -27,6 +27,7 @@ function FeedListCtrl($scope, $http, $log){
    * get the list of feeds and store it
    */
   $scope.refresh = function(){
+    $scope.info('refreshing feeds');
     $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
     .success(function(data){ 
       $scope.feeds = data;

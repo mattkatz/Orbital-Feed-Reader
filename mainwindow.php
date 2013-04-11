@@ -17,7 +17,9 @@
   </div>
   <div id="wprss-feedlist" ng-controller="FeedListCtrl" >
       <div id='feed-head'>
-        <h2>The Feeds</h2> <a class="action" ng-click="requestNewFeed()">+</a>
+        <h2>The Feeds</h2> 
+        <a class="action" ng-click="requestNewFeed()">+</a>
+        <a class="action" ng-click="refresh()">⟳</a>
       </div>
     <ul id='feeds' >
       <li class="feed" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
