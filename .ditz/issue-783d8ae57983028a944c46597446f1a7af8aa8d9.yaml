@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fix Date Formatting
+desc: angular date filter wants YYYY-MM-DDTHH:mm:ss
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-12 21:49:35.502664 Z
+references: []
+
+id: 783d8ae57983028a944c46597446f1a7af8aa8d9
+log_events: 
+- - 2013-04-12 21:49:40.730042 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""

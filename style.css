@@ -54,6 +54,13 @@
   text-shadow: 0px 1px 1px #aaa;
 }
 
+.entry .author{
+  font-size: .9em;
+}
+.entry .author:before{
+  content:"by ";
+}
+
 .ember-button{
   border-bottom: 1px dotted;
 }
