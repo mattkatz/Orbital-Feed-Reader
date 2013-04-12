@@ -66,6 +66,7 @@ function EntriesCtrl($scope, $http, $log){
     $scope.log('Getting feed '+id);
     $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+id)
     .success(function(data){
+      $scope.info(data);
       $scope.entries = data;
       $scope.selectedEntry = null;
     });
@@ -190,8 +191,7 @@ function SubsCtrl($scope,$http,$log){
 
     //ask the backend to look at it
     $http.post(get_url.ajaxurl+'?action=wprss_find_feed&url='+$scope.urlCandidate)
-    .success(function(data){
-      response = data;
+    .success(function(response){
       if("feed" == response.url_type){
         console.log('found a feed!');
         //if it returns a feed detail, display that.
@@ -213,6 +213,10 @@ function SubsCtrl($scope,$http,$log){
       }
 
     });
+  }
+
+  $scope.saveFeed = function(feed){
+
   }
 
   //this window has been requested or dismissed
