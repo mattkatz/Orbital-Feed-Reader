@@ -33,6 +33,13 @@ function FeedListCtrl($scope, $http, $log){
       $scope.feeds = data;
     });
   };
+  /*
+   * Set editable
+   */
+  $scope.setEditable = function(){
+    console.log('set editable - not implemented yet!');
+
+  }
   $scope.refresh();
 
   /*

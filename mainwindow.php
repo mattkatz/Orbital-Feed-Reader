@@ -26,6 +26,7 @@
         <h2>The Feeds</h2> 
         <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
         <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
+        <a class="action" title="Edit these feeds" ng-click="setEditable()">✎</a>
       </div>
     <ul id='feeds' >
       <li class="feed" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
