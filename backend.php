@@ -558,8 +558,8 @@ class WprssEntries{
         ue.marked as marked,
         ue.id as id,
         ue.feed_id as feed_id,
-        entries.entered as entered,
-        entries.updated as updated
+        DATE_FORMAT(entries.entered , '%Y-%m-%dT%TZ') as entered,
+        DATE_FORMAT(entries.updated, '%Y-%m-%dT%TZ') as updated
 
         from  $entries  as entries
         inner join  $user_entries  as ue
