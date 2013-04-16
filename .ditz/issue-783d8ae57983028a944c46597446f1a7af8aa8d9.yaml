@@ -5,8 +5,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-04-12 21:49:35.502664 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2013-04-12 21:49:40.730042 Z
   - matt <matt@kingofrats>
   - created
+  - ""
+- - 2013-04-16 12:25:34.245656 Z
+  - matt <matt@kingofrats>
+  - closed with disposition fixed
   - ""
