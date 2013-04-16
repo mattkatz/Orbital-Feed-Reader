@@ -4,6 +4,7 @@ function FeedListCtrl($scope, $http, $log){
   $log.log('in feedscontrol');
   $scope.log = $log.log;
   $scope.info = $log.info;
+  $scope.editable = false;
 
   /*
    * let the world know a feed has been CHOSEN
@@ -12,12 +13,17 @@ function FeedListCtrl($scope, $http, $log){
 
   $scope.select = function(feed){
     $scope.log(feed.feed_id);
-    $scope.$emit('feedSelect', {feed_id: feed.feed_id});
+    if( $scope.editable){
+      $scope.$emit('feedEdit',{feed_id: feed.feed_id}); 
+    }
+    else{
+      $scope.$emit('feedSelect', {feed_id: feed.feed_id});
+      //Mark feed as loading
+    }
     //Mark feed as selected
     $scope.feeds.forEach(function(value,index){
       value.isSelected = value.feed_id == feed.feed_id
     });
-    //Mark feed as loading
   };
   $scope.requestNewFeed = function () {
     $scope.info('new feed requested');
@@ -37,10 +43,14 @@ function FeedListCtrl($scope, $http, $log){
    * Set editable
    */
   $scope.setEditable = function(){
-    console.log('set editable - not implemented yet!');
-
+    $scope.editable = ! $scope.editable;
   }
   $scope.refresh();
+
+  $scope.editFeed = function(feed){
+    console.log('editing feed:' + feed);
+
+  }
 
   /*
    * Has an entry changed? Update our feedlist

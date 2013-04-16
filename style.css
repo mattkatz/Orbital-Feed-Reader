@@ -101,6 +101,12 @@
   color: #FFFFFF;
   text-shadow: 0 -1px 0 #333333;
 }
+
+.is-editable{
+  background-color: white;
+  box-shadow: 0 0 4px white;
+}
+
 #y-indicator{
   background-color: rgba(20,20,200, .5);
   height: 5px;
