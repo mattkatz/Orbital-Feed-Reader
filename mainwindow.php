@@ -28,6 +28,9 @@
         <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
         <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
         <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
+        <div ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
+          You are in edit mode, click here to exit.
+        </div>
       </div>
     <ul id='feeds' >
       <li class="feed" ng-class="{'is-editable': editable}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
