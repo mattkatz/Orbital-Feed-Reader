@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Feed editing
+desc: give users the chance to change feed properties by editing
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-16 12:22:43.647891 Z
+references: []
+
+id: fc8c37de5e8b594281860345a96de6fe96f050ca
+log_events: 
+- - 2013-04-16 12:22:44.686345 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
