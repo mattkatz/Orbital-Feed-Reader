@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: infinite scroll
+desc: |-
+  angular has some sort of inifinite scroll library
+  oh god I just spelled infinite inifinite.
+  no going back now.
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-16 12:27:20.871451 Z
+references: []
+
+id: 449e95b8c2c72dac1c3445742a41a1ecebc3bbd0
+log_events: 
+- - 2013-04-16 12:27:23.787859 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
