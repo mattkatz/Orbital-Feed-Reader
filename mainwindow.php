@@ -40,10 +40,12 @@
     </ul>
   </div>
   <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
-    <label for='subscriptionUrl'>Drag or copy paste a feed here</label>
-    <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
-    <a class='button' ng-click='checkUrl()'>Check a URL</a>
-    <a class="dismiss" ng-click="toggle()">X</a>
+    <div ng-hide="feedCandidate">
+      <label for='subscriptionUrl'>Drag or copy paste a feed here</label>
+      <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
+      <a class='button' ng-click='checkUrl()'>Check a URL</a>
+      <a class="dismiss" ng-click="toggle()">X</a>
+    </div>
     <div class="horizontal-form" >
       <div class="possibleFeeds" ng-show="possibleFeeds.length > 0" >
         <div>
@@ -64,15 +66,19 @@
           <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
         </label>
         <label>
-          <input type='checkbox' ng-model="feedCandidate.is_private" title="" />
+          <input type='checkbox' ng-model="feedCandidate.private" title="" />
           This Feed is Private! Do not show it to other people.
         </label>
         <label ng-show="feedCandidate.feed_id">
             Get rid of this feed! Seriously! 
             <a ng-click='unsubscribe(feedCandidate.feed_id)' class='button'>Unsubscribe</a>
         </label>
+        <br/>
         <div class="clickable button" ng-click="saveFeed(feedCandidate)" }}>
-        Save {{feedCandidate.feed_name}}
+          Save {{feedCandidate.feed_name}}
+        </div>
+        <div class="clickable button" ng-click="toggle()">
+          Cancel
         </div>
       </div>
     </div>

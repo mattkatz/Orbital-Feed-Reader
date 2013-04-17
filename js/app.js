@@ -8,6 +8,11 @@ mainModule.run(function($rootScope){
     console.log('caught feedSelect!');
     $rootScope.$broadcast('feedSelected',args);
   });
+  $rootScope.$on('feedEdit',function(event, args){
+    console.log('caught feedEdit!');
+    //Ugh, this should have a better name
+    $rootScope.$broadcast('feedEditRequest',args);
+  });
   //catch and broadcast entry changes
   $rootScope.$on('entryChange', function(event, args){
     console.log('caught entryChange!');

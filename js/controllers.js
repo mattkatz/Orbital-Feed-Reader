@@ -14,7 +14,7 @@ function FeedListCtrl($scope, $http, $log){
   $scope.select = function(feed){
     $scope.log(feed.feed_id);
     if( $scope.editable){
-      $scope.$emit('feedEdit',{feed_id: feed.feed_id}); 
+      $scope.$emit('feedEdit',{feed: feed}); 
     }
     else{
       $scope.$emit('feedSelect', {feed_id: feed.feed_id});
@@ -39,17 +39,15 @@ function FeedListCtrl($scope, $http, $log){
       $scope.feeds = data;
     });
   };
+  //call the refresh to load it all up.
+  //TODO change this to load the initial feeds variable
+  $scope.refresh();
+
   /*
    * Set editable
    */
   $scope.setEditable = function(){
     $scope.editable = ! $scope.editable;
-  }
-  $scope.refresh();
-
-  $scope.editFeed = function(feed){
-    console.log('editing feed:' + feed);
-
   }
 
   /*
@@ -185,7 +183,12 @@ function EntriesCtrl($scope, $http, $log){
 
 /*
  * Subscription control
- * This should manage the workflow of adding a new feed
+ * This should manage the workflow of adding or editing a feed
+ * Feed CRUD happens here.
+ *
+ * If you summon this with nothing in it, we'll show the feed search
+ * Give it a candidate and we'll hide the rest and let you edit this
+ * 
  */
 function SubsCtrl($scope,$http,$log){
   $scope.log = $log.log;
@@ -193,11 +196,18 @@ function SubsCtrl($scope,$http,$log){
 
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
-  $scope.possibleFeeds = [{url:'blart'},];
+  $scope.possibleFeeds = null;
   $scope.urlCandidate = '';
   $scope.feedCandidate = null;
   $scope.toggle = function(){
     $scope.reveal = !$scope.reveal;
+    $scope.clear();
+  }
+
+  $scope.clear = function() {
+    $scope.possibleFeeds = null;
+    $scope.urlCandidate = '';
+    $scope.feedCandidate = null;
   }
 
   $scope.checkUrl = function(url){
@@ -218,7 +228,7 @@ function SubsCtrl($scope,$http,$log){
           feed_id: null, 
           feed_name: response.feed_name,
           unread_count:0,
-          is_private:false
+          private:false
         };
         $scope.possibleFeeds=null;
       }
@@ -228,12 +238,24 @@ function SubsCtrl($scope,$http,$log){
         //remove the old feedCandidate if there is one
         $scope.feedCandidate = null;
       }
-
     });
   }
 
   $scope.saveFeed = function(feed){
-
+    //mark the save button busy
+    
+    $http.post(get_url.ajaxurl+'?action=wprss_save_feed&feed_id='+feed.feed_id+'&feed_url='+feed.feed_url+'&feed_name='+feed.feed_name+'&site_url='+feed.site_url+'&is_private='+feed.private, feed)
+    .success(function(response){
+      //mark the save button not busy
+      $scope.toggle();
+    });
+  }
+  $scope.unsubscribe = function(feed){
+    //mark the button busy
+    //TODO it would be good to give a cancel
+    //Maybe it could just be to call the save again
+    //unmark the busy 
+    //close the dialogue
   }
 
   //this window has been requested or dismissed
@@ -243,5 +265,12 @@ function SubsCtrl($scope,$http,$log){
     $scope.toggle();
   });
 
-
+  //We are going to edit a feed
+  //it becomes the feedCandidate so we can edit it there.
+  //TODO we should copy the feed, not use the one in the feedlist
+  $scope.$on('feedEditRequest', function(event,args){
+    $scope.info('feedEdit');
+    $scope.reveal=true;
+    $scope.feedCandidate = args.feed;
+  });
 }

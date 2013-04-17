@@ -40,6 +40,7 @@ class WprssFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $resp = "";
+    $feed_id = '';
     if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
     /*
      //TODO NO IDEA WHY THIS DOESN'T WORK!
@@ -719,14 +720,31 @@ function wprss_save_feed(){
   //nonce_dance();
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
-  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
-  $site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
-  $feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
-  $is_private = $_POST['is_private']=="true"?1:0;
+  //TODO figure out why none of the POST information is showing up now
+  //$feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  //$feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
+  //$site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
+  //$feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
+  //$is_private = $_POST['is_private']=="true"?1:0;
+  //$is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
+  $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $feed_url = filter_input(INPUT_GET, 'feed_url',FILTER_SANITIZE_STRING);
+  $site_url = filter_input(INPUT_GET, 'site_url',FILTER_SANITIZE_STRING);
+  $feed_name = filter_input(INPUT_GET, 'feed_name',FILTER_SANITIZE_STRING);
+  //$is_private = $_POST['is_private']=="true"?1:0;
+  $is_private = filter_input(INPUT_GET, 'is_private',FILTER_SANITIZE_STRING);
+  _log('POST');
+  _log($_POST);
+  _log('GET');
+  _log($_GET);
+  _log('is_private');
+  _log($is_private);
+  
+  //$is_private = $is_private?1:0;
+
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  $resp = WprssFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'private'=>$is_private));
+  $resp = WprssFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private));
   echo json_encode($resp);
   exit;
 }
