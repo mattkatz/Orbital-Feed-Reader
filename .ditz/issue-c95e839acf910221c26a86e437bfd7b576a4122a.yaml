@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: unsubscribe
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :in_progress
+disposition: 
+creation_time: 2013-04-17 21:13:48.102735 Z
+references: []
+
+id: c95e839acf910221c26a86e437bfd7b576a4122a
+log_events: 
+- - 2013-04-17 21:13:49.325650 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
+- - 2013-04-17 21:14:55.849895 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
+  - ""
