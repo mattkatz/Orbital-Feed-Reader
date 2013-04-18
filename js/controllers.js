@@ -251,11 +251,17 @@ function SubsCtrl($scope,$http,$log){
     });
   }
   $scope.unsubscribe = function(feed){
-    //mark the button busy
+    //TODO mark the button busy
     //TODO it would be good to give a cancel
     //Maybe it could just be to call the save again
-    //unmark the busy 
-    //close the dialogue
+    $scope.info(feed);
+    $http.post(get_url.ajaxurl+'?action=wprss_unsubscribe_feed&feed_id='+feed.feed_id)
+    .success(function(response){
+      $scope.feedsChanged();
+      //TODO unmark the busy 
+      //close the dialogue
+      $scope.toggle();
+    });
   }
 
   //this window has been requested or dismissed
@@ -264,6 +270,10 @@ function SubsCtrl($scope,$http,$log){
     //$scope.info(event);
     $scope.toggle();
   });
+
+  $scope.feedsChanged = function(){
+    $scope.$emit('feedsChanged');
+  }
 
   //We are going to edit a feed
   //it becomes the feedCandidate so we can edit it there.

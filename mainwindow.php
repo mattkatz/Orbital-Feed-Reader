@@ -71,7 +71,7 @@
         </label>
         <label ng-show="feedCandidate.feed_id">
             Get rid of this feed! Seriously! 
-            <a ng-click='unsubscribe(feedCandidate.feed_id)' class='button'>Unsubscribe</a>
+            <a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a>
         </label>
         <br/>
         <div class="clickable button" ng-click="saveFeed(feedCandidate)" }}>

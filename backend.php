@@ -606,7 +606,10 @@ add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds_die');
 function wprss_unsubscribe_feed(){
   //nonce_dance();
   
-  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  //none of my posts are working as posts
+  //$feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+
+  $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $resp = WprssFeeds::remove($feed_id);
   echo json_encode($resp);
   exit;

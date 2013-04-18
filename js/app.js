@@ -22,4 +22,8 @@ mainModule.run(function($rootScope){
     console.log('caught newFeedRequested');
     $rootScope.$broadcast('subscriptionsWindow',args);
   });
+  $rootScope.$on('feedsChanged', function(event,args){
+    console.log('the feeds are changing');
+    $rootScope.$broadcast('refreshFeeds',args);
+  });
 });
