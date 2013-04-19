@@ -55,6 +55,15 @@ function FeedListCtrl($scope, $http, $log){
    */
   $scope.$on('entryChanged', function(event,args){
     //find the feed entry that has this entry's feed_id
+    entry = args.entry;
+    feed_id = entry.feed_id;
+    for( feed in $scope.feeds){
+      $scope.info(feed);
+      $scope.info("checking does feed " + feed.feed_id + " == entry "+entry.feed_id);
+      if( feed.feed_id ==  entry.feed_id){
+        feed.unread_count += (entry.isRead ? -1:1);
+      }
+    }
 
     //decrement the read counter by the isread status
     $scope.log('caught entrychanged in feedCtrl');

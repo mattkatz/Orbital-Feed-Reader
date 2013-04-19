@@ -26,10 +26,12 @@ jQuery(document).ready(function($){
     $(id).css({'height':(($(window).height())-height)+'px'});
   }
   $(window).resize(function(){
-    setContentHeight('#wprss-content',28+22);
+    setContentHeight('#wprss-content',28+$('commandbar').height());
     setContentHeight('#wprss-feedlist',28);
-    $('#wprss-content').css({'width':(($('#wprss-container').width() - 190 )+'px')});
-    //setContentHeight('#feeds', 28+63);
+    var w =$('#wprss-container').width();
+
+    $('#wprss-content').css({'width':((w * .8)- 10 +'px')});
+    //scrollbar.width probably is 10 px.
     $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
   });
   $(window).resize();
