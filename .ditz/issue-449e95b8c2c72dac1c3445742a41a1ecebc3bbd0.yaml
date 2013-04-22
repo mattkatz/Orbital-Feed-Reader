@@ -8,7 +8,7 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2013-04-16 12:27:20.871451 Z
 references: []
@@ -19,3 +19,7 @@ log_events:
   - matt <matt@kingofrats>
   - created
   - ""
+- - 2013-04-22 18:24:37.052193 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
+  - let's try to just add in the ng-infinite scroll plugin
