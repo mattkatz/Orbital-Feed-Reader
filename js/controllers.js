@@ -58,8 +58,8 @@ function FeedListCtrl($scope, $http, $log){
     entry = args.entry;
     feed_id = entry.feed_id;
     for( feed in $scope.feeds){
-      $scope.info(feed);
-      $scope.info("checking does feed " + feed.feed_id + " == entry "+entry.feed_id);
+      //$scope.info(feed);
+      //$scope.info("checking does feed " + feed.feed_id + " == entry "+entry.feed_id);
       if( feed.feed_id ==  entry.feed_id){
         feed.unread_count += (entry.isRead ? -1:1);
       }
@@ -85,20 +85,31 @@ function EntriesCtrl($scope, $http, $log){
   $scope.warn = $log.warn;
   $scope.error = $log.error;
   $scope.selectedEntry = null;
+  $scope.currentFeedId = null;
   $scope.log("in EntriesCtrl");
   
   /*
    * select a feed to display entries from
    */
   $scope.displayFeed = function(id){
+    $scope.currentFeedId = id;
     $scope.log('Getting feed '+id);
-    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+id)
+    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
     .success(function(data){
-      $scope.info(data);
+      //$scope.info(data);
       $scope.entries = data;
       $scope.selectedEntry = null;
     });
   };
+
+  $scope.addMoreEntries = function(){
+    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
+    .success(function  (response) {
+      $scope.info('going to the server mines for more delicious content');
+      //$scope.info(response);
+      $scope.entries = _.union($scope.entries, response);
+    });
+  }
 
   /*
    * Someone has clicked an entry.

@@ -5,7 +5,7 @@
   </div>
   <div id="wprss-main-content" ng-controller="EntriesCtrl">
     <div id="wprss-content" >
-        <ul class="entries">
+        <ul class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-distance="2">
           <li class="entry" ng-repeat="entry in entries" >
               <div id="{{entry.feed_id}}_{{entry.entry_id}}"ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
                 <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>

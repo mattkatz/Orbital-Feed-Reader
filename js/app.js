@@ -1,4 +1,4 @@
-var mainModule= angular.module('mainModule', ['ngSanitize']);
+var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll']);
 mainModule.run(function($rootScope){
   /* 
    * receive the emitted messages and rebroadcast
