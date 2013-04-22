@@ -69,9 +69,13 @@ function FeedListCtrl($scope, $http, $log){
     $scope.log('caught entrychanged in feedCtrl');
     $scope.log(event);
     $scope.log(args);
+  });
 
-
-
+  /*
+   * We should just get the feeds from the DB.
+   */
+  $scope.$on('refreshFeeds', function(event,args){
+    $scope.refresh();
   });
 }
 
@@ -257,6 +261,7 @@ function SubsCtrl($scope,$http,$log){
     .success(function(response){
       //mark the save button not busy
       $scope.toggle();
+      $scope.feedsChanged();
     });
   }
   $scope.unsubscribe = function(feed){
@@ -270,6 +275,7 @@ function SubsCtrl($scope,$http,$log){
       //TODO unmark the busy 
       //close the dialogue
       $scope.toggle();
+      $scope.feedsChanged();
     });
   }
 
