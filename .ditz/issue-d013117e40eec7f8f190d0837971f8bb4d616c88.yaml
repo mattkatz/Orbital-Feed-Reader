@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: mark read should decrement feed unread
+desc: ""
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-22 19:07:18.856013 Z
+references: []
+
+id: d013117e40eec7f8f190d0837971f8bb4d616c88
+log_events: 
+- - 2013-04-22 19:07:33.499499 Z
+  - matt <matt@kingofrats>
+  - created
+  - all features are bugs are tasks when you are rewriting
