@@ -137,6 +137,7 @@
   width:80%;
  /* background:#dedede;*/
   overflow-y:auto;
+  top: 20px;
 }
 #commandbar {
   background: #dddddd;

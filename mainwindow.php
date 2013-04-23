@@ -1,5 +1,8 @@
 <div id='wprss-container' ng-app="mainModule" >
-  <div id="commandbar" class="quicklinks">
+  <div id="commandbar" class="quicklinks" ng-controller="CommandBarCtrl">
+    <ul>
+      <li class="command" ng-repeat="command in commands" ><a href="#" ng-click="command.action(command.title)">{{command.title}}</a></li>
+    </ul>
   </div>
   <div id="y-indicator" class="does not provide funding" >
   </div>

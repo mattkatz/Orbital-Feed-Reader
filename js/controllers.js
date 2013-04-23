@@ -17,7 +17,7 @@ function FeedListCtrl($scope, $http, $log){
       $scope.$emit('feedEdit',{feed: feed}); 
     }
     else{
-      $scope.$emit('feedSelect', {feed_id: feed.feed_id});
+      $scope.$emit('feedSelect', {feed: feed});
       //Mark feed as loading
     }
     //Mark feed as selected
@@ -140,8 +140,8 @@ function EntriesCtrl($scope, $http, $log){
    * Catch the feedSelected event, display entries from that feed
    */
   $scope.$on('feedSelected',function(event,args){
-    $scope.log('feedSelected in Entries!');
-    $scope.displayFeed(args.feed_id);
+    //$scope.log('feedSelected in Entries!');
+    $scope.displayFeed(args['feed'].feed_id);
   });
   $scope.nextEntry = function(currentEntry){
     $scope.info('next entry finds the entry after the current entry, selects it');
@@ -309,4 +309,27 @@ function SubsCtrl($scope,$http,$log){
     $scope.reveal=true;
     $scope.feedCandidate = args.feed;
   });
+}
+
+function CommandBarCtrl($scope,$http,$log){
+  $scope.$on('feedSelected', function(event,args){
+    $log.info('commandBar feed is:' agrs['feed'].feed_name);
+    $scope.currentFeed = args.feed;
+  });
+  $scope.commandBarAction = function(title){
+    $log.info(title + ' - not implemented yet');
+    $scope.$emit(title,{feed: $scope.currentFeed});
+  };
+  $scope.commands = [
+    { title: "Mark All As Read",
+      action: $scope.commandBarAction,
+    },
+    { title: "Update Feed",
+      action: $scope.commandBarAction,
+    },
+    { title: "Show Read Items",
+      action: $scope.commandBarAction,
+    },
+  ];
+
 }
