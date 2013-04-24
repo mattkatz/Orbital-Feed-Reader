@@ -5,6 +5,7 @@ function FeedListCtrl($scope, $http, $log){
   $scope.log = $log.log;
   $scope.info = $log.info;
   $scope.editable = false;
+  $scope.selectedFeed = null;
 
   /*
    * let the world know a feed has been CHOSEN
@@ -24,6 +25,8 @@ function FeedListCtrl($scope, $http, $log){
     $scope.feeds.forEach(function(value,index){
       value.isSelected = value.feed_id == feed.feed_id
     });
+    //let's cache this for later
+    $scope.selectedFeed = feed;
   };
   $scope.requestNewFeed = function () {
     $scope.info('new feed requested');
@@ -44,11 +47,38 @@ function FeedListCtrl($scope, $http, $log){
   $scope.refresh();
 
   /*
+   * Get the next unread feed
+   *
+   */
+  $scope.nextUnreadFeed = function(){
+    // We should iterate through the feeds
+    // Find our selected feed
+    // Then keep iterating till we find an unread feed
+    // If we reach the end of the list
+    // Start looking at the beginning till we find an unread feed
+    feeds = $scope.feeds;
+    index = feeds.indexOf($scope.selectedFeed);
+    //we are starting at the index item
+    //and circling the array
+    for(i=(index+1)%feeds.length;i!=index;i= (i+1)%feeds.length){
+      if(feeds[i].unread_count >0){
+        return feeds[i];
+      }
+    }
+    //NOTHING! let's just return where we started
+    return $scope.selectedFeed;
+  };
+
+  /*
    * Set editable
    */
   $scope.setEditable = function(){
     $scope.editable = ! $scope.editable;
   }
+
+  /*
+   * Events
+   */
 
   /*
    * Has an entry changed? Update our feedlist
@@ -67,7 +97,7 @@ function FeedListCtrl($scope, $http, $log){
 
     //decrement the read counter by the isread status
     $scope.log('caught entrychanged in feedCtrl');
-    $scope.log(event);
+    //$scope.log(event);
     $scope.log(args);
   });
 
@@ -76,6 +106,33 @@ function FeedListCtrl($scope, $http, $log){
    */
   $scope.$on('refreshFeeds', function(event,args){
     $scope.refresh();
+  });
+  /* One of the command bar actions fired */
+  $scope.$on('commandBarEvented', function  (event, args) {
+    feed = args.feed;
+    switch(args.name){
+      case "markRead":
+        //mark feed read
+        var data = {
+          action: 'wprss_mark_items_read',
+          feed_id:feed.feed_id,
+        };
+        $http.post(get_url.ajaxurl, data)
+        .success(function(response){
+          $scope.refresh();
+          $scope.select($scope.nextUnreadFeed());
+        });
+        break;
+      case "updateFeed":
+        //update feed 
+        //break;
+      case "showRead":
+        //refresh this feed, but display read items
+        //break;
+      default:
+        $log.log('requested commandBar action ' + args.name + ' - not implemented yet');
+        break;
+    }
   });
 }
 
@@ -305,7 +362,7 @@ function SubsCtrl($scope,$http,$log){
   //it becomes the feedCandidate so we can edit it there.
   //TODO we should copy the feed, not use the one in the feedlist
   $scope.$on('feedEditRequest', function(event,args){
-    $scope.info('feedEdit');
+    //$scope.info('feedEdit');
     $scope.reveal=true;
     $scope.feedCandidate = args.feed;
   });
@@ -313,22 +370,22 @@ function SubsCtrl($scope,$http,$log){
 
 function CommandBarCtrl($scope,$http,$log){
   $scope.$on('feedSelected', function(event,args){
-    $log.info('commandBar feed is:' agrs['feed'].feed_name);
+    //$log.info('commandBar feed is:' + args['feed'].feed_name);
     $scope.currentFeed = args.feed;
   });
-  $scope.commandBarAction = function(title){
-    $log.info(title + ' - not implemented yet');
-    $scope.$emit(title,{feed: $scope.currentFeed});
+  $scope.commandBarAction = function(action){
+    //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));
+    $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
   $scope.commands = [
     { title: "Mark All As Read",
-      action: $scope.commandBarAction,
+      name: 'markRead',
     },
     { title: "Update Feed",
-      action: $scope.commandBarAction,
+      name: 'updateFeed',
     },
     { title: "Show Read Items",
-      action: $scope.commandBarAction,
+      name: 'showRead',
     },
   ];
 
