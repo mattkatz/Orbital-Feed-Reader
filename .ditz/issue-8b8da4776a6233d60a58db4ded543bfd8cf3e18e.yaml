@@ -1,0 +1,23 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: commandbar refresh feed
+desc: |-
+  trigger a serverside refresh
+  go to the server, tell it to refresh the feed.
+  when it is done, tell the UI to refresh that feed
+  feedlist should refresh.
+  if that feed is selected, it should refresh in entries
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-25 23:40:32.212158 Z
+references: []
+
+id: 8b8da4776a6233d60a58db4ded543bfd8cf3e18e
+log_events: 
+- - 2013-04-25 23:40:33.455801 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
