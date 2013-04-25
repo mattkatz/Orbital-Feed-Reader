@@ -127,7 +127,7 @@ function EntriesCtrl($scope, $http, $log){
     //Set this as the selected entry
     $scope.selectedEntry = entry;
     //Mark the entry read on the server
-    $http.post(get_url.ajaxurl+'?action=wprss_mark_item_read&entry_id='+entry.entry_id+'&read_status='+newReadStatus,data)
+    $http.post(get_url.ajaxurl,data)
     .success(function(data){
       //mark the entry as read in the UI
       entry.isRead= entry.isRead == 0 ? 1:0;
@@ -239,9 +239,13 @@ function SubsCtrl($scope,$http,$log){
       $scope.urlCandidate = url;
     }
     //now we should check the candidate
+    var data = {
+      action: 'wprss_find_feed',
+      url: $scope.urlCandidate,
+    };
 
     //ask the backend to look at it
-    $http.post(get_url.ajaxurl+'?action=wprss_find_feed&url='+$scope.urlCandidate)
+    $http.post(get_url.ajaxurl,data)
     .success(function(response){
       if("feed" == response.url_type){
         console.log('found a feed!');
@@ -266,9 +270,17 @@ function SubsCtrl($scope,$http,$log){
   }
 
   $scope.saveFeed = function(feed){
-    //mark the save button busy
+    //TODO mark the save button busy
+    var data = {
+      action: 'wprss_save_feed',
+      feed_id: feed.feed_id,
+      feed_url: feed.feed_url,
+      feed_name: feed.feed_name,
+      site_url: feed.site_url,
+      is_private: feed.private,
+    };
     
-    $http.post(get_url.ajaxurl+'?action=wprss_save_feed&feed_id='+feed.feed_id+'&feed_url='+feed.feed_url+'&feed_name='+feed.feed_name+'&site_url='+feed.site_url+'&is_private='+feed.private, feed)
+    $http.post(get_url.ajaxurl,data)
     .success(function(response){
       //mark the save button not busy
       $scope.toggle();
@@ -280,7 +292,11 @@ function SubsCtrl($scope,$http,$log){
     //TODO it would be good to give a cancel
     //Maybe it could just be to call the save again
     $scope.info(feed);
-    $http.post(get_url.ajaxurl+'?action=wprss_unsubscribe_feed&feed_id='+feed.feed_id)
+    var data = {
+      action: 'wprss_unsubscribe_feed',
+      feed_id: feed.feed_id,
+    };
+    $http.post(get_url.ajaxurl,data)
     .success(function(response){
       $scope.feedsChanged();
       //TODO unmark the busy 

@@ -606,10 +606,8 @@ add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds_die');
 function wprss_unsubscribe_feed(){
   //nonce_dance();
   
-  //none of my posts are working as posts
-  //$feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
 
-  $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $resp = WprssFeeds::remove($feed_id);
   echo json_encode($resp);
   exit;
@@ -618,7 +616,7 @@ add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
 
 //find the details of the feed.
 function wprss_find_feed(){
-  $orig_url = filter_input(INPUT_GET, 'url',FILTER_SANITIZE_URL);
+  $orig_url = filter_input(INPUT_POST, 'url',FILTER_SANITIZE_URL);
   $contents = "";
   $resp->orig_url = $orig_url;
   if( !class_exists( 'WP_Http' ) )
@@ -637,7 +635,7 @@ function wprss_find_feed(){
     //TODO: LOOK, I know this is dumb.
     //Simplepie doesn't seem to do a proper $feed->get_type unless we pass in contents
     //feed autodiscovery doesn't work if you do pass in contents.
-    //So I'm doing 2 requests to figure out the goddamn feed contents
+    //So I'm doing 2 requests to figure out the feed contents
     //WE'LL DO IT LATER
     //http://knowyourmeme.com/memes/bill-oreilly-rant
 
@@ -723,28 +721,12 @@ function wprss_save_feed(){
   //nonce_dance();
   
   $prefix = $wpdb->prefix.$tbl_prefix; 
-  //TODO figure out why none of the POST information is showing up now
-  //$feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  //$feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
-  //$site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
-  //$feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
+  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
+  $feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
+  $site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
+  $feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
   //$is_private = $_POST['is_private']=="true"?1:0;
-  //$is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
-  $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $feed_url = filter_input(INPUT_GET, 'feed_url',FILTER_SANITIZE_STRING);
-  $site_url = filter_input(INPUT_GET, 'site_url',FILTER_SANITIZE_STRING);
-  $feed_name = filter_input(INPUT_GET, 'feed_name',FILTER_SANITIZE_STRING);
-  //$is_private = $_POST['is_private']=="true"?1:0;
-  $is_private = filter_input(INPUT_GET, 'is_private',FILTER_SANITIZE_STRING);
-  _log('POST');
-  _log($_POST);
-  _log('GET');
-  _log($_GET);
-  _log('is_private');
-  _log($is_private);
-  
-  //$is_private = $is_private?1:0;
-
+  $is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
   $resp = WprssFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private));
@@ -827,7 +809,7 @@ function wprss_mark_items_read($feed_id){
   global $tbl_prefix;
   global $current_user;
   //what do we update? 
-  $feed_id = $_POST['feed_id'];
+  $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   
   $prefix = $wpdb->prefix.$tbl_prefix;
   $ret = $wpdb->update(
@@ -852,47 +834,15 @@ function wprss_mark_item_read(){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
-  //$entry_id = $_POST['entry_id'];
-  //$unread_status = $_POST['unread_status'];
-  _log($_POST);
-  //Seems that we are only GETTING this instead of posting!
-  _log($_GET);
-  //$entry_id = $_POST['entry_id'];
-  $entry_id = $_GET['entry_id'];
-  //$read_status = $_POST['read_status'];
-  $read_status = $_GET['read_status'];
+  $entry_id = filter_input(INPUT_POST, 'entry_id', FILTER_SANITIZE_NUMBER_INT);
+  $read_status = filter_input(INPUT_POST, 'read_status', FILTER_SANITIZE_NUMBER_INT);
   $resp = WprssEntries::save(array(
     'isRead' =>$read_status,//columns to update
     'entry_id' =>$entry_id, //current entry
   ));
   echo json_encode($resp);
-/*
-  $prefix = $wpdb->prefix.$tbl_prefix; 
-  $ret = $wpdb->update(
-    $prefix.'user_entries',//the table
-    array('isRead' =>($read_status=="true"?1:0)),//columns to update
-    array(
-      'id' =>$entry_id, //current entry
-      'owner_uid'=>$current_user->ID //logged in user
-    )//where filters
-  );
-*/
-/*
-  $returnval;
- // $returnval->updated = $ret;
-  $returnval->id = $entry_id;
-  $returnval->read_status = $read_status;
-  echo json_encode($returnval);
-*/
-
   exit;
 }
 add_action('wp_ajax_wprss_mark_item_read','wprss_mark_item_read');
 //No non logged in way to mark an item read for me yet
-
-
-
-
-
-
 ?>
