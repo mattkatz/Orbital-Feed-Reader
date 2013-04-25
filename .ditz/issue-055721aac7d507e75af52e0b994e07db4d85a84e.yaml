@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fix the Angular POST -> PHP issue
+desc: |-
+  angular doesn't POST in a way PHP natively understands
+  http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-25 00:02:11.375014 Z
+references: []
+
+id: 055721aac7d507e75af52e0b994e07db4d85a84e
+log_events: 
+- - 2013-04-25 00:02:13.657087 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
