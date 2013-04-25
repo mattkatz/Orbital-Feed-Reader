@@ -1,7 +1,58 @@
-var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll']
-  //TODO insert fix for angular->php post here
-  //http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
-);
+var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], function($httpProvider)
+{
+  // Use x-www-form-urlencoded Content-Type
+  // Angular's POST isn't natively undestood by PHP
+  // fix via: http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
+  $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+ 
+  // Override $http service's default transformRequest
+  $httpProvider.defaults.transformRequest = [function(data)
+  {
+    /**
+     * The workhorse; converts an object to x-www-form-urlencoded serialization.
+     * @param {Object} obj
+     * @return {String}
+     */ 
+    var param = function(obj)
+    {
+      var query = '';
+      var name, value, fullSubName, subValue, innerObj, i;
+      for(name in obj)
+      {
+        value = obj[name];
+        if(value instanceof Array)
+        {
+          for(i=0; i<value.length; ++i)
+          {
+            subValue = value[i];
+            fullSubName = name + '[' + i + ']';
+            innerObj = {};
+            innerObj[fullSubName] = subValue;
+            query += param(innerObj) + '&';
+          }
+        }
+        else if(value instanceof Object)
+        {
+          for(subName in value)
+          {
+            subValue = value[subName];
+            fullSubName = name + '[' + subName + ']';
+            innerObj = {};
+            innerObj[fullSubName] = subValue;
+            query += param(innerObj) + '&';
+          }
+        }
+        else if(value !== undefined && value !== null)
+        {
+          query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+        }
+      }
+      return query.length ? query.substr(0, query.length - 1) : query;
+    };
+    return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+  }];
+});
+
 mainModule.run(function($rootScope){
   /* 
    * receive the emitted messages and rebroadcast
