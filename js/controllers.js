@@ -12,13 +12,13 @@ function FeedListCtrl($scope, $http, $log){
    * Mightily emit a roar up the scope chain
    */
 
-  $scope.select = function(feed){
+  $scope.select = function(feed,showRead){
     $scope.log(feed.feed_id);
     if( $scope.editable){
       $scope.$emit('feedEdit',{feed: feed}); 
     }
     else{
-      $scope.$emit('feedSelect', {feed: feed});
+      $scope.$emit('feedSelect', {feed: feed,showRead:showRead});
       //Mark feed as loading
     }
     //Mark feed as selected
@@ -144,7 +144,8 @@ function FeedListCtrl($scope, $http, $log){
         break;
       case "showRead":
         //refresh this feed, but display read items
-        //break;
+        $scope.select(feed,1);
+        break;
       default:
         $log.log('requested commandBar action ' + args.name + ' - not implemented yet');
         break;
@@ -164,10 +165,10 @@ function EntriesCtrl($scope, $http, $log){
   /*
    * select a feed to display entries from
    */
-  $scope.displayFeed = function(id){
+  $scope.displayFeed = function(id,showRead){
     $scope.currentFeedId = id;
     $scope.log('Getting feed '+id);
-    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
+    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
     .success(function(data){
       //$scope.info(data);
       $scope.entries = data;
@@ -214,7 +215,7 @@ function EntriesCtrl($scope, $http, $log){
    */
   $scope.$on('feedSelected',function(event,args){
     //$scope.log('feedSelected in Entries!');
-    $scope.displayFeed(args['feed'].feed_id);
+    $scope.displayFeed(args['feed'].feed_id, args['showRead']);
   });
   $scope.nextEntry = function(currentEntry){
     $scope.info('next entry finds the entry after the current entry, selects it');

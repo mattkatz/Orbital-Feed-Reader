@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "Show read items "
+desc: To show old read items, click this
+type: :feature
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :closed
+disposition: :fixed
+creation_time: 2013-04-26 01:14:58.343703 Z
+references: []
+
+id: 79ac21e38d81a019ed26aadcd33c7922c3bc8ea8
+log_events: 
+- - 2013-04-26 01:14:59.499339 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
+- - 2013-04-26 01:15:39.405280 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-04-26 01:32:15.841598 Z
+  - matt <matt@kingofrats>
+  - closed with disposition fixed
+  - ""
