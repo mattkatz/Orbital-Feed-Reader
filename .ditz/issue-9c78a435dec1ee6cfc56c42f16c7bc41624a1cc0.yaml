@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Restyle - lots needs fixing
+desc: feedlist, entries, etc.
+type: :bugfix
+component: Wordprss
+release: 0.1 - Feeds, Subscribed
+reporter: matt <matt@kingofrats>
+status: :unstarted
+disposition: 
+creation_time: 2013-04-26 22:07:55.628172 Z
+references: []
+
+id: 9c78a435dec1ee6cfc56c42f16c7bc41624a1cc0
+log_events: 
+- - 2013-04-26 22:07:56.680746 Z
+  - matt <matt@kingofrats>
+  - created
+  - ""
