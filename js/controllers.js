@@ -127,7 +127,21 @@ function FeedListCtrl($scope, $http, $log){
         break;
       case "updateFeed":
         //update feed 
-        //break;
+        var data= {
+          action: 'wprss_update_feed',
+          feed_id: feed.feed_id,
+        };
+        $http.post(get_url.ajaxurl, data)
+        .success(function(response){
+          $log.info('selecting '+feed.feed_id);
+          //refresh the feedlist
+          $scope.refresh();
+          //refresh the feed if it is still selected
+          if(feed == $scope.selectedFeed){
+            $scope.select(feed);
+          }
+        });
+        break;
       case "showRead":
         //refresh this feed, but display read items
         //break;

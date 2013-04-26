@@ -782,7 +782,7 @@ add_action('wp_ajax_nopriv_wprss_update_feeds','wprss_get_update_feeds');
 
 //update single feed
 function wprss_update_feed($feed_id="",$feed_url=""){
-  //if we didn't get passed a feed, check to see if it is in the url
+  //TODO if we didn't get passed a feed, check to see if it is in the url
   if("" == $feed_id){
     $feed_id = filter_input(INPUT_POST, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
     if("" == $feed_id){
