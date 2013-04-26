@@ -5,8 +5,8 @@ type: :bugfix
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-04-22 19:07:18.856013 Z
 references: []
 
@@ -16,3 +16,11 @@ log_events:
   - matt <matt@kingofrats>
   - created
   - all features are bugs are tasks when you are rewriting
+- - 2013-04-26 01:40:40.803262 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-04-26 22:01:20.806920 Z
+  - matt <matt@kingofrats>
+  - closed with disposition fixed
+  - yay it works

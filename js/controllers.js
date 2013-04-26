@@ -89,18 +89,15 @@ function FeedListCtrl($scope, $http, $log){
     //find the feed entry that has this entry's feed_id
     entry = args.entry;
     feed_id = entry.feed_id;
-    for( feed in $scope.feeds){
-      //$scope.info(feed);
-      //$scope.info("checking does feed " + feed.feed_id + " == entry "+entry.feed_id);
+    $scope.info($scope.feeds);
+    //Look down the list of feeds for the one this entry belongs to
+    for( i = 0; i < $scope.feeds.length; i++){
+      feed = $scope.feeds[i];
       if( feed.feed_id ==  entry.feed_id){
-        feed.unread_count += (entry.isRead ? -1:1);
+        //decrement the read counter by the isread status
+        feed.unread_count = Number(feed.unread_count ) + (entry.isRead ? -1:1);
       }
     }
-
-    //decrement the read counter by the isread status
-    $scope.log('caught entrychanged in feedCtrl');
-    //$scope.log(event);
-    $scope.log(args);
   });
 
   /*
@@ -182,6 +179,7 @@ function EntriesCtrl($scope, $http, $log){
       $scope.info('going to the server mines for more delicious content');
       //$scope.info(response);
       $scope.entries = _.union($scope.entries, response);
+      //TODO is this really a good union? Is it double entering?
     });
   }
 
