@@ -56,13 +56,13 @@ function wprss_plugin_menu(){
   //We add the hook for our menu item on the main menu
   $main = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
   //add hook for feed management page
-  $feed_mgmt = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
+  //$feed_mgmt = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
   
   
    /* Using registered $page handle to hook script load */
   add_action('admin_print_styles-' . $main, 'wprss_enqueue_scripts');
   add_action('admin_print_styles-' . $main, 'wprss_main_scripts');
-  add_action('admin_print_styles-' . $feed_mgmt, 'wprss_enqueue_scripts');
+  //add_action('admin_print_styles-' . $feed_mgmt, 'wprss_enqueue_scripts');
 
 }
 
