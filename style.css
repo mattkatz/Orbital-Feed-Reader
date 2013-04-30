@@ -62,6 +62,29 @@
   content:"by ";
 }
 
+.indicator{
+  position:absolute;
+  top: 50px;
+  right: 20px;
+}
+
+/* i'd like to just make this all CSS
+ * including backgroud spinner*/
+/*
+.is-loading:before{
+  content:"loading..";
+  color:white;
+  background-color: #232323;
+  color: rgba(200,200,200,.8);
+  background-color:rgba(50,50,50, .8);
+  padding: 5px;
+  border-radius: 5px;
+  position: absolute;
+  top:50px;
+  right: 30px;
+}
+*/
+
 .ember-button{
   border-bottom: 1px dotted;
 }
@@ -119,10 +142,10 @@
 
 .modal-window{
   padding: 20px;
-  color: #dddddd;
-  background-color: #343434;
-  background-color: rgba(20,20,20,.8);
-  background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(20, 20, 20, 0.6) 50px);
+  color: #343434;
+  background-color: #dddddd;
+  background-color: rgba(200,200,200,.8);
+  background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(40, 40, 40, 0.6) 50px);
   position: fixed;
   top: 50px;
   left: 200px;

@@ -9,6 +9,11 @@
   </div>
   <div id="wprss-main-content" ng-controller="EntriesCtrl">
     <div id="wprss-content" >
+        <div class="indicator" ng-show="isLoading">
+          <img src="<?php
+            echo plugins_url("ajax-loader.gif", __FILE__);
+          ?>">
+        </div>
         <ul class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-distance="2">
           <li class="entry" ng-repeat="entry in entries" >
               <div id="{{entry.feed_id}}_{{entry.entry_id}}"ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
@@ -18,6 +23,14 @@
                 </div>
                 <div class="date">
                   {{entry.entered | date:medium }}
+                </div>
+                <div class="indicator" ng-show="entry.isLoading">
+                  <img src="<?php
+                    echo plugins_url("ajax-loader.gif", __FILE__);
+                  ?>">
+                </div>
+                <div class="indicator" ng-show="entry.isRead">
+                  Read
                 </div>
                 <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               </div>
@@ -49,6 +62,11 @@
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
       <a class="dismiss" ng-click="toggle()">X</a>
+    </div>
+    <div class='indicator' ng-show="isLoading" >
+                  <img src="<?php
+                    echo plugins_url("ajax-loader.gif", __FILE__);
+                  ?>">
     </div>
     <div class="horizontal-form" >
       <div class="possibleFeeds" ng-show="possibleFeeds.length > 0" >

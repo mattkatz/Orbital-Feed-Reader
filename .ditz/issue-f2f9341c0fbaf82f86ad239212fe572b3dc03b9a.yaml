@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2013-04-10 23:38:47.484182 Z
 references: []
 
@@ -16,3 +16,11 @@ log_events:
   - matt <matt@kingofrats>
   - created
   - ""
+- - 2013-04-29 12:23:00.123600 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-04-30 00:06:19.736396 Z
+  - matt <matt@kingofrats>
+  - closed with disposition wontfix
+  - I actually decided spinners made sense most OTHER places.

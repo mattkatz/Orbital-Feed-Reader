@@ -164,9 +164,10 @@ function EntriesCtrl($scope, $http, $log){
    */
   $scope.displayFeed = function(id,showRead){
     $scope.currentFeedId = id;
-    $scope.log('Getting feed '+id);
+    $scope.isLoading = true;
     $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
     .success(function(data){
+      $scope.isLoading = false;
       //$scope.info(data);
       $scope.entries = data;
       $scope.selectedEntry = null;
@@ -198,11 +199,13 @@ function EntriesCtrl($scope, $http, $log){
     };
     //Set this as the selected entry
     $scope.selectedEntry = entry;
+    entry.isLoading = true;
     //Mark the entry read on the server
     $http.post(get_url.ajaxurl,data)
     .success(function(data){
       //mark the entry as read in the UI
       entry.isRead= entry.isRead == 0 ? 1:0;
+      entry.isLoading = false;
       //tell the feed list that the entry was toggled read.
       $scope.$emit('entryChange', {entry:entry});
     });
@@ -315,10 +318,11 @@ function SubsCtrl($scope,$http,$log){
       action: 'wprss_find_feed',
       url: $scope.urlCandidate,
     };
-
+    $scope.isLoading=true;
     //ask the backend to look at it
     $http.post(get_url.ajaxurl,data)
     .success(function(response){
+      $scope.isLoading=false;
       if("feed" == response.url_type){
         console.log('found a feed!');
         //if it returns a feed detail, display that.
@@ -351,10 +355,11 @@ function SubsCtrl($scope,$http,$log){
       site_url: feed.site_url,
       is_private: feed.private,
     };
-    
+    $scope.isLoading = true; 
     $http.post(get_url.ajaxurl,data)
     .success(function(response){
       //mark the save button not busy
+      $scope.isLoading = false;
       $scope.toggle();
       $scope.feedsChanged();
     });
