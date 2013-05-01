@@ -85,6 +85,7 @@ function wprss_admin_init(){
   //keyboard shortcut handling
   wp_register_script('scrollToEntry',  plugins_url('/js/scrollToEntry.js', __FILE__),array('jquery'));
   wp_register_script( 'keymaster_script', plugins_url('/js/keymaster.min.js', __FILE__),array('jquery'));
+  wp_register_script( 'opml_script', plugins_url('/js/opml.js', __FILE__),array('jquery'));
   //wp_register_script( 'endless_scroll', plugins_url('/js/jquery.endless-scroll.js', __FILE__),array('jquery'));
   //wp_register_script( 'jquery_waypoints', plugins_url('/js/waypoints.js', __FILE__),array('jquery'));
   //wp_register_script( 'mainwindow_script', plugins_url('/mainwindow.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script','wordprss_script','keymaster_script','endless_scroll'));
@@ -105,7 +106,7 @@ function wprss_enqueue_scripts()
   wp_enqueue_script('angular_app_script');
   wp_enqueue_script('angular_controllers_script');
   wp_enqueue_script('scrollToEntry');
-  
+  wp_enqueue_script('opml_script');
 
   //wp_enqueue_script('handlebars_script');
   //wp_enqueue_script('wordprss_script');

@@ -5,7 +5,7 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2013-04-10 23:32:20.532359 Z
 references: []
@@ -15,4 +15,8 @@ log_events:
 - - 2013-04-10 23:32:21.449916 Z
   - matt <matt@kingofrats>
   - created
+  - ""
+- - 2013-04-30 22:25:52.799274 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
   - ""
