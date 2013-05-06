@@ -346,7 +346,8 @@ function SubsCtrl($scope,$http,$log){
   }
 
   $scope.saveFeed = function(feed){
-    //TODO mark the save button busy
+    //mark the save button busy
+    $scope.isLoading = true; 
     var data = {
       action: 'wprss_save_feed',
       feed_id: feed.feed_id,
@@ -355,7 +356,6 @@ function SubsCtrl($scope,$http,$log){
       site_url: feed.site_url,
       is_private: feed.private,
     };
-    $scope.isLoading = true; 
     $http.post(get_url.ajaxurl,data)
     .success(function(response){
       //mark the save button not busy
@@ -365,9 +365,9 @@ function SubsCtrl($scope,$http,$log){
     });
   }
   $scope.unsubscribe = function(feed){
-    //TODO mark the button busy
     //TODO it would be good to give a cancel
     //Maybe it could just be to call the save again
+    $scope.isLoading = true;
     $scope.info(feed);
     var data = {
       action: 'wprss_unsubscribe_feed',
@@ -375,13 +375,37 @@ function SubsCtrl($scope,$http,$log){
     };
     $http.post(get_url.ajaxurl,data)
     .success(function(response){
+      //unmark the busy 
+      $scope.isLoading = false;
       $scope.feedsChanged();
-      //TODO unmark the busy 
       //close the dialogue
       $scope.toggle();
       $scope.feedsChanged();
     });
   }
+  $scope.getFile = function(){
+    var file = document.getElementById('import-opml').files[0];
+    return file;
+  }
+
+  $scope.fileSelected = function(){
+  //var file = jQuery('#import_opml').files[0];
+  var file = $scope.getFile();
+  var fileSize = 0;
+  if(file.size > 1024 * 1024){
+    fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+  }
+  else{
+    fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+  }
+  jQuery('#fileName').html('Name: '+ file.name);
+  jQuery('#fileSize').html('Size: '+ fileSize);
+  jQuery('#uploadButton').removeProp('disabled');
+
+
+  }
+
+  /* events */
 
   //this window has been requested or dismissed
   $scope.$on('subscriptionsWindow',function(event,args){

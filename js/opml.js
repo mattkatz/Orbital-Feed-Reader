@@ -30,7 +30,7 @@ function fileSelected(){
 function saveFeed(feed) {
   //extract the feed,
   //save the feed
-  console.log('should save feed '+feed.feed_name');
+  console.log('should save feed '+feed.feed_name);
 }
 
 
