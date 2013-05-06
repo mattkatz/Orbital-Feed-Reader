@@ -15,25 +15,23 @@
           ?>">
         </div>
         <ul class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-distance="2">
-          <li class="entry" ng-repeat="entry in entries" >
-              <div id="{{entry.feed_id}}_{{entry.entry_id}}"ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
-                <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
-                <div class="author" ng-show="entry.author">
-                  {{entry.author}}
-                </div>
-                <div class="date">
-                  {{entry.entered | date:medium }}
-                </div>
-                <div class="indicator" ng-show="entry.isLoading">
-                  <img src="<?php
-                    echo plugins_url("ajax-loader.gif", __FILE__);
-                  ?>">
-                </div>
-                <div class="indicator" ng-show="entry.isRead">
-                  Read
-                </div>
-                <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
+          <li id="{{entry.feed_id}}_{{entry.entry_id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
+              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
+              <div class="author" ng-show="entry.author">
+                {{entry.author}}
               </div>
+              <div class="date">
+                {{entry.entered | date:medium }}
+              </div>
+              <div class="indicator" ng-show="entry.isLoading">
+                <img src="<?php
+                  echo plugins_url("ajax-loader.gif", __FILE__);
+                ?>">
+              </div>
+              <div class="indicator" ng-show="entry.isRead">
+                Read
+              </div>
+              <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
           </li>
         </ul>
     </div>

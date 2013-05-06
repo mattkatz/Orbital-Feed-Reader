@@ -2,7 +2,7 @@ function scrollToEntry(currentItem, bottom){
 
     var body = jQuery('html');
     var adminbar = jQuery('#wpadminbar');
-    var commandbar = jQuery('#commandbar');
+    //var commandbar = jQuery('#commandbar');
     var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
     if(null === row.offset()){
       console.log('row.offset() was null');
@@ -18,7 +18,8 @@ function scrollToEntry(currentItem, bottom){
 
     var currentScroll = jQuery('#wprss-content').scrollTop();
     
-    jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
+    //jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
+    jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll }, 200); 
 }
 //Set everything up after page load
 jQuery(document).ready(function($){
