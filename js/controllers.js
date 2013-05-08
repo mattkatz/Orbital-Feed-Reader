@@ -345,6 +345,9 @@ function SubsCtrl($scope,$http,$log){
     });
   }
 
+  /*
+   * save changes or additions in a feed back to storage
+   */
   $scope.saveFeed = function(feed){
     //mark the save button busy
     $scope.isLoading = true; 
@@ -360,10 +363,16 @@ function SubsCtrl($scope,$http,$log){
     .success(function(response){
       //mark the save button not busy
       $scope.isLoading = false;
+      //hide the feed away
       $scope.toggle();
       $scope.feedsChanged();
+      //TODO We should also set the feed_id if it is new
     });
   }
+  /*
+   * Unsubscribe from a feed. 
+   *
+   */
   $scope.unsubscribe = function(feed){
     //TODO it would be good to give a cancel
     //Maybe it could just be to call the save again
