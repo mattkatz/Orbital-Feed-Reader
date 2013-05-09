@@ -15,25 +15,23 @@
           ?>">
         </div>
         <ul class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-distance="2">
-          <li class="entry" ng-repeat="entry in entries" >
-              <div id="{{entry.feed_id}}_{{entry.entry_id}}"ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
-                <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
-                <div class="author" ng-show="entry.author">
-                  {{entry.author}}
-                </div>
-                <div class="date">
-                  {{entry.entered | date:medium }}
-                </div>
-                <div class="indicator" ng-show="entry.isLoading">
-                  <img src="<?php
-                    echo plugins_url("ajax-loader.gif", __FILE__);
-                  ?>">
-                </div>
-                <div class="indicator" ng-show="entry.isRead">
-                  Read
-                </div>
-                <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
+          <li id="{{entry.feed_id}}_{{entry.entry_id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
+              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
+              <div class="author" ng-show="entry.author">
+                {{entry.author}}
               </div>
+              <div class="date">
+                {{entry.entered | date:medium }}
+              </div>
+              <div class="indicator" ng-show="entry.isLoading">
+                <img src="<?php
+                  echo plugins_url("ajax-loader.gif", __FILE__);
+                ?>">
+              </div>
+              <div class="indicator" ng-show="entry.isRead">
+                Read
+              </div>
+              <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
           </li>
         </ul>
     </div>
@@ -57,16 +55,36 @@
     </ul>
   </div>
   <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
+    <div class='indicator' ng-show="isLoading" >
+                  <img src="<?php
+                    echo plugins_url("ajax-loader.gif", __FILE__);
+                  ?>">
+    </div>
     <div ng-hide="feedCandidate">
       <label for='subscriptionUrl'>Drag or copy paste a feed here</label>
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
       <a class="dismiss" ng-click="toggle()">X</a>
-    </div>
-    <div class='indicator' ng-show="isLoading" >
-                  <img src="<?php
-                    echo plugins_url("ajax-loader.gif", __FILE__);
-                  ?>">
+      <form id='opml-form' class='opml' novalidate>
+        <p> -- OR -- </p>
+        Have an OPML file? Upload it by dragging it here.
+        <div class="horizontal-form">
+          <!--<form id="upload_form" enctype="multipart/form-data" method="post" onsubmit='uploadOpml()'>-->
+          <label>
+            Select an OPML file to import
+            <input type="file" name="import-opml" value="" id="import-opml" placeholder="Select an OPML file"
+               onchange="angular.element(this).scope().fileSelected()"/>
+          </label>
+          
+          <div ng-show="feedsCount" id="feedsCount">{{feedsCount}}</div>
+          <div ng-show="feedsCount" id="progress">{{100 * doneFeeds/feedsCount}}%</div>
+          <button type='submit' id="uploadButton"  disabled=true ng-click='uploadOPML()' >
+            Upload
+          </button>
+          <!--</form>-->
+        </div>
+      </form>
+    
     </div>
     <div class="horizontal-form" >
       <div class="possibleFeeds" ng-show="possibleFeeds.length > 0" >

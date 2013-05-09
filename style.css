@@ -49,6 +49,7 @@
   padding-bottom: 10px;
   /*padding-left: 5px;*/
   width:100%;
+  position:relative;
 }
 
 .entry h2{
@@ -64,7 +65,7 @@
 
 .indicator{
   position:absolute;
-  top: 50px;
+  top: 10px;
   right: 20px;
 }
 
@@ -102,6 +103,7 @@
 {
   border-bottom: 1px solid #DFDFDF;
   border-top: 1px solid #F9F9F9;
+  margin-bottom: 0px; /*override something in main wp styles.*/
 }
 .feedcounter{
   font-size: xx-small;
@@ -143,6 +145,7 @@
 .modal-window{
   padding: 20px;
   color: #343434;
+  text-shadow: 1px 1px 2px #ffffff;
   background-color: #dddddd;
   background-color: rgba(200,200,200,.8);
   background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(40, 40, 40, 0.6) 50px);
@@ -154,6 +157,9 @@
 }
 .invisible{
   display: none;
+}
+#opml-form{
+  border-top: 1px dotted #000;
 }
 #wprss-content{
   position:absolute;

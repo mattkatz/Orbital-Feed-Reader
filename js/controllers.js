@@ -36,10 +36,12 @@ function FeedListCtrl($scope, $http, $log){
    * get the list of feeds and store it
    */
   $scope.refresh = function(){
+    $scope.isLoading = true;
     $scope.info('refreshing feeds');
     $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
     .success(function(data){ 
       $scope.feeds = data;
+      $scope.isLoading = false;
     });
   };
   //call the refresh to load it all up.
@@ -298,6 +300,8 @@ function SubsCtrl($scope,$http,$log){
   $scope.possibleFeeds = null;
   $scope.urlCandidate = '';
   $scope.feedCandidate = null;
+  //$scope.opmlFile=null;
+  //$scope.fileSize = null;
   $scope.toggle = function(){
     $scope.reveal = !$scope.reveal;
     $scope.clear();
@@ -307,6 +311,9 @@ function SubsCtrl($scope,$http,$log){
     $scope.possibleFeeds = null;
     $scope.urlCandidate = '';
     $scope.feedCandidate = null;
+    $scope.feedsCount = '';
+    $scope.doneFeeds = '';
+    //TODO clear any OPML elements
   }
 
   $scope.checkUrl = function(url){
@@ -345,8 +352,12 @@ function SubsCtrl($scope,$http,$log){
     });
   }
 
-  $scope.saveFeed = function(feed){
-    //TODO mark the save button busy
+  /*
+   * save changes or additions in a feed back to storage
+   */
+  $scope.saveFeed = function(feed, batchmode){
+    //mark the save button busy
+    if(! batchmode) {$scope.isLoading = true;}
     var data = {
       action: 'wprss_save_feed',
       feed_id: feed.feed_id,
@@ -355,19 +366,25 @@ function SubsCtrl($scope,$http,$log){
       site_url: feed.site_url,
       is_private: feed.private,
     };
-    $scope.isLoading = true; 
     $http.post(get_url.ajaxurl,data)
     .success(function(response){
-      //mark the save button not busy
-      $scope.isLoading = false;
-      $scope.toggle();
-      $scope.feedsChanged();
+      if(! batchmode){
+        //mark the save button not busy
+        $scope.isLoading = false;
+        //hide the feed away
+        $scope.toggle();
+        $scope.feedsChanged();
+      }
     });
   }
+  /*
+   * Unsubscribe from a feed. 
+   *
+   */
   $scope.unsubscribe = function(feed){
-    //TODO mark the button busy
     //TODO it would be good to give a cancel
     //Maybe it could just be to call the save again
+    $scope.isLoading = true;
     $scope.info(feed);
     var data = {
       action: 'wprss_unsubscribe_feed',
@@ -375,13 +392,106 @@ function SubsCtrl($scope,$http,$log){
     };
     $http.post(get_url.ajaxurl,data)
     .success(function(response){
+      //unmark the busy 
+      $scope.isLoading = false;
       $scope.feedsChanged();
-      //TODO unmark the busy 
       //close the dialogue
       $scope.toggle();
       $scope.feedsChanged();
     });
   }
+  $scope.getFile = function(){
+
+    var file = document.getElementById('import-opml').files[0];
+    $scope.opmlFile = file;
+    console.log(document.getElementById('import-opml').files);
+    return file;
+  }
+
+  /*
+   * When an opml file is selected, read the size and name out
+   */
+  $scope.fileSelected = function(){
+    var file = $scope.getFile();
+    $scope.fileSize = 0;
+    if(file.size > 1024 * 1024){
+      $scope.fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+    }
+    else{
+      $scope.fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+    }
+    //TODO this isn't very angular
+    //jQuery('#fileName').html('Name: '+ file.name);
+    //jQuery('#fileSize').html('Size: '+ $scope.fileSize);
+    jQuery('#uploadButton').removeProp('disabled');
+  }
+
+  /*
+   * When an OPML file is uploaded, we should read that file
+   * Extract each feed out of the file
+   * save that feed back up to the server.
+   * TODO It would be even better to hand this off to a web worker if supported
+   */
+  $scope.uploadOPML = function(){
+    $log.info('uploading OPML');
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+    // Great success! All the File APIs are supported.
+      var f = $scope.getFile();
+      var reader = new FileReader();
+      //reader.onprogress = updateProgress;
+      reader.onload = (function (theFile){
+        return function (e){
+          //parse the opml and upload it
+          console.log(e.target.result);
+          $scope.isLoading = true;
+          try{
+            var opml = jQuery(e.target.result);
+            //var opml =  jQuery.parseXML(e.target.result);
+            var outlines = jQuery(opml).find('outline[xmlUrl]');
+            $scope.feedsCount = outlines.length;
+            $scope.doneFeeds = 0;
+            
+            outlines.each(function(index){
+              var el = jQuery(this);
+              console.log(el);
+              var feed = {};
+              feed.feed_id = null;
+              //TODO later we should let people choose before we upload.
+              feed.is_private = false;
+              feed.feed_name = el.attr('text'); 
+              feed.feed_url = el.attr('xmlUrl');
+              feed.site_url = el.attr('htmlUrl');
+              //Wprss.feedsController.saveFeed(feed);
+
+              $scope.saveFeed(feed,true);
+              $scope.doneFeeds++;
+            });
+            $scope.feedsChanged();
+            $scope.isLoading = false;
+          }
+          catch(ex){
+            alert('Sorry, we had trouble reading this file through.');
+            $scope.isLoading = false;
+            console.log(ex);
+          }
+          //TODO do we clear
+          $scope.toggle();;
+
+        };
+      })(f);
+      reader.readAsText(f);
+
+      console.log('great success!');
+      return false;
+    } else {
+      //TODO better error telling you specific versions of FF, Chrome, IE to use
+      alert('Unfortunately, this browser is a bit busted.  File reading will not work, and I have not written a different way to upload opml.  Try using the latest firefox or chrome');
+    }
+
+  }
+
+  /* events */
 
   //this window has been requested or dismissed
   $scope.$on('subscriptionsWindow',function(event,args){

@@ -5,8 +5,8 @@ type: :feature
 component: Wordprss
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-04-10 23:32:20.532359 Z
 references: []
 
@@ -16,3 +16,11 @@ log_events:
   - matt <matt@kingofrats>
   - created
   - ""
+- - 2013-04-30 22:25:52.799274 Z
+  - matt <matt@kingofrats>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-05-09 23:29:55.500828 Z
+  - matt <matt@kingofrats>
+  - closed with disposition fixed
+  - Should put in a better progress display later
