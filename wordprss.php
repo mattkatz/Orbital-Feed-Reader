@@ -56,7 +56,8 @@ function wprss_plugin_menu(){
   //We add the hook for our menu item on the main menu
   $main = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
   //add hook for feed management page
-  $feed_mgmt = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
+  //TODO remove this. We don't need submenu pages now.
+  //$feed_mgmt = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
   
   
    /* Using registered $page handle to hook script load */
@@ -72,23 +73,17 @@ add_action( 'admin_init', 'wprss_admin_init' );
 function wprss_admin_init(){
   //Register the js that we need
   wp_register_script( 'handlebars_script', plugins_url('/js/handlebars-1.0.rc.1.js', __FILE__) ,array('jquery'));
-  //wp_register_script( 'emberjs_script', plugins_url('/js/ember-1.0.pre.min.js', __FILE__) ,array('jquery','handlebars_script'));
   wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
   wp_register_script( 'angular_sanitize', plugins_url('/js/angular-sanitize.js', __FILE__) ,array('angular_script',));
   wp_register_script( 'ng_infinite_scroll',plugins_url('/js/ng-infinite-scroll.min.js', __FILE__) ,array('angular_script',));
 
   wp_register_script( 'angular_app_script', plugins_url('/js/app.js', __FILE__) ,array('jquery','angular_script'));
   wp_register_script( 'angular_controllers_script', plugins_url('/js/controllers.js', __FILE__) ,array('jquery','underscore','angular_app_script','angular_script','ng_infinite_scroll',));
-  //wp_register_script( 'geturl_script', plugins_url('/js/geturl.js', __FILE__) ,array());
-  //wp_register_script( 'wordprss_script', plugins_url('/wprss.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
-  //wp_register_script( 'feedmgmt_script', plugins_url('/feed_management.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script'));
-  //keyboard shortcut handling
+
   wp_register_script('scrollToEntry',  plugins_url('/js/scrollToEntry.js', __FILE__),array('jquery'));
+  //keyboard shortcut handling
   wp_register_script( 'keymaster_script', plugins_url('/js/keymaster.min.js', __FILE__),array('jquery'));
-  wp_register_script( 'opml_script', plugins_url('/js/opml.js', __FILE__),array('jquery'));
-  //wp_register_script( 'endless_scroll', plugins_url('/js/jquery.endless-scroll.js', __FILE__),array('jquery'));
   //wp_register_script( 'jquery_waypoints', plugins_url('/js/waypoints.js', __FILE__),array('jquery'));
-  //wp_register_script( 'mainwindow_script', plugins_url('/mainwindow.javascript', __FILE__),array('jquery', 'json2', 'emberjs_script','wordprss_script','keymaster_script','endless_scroll'));
   /* Register our stylesheet. */
   wp_register_style( 'wprsscss', plugins_url('style.css', __FILE__) );
 
@@ -98,18 +93,12 @@ function wprss_admin_init(){
 function wprss_enqueue_scripts()
 {
   wp_enqueue_script( 'json2' );
-  //wp_enqueue_script('underscore');
-  //wp_enqueue_script('emberjs_script');
   wp_enqueue_script('ng-infinite-scroll');
   wp_enqueue_script('angular_script');
   wp_enqueue_script('angular_sanitize');
   wp_enqueue_script('angular_app_script');
   wp_enqueue_script('angular_controllers_script');
   wp_enqueue_script('scrollToEntry');
-  wp_enqueue_script('opml_script');
-
-  //wp_enqueue_script('handlebars_script');
-  //wp_enqueue_script('wordprss_script');
 
   wp_localize_script( 'angular_controllers_script', 'get_url', array( 
     'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
@@ -126,12 +115,7 @@ function wprss_main_scripts()
 {
   //here we set up our keyboard shortcuts
   wp_enqueue_script('keymaster_script');
-  wp_enqueue_script('endless_scroll');
-  wp_enqueue_script('jquery_waypoints');
   //here we set up hook like the shortcuts
-  //also things like what to do when a feed is selected
-  //wp_enqueue_script('mainwindow_script');
-
 }
 
 function generate_main_page()
