@@ -178,8 +178,6 @@ function EntriesCtrl($scope, $http, $log){
 
   $scope.addMoreEntries = function(){
     $scope.isLoading = true;
-    $log.log('adding more entries');
-    $log.log('maximum entry is currently: ' + $scope.entries[$scope.entries.length-1].id);
     $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
     .success(function  (response) {
       $scope.isLoading = false;
