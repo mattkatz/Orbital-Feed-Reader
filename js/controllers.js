@@ -177,12 +177,20 @@ function EntriesCtrl($scope, $http, $log){
   };
 
   $scope.addMoreEntries = function(){
+    $scope.isLoading = true;
+    $log.log('adding more entries');
+    $log.log('maximum entry is currently: ' + $scope.entries[$scope.entries.length-1].id);
     $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
     .success(function  (response) {
+      $scope.isLoading = false;
       $scope.info('going to the server mines for more delicious content');
-      //$scope.info(response);
-      $scope.entries = _.union($scope.entries, response);
-      //TODO is this really a good union? Is it double entering?
+      response.forEach( function(value, index, array){
+        //check to see if the value is in entries.
+        if(! _.some($scope.entries, function(item){ return item.id == value.id})){
+          //If not in entries then append it
+          $scope.entries.push(value);
+        };
+      });
     });
   }
 
