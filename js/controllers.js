@@ -319,6 +319,7 @@ function SubsCtrl($scope,$http,$log){
     $scope.feedCandidate = null;
     $scope.feedsCount = '';
     $scope.doneFeeds = '';
+    $scope.isLoading = false;
     //TODO clear any OPML elements
   }
 
