@@ -2,8 +2,6 @@
 
 function FeedListCtrl($scope, $http, $log){
   $log.log('in feedscontrol');
-  $scope.log = $log.log;
-  $scope.info = $log.info;
   $scope.editable = false;
   $scope.selectedFeed = null;
 
@@ -13,7 +11,7 @@ function FeedListCtrl($scope, $http, $log){
    */
 
   $scope.select = function(feed,showRead){
-    $scope.log(feed.feed_id);
+    $log.log(feed.feed_id);
     if( $scope.editable){
       $scope.$emit('feedEdit',{feed: feed}); 
     }
@@ -29,7 +27,7 @@ function FeedListCtrl($scope, $http, $log){
     $scope.selectedFeed = feed;
   };
   $scope.requestNewFeed = function () {
-    $scope.info('new feed requested');
+    $log.info('new feed requested');
     $scope.$emit('newFeedRequested');
   }
   /*
@@ -37,7 +35,7 @@ function FeedListCtrl($scope, $http, $log){
    */
   $scope.refresh = function(){
     $scope.isLoading = true;
-    $scope.info('refreshing feeds');
+    $log.info('refreshing feeds');
     $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
     .success(function(data){ 
       $scope.feeds = data;
@@ -91,7 +89,7 @@ function FeedListCtrl($scope, $http, $log){
     //find the feed entry that has this entry's feed_id
     entry = args.entry;
     feed_id = entry.feed_id;
-    $scope.info($scope.feeds);
+    $log.info($scope.feeds);
     //Look down the list of feeds for the one this entry belongs to
     for( i = 0; i < $scope.feeds.length; i++){
       feed = $scope.feeds[i];
@@ -153,13 +151,9 @@ function FeedListCtrl($scope, $http, $log){
 }
 
 function EntriesCtrl($scope, $http, $log){
-  $scope.log = $log.log;
-  $scope.info = $log.info;
-  $scope.warn = $log.warn;
-  $scope.error = $log.error;
   $scope.selectedEntry = null;
   $scope.currentFeedId = null;
-  $scope.log("in EntriesCtrl");
+  $log.log("in EntriesCtrl");
   
   /*
    * select a feed to display entries from
@@ -170,7 +164,7 @@ function EntriesCtrl($scope, $http, $log){
     $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
     .success(function(data){
       $scope.isLoading = false;
-      //$scope.info(data);
+      //$log.info(data);
       $scope.entries = data;
       $scope.selectedEntry = null;
     });
@@ -181,7 +175,7 @@ function EntriesCtrl($scope, $http, $log){
     $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
     .success(function  (response) {
       $scope.isLoading = false;
-      $scope.info('going to the server mines for more delicious content');
+      $log.info('going to the server mines for more delicious content');
       response.forEach( function(value, index, array){
         //check to see if the value is in entries.
         if(! _.some($scope.entries, function(item){ return item.id == value.id})){
@@ -198,7 +192,7 @@ function EntriesCtrl($scope, $http, $log){
    */
 
   $scope.selectEntry = function selectEntry(entry) {
-    $scope.log('Selected entry ' + entry.entry_id);
+    $log.log('Selected entry ' + entry.entry_id);
     var newReadStatus = entry.isRead == 0?1:0;
     var data = {
       action: 'wprss_mark_item_read',
@@ -223,11 +217,11 @@ function EntriesCtrl($scope, $http, $log){
    * Catch the feedSelected event, display entries from that feed
    */
   $scope.$on('feedSelected',function(event,args){
-    //$scope.log('feedSelected in Entries!');
+    //$log.log('feedSelected in Entries!');
     $scope.displayFeed(args['feed'].feed_id, args['showRead']);
   });
   $scope.nextEntry = function(currentEntry){
-    $scope.info('next entry finds the entry after the current entry, selects it');
+    $log.info('next entry finds the entry after the current entry, selects it');
     var index =0;//by default we select the first entry
     if( $scope.entries.length == 0){
       return;//can't select anything
@@ -243,7 +237,7 @@ function EntriesCtrl($scope, $http, $log){
     scrollToEntry(next);
   };
   $scope.previousEntry = function (currentEntry) {
-    $scope.info('prev entry finds the entry before the current entry, selects it');
+    $log.info('prev entry finds the entry before the current entry, selects it');
     var index = $scope.entries.length;//by default we select the last entry
     if( $scope.entries.length == 0){
       return;//can't select anything
@@ -273,7 +267,7 @@ function EntriesCtrl($scope, $http, $log){
   //o should open the original article
   key('o',function(event,handler){
     var entry = $scope.selectedEntry;
-    $scope.log(entry);
+    $log.log(entry);
     //TODO get a canonical link - or maybe we should only store canonical links when we do inserts
     if(entry){
       window.open(entry.link);
@@ -298,8 +292,8 @@ function EntriesCtrl($scope, $http, $log){
  * 
  */
 function SubsCtrl($scope,$http,$log){
-  $scope.log = $log.log;
-  $scope.info = $log.info;
+  $log.log = $log.log;
+  $log.info = $log.info;
 
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
@@ -392,7 +386,7 @@ function SubsCtrl($scope,$http,$log){
     //TODO it would be good to give a cancel
     //Maybe it could just be to call the save again
     $scope.isLoading = true;
-    $scope.info(feed);
+    $log.info(feed);
     var data = {
       action: 'wprss_unsubscribe_feed',
       feed_id: feed.feed_id,
@@ -502,8 +496,8 @@ function SubsCtrl($scope,$http,$log){
 
   //this window has been requested or dismissed
   $scope.$on('subscriptionsWindow',function(event,args){
-    $scope.info('subscriptionsWindow');
-    //$scope.info(event);
+    $log.info('subscriptionsWindow');
+    //$log.info(event);
     $scope.toggle();
   });
 
@@ -515,7 +509,7 @@ function SubsCtrl($scope,$http,$log){
   //it becomes the feedCandidate so we can edit it there.
   //TODO we should copy the feed, not use the one in the feedlist
   $scope.$on('feedEditRequest', function(event,args){
-    //$scope.info('feedEdit');
+    //$log.info('feedEdit');
     $scope.reveal=true;
     $scope.feedCandidate = args.feed;
   });
