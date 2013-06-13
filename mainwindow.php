@@ -1,4 +1,4 @@
-<div id='wprss-container' ng-app="mainModule" >
+<div id='orbital-container' ng-app="mainModule" >
   <div id="commandbar" class="quicklinks" ng-controller="CommandBarCtrl">
     <ul>
       <li class="command" ng-repeat="command in commands" ><a href="#" ng-click="commandBarAction(command)">{{command.title}}</a></li>
@@ -7,8 +7,8 @@
   </div>
   <div id="y-indicator" class="does not provide funding" >
   </div>
-  <div id="wprss-main-content" ng-controller="EntriesCtrl">
-    <div id="wprss-content" >
+  <div id="orbital-main-content" ng-controller="EntriesCtrl">
+    <div id="orbital-content" >
         <div class="indicator" ng-show="isLoading">
           <img src="<?php
             echo plugins_url("ajax-loader.gif", __FILE__);
@@ -36,7 +36,7 @@
         </ul>
     </div>
   </div>
-  <div id="wprss-feedlist" ng-controller="FeedListCtrl" >
+  <div id="orbital-feedlist" ng-controller="FeedListCtrl" >
       <div id='feed-head'>
         <h2>The Feeds</h2> 
         <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
@@ -128,7 +128,7 @@
   var startentries = 
   <?php
     require_once('backend.php');
-    $entries = WprssEntries::get(array('isRead'=>0));
+    $entries = OrbitalEntries::get(array('isRead'=>0));
 
     echo json_encode($entries);
   ?>;

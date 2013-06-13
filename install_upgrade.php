@@ -4,11 +4,11 @@ require_once 'backend.php';
 
 
 # create the database tables.
-function wprss_install_db()
+function orbital_install_db()
 {
   global $wpdb;
-  global $wordprss_db_version;
-  global $wordprss_db_version_opt_string;
+  global $orbital_db_version;
+  global $orbital_db_version_opt_string;
   global $tbl_prefix;
   $charset_collate = '';
 
@@ -18,7 +18,7 @@ function wprss_install_db()
     $charset_collate .= " COLLATE $wpdb->collate";
 
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
-  add_option($wordprss_db_version_opt_string,$wordprss_db_version);
+  add_option($orbital_db_version_opt_string,$orbital_db_version);
   //feeds
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
@@ -95,13 +95,13 @@ function wprss_install_db()
 }
 //TODO load in everything with admin as owner, 
 # load all the first installation data in.
-function wprss_install_data(){
+function orbital_install_data(){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
   $user_id = $current_user->ID;
   //install some sample feeds
-  $feed = WprssFeeds::save(
+  $feed = OrbitalFeeds::save(
   array(
   //'feed_url'=>'http://www.morelightmorelight.com/feed/',
   'feed_url'=>'http://localhost/morelightmorelight/feed',
@@ -110,7 +110,7 @@ function wprss_install_data(){
   //'owner' => $current_user->ID,
   'feed_name' =>'More Light! More Light!'));
   
-  $bb = WprssFeeds::save(
+  $bb = OrbitalFeeds::save(
   array(
     //'feed_url'=>'http://boingboing.net/feed/',
     'feed_url'=>'http://localhost/boingboing/iBag',
@@ -118,21 +118,21 @@ function wprss_install_data(){
     'is_private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Fake Boing Boing'));
-  $wprssfeed = WprssFeeds::save(
+  $orbitalfeed = OrbitalFeeds::save(
   array(
-    //'feed_url' => 'http://mattkatz.github.com/Wordprss/ditz/html/feed.xml',
-    'feed_url' => 'http://localhost/Wordprss/ditz/html/feed.xml',
-    'site_url' => 'http://mattkatz.github.com/Wordprss/', 
+    //'feed_url' => 'http://mattkatz.github.com/orbital/ditz/html/feed.xml',
+    'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
+    'site_url' => 'http://mattkatz.github.com/orbital/', 
     'is_private'=>0,
     //'owner' => $current_user->ID,
-    'feed_name' => 'Wordprss Changes'));
+    'feed_name' => 'orbital Changes'));
 
   //Insert a sample entry
-  WprssEntries::save(array(
-    'feed_id'=> $wprssfeed->feed_id,
-    'title'=>'Welcome to Wordprss!',
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>'Welcome to orbital!',
     'guid'=>'FAKEGUID',
-    'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
+    'link'=>'http://mattkatz.github.com/orbital/welcome.html',//TODO 
     'updated'=>date ("Y-m-d H:i:s"),
     'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
     'entered' =>date ("Y-m-d H:i:s"),
@@ -140,11 +140,11 @@ function wprss_install_data(){
   ));
   for ($i = 1; $i <= 120; $i++) {
     //Insert a sample entry
-    WprssEntries::save(array(
-      'feed_id'=> $wprssfeed->feed_id,
+    OrbitalEntries::save(array(
+      'feed_id'=> $orbitalfeed->feed_id,
       'title'=>'Entry number ' . $i,
       'guid'=>'FAKEGUID'.$i,
-      'link'=>'http://mattkatz.github.com/Wordprss/welcome.html',//TODO 
+      'link'=>'http://mattkatz.github.com/orbital/welcome.html',//TODO 
       'updated'=>date ("Y-m-d H:i:s"),
       'content'=>"Here is where I'll put in some helpful stuff to look at\n \n Lorem Ipusm and so forth\n and so on.",//TODO
       'entered' =>date ("Y-m-d H:i:s"),
@@ -153,7 +153,7 @@ function wprss_install_data(){
     $i++;
 
   }
-  WprssEntries::save(array(
+  OrbitalEntries::save(array(
   //$wpdb->insert($table_name, array(
     'feed_id'=> $bb->feed_id,
     'title'=>'Look at this fake post about a banana',
@@ -165,7 +165,7 @@ function wprss_install_data(){
     'author' => 'Cory Doctorow'
   ));
 
-  $bb = WprssFeeds::save(
+  $bb = OrbitalFeeds::save(
   array(
     'feed_url'=>'http://boingboing.net/feed/',
     //'feed_url'=>'http://localhost/boingboing/iBag',
@@ -175,10 +175,10 @@ function wprss_install_data(){
     'feed_name' => 'Boing Boing'));
 }
 /*
-function wprss_uninstall_db()
+function orbital_uninstall_db()
 {
   //We should remove the DB option for the db version
-  delete_option('wordprss_db_version');
+  delete_option('orbital_db_version');
   //TODO clean up all the tables
   global $wpdb;
   $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";

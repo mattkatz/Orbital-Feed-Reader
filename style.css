@@ -1,5 +1,5 @@
   
-#wprss-feedlist{
+#orbital-feedlist{
   overflow-y:auto;
 
   border-left: 1px solid #dddddd;
@@ -99,7 +99,7 @@
   margin:0px;
 }
 
-#wprss-feedlist ul li 
+#orbital-feedlist ul li 
 {
   border-bottom: 1px solid #DFDFDF;
   border-top: 1px solid #F9F9F9;
@@ -161,7 +161,7 @@
 #opml-form{
   border-top: 1px dotted #000;
 }
-#wprss-content{
+#orbital-content{
   position:absolute;
   width:80%;
  /* background:#dedede;*/

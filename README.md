@@ -1,5 +1,5 @@
-WORDPRSS
-=======
+Orbital Feed Reader
+===================
 
 A feed reader for Wordpress
 ---------------------------
@@ -42,7 +42,7 @@ I'd love to collaborate with you.  Here are the steps to get set up.
 * Fork this repository and then clone your fork on your machine
 * gem install ditz - I'm using ditz to track most bugs and bug status. Type ditz in the repo and specify that bugs are stored in the .ditz directory.
 * Pick a bug from ditz and send me a message!  I'd love to help you get started.
-* Easy first steps might be helping out with the intro tutorial feeds in install_upgrade.php or improving the infinite scroll
+* Easy first steps might be helping out with the intro tutorial feeds.
 
 ## Buy me a drink! ##
 I'm tippable on GitTip
@@ -56,7 +56,7 @@ Other Projects
 Many other folks have made open source host it yourself feed readers.
 I'm a huge fan of Tiny Tiny RSS and I used it till I got this working. I've contributed code to it and I think it's wonderful for how easy it is to get up and running.
 
-Newsblur is also amazing.  Great usability, and great design.  This was a big inspiration for several features.  The developer is also hosting newsblur for you, so you can get this one without having your own server.Like Wordprss, newsblur was written on the subway to and from work.  
+Newsblur is also amazing.  Great usability, and great design.  This was a big inspiration for several features.  The developer is also hosting newsblur for you, so you can get this one without having your own server.Like Orbital, Newsblur was written on the subway to and from work.  
 
 I have not used Lilina much, but it looks nice and requires only php.
 

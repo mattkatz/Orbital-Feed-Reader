@@ -1,7 +1,7 @@
 <?php
 /*
-* Plugin Name: WordPrss
-* Plugin URI: http://mattkatz.github.com/Wordprss/
+* Plugin Name: orbital
+* Plugin URI: http://mattkatz.github.com/orbital/
 * Description:A voracious feed reader
 * Version: 0.1
 * Author: Matt Katz
@@ -11,13 +11,13 @@
 $page_title = "Voracious Reader";
 $menu_title = "CONSUME";
 $capability = 'edit_posts';
-$slug = 'wordprss.php';
-global $wprss_db_version ;
-$wprss_db_version = '0.1';
-global $wordprss_db_version_opt_string;
-$wrss_db_v_opt_string = 'wordprss_db_version';
+$slug = 'orbital.php';
+global $orbital_db_version ;
+$orbital_db_version = '0.1';
+global $orbital_db_version_opt_string;
+$orbital_db_v_opt_string = 'orbital_db_version';
 global $tbl_prefix;
-$tbl_prefix = 'wprss_' ;
+$tbl_prefix = 'orbital_' ;
 
 if ( !function_exists( 'add_action' ) ) {
   echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
@@ -25,52 +25,58 @@ if ( !function_exists( 'add_action' ) ) {
 }
 require_once 'backend.php';
 
-add_action('plugins_loaded', 'wprss_update_db_check');
-function wprss_update_db_check(){
-  global $wprss_db_version;
-  global $wrss_db_v_opt_string;
-  if(get_site_option($wrss_db_v_opt_string) != $wprss_db_version){
-    _log(get_site_option($wrss_db_v_opt_string) );
+//add_action('plugins_loaded', 'orbital_update_db_check');
+function orbital_update_db_check(){
+  global $orbital_db_version;
+  global $orbital_db_v_opt_string;
+  if(get_site_option($orbital_db_v_opt_string) != $orbital_db_version){
+    _log(get_site_option($orbital_db_v_opt_string) );
     //upgrayedd the db
-    _log("Wordprss: Installing or Upgrayedding Database");
+    _log("orbital: Installing or Upgrayedding Database");
     //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
-    wprss_install_db();
-    update_option($wrss_db_v_opt_string, $wprss_db_version);
+    orbital_install_db();
+    update_option($orbital_db_v_opt_string, $orbital_db_version);
   }
+  _log('finished DB update check');
 }
-function wprss_sample_data_check(){
-  $samples_loaded = get_site_option('wprss_sample_data_loaded');
+function orbital_sample_data_check(){
+  _log('check for sampledata');
+  $samples_loaded = get_site_option('orbital_sample_data_loaded');
   _log("Are the samples loaded: $samples_loaded ");
   if( $samples_loaded != 1)
   {
-    _log("Wordprss: Installing Sample Data");
+    _log("orbital: Installing Sample Data");
     require_once 'install_upgrade.php';
-    wprss_install_data();
-    update_option('wprss_sample_data_loaded', 1);
+    orbital_install_data();
+    update_option('orbital_sample_data_loaded', 1);
+  }
+  else{
+    _log('Sample Date already in there, never mind');
+
   }
 }
 
-add_action('admin_menu', 'wprss_plugin_menu');
-function wprss_plugin_menu(){
+add_action('admin_menu', 'orbital_plugin_menu');
+function orbital_plugin_menu(){
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page('WordPrss', 'Consume','edit_posts','wordprss.php','generate_main_page');
+  $main = add_menu_page('orbital', 'Consume','edit_posts','orbital.php','generate_main_page');
   //add hook for feed management page
   //TODO remove this. We don't need submenu pages now.
-  //$feed_mgmt = add_submenu_page('wordprss.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
+  //$feed_mgmt = add_submenu_page('orbital.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
   
   
    /* Using registered $page handle to hook script load */
-  add_action('admin_print_styles-' . $main, 'wprss_enqueue_scripts');
-  add_action('admin_print_styles-' . $main, 'wprss_main_scripts');
-  //add_action('admin_print_styles-' . $feed_mgmt, 'wprss_enqueue_scripts');
+  add_action('admin_print_styles-' . $main, 'orbital_enqueue_scripts');
+  add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
+  //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
 
 }
 
-add_action( 'admin_init', 'wprss_admin_init' );
+add_action( 'admin_init', 'orbital_admin_init' );
 /* Reqister our scripts so they can be enqueued
  */
-function wprss_admin_init(){
+function orbital_admin_init(){
   //Register the js that we need
   wp_register_script( 'handlebars_script', plugins_url('/js/handlebars-1.0.rc.1.js', __FILE__) ,array('jquery'));
   wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
@@ -85,12 +91,12 @@ function wprss_admin_init(){
   wp_register_script( 'keymaster_script', plugins_url('/js/keymaster.min.js', __FILE__),array('jquery'));
   //wp_register_script( 'jquery_waypoints', plugins_url('/js/waypoints.js', __FILE__),array('jquery'));
   /* Register our stylesheet. */
-  wp_register_style( 'wprsscss', plugins_url('style.css', __FILE__) );
+  wp_register_style( 'orbitalcss', plugins_url('style.css', __FILE__) );
 
 }
 
 // these are common to all of our pages
-function wprss_enqueue_scripts()
+function orbital_enqueue_scripts()
 {
   wp_enqueue_script( 'json2' );
   wp_enqueue_script('ng-infinite-scroll');
@@ -107,11 +113,11 @@ function wprss_enqueue_scripts()
     'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
   ) );
   //add our stylesheet
-  wp_enqueue_style('wprsscss');
+  wp_enqueue_style('orbitalcss');
 }
 
 //these are just for the main page
-function wprss_main_scripts()
+function orbital_main_scripts()
 {
   //here we set up our keyboard shortcuts
   wp_enqueue_script('keymaster_script');
@@ -129,11 +135,11 @@ function feed_management(){
   //wp_enqueue_script('feedmgmt_script');
   require_once('feed_management.php');
 }
-function wprss_uninstall_db()
+function orbital_uninstall_db()
 {
 
   //We should remove the DB option for the db version
-  delete_option($wrss_db_v_opt_string);
+  delete_option($orbital_db_v_opt_string);
   //clean up all the tables
   global $wpdb;
   global $tbl_prefix;
@@ -152,22 +158,25 @@ function one_hour( $schedules ) {
   );
   return $schedules;
 }
-add_action('wprss_update_event', 'wprss_update_job');
-function wprss_set_up_cron(){
-  wp_schedule_event( current_time( 'timestamp' ), '1hour', 'wprss_update_event');
+add_action('orbital_update_event', 'orbital_update_job');
+function orbital_set_up_cron(){
+  wp_schedule_event( current_time( 'timestamp' ), '1hour', 'orbital_update_event');
 }
 
-function wprss_update_job(){
+function orbital_update_job(){
   //call feeds update.
-  _log('wprss_update_job called');
-  wprss_update_feeds();
+  _log('orbital_update_job called');
+  orbital_update_feeds();
   //TODO somehow signal a pop to the front end that the job, it is done.
 }
 
-function wprss_activate(){
-  wprss_update_db_check();
-  wprss_sample_data_check();
-  wprss_set_up_cron();
+function orbital_activate(){
+  _log('orbital activate begin');
+  orbital_update_db_check();
+  _log('orbital sample begin');
+  orbital_sample_data_check();
+  orbital_set_up_cron();
+  _log('orbital activate end');
 }
 
 add_filter('query_vars','plugin_add_trigger');
@@ -188,8 +197,8 @@ function plugin_trigger_check() {
   }
 }
 //Turns out you can't just do __FILE__ like it says in the wordpress codex!
-register_activation_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_activate');
+register_activation_hook(WP_PLUGIN_DIR.'/Orbital/orbital.php','Orbital_activate');
 
-register_uninstall_hook(WP_PLUGIN_DIR.'/Wordprss/wordprss.php','wprss_uninstall_db');
+register_uninstall_hook(WP_PLUGIN_DIR.'/Orbital/orbital.php','Orbital_uninstall_db');
 
 ?>

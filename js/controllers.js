@@ -36,7 +36,7 @@ function FeedListCtrl($scope, $http, $log){
   $scope.refresh = function(){
     $scope.isLoading = true;
     $log.info('refreshing feeds');
-    $http.get(get_url.ajaxurl+'?action=wprss_get_feeds' )
+    $http.get(get_url.ajaxurl+'?action=orbital_get_feeds' )
     .success(function(data){ 
       $scope.feeds = data;
       $scope.isLoading = false;
@@ -113,7 +113,7 @@ function FeedListCtrl($scope, $http, $log){
       case "markRead":
         //mark feed read
         var data = {
-          action: 'wprss_mark_items_read',
+          action: 'orbital_mark_items_read',
           feed_id:feed.feed_id,
         };
         $http.post(get_url.ajaxurl, data)
@@ -125,7 +125,7 @@ function FeedListCtrl($scope, $http, $log){
       case "updateFeed":
         //update feed 
         var data= {
-          action: 'wprss_update_feed',
+          action: 'orbital_update_feed',
           feed_id: feed.feed_id,
         };
         $http.post(get_url.ajaxurl, data)
@@ -161,7 +161,7 @@ function EntriesCtrl($scope, $http, $log){
   $scope.displayFeed = function(id,showRead){
     $scope.currentFeedId = id;
     $scope.isLoading = true;
-    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
+    $http.get(get_url.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
@@ -172,7 +172,7 @@ function EntriesCtrl($scope, $http, $log){
 
   $scope.addMoreEntries = function(){
     $scope.isLoading = true;
-    $http.get(get_url.ajaxurl+'?action=wprss_get_entries&feed_id='+$scope.currentFeedId)
+    $http.get(get_url.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId)
     .success(function  (response) {
       $scope.isLoading = false;
       $log.info('going to the server mines for more delicious content');
@@ -195,7 +195,7 @@ function EntriesCtrl($scope, $http, $log){
     $log.log('Selected entry ' + entry.entry_id);
     var newReadStatus = entry.isRead == 0?1:0;
     var data = {
-      action: 'wprss_mark_item_read',
+      action: 'orbital_mark_item_read',
       read_status: newReadStatus ,
       entry_id: entry.entry_id,
     };
@@ -323,7 +323,7 @@ function SubsCtrl($scope,$http,$log){
     }
     //now we should check the candidate
     var data = {
-      action: 'wprss_find_feed',
+      action: 'orbital_find_feed',
       url: $scope.urlCandidate,
     };
     $scope.isLoading=true;
@@ -360,7 +360,7 @@ function SubsCtrl($scope,$http,$log){
     //mark the save button busy
     if(! batchmode) {$scope.isLoading = true;}
     var data = {
-      action: 'wprss_save_feed',
+      action: 'orbital_save_feed',
       feed_id: feed.feed_id,
       feed_url: feed.feed_url,
       feed_name: feed.feed_name,
@@ -388,7 +388,7 @@ function SubsCtrl($scope,$http,$log){
     $scope.isLoading = true;
     $log.info(feed);
     var data = {
-      action: 'wprss_unsubscribe_feed',
+      action: 'orbital_unsubscribe_feed',
       feed_id: feed.feed_id,
     };
     $http.post(get_url.ajaxurl,data)
@@ -463,7 +463,7 @@ function SubsCtrl($scope,$http,$log){
               feed.feed_name = el.attr('text'); 
               feed.feed_url = el.attr('xmlUrl');
               feed.site_url = el.attr('htmlUrl');
-              //Wprss.feedsController.saveFeed(feed);
+              //orbital.feedsController.saveFeed(feed);
 
               $scope.saveFeed(feed,true);
               $scope.doneFeeds++;

@@ -23,7 +23,7 @@ if(!function_exists('_log')){
  * CLASSES
  * Feeds Class
  */
-class WprssFeeds {
+class OrbitalFeeds {
 
 /* Method to save a feed
  *   - check to see if there is a feed_id.
@@ -293,7 +293,7 @@ class WprssFeeds {
     require_once('simplepie.inc');
     //_log($feedrow);
     //echo $feedrow->feed_url;
-    $feedrow = WprssFeeds::get_feed($feed_id);
+    $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
     $feed->set_feed_url($feedrow->feed_url);
@@ -317,7 +317,7 @@ class WprssFeeds {
       if(null != $author){
         $name =$author->get_name(); 
       }
-      WprssEntries::save(array(
+      OrbitalEntries::save(array(
         'feed_id'=>$feed_id,
         'title'=>$item->get_title(),
         'guid'=>$item->get_id(),
@@ -355,7 +355,7 @@ class WprssFeeds {
  *
  *
  * */
-class WprssEntries{
+class OrbitalEntries{
 /*
  * Insert an entry for a feed
  *    - TODO check to see if entry exists, using entry hash?
@@ -370,13 +370,13 @@ class WprssEntries{
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
       _log('sending to update');
-      $resp = WprssEntries::update($entry);
+      $resp = OrbitalEntries::update($entry);
     }
     else{
       $entry_id = null;
       //TODO see if the entry exists using entry hash or guid?
       if(array_key_exists('guid', $entry) && $entry['guid']){
-        $entry_id = WprssEntries::check_guid($entry['guid']);
+        $entry_id = OrbitalEntries::check_guid($entry['guid']);
         _log('check guid says entry id is');
         _log($entry_id);
       }
@@ -384,13 +384,13 @@ class WprssEntries{
       if(null === $entry_id){
         _log('sending to insert');
         //insert the entry, get the ID for the feed
-        $resp = WprssEntries::insert($entry);
+        $resp = OrbitalEntries::insert($entry);
       }
       else {
         //this is an update - let's do it.
         $entry['entry_id'] = $entry_id;
         _log("found an $entry_id  and sending to update");
-        $resp = WprssEntries::update($entry);
+        $resp = OrbitalEntries::update($entry);
       }
     }
    return $resp; 
@@ -588,34 +588,34 @@ function nonce_dance(){
 }  
 
 //TODO return a nonce or something. Nonce dancing should work better
-function wprss_list_feeds_die(){
-  wprss_list_feeds();
+function orbital_list_feeds_die(){
+  orbital_list_feeds();
   exit;
 }
 
-function wprss_list_feeds(){
+function orbital_list_feeds(){
   //nonce_dance();
-  $myrows = WprssFeeds::get();
+  $myrows = OrbitalFeeds::get();
 
   echo json_encode($myrows);
 }
-add_action('wp_ajax_wprss_get_feeds','wprss_list_feeds_die');
-add_action('wp_ajax_nopriv_wprss_get_feeds','wprss_list_feeds_die');
+add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
+add_action('wp_ajax_nopriv_orbital_get_feeds','orbital_list_feeds_die');
 
 //remove feed 
-function wprss_unsubscribe_feed(){
+function orbital_unsubscribe_feed(){
   //nonce_dance();
   
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
 
-  $resp = WprssFeeds::remove($feed_id);
+  $resp = OrbitalFeeds::remove($feed_id);
   echo json_encode($resp);
   exit;
 }
-add_action('wp_ajax_wprss_unsubscribe_feed','wprss_unsubscribe_feed');
+add_action('wp_ajax_orbital_unsubscribe_feed','orbital_unsubscribe_feed');
 
 //find the details of the feed.
-function wprss_find_feed(){
+function orbital_find_feed(){
   $orig_url = filter_input(INPUT_POST, 'url',FILTER_SANITIZE_URL);
   $contents = "";
   $resp->orig_url = $orig_url;
@@ -710,10 +710,10 @@ function wprss_find_feed(){
   exit;
 
 }
-add_action('wp_ajax_wprss_find_feed','wprss_find_feed');
+add_action('wp_ajax_orbital_find_feed','orbital_find_feed');
 
 //edit feed
-function wprss_save_feed(){
+function orbital_save_feed(){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
@@ -729,14 +729,14 @@ function wprss_save_feed(){
   $is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  $resp = WprssFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private));
+  $resp = OrbitalFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private));
   echo json_encode($resp);
   exit;
 }
-add_action('wp_ajax_wprss_save_feed','wprss_save_feed');
+add_action('wp_ajax_orbital_save_feed','orbital_save_feed');
 
 //get feed entries
-function wprss_get_feed_entries(){
+function orbital_get_feed_entries(){
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
   $filters = array();
@@ -753,18 +753,18 @@ function wprss_get_feed_entries(){
     $filters['isRead']=$show_read;
   }
 
-  $myrows = WprssEntries::get($filters);
+  $myrows = OrbitalEntries::get($filters);
   echo json_encode($myrows);
   exit;
 }
-add_action('wp_ajax_wprss_get_entries','wprss_get_feed_entries');
-add_action('wp_ajax_nopriv_wprss_get_entries','wprss_get_feed_entries');
+add_action('wp_ajax_orbital_get_entries','orbital_get_feed_entries');
+add_action('wp_ajax_nopriv_orbital_get_entries','orbital_get_feed_entries');
 
 //update multiple feeds
-function wprss_update_feeds(){
+function orbital_update_feeds(){
   //get the list of feeds to update that haven't been updated recently
   _log('wp_cron update fired!');
-  $feeds = WprssFeeds::get_stale_feeds();
+  $feeds = OrbitalFeeds::get_stale_feeds();
   _log($feeds);
   
   //TODO Limit it to a reasonable number of feeds in a batch
@@ -772,16 +772,16 @@ function wprss_update_feeds(){
   //for each feed call update_feed
   foreach( $feeds as $feed){
     _log($feed);
-    WprssFeeds::refresh($feed->id);
-    //wprss_update_feed($feed->id);
+    OrbitalFeeds::refresh($feed->id);
+    //orbital_update_feed($feed->id);
   }
 }
-add_action('wp_ajax_wprss_update_feeds','wprss_update_feeds');
-add_action('wp_ajax_nopriv_wprss_update_feeds','wprss_get_update_feeds');
+add_action('wp_ajax_orbital_update_feeds','orbital_update_feeds');
+add_action('wp_ajax_nopriv_orbital_update_feeds','orbital_get_update_feeds');
 
 
 //update single feed
-function wprss_update_feed($feed_id="",$feed_url=""){
+function orbital_update_feed($feed_id="",$feed_url=""){
   //TODO if we didn't get passed a feed, check to see if it is in the url
   if("" == $feed_id){
     $feed_id = filter_input(INPUT_POST, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
@@ -795,16 +795,16 @@ function wprss_update_feed($feed_id="",$feed_url=""){
     }
   }
   //echo $feed_id;
-  $resp = WprssFeeds::refresh($feed_id);
+  $resp = OrbitalFeeds::refresh($feed_id);
 
   echo json_encode($resp);
   exit;
 }
-add_action('wp_ajax_wprss_update_feed','wprss_update_feed');
-add_action('wp_ajax_nopriv_wprss_update_feed','wprss_get_update_feed');
+add_action('wp_ajax_orbital_update_feed','orbital_update_feed');
+add_action('wp_ajax_nopriv_orbital_update_feed','orbital_get_update_feed');
 
 //Mark items as read
-function wprss_mark_items_read($feed_id){
+function orbital_mark_items_read($feed_id){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
@@ -827,22 +827,22 @@ function wprss_mark_items_read($feed_id){
   exit;
   
 }
-add_action('wp_ajax_wprss_mark_items_read','wprss_mark_items_read');
+add_action('wp_ajax_orbital_mark_items_read','orbital_mark_items_read');
 
 //Mark item as read
-function wprss_mark_item_read(){
+function orbital_mark_item_read(){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
   $entry_id = filter_input(INPUT_POST, 'entry_id', FILTER_SANITIZE_NUMBER_INT);
   $read_status = filter_input(INPUT_POST, 'read_status', FILTER_SANITIZE_NUMBER_INT);
-  $resp = WprssEntries::save(array(
+  $resp = OrbitalEntries::save(array(
     'isRead' =>$read_status,//columns to update
     'entry_id' =>$entry_id, //current entry
   ));
   echo json_encode($resp);
   exit;
 }
-add_action('wp_ajax_wprss_mark_item_read','wprss_mark_item_read');
+add_action('wp_ajax_orbital_mark_item_read','orbital_mark_item_read');
 //No non logged in way to mark an item read for me yet
 ?>
