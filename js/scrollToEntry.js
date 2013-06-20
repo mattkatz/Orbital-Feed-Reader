@@ -27,13 +27,13 @@ jQuery(document).ready(function($){
     $(id).css({'height':(($(window).height())-height)+'px'});
   }
   $(window).resize(function(){
-    setContentHeight('#wprss-content',28+$('commandbar').height());
-    setContentHeight('#wprss-feedlist',28);
-    var w =$('#wprss-container').width();
+    setContentHeight('#orbital-content',$('#wpadminbar').height()+$('#commandbar').height());
+    setContentHeight('#orbital-feedlist',0);
+    var w =$('#orbital-container').width();
 
-    $('#wprss-content').css({'width':((w * .8)- 10 +'px')});
+    $('#orbital-content').css({'width':((w * .8)- 10 +'px')});
     //scrollbar.width probably is 10 px.
-    $('#feeds').css({'height':(($('#wprss-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
+    $('#feeds').css({'height':(($('#orbital-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
   });
   $(window).resize();
 });
