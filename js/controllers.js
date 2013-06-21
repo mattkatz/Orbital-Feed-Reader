@@ -167,6 +167,7 @@ function EntriesCtrl($scope, $http, $log){
       //$log.info(data);
       $scope.entries = data;
       $scope.selectedEntry = null;
+      scrollToEntry(null);
     });
   };
 

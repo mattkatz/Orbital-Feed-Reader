@@ -1,8 +1,7 @@
 function scrollToEntry(currentItem, bottom){
-
-    var body = jQuery('html');
-    var adminbar = jQuery('#wpadminbar');
-    //var commandbar = jQuery('#commandbar');
+  var currentScroll = jQuery('#orbital-content').scrollTop();
+  scrollAmount = -1 * currentScroll;
+  if(currentItem){
     var row = jQuery('#'+currentItem.feed_id + "_" +currentItem.id);
     if(null === row.offset()){
       console.log('row.offset() was null');
@@ -10,16 +9,12 @@ function scrollToEntry(currentItem, bottom){
     }
     //position is the offset from the parent scrollable element
     var scrollAmount = row.position().top;
-    if(bottom){
-      console.log('trying to get to the bottom');
-      scrollAmount += row.height();
-    }
-
-
-    var currentScroll = jQuery('#wprss-content').scrollTop();
-    
-    //jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll -  commandbar.height()}, 200); 
-    jQuery('#wprss-content').animate({ scrollTop: scrollAmount + currentScroll }, 200); 
+  }
+  if(bottom){
+    console.log('trying to get to the bottom');
+    scrollAmount += row.height();
+  }
+  jQuery('#orbital-content').animate({ scrollTop: scrollAmount + currentScroll }, 200); 
 }
 //Set everything up after page load
 jQuery(document).ready(function($){

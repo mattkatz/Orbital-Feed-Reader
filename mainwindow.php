@@ -14,7 +14,7 @@
             echo plugins_url("ajax-loader.gif", __FILE__);
           ?>">
         </div>
-        <ul class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
+        <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
           <li id="{{entry.feed_id}}_{{entry.entry_id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.entry_id == selectedEntry.entry_id}" >
               <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
               <div class="author" ng-show="entry.author">
