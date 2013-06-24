@@ -32,6 +32,9 @@
                 Read
               </div>
               <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
+              <div class='entry-tools'>
+                <a href="#" ng-click="pressThis(entry)">ReBlog!</a>
+              </div>
           </li>
         </ul>
     </div>

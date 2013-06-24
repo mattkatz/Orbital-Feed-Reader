@@ -187,6 +187,33 @@ function EntriesCtrl($scope, $http, $log){
     });
   }
 
+  $scope.pressThis = function(entry) {
+    //Get the selected text
+    //This is ripped from the pressthisbookmarklet
+    var d=document,
+    w=window,
+    e=w.getSelection,
+    k=d.getSelection,
+    x=d.selection,
+    s=(e?e():(k)?k():(x?x.createRange().text:0)),
+    f='http://localhost/~matt/wp/wp-admin/press-this.php',
+    d=entry;
+    l=d.link,
+    e=encodeURIComponent,
+    g=f+'?u='+e(l)+'&t='+e(d.title)+'&s='+e(s)+'&v=2';
+    function a(){
+      if(!w.open(g,'t','toolbar=0,resizable=0,scrollbars=1,status=1,width=720,height=570'))
+        {l.href=g;}
+    }
+    setTimeout(a,0);
+    void(0);
+
+    //Use the entry details to construct a pressthis URL
+    //Reveal a pressthis iframe window.
+
+    console.log(entry);
+  }
+
   /*
    * Someone has clicked an entry.
    * Toggle read on the server, then alert the UI
