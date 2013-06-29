@@ -33,7 +33,7 @@
               </div>
               <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               <div class='entry-tools'>
-                <a href="#" ng-click="pressThis(entry)">ReBlog!</a>
+              <a href="#" ng-click="pressThis(entry,'<?php echo admin_url('press-this.php') ?>')">ReBlog!</a>
               </div>
           </li>
         </ul>

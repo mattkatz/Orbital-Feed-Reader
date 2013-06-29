@@ -187,7 +187,7 @@ function EntriesCtrl($scope, $http, $log){
     });
   }
 
-  $scope.pressThis = function(entry) {
+  $scope.pressThis = function(entry,pressThisUrl) {
     //Get the selected text
     //This is ripped from the pressthisbookmarklet
     var d=document,
@@ -196,7 +196,7 @@ function EntriesCtrl($scope, $http, $log){
     k=d.getSelection,
     x=d.selection,
     s=(e?e():(k)?k():(x?x.createRange().text:0)),
-    f='http://localhost/~matt/wp/wp-admin/press-this.php',
+    f=pressThisUrl,
     d=entry;
     l=d.link,
     e=encodeURIComponent,
