@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Music display
+desc: |-
+  Let's make it so that we find all entries with music attachments, play them as it goes.
+  youtube playing as well
+type: :feature
+component: Wordprss
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-06-30 12:34:37.321235 Z
+references: []
+
+id: 835dfb4d55d2d3a63242829fc8fd60e8f54b1f7a
+log_events: 
+- - 2013-06-30 12:34:43.064626 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
