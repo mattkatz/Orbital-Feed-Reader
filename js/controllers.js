@@ -38,7 +38,14 @@ function FeedListCtrl($scope, $http, $log){
     $log.info('refreshing feeds');
     $http.get(get_url.ajaxurl+'?action=orbital_get_feeds' )
     .success(function(data){ 
+      
       $scope.feeds = data;
+      var fresh = {
+        feed_id:null,
+        feed_name:'All Feeds',
+        unread_count:'',
+      }
+      $scope.feeds.unshift(fresh);
       $scope.isLoading = false;
     });
   };
@@ -79,6 +86,27 @@ function FeedListCtrl($scope, $http, $log){
   }
 
   /*
+   * Update this feed
+   */
+  $scope.update = function(feed){
+    //update feed 
+    var data= {
+      action: 'orbital_update_feed',
+      feed_id: feed.feed_id,
+    };
+    $http.post(get_url.ajaxurl, data)
+    .success(function(response){
+      $log.info('selecting '+feed.feed_id);
+      //refresh the feedlist
+      $scope.refresh();
+      //refresh the feed if it is still selected
+      if(feed == $scope.selectedFeed){
+        $scope.select(feed);
+      }
+    });
+  }
+
+  /*
    * Events
    */
 
@@ -106,6 +134,10 @@ function FeedListCtrl($scope, $http, $log){
   $scope.$on('refreshFeeds', function(event,args){
     $scope.refresh();
   });
+  $scope.$on('updateFeed', function(event,args){
+    $log.log('updateFeed event');
+    $scope.update(args.feed);
+  });
   /* One of the command bar actions fired */
   $scope.$on('commandBarEvented', function  (event, args) {
     feed = args.feed;
@@ -124,20 +156,7 @@ function FeedListCtrl($scope, $http, $log){
         break;
       case "updateFeed":
         //update feed 
-        var data= {
-          action: 'orbital_update_feed',
-          feed_id: feed.feed_id,
-        };
-        $http.post(get_url.ajaxurl, data)
-        .success(function(response){
-          $log.info('selecting '+feed.feed_id);
-          //refresh the feedlist
-          $scope.refresh();
-          //refresh the feed if it is still selected
-          if(feed == $scope.selectedFeed){
-            $scope.select(feed);
-          }
-        });
+        $scope.update(feed);
         break;
       case "showRead":
         //refresh this feed, but display read items
@@ -320,9 +339,6 @@ function EntriesCtrl($scope, $http, $log){
  * 
  */
 function SubsCtrl($scope,$http,$log){
-  $log.log = $log.log;
-  $log.info = $log.info;
-
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
   $scope.possibleFeeds = null;
@@ -402,6 +418,7 @@ function SubsCtrl($scope,$http,$log){
         $scope.isLoading = false;
         //hide the feed away
         $scope.toggle();
+        $scope.feedSaved(response);
         $scope.feedsChanged();
       }
     });
@@ -528,6 +545,10 @@ function SubsCtrl($scope,$http,$log){
     //$log.info(event);
     $scope.toggle();
   });
+
+  $scope.feedSaved = function(feed){
+    $scope.$emit('feedSaved',{feed:feed});
+  }
 
   $scope.feedsChanged = function(){
     $scope.$emit('feedsChanged');

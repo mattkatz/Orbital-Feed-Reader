@@ -80,6 +80,10 @@ mainModule.run(function($rootScope){
     //console.log('the feeds are changing');
     $rootScope.$broadcast('refreshFeeds',args);
   });
+  $rootScope.$on('feedSaved', function(event,args){
+    //console.log('the feeds are changing');
+    $rootScope.$broadcast('updateFeed',args);
+  });
   $rootScope.$on('commandBarEvent',function(event,args){
     $rootScope.$broadcast('commandBarEvented', args);
   });
