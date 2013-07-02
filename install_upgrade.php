@@ -166,8 +166,88 @@ function orbital_install_data(){
     'updated'=>date ("Y-m-d H:i:s"),
     'content'=>"<p>What else?</p>
     <p>
-    You can press 'u' to toggle whether a feed is read or not.  'k' or ⬆ will go back to stuff you've already read. 'o' will open up a new browser tab with the feed you are looking at.
+      <ul>
+        <li>You can press 'u' to toggle whether an item is read or not.  </li>
+        <li>'k' or ⬆ will go back to stuff you've already read. </li>
+        <li>'o' will open up a new browser tab with the feed you are looking at.  </li>
+      </ul>
     </p>
+    ",//TODO
+    'entered' =>date ("Y-m-d H:i:s"),
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>'The feedlist',
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'updated'=>date ("Y-m-d H:i:s"),
+    'content'=>"
+    <p>Over in the feed list on the right hand side, look for three icons:
+      <ul>
+        <li> ⟳ - this is the refresh icon. It will refresh the feed list if for some reason we aren't keeping it up to date.  </li>
+        <li>
+        + - Add a new feed. This brings up the subscriptions dialog, and I'll tell you more about that in a second.
+        </li>
+        <li>
+        ✎ - Edit and manage your feeds. Rename them, set them as private or public, etc. 
+        </li>
+      </ul>
+      Underneath you'll find a list of all your feeds, ready to click on. Click one to just see that or click All to drink from the firehose.
+    </p>
+    ",//TODO
+    'entered' =>date ("Y-m-d H:i:s"),
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>'Adding your own sites to monitor',
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'updated'=>date ("Y-m-d H:i:s"),
+    'content'=>"
+    <p>
+      I've started you out with some great feeds that I like, but you probably want to add your own. That's easy!
+    </p>
+    <p>
+    On the feedlist click the '+'. There's two ways to go from here. 
+    <ol>
+      <li>
+      If you just want to add a new favorite site, that's easy. Just copy the URL ('http://www.whatever.com') and put it in text box, then hit the 'Check a Url' button. I'll go to the site and try to figure out what feeds it provides and give you a chance to pick, then hit save.  If I can't find one (not all websites make it easy), no problem. Look for the words 'RSS', 'ATOM', 'Feed' or the feed icon.
+      </li>
+      <li>
+      Are you coming from Google Reader or something like that? You can go to the bottom section and just upload your OPML file. I'll do my best to read that file and import all your feeds for you. If you've got a lot, please be chill - it's all happening on your browser.
+      </li>
+      </ol>
+      </p>
+    ",//TODO
+    'entered' =>date ("Y-m-d H:i:s"),
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>"Press This!",
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'updated'=>date ("Y-m-d H:i:s"),
+    'content'=>"
+    <p>So the real benefit of the Orbital Feed Reader is that it should encourage you to write more! All this stuff in your feed reader is really just inspiration juice. So here's how we do that. Highlight the first sentence on this post and click the PressThis! link below. You'll see attribution and citation in a ready to edit Blog Post!</p>
+    ",//TODO
+    'entered' =>date ("Y-m-d H:i:s"),
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>"That's it for now!",
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'updated'=>date ("Y-m-d H:i:s"),
+    'content'=>"
+    <p>Try adding some of your favorite sites to get started. When you find something you like, click PressThis!</p>
     ",//TODO
     'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
