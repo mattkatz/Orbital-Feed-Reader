@@ -148,7 +148,7 @@
   text-shadow: 1px 1px 2px #ffffff;
   background-color: #dddddd;
   background-color: rgba(200,200,200,.8);
-  background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(40, 40, 40, 0.6) 50px);
+ /* background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(40, 40, 40, 0.6) 50px);*/
   position: fixed;
   top: 50px;
   left: 200px;
