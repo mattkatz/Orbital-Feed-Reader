@@ -18,7 +18,6 @@ function orbital_install_db()
     $charset_collate .= " COLLATE $wpdb->collate";
 
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
-  add_option($orbital_db_version_opt_string,$orbital_db_version);
   //feeds
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
@@ -92,6 +91,7 @@ function orbital_install_db()
   ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
+  add_option($orbital_db_version_opt_string,$orbital_db_version);
 }
 //TODO load in everything with admin as owner, 
 # load all the first installation data in.
@@ -103,66 +103,74 @@ function orbital_install_data(){
   //install some sample feeds
   $feed = OrbitalFeeds::save(
   array(
-  //'feed_url'=>'http://www.morelightmorelight.com/feed/',
-  'feed_url'=>'http://localhost/morelightmorelight/feed',
+  'feed_url'=>'http://www.morelightmorelight.com/feed/',
+  //'feed_url'=>'http://localhost/morelightmorelight/feed',
   'site_url'=> 'http://www.morelightmorelight.com',
   'is_private'=>0,
   //'owner' => $current_user->ID,
   'feed_name' =>'More Light! More Light!'));
   
-  $bb = OrbitalFeeds::save(
-  array(
-    //'feed_url'=>'http://boingboing.net/feed/',
-    'feed_url'=>'http://localhost/boingboing/iBag',
-    'site_url'=> 'http://boingboing.net',
-    'is_private'=>0,
-    //'owner' => $current_user->ID,
-    'feed_name' => 'Fake Boing Boing'));
   $orbitalfeed = OrbitalFeeds::save(
   array(
-    //'feed_url' => 'http://mattkatz.github.com/orbital/ditz/html/feed.xml',
-    'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
-    'site_url' => 'http://mattkatz.github.com/orbital/', 
+    'feed_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/ditz/html/feed.xml',
+    //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
+    'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
     'is_private'=>0,
     //'owner' => $current_user->ID,
-    'feed_name' => 'orbital Changes'));
+    'feed_name' => 'Orbital Changes'));
 
   //Insert a sample entry
   OrbitalEntries::save(array(
     'feed_id'=> $orbitalfeed->feed_id,
-    'title'=>'Welcome to orbital!',
+    'title'=>'Welcome to Orbital!',
     'guid'=>'FAKEGUID',
-    'link'=>'http://mattkatz.github.com/orbital/welcome.html',//TODO 
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/welcome.html',//TODO 
     'updated'=>date ("Y-m-d H:i:s"),
     'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
     'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
-  for ($i = 1; $i <= 120; $i++) {
-    //Insert a sample entry
-    OrbitalEntries::save(array(
-      'feed_id'=> $orbitalfeed->feed_id,
-      'title'=>'Entry number ' . $i,
-      'guid'=>'FAKEGUID'.$i,
-      'link'=>'http://mattkatz.github.com/orbital/welcome.html',//TODO 
-      'updated'=>date ("Y-m-d H:i:s"),
-      'content'=>"Here is where I'll put in some helpful stuff to look at\n \n Lorem Ipusm and so forth\n and so on.",//TODO
-      'entered' =>date ("Y-m-d H:i:s"),
-      'author' => 'Matt Katz'
-    ));
-    $i++;
-
-  }
+  $i = 0;
+  //Insert a sample entry
   OrbitalEntries::save(array(
-  //$wpdb->insert($table_name, array(
-    'feed_id'=> $bb->feed_id,
-    'title'=>'Look at this fake post about a banana',
-    'guid'=>'FAKEGUID2',
-    'link'=>'http://boingboing.net/',//TODO 
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>'Getting Started',
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
     'updated'=>date ("Y-m-d H:i:s"),
-    'content'=>"just LOOK AT IT.<br/>Amazing, really how this meme caught on.",//TODO
+    'content'=>"This is <b>your</b> Orbital Reader, a feed reading platform for WordPress. I'll handle polling all your favorite websites for new posts. I've put some favorite samples in the side bar on the right. You'll see those start getting populated with new posts.",//TODO
     'entered' =>date ("Y-m-d H:i:s"),
-    'author' => 'Cory Doctorow'
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>'Keyboard Shortcuts',
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'updated'=>date ("Y-m-d H:i:s"),
+    'content'=>"You can mark entries as read and Orbital will remember for you. As you scroll down, just click on an entry to mark it as read.
+    A better way to do this is to take your hand off the mouse and just click the 'j' key or the ⬇ key.
+    Watch as you are taken to the next item to be read - we'll also mark it as something you've looked at.
+    <p>Go ahead and try it now - see you at the next post.
+    </p>    ",//TODO
+    'entered' =>date ("Y-m-d H:i:s"),
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>'More Keyboard Shortcuts',
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'updated'=>date ("Y-m-d H:i:s"),
+    'content'=>"<p>What else?</p>
+    <p>
+    You can press 'u' to toggle whether a feed is read or not.  'k' or ⬆ will go back to stuff you've already read. 'o' will open up a new browser tab with the feed you are looking at.
+    </p>
+    ",//TODO
+    'entered' =>date ("Y-m-d H:i:s"),
+    'author' => 'Matt Katz'
   ));
 
   $bb = OrbitalFeeds::save(
@@ -173,6 +181,22 @@ function orbital_install_data(){
     'is_private'=>0,
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
+  OrbitalFeeds::save(
+  array(
+    'feed_url'=>'http://feeds.feedburner.com/ButDoesItFloat?format=xml',
+    //'feed_url'=>'http://localhost/boingboing/iBag',
+    'site_url'=> 'http://butdoesitfloat.com',
+    'is_private'=>0,
+    //'owner' => $current_user->ID,
+    'feed_name' => 'But does it float?'));
+  OrbitalFeeds::save(
+  array(
+    'feed_url'=>'http://visitsteve.com/feed',
+    //'feed_url'=>'http://localhost/boingboing/iBag',
+    'site_url'=> 'http://visitsteve.com/',
+    'is_private'=>0,
+    //'owner' => $current_user->ID,
+    'feed_name' => 'Steve Lambert, art etc.'));
 }
 /*
 function orbital_uninstall_db()
