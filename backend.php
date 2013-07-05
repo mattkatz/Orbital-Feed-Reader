@@ -290,7 +290,7 @@ class OrbitalFeeds {
    */
   static function refresh($feed_id){
     //TODO update the feeds last updated time
-    require_once('simplepie.inc');
+    include_once(ABSPATH . WPINC . '/class-feed.php');
     //_log($feedrow);
     //echo $feedrow->feed_url;
     $feedrow = OrbitalFeeds::get_feed($feed_id);
@@ -628,7 +628,8 @@ function orbital_find_feed(){
   
 
 
-    require_once('simplepie.inc');
+  //if( !class_exists( 'WP_Http' ) )
+    include_once(ABSPATH . WPINC . '/class-feed.php');
     $feed = new SimplePie();
     $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);
     /*
