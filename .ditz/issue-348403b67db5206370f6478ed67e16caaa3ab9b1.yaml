@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Subscriptions aren't refreshing automatically
+desc: ""
+type: :bugfix
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-09 03:05:28.246967 Z
+references: []
+
+id: 348403b67db5206370f6478ed67e16caaa3ab9b1
+log_events: 
+- - 2013-07-09 03:05:29.285541 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

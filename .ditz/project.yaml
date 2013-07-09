@@ -7,8 +7,8 @@ components:
 releases: 
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1 - Feeds, Subscribed
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2013-07-09 02:40:21.186745 Z
   log_events: 
   - - 2012-01-05 22:11:51.560274 Z
     - Matt Katz <ditz@morelightmorelight.com>
@@ -16,6 +16,10 @@ releases:
     - |-
       This should be a minimal feed reader.  Pull updates, display them
       per feed browsing
+  - - 2013-07-09 02:40:21.186767 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.2 Wordpress integration
   status: :unreleased
@@ -25,3 +29,12 @@ releases:
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.1
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2013-07-09 02:46:51.140583 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - bugfixes
