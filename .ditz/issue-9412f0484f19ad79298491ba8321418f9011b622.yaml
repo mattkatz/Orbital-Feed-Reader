@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Change menu name from Consume to Orbit
+desc: from adubs
+type: :bugfix
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-07-11 14:16:10.516375 Z
+references: []
+
+id: 9412f0484f19ad79298491ba8321418f9011b622
+log_events: 
+- - 2013-07-11 14:16:11.509177 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-07-11 14:25:07.811373 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-07-11 14:25:24.975102 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

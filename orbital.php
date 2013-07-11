@@ -60,7 +60,7 @@ function orbital_sample_data_check(){
 add_action('admin_menu', 'orbital_plugin_menu');
 function orbital_plugin_menu(){
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page('orbital', 'Consume','edit_posts','orbital.php','generate_main_page');
+  $main = add_menu_page('orbital', 'Orbital','edit_posts','orbital.php','generate_main_page');
   //add hook for feed management page
   //TODO remove this. We don't need submenu pages now.
   //$feed_mgmt = add_submenu_page('orbital.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
