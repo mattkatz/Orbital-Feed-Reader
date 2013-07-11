@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Style repost things
+desc: |-
+  From adubs:
+  "It would be awesome if I could specify a css class to apply to things I want to repost , so that when I click 'PressThis!', the <p> wrapping the <a> is styled according to that class."
+  I don't totally get that, but some of this is due to dependency on the pressthis page/bookmarklet. Maybe we can change what we style.
+type: :feature
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-11 14:33:29.475784 Z
+references: []
+
+id: 0665ac1aef6189b5e7e861212b0bb22eebf24067
+log_events: 
+- - 2013-07-11 14:33:32.631114 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - from adubs

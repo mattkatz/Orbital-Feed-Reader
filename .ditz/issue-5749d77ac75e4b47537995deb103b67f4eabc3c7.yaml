@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Wordpress plugins page site link is 404
+desc: points to http://mattkatz.github.io/orbital instead of http://mattkatz.github.io/Orbital-Feed-Reader
+type: :bugfix
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-11 14:29:28.383257 Z
+references: []
+
+id: 5749d77ac75e4b47537995deb103b67f4eabc3c7
+log_events: 
+- - 2013-07-11 14:29:44.428491 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - from adubs.

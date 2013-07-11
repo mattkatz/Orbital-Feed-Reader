@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Settings should control creating blockquote for reblog
+desc: |-
+  From adubs:
+  "It would also be awesome to have a setting that lets me include the entire post ( or the first N paragraphs) in my post automatically.
+  "
+type: :feature
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-11 14:35:22.500296 Z
+references: []
+
+id: 87c502b2bc5ab9c8fb923f2f61e7b99887c2b617
+log_events: 
+- - 2013-07-11 14:35:31.822980 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - from adubs

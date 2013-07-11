@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: No setting to retrieve whole posts or just excerpts for a particular feed
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1.1
+reporter: Adubs
+status: :unstarted
+disposition: 
+creation_time: 2013-07-11 14:36:16.378671 Z
+references: []
+
+id: e7cb006aa862ec580b447ee8b05de08563afe05c
+log_events: 
+- - 2013-07-11 14:36:17.616909 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

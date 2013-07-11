@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: PressThis! as blog this button name is confusing.
+desc: |-
+  Maybe we can solve with a note or wp-pointer?
+  maybe change the text to "blog this!"?
+type: :bugfix
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-11 14:31:05.724499 Z
+references: []
+
+id: 2e10fffa88c9e713d724f5f26043ca52092f64ae
+log_events: 
+- - 2013-07-11 14:31:12.104492 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - from adubs

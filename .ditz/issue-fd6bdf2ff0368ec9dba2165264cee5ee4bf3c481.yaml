@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Get started tooltip message after first activate
+desc: |-
+  when I activate the plugin, register this little pointer guy.
+  first run it should point to where you need to click.
+  then it should disappear forever.
+type: :feature
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-11 14:28:09.561542 Z
+references: []
+
+id: fd6bdf2ff0368ec9dba2165264cee5ee4bf3c481
+log_events: 
+- - 2013-07-11 14:28:13.586164 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - from adubs
