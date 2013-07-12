@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: users should be able to manage settings
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :in_progress
+disposition: 
+creation_time: 2013-07-11 19:41:25.093233 Z
+references: []
+
+id: 4f3aa5ae83f9dc3fdc0751fbd8e0bc1297504c0b
+log_events: 
+- - 2013-07-11 19:41:26.463925 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-07-12 15:08:07.519603 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
