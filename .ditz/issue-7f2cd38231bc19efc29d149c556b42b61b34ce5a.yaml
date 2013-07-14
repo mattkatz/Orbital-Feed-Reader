@@ -2,7 +2,7 @@
 title: Save button on subscribe feeds not working
 desc: ""
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

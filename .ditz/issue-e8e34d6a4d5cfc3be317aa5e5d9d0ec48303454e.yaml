@@ -4,7 +4,7 @@ desc: |-
   seems to be mainly date functions that don't transfer.
   what does ttrss do?  what does wordpress do?
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

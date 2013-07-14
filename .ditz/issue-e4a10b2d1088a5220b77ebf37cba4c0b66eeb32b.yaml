@@ -2,7 +2,7 @@
 title: Switch to ember pre 2
 desc: upgrade, rewrite relevant bits
 type: :task
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

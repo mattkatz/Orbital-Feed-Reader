@@ -2,7 +2,7 @@
 title: Feed editing
 desc: give users the chance to change feed properties by editing
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

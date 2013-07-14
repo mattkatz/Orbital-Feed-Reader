@@ -2,7 +2,7 @@
 title: users should be able to manage settings
 desc: ""
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :in_progress

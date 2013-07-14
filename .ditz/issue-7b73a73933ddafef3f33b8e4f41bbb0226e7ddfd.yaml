@@ -2,7 +2,7 @@
 title: Add ability to see read items
 desc: add the show_read flag to the get feed entries call
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

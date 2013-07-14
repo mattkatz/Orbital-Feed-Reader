@@ -2,7 +2,7 @@
 title: "Add feed Title discovery to simplepie "
 desc: Not sure why it isn't in there already, but let's make it work.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

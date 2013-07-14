@@ -4,7 +4,7 @@ desc: |-
   I don't like confirmation boxes.
   maybe instead just set a timer for the undelete, put a note with a link to cancel it.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

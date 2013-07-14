@@ -2,7 +2,7 @@
 title: Feed management screen shouldn't show only sites with unread
 desc: ""
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

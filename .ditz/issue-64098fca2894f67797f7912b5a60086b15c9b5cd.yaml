@@ -2,7 +2,7 @@
 title: link titles should display html encoding
 desc: what's all this &quot business in my titles?
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
 status: :closed

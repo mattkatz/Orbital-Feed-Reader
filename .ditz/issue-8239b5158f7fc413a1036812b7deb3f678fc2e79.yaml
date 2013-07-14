@@ -2,7 +2,7 @@
 title: Clean up old ember files
 desc: we won't need them anymore
 type: :task
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

@@ -2,7 +2,7 @@
 title: Extract backend hooks to a single backend file
 desc: that way all hooks get added from one file
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

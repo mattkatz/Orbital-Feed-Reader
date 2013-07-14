@@ -2,7 +2,7 @@
 title: Public OPML export for not logged in users
 desc: display only feeds not marked as private.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted

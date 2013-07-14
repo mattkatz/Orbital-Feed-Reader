@@ -5,7 +5,7 @@ desc: |-
   Have a screen which displays recent feeds with a background
   Every few minutes, speak a feed title that you just switched to
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

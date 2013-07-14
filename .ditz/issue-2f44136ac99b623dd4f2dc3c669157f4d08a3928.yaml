@@ -4,7 +4,7 @@ desc: |-
   We want the scroll to entry to push us to the first item.  Even want to look like this item is selected.
   but we don't want to mark it as read yet.  First time you "j" it should mark as read the first item and select it.  Then it should move on with the next 'j'
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

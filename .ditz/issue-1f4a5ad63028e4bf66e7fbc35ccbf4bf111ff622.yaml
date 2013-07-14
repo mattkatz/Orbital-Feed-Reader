@@ -4,7 +4,7 @@ desc: |-
   instead of saying full - set it to fixed and the height of the window
   also stick it in place so outer window can scroll and it stays still
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

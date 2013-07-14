@@ -2,7 +2,7 @@
 title: Check export for private feeds!
 desc: We should be able to call wprssFeeds::get on any userid and get the public feeds.  For the current user we should also show public feeds.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

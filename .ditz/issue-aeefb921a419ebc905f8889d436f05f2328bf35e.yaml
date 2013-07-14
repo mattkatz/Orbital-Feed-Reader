@@ -2,7 +2,7 @@
 title: Add an icon for the sidemenu
 desc: maybe a satellite? there's a decent svg from the wikimedia foundation.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

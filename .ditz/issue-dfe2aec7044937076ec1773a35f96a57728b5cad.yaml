@@ -4,7 +4,7 @@ desc: |-
   It's public, there should be a good way to sub out to that and 
   whatever the RSS push thing is that Dave Winer made
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

@@ -2,7 +2,7 @@
 title: selectedFeedController should know read/unread pref
 desc: We should keep that info in the controller. or the view.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

@@ -1,8 +1,8 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
 title: Simplepie doesn't autodiscover some feeds
-desc: for example, http://mattkatz.github.com/Wordprss/
+desc: for example, http://mattkatz.github.com/Orbital/
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

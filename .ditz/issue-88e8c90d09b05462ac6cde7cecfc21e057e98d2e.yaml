@@ -2,7 +2,7 @@
 title: Import OPML
 desc: Start simple, just import without folders or tags
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

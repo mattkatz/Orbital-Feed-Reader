@@ -2,7 +2,7 @@
 title: Make read if you scroll past the cursor x position
 desc: Seems like we should make current as soon as you scroll the item to the top of the page or the mouse x and if you scroll the bottom past the mouse x or top of the page, we should make the item read.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

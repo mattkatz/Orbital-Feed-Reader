@@ -2,7 +2,7 @@
 title: Wordfence plugin shouldn't break the page.
 desc: for some reason an alert by wordfence screws up not just the page layout, but even the clicking of links.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

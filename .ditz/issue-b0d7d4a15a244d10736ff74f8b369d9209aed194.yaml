@@ -2,7 +2,7 @@
 title: Mark Read should take you to next unread feed
 desc: this has a few dependencies
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

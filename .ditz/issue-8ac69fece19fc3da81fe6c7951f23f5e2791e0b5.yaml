@@ -5,7 +5,7 @@ desc: |-
   need to copy the feed into form, then copy back to feed list.
   save button should enable only when form is dirty, disable after save.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

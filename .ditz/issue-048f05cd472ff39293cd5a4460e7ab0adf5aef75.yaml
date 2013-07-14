@@ -5,7 +5,7 @@ desc: |-
   if there are no more, a friendly note should let you know
   and if you press j again, you should go to next unread feed
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

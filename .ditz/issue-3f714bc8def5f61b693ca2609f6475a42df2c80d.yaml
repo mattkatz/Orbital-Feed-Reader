@@ -2,7 +2,7 @@
 title: Create scaffolding - script to update the site, etc
 desc: copy from upfuckr I imagine
 type: :task
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

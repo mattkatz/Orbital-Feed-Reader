@@ -2,7 +2,7 @@
 title: Special All Unread Feed
 desc: onload show a special all unread feed
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

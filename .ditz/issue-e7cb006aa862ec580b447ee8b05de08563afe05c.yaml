@@ -2,7 +2,7 @@
 title: No setting to retrieve whole posts or just excerpts for a particular feed
 desc: ""
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1.1
 reporter: Adubs
 status: :unstarted

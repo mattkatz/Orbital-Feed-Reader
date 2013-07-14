@@ -2,7 +2,7 @@
 title: figure out sort order
 desc: we should get the sort order to make sense - unread, oldest first.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted

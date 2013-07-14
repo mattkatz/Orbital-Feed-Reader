@@ -7,7 +7,7 @@ desc: |-
   feedlist should refresh.
   if that feed is selected, it should refresh in entries
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

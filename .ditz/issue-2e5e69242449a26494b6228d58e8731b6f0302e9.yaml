@@ -8,7 +8,7 @@ desc: |-
   K previous item.
   gt tagsearch
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

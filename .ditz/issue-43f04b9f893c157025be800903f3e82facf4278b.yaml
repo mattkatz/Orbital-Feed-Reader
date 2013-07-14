@@ -4,7 +4,7 @@ desc: |-
   we need to have an unread count in the menu item
   maybe as the icon, maybe in txt
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

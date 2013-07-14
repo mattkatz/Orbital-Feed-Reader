@@ -2,7 +2,7 @@
 title: Mark item read
 desc: clicking on an item should mark it as read
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

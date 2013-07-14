@@ -6,7 +6,7 @@ desc: |-
   that content area has a max-width that makes sense
   who has done this right?
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

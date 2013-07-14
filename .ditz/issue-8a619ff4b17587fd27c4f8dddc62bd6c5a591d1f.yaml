@@ -5,7 +5,7 @@ desc: |-
   * subscribe/edit subscriptions
   * tagging feeds
 type: :task
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

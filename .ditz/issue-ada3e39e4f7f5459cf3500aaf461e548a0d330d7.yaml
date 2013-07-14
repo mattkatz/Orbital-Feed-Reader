@@ -10,7 +10,7 @@ desc: |-
   hit h to go previous.  Correctly cycles.
   hit h again, correctly goes backwards.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

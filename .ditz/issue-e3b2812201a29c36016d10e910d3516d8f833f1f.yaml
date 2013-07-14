@@ -2,7 +2,7 @@
 title: fix the display of dates
 desc: right now they are just the big string - should change it to be simpler, clearer
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted

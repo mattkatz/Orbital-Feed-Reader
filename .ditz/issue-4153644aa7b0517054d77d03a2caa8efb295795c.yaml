@@ -2,7 +2,7 @@
 title: blog from feed
 desc: Click to blog an entry.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

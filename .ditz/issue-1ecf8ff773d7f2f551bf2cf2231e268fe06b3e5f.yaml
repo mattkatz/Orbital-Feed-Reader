@@ -4,7 +4,7 @@ desc: |-
   they shouldn't show up in any PUBLIC opml, just opml files that you export.
   they shouldn't show up in your blogroll
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

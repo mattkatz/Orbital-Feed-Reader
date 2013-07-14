@@ -5,7 +5,7 @@ desc: |-
   when adding an entry, look up to see if the guid exists first
   then update if it does
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

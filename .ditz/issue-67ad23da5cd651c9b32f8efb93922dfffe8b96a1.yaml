@@ -2,7 +2,7 @@
 title: Mark an item unread
 desc: clicking on the read/unread indicator should toggle the status
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

@@ -2,7 +2,7 @@
 title: Pull JS enqueue out of main function.
 desc: Should only be enqueued when on the page or subpages
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

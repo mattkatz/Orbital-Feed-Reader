@@ -2,7 +2,7 @@
 title: "Show read items "
 desc: To show old read items, click this
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

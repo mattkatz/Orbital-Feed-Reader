@@ -6,7 +6,7 @@ desc: |-
   Here in the stack trace:
   jQuery('#'+entry.entry_id+"<.entry_isloading").show();
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

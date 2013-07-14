@@ -5,7 +5,7 @@ desc: |-
   "It would be awesome if I could specify a css class to apply to things I want to repost , so that when I click 'PressThis!', the <p> wrapping the <a> is styled according to that class."
   I don't totally get that, but some of this is due to dependency on the pressthis page/bookmarklet. Maybe we can change what we style.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

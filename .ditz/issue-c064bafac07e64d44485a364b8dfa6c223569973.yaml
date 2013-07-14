@@ -2,7 +2,7 @@
 title: Clicking read toggle doesn't always work right
 desc: If you click on the read/unread toggle for an unselected item, the selected one toggles instead
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

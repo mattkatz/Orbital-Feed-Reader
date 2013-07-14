@@ -4,7 +4,7 @@ desc: |-
   need to have enter actually work in a dialog
   like add feed view, etc.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

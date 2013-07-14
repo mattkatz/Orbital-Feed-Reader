@@ -2,7 +2,7 @@
 title: Show entry date on entries
 desc: pay more attention to the great work of tt-rss and google reader
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

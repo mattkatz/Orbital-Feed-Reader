@@ -2,7 +2,7 @@
 title: add feed should fail better
 desc: when there is no feed we should let peeps know.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
 status: :closed

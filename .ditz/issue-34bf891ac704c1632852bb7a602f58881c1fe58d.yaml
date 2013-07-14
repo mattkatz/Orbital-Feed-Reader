@@ -2,7 +2,7 @@
 title: Command bar across the top
 desc: ""
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

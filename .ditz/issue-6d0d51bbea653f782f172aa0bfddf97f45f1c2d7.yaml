@@ -2,7 +2,7 @@
 title: Create a helper for commands
 desc: should make the button and span and so on.
 type: :task
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

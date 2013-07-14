@@ -4,7 +4,7 @@ desc: |-
   Currently i
   currently it fires too early, so we don't have a row to do an offset from.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

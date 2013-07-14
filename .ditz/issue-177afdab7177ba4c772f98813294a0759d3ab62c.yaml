@@ -2,7 +2,7 @@
 title: Display Blogroll
 desc: Should be a widget, generated from your blogroll, divided by categories, hiding anything marked private
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

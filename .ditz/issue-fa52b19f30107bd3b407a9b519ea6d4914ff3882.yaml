@@ -2,7 +2,7 @@
 title: Menu Title should have total unread number
 desc: in the main menu on the right we should put unread after the title.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

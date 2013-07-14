@@ -2,7 +2,7 @@
 title: Add NONCE and Permission valdation to ajax calls
 desc: insecurity is lame yall.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

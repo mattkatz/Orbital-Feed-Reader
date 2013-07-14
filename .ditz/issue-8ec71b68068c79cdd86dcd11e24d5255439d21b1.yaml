@@ -2,7 +2,7 @@
 title: Add loading indicators to elements when they are loading.
 desc: Right now it is unclear when elements are loading or have stopped.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

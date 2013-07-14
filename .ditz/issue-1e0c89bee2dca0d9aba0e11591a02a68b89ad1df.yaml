@@ -2,7 +2,7 @@
 title: Show unread when user selects a feed with no unread items
 desc: Presumably they clicked on it to see *SOMETHING*
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

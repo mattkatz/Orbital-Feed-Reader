@@ -4,7 +4,7 @@ desc: |-
   clean up theh calling so that it happens in the proper hooks.
   Don't want to crap up the debug log.
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

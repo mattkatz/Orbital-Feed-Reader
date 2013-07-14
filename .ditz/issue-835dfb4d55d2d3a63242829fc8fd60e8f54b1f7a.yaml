@@ -4,7 +4,7 @@ desc: |-
   Let's make it so that we find all entries with music attachments, play them as it goes.
   youtube playing as well
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

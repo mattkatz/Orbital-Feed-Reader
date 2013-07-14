@@ -2,7 +2,7 @@
 title: Fixed feedlist, scrollable feeds
 desc: the items should scroll, the feedlist should be stuck
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

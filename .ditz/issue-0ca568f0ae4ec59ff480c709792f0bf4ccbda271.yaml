@@ -2,7 +2,7 @@
 title: clicking a possible feed should fill in that as the details.
 desc: We should fill in the title, the site_url, etc for each of them.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

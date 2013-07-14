@@ -2,7 +2,7 @@
 title: logging cleanup
 desc: Get rid of some of the logging so we can deal with any issues easier.
 type: :task
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
 status: :closed

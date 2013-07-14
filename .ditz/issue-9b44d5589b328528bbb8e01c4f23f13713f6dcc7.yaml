@@ -2,7 +2,7 @@
 title: import opml from tt-rss
 desc: ""
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

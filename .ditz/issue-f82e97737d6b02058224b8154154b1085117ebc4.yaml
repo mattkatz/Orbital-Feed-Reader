@@ -5,7 +5,7 @@ desc: |-
   should we get changed feeds only and then update those by searching on feed_id or should we just grab the whole thing and then iterate?  
   client side shouldn't get too bogged down I think so I guess I'll start with the simple version and see if we need something more complex.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

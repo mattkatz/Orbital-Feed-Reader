@@ -2,7 +2,7 @@
 title: Add a sanity check for installation
 desc: we need to check things like curl_init and allow_url_fopen
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

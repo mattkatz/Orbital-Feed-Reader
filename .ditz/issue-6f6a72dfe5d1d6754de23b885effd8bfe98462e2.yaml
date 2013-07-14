@@ -2,7 +2,7 @@
 title: Finish Add Feed should clear the add-feed form
 desc: right now you have the old crap in there.  On hide we should erase all
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

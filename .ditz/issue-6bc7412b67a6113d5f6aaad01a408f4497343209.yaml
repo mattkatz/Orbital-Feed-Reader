@@ -2,7 +2,7 @@
 title: upgrade to ember 1.0
 desc: getting oooold
 type: :task
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@morelightmorelight.com>
 status: :closed

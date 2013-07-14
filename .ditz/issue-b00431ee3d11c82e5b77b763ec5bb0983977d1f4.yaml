@@ -2,7 +2,7 @@
 title: Ajax request feed list, display on page
 desc: ""
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

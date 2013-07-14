@@ -2,7 +2,7 @@
 title: mark read should decrement feed unread
 desc: ""
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

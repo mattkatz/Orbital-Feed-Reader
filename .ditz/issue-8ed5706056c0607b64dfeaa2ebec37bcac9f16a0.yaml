@@ -2,7 +2,7 @@
 title: upgrade to latest ember
 desc: has the action helper, means we might not need to use styled buttons
 type: :task
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

@@ -2,7 +2,7 @@
 title: DB uninstall doesn't work.
 desc: deactivation hook doesn't work
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted

@@ -4,7 +4,7 @@ desc: |-
   angular posts don't properly work with PHP
   http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: matt <matt@kingofrats>
 status: :closed

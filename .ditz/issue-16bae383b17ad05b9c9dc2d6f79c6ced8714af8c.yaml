@@ -5,7 +5,7 @@ desc: |-
   Maybe go look up all their urls, and discover feeds for them?
   Maybe try to follow their google reader whatsits?
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted

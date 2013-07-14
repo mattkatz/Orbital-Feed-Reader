@@ -4,7 +4,7 @@ desc: |-
   if there is a comment link in the feed, store it
   if the comment link is there, display it unobtrusively.
 type: :feature
-component: Wordprss
+component: Orbital
 release: 
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted

@@ -2,7 +2,7 @@
 title: Change menu name from Consume to Orbit
 desc: from adubs
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

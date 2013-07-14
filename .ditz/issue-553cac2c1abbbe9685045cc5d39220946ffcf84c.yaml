@@ -2,7 +2,7 @@
 title: loading the home page just exports OPML?!
 desc: for crying out loud
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed

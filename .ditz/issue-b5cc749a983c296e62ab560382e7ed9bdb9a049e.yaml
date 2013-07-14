@@ -2,7 +2,7 @@
 title: Sometimes read/unread status doesn't update
 desc: No failure, just doesn't return a change
 type: :bugfix
-component: Wordprss
+component: Orbital
 release: 
 reporter: matt <matt@morelightmorelight.com>
 status: :closed

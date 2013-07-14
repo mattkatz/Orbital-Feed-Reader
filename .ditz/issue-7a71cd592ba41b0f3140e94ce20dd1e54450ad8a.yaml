@@ -2,7 +2,7 @@
 title: If there is only one feed at a site, just return that.
 desc: ""
 type: :feature
-component: Wordprss
+component: Orbital
 release: 0.1 - Feeds, Subscribed
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
