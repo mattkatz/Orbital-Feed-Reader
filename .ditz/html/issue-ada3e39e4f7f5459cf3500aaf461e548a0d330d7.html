@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>Finish Add Feed should clear the add-feed form</title>
+<title>previousUnreadFeed doesn't iterate properly</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -13,12 +13,17 @@
 
 <div class="main">
 
-<h1>Finish Add Feed should clear the add-feed form</h1>
+<h1>previousUnreadFeed doesn't iterate properly</h1>
 <div class="backptr"><a href="index.html">&laquo; Orbital project page</a></div>
 
 
   <div class="description">
-  <p>right now you have the old crap in there.  On hide we should erase all</p>
+  <p>Start with nothing selected.
+hit h to go to previous unread feed.
+Correctly hits the last feed.
+hit h again to go back - doesn't go back.  Keeps finding the last item.</p><p>click on first item.
+hit h to go previous.  Correctly cycles.
+hit h again, correctly goes backwards.</p>
   </div>
 
 
@@ -27,7 +32,7 @@
   <tbody>
     <tr>
       <td class="attrname">Id:</td>
-      <td class="attrval"><span class="id">6f6a72dfe5d1d6754de23b885effd8bfe98462e2</span></td>
+      <td class="attrval"><span class="id">ada3e39e4f7f5459cf3500aaf461e548a0d330d7</span></td>
     </tr>
 
     <tr>
@@ -37,7 +42,7 @@
 
     <tr>
       <td class="attrname">Creation time:</td>
-      <td class="attrval">2012-05-20 14:44 UTC</td>
+      <td class="attrval">2012-03-20 03:57 UTC</td>
     </tr>
 
     <tr>
@@ -84,23 +89,19 @@
   <tbody>
   
     <tr class="even-row">
-      <td class="date">2012-07-17 12:25 UTC</td>
+      <td class="date">2012-03-20 04:16 UTC</td>
       <td class="person">Matt Katz &lt;ditz@...&gt;</td>
       <td class="message">closed with disposition fixed</td>
     </tr>
     
-    <tr><td></td></tr>
-  
-    <tr class="odd-row">
-      <td class="date">2012-06-06 12:14 UTC</td>
-      <td class="person">Matt Katz &lt;ditz@...&gt;</td>
-      <td class="message">changed status from unstarted to in_progress</td>
-    </tr>
+      <tr><td colspan="3" class="logcomment">
+      using toArray() first fixes it.
+      </td></tr>
     
     <tr><td></td></tr>
   
-    <tr class="even-row">
-      <td class="date">2012-05-20 14:44 UTC</td>
+    <tr class="odd-row">
+      <td class="date">2012-03-20 03:57 UTC</td>
       <td class="person">Matt Katz &lt;ditz@...&gt;</td>
       <td class="message">created</td>
     </tr>
