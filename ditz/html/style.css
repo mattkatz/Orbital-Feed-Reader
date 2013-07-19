@@ -30,6 +30,11 @@ a:visited {
   color: #553d41;
 }
 
+a:hover {
+  text-decoration: underline;
+  color: #003339;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
