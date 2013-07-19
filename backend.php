@@ -160,8 +160,27 @@ class OrbitalFeeds {
     // AND feeds.owner = " . $current_user->ID."
     $myrows = $wpdb->get_results($sql );
     return $myrows;
+  }
+/* Method to find total unread feeds
+ */
+  static function get_unread_count(){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $current_user = wp_get_current_user();
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $sql = "
+      select 
+      count(*) as unread_count 
+      from ".$user_entries." as ue
+      where ue.isRead !=1
+      and ue.owner_uid = ". $current_user->ID."
+      ";
+    $myrows = $wpdb->get_var($sql );
+    return $myrows;
 
   }
+
 /* Method to unsubscribe a feed
  *   - Should delete a feed from user_feeds for current user
  *   - Should delete all user_entries for current user

@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-07-11 14:29:28.383257 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - from adubs.
+- - 2013-07-19 01:49:16.844030 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - thanks adubs
