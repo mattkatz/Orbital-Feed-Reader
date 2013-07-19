@@ -5,8 +5,8 @@ type: :task
 component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2012-03-15 23:54:03.178051 Z
 references: []
 
@@ -20,3 +20,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - unassigned from release 0.1 - Feeds, Subscribed
   - naw, this can wait for a revisit of helpers
+- - 2013-07-19 23:35:31.589089 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - not needed after the angular switch
