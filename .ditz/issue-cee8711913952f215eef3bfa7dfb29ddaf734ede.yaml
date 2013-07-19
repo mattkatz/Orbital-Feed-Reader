@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Title and menu should show unread count
+desc: ""
+type: :feature
+component: Wordprss
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-07-19 01:48:10.346874 Z
+references: []
+
+id: cee8711913952f215eef3bfa7dfb29ddaf734ede
+log_events: 
+- - 2013-07-19 01:48:12.001028 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-07-19 01:48:34.627856 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

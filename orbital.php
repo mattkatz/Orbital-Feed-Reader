@@ -1,7 +1,7 @@
 <?php
 /*
 * Plugin Name: Orbital Feed Reader
-* Plugin URI: http://mattkatz.github.com/orbital/
+* Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
 * Version: 0.1
 * Author: Matt Katz
@@ -59,15 +59,16 @@ function orbital_sample_data_check(){
 
 add_action('admin_menu', 'orbital_plugin_menu');
 function orbital_plugin_menu(){
+  require_once 'backend.php';
+  $unread_count = OrbitalFeeds::get_unread_count();
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page('orbital', 'Orbital','edit_posts','orbital.php','generate_main_page');
-  $settings = add_submenu_page('orbital.php', 'Settings', 'Settings', 'edit_posts','edit_settings','edit_settings');
+  $main = add_menu_page($unread_count.' - Orbital', '('.$unread_count.') Orbital','edit_posts','orbital.php','generate_main_page');
+  //Settings page
+  $settings = add_submenu_page('orbital.php', 'Settings', 'Settings', 'edit_posts','edit_orbital_settings','orbital_settings');
   //add hook for feed management page
   //TODO remove this. We don't need submenu pages now.
   //$feed_mgmt = add_submenu_page('orbital.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
-  
-  
-   /* Using registered $page handle to hook script load */
+  /* Using registered $page handle to hook script load */
   add_action('admin_print_styles-' . $main, 'orbital_enqueue_scripts');
   add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
   //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
@@ -125,9 +126,15 @@ function orbital_main_scripts()
   //here we set up hook like the shortcuts
 }
 
+/* This is the main orbital page with all the feed reading goodness */
 function generate_main_page()
 {
   require_once('mainwindow.php');
+}
+/* This is the settings page. */
+function orbital_settings()
+{
+  require_once 'settings.php';
 }
 
 function feed_management(){
