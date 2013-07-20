@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add icons for OPML, feed, share
+desc: use the standard icons more so that they get better known
+type: :feature
+component: Orbital
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-07-20 20:04:33.363333 Z
+references: []
+
+id: 59b03cfef9979728886ab0ae0017954cea9be86d
+log_events: 
+- - 2013-07-20 20:04:34.999565 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
