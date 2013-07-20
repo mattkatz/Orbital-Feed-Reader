@@ -224,16 +224,7 @@ function orbital_admin_menu() {
     add_options_page( 'Orbital', 'Orbital', 'manage_options', 'orbital-plugin-settings', 'orbital_options_page' );
 }
 function orbital_options_page() {
-    ?>
-    <div class="wrap">
-        <h2>My Plugin Options</h2>
-        <form action="options.php" method="POST">
-            <?php settings_fields( 'orbital-settings-group' ); ?>
-            <?php do_settings_sections( 'orbital-plugin-settings' ); ?>
-            <?php submit_button(); ?>
-        </form>
-    </div>
-    <?php
+  require_once "settings.php";
 }
 
 
