@@ -95,6 +95,19 @@ function orbital_admin_init(){
   /* Register our stylesheet. */
   wp_register_style( 'orbitalcss', plugins_url('style.css', __FILE__) );
 
+  /* Register some settings for the settings menu */
+  register_setting( 'orbital-settings-group', 'orbital-setting' );
+  add_settings_section( 'section-one', 'Section One', 'section_one_callback',  'orbital-plugin-settings');
+  add_settings_field( 'field-one', 'Field One', 'field_one_callback',   'orbital-plugin-settings', 'section-one' );
+  
+
+}
+function section_one_callback() {
+    echo 'Some help text goes here.';
+}
+function field_one_callback() {
+    $setting = esc_attr( get_option( 'orbital-setting' ) );
+    echo "<input type='text' name='orbital-setting' value='$setting' />";
 }
 
 // these are common to all of our pages
@@ -204,6 +217,26 @@ function plugin_trigger_check() {
     exit;
   }
 }
+
+//Add settings page
+add_action( 'admin_menu', 'orbital_admin_menu' );
+function orbital_admin_menu() {
+    add_options_page( 'Orbital', 'Orbital', 'manage_options', 'orbital-plugin-settings', 'orbital_options_page' );
+}
+function orbital_options_page() {
+    ?>
+    <div class="wrap">
+        <h2>My Plugin Options</h2>
+        <form action="options.php" method="POST">
+            <?php settings_fields( 'orbital-settings-group' ); ?>
+            <?php do_settings_sections( 'orbital-plugin-settings' ); ?>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}
+
+
 register_activation_hook(__FILE__,'orbital_activate');
 
 register_uninstall_hook(__FILE__,'orbital_uninstall_db');
