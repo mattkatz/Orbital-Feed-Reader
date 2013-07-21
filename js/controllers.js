@@ -215,11 +215,13 @@ function EntriesCtrl($scope, $http, $log){
     k=d.getSelection,
     x=d.selection,
     s=(e?e():(k)?k():(x?x.createRange().text:0)),
-    f=pressThisUrl,
-    d=entry;
-    l=d.link,
-    e=encodeURIComponent,
-    g=f+'?u='+e(l)+'&t='+e(d.title)+'&s='+e(s)+'&v=2';
+    f=pressThisUrl;
+    e=encodeURIComponent;
+    url = e(entry.link);
+    title = e(entry.title);
+    content = e(s);
+    content = content?content:e(entry.content);
+    g=f+'?u='+url+'&t='+title+'&s='+content+'&v=2';
     function a(){
       if(!w.open(g,'t','toolbar=0,resizable=0,scrollbars=1,status=1,width=720,height=570'))
         {l.href=g;}
