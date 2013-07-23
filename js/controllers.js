@@ -221,8 +221,10 @@ function EntriesCtrl($scope, $http, $log){
     title = e(entry.title);
     content = e(s);
     console.log(opts.settings['quote-text']);
-    if(opts.settings[ 'quote-text' ]){
-      content = content?content:e(entry.content);
+    if(opts.settings[ 'quote-text' ] && ! content ){
+      var div = document.createElement("div");
+      div.innerHTML = entry.content;
+      content = e(div.textContent || div.innerText || "");
     }
     g=f+'?u='+url+'&t='+title+'&s='+content+'&v=2';
     function a(){
