@@ -98,16 +98,16 @@ function orbital_admin_init(){
   /* Register some settings for the settings menu */
   register_setting( 'orbital-settings-group', 'orbital-setting' );
   add_settings_section( 'section-one', 'Blog This Settings', 'section_one_callback',  'orbital-plugin-settings');
-  add_settings_field( 'field-one', 'Field One', 'field_one_callback',   'orbital-plugin-settings', 'section-one' );
+  add_settings_field( 'field-one', 'I want to quote the whole article if there is no text selected', 'field_one_callback',   'orbital-plugin-settings', 'section-one' );
   
 
 }
 function section_one_callback() {
-    echo 'You can put in some stylings for the blog this option.';
+    echo 'How should the Blog This! button work?';
 }
 function field_one_callback() {
     $setting = esc_attr( get_option( 'orbital-setting' ) );
-    echo "<input type='text' name='orbital-setting' value='$setting' />";
+    echo "<input type='checkbox' name='orbital-setting' value='$setting' />";
 }
 
 // these are common to all of our pages
