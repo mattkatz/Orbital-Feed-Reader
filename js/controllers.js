@@ -220,8 +220,8 @@ function EntriesCtrl($scope, $http, $log){
     url = e(entry.link);
     title = e(entry.title);
     content = e(s);
-    console.log(opts.settings);
-    if(opts.settings){
+    console.log(opts.settings['quote-text']);
+    if(opts.settings[ 'quote-text' ]){
       content = content?content:e(entry.content);
     }
     g=f+'?u='+url+'&t='+title+'&s='+content+'&v=2';

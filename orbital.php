@@ -106,8 +106,9 @@ function section_one_callback() {
     echo 'How should the Blog This! button work?';
 }
 function field_one_callback() {
-    $setting = esc_attr( get_option( 'orbital-setting' ) );
-    echo "<input type='checkbox' name='orbital-setting' value=1 ". checked( 1, $setting, false ) . " />";
+    $settings = (array) get_option( 'orbital-setting' );
+    $quote_text = esc_attr($settings['quote-text']);
+    echo "<input type='checkbox' name='orbital-setting[quote-text]' value=1 ". checked( 1, $quote_text, false ) . " />";
 }
 
 // these are common to all of our pages
@@ -127,7 +128,7 @@ function orbital_enqueue_scripts()
     // so that you can check it later when an AJAX request is sent
     'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
     //our main settings
-    'settings' => get_option('orbital-setting'),
+    'settings' => (array) get_option('orbital-setting'),
   ) );
   //add our stylesheet
   wp_enqueue_style('orbitalcss');
