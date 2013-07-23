@@ -36,7 +36,7 @@ function FeedListCtrl($scope, $http, $log){
   $scope.refresh = function(){
     $scope.isLoading = true;
     $log.info('refreshing feeds');
-    $http.get(get_url.ajaxurl+'?action=orbital_get_feeds' )
+    $http.get(opts.ajaxurl+'?action=orbital_get_feeds' )
     .success(function(data){ 
       
       $scope.feeds = data;
@@ -94,7 +94,7 @@ function FeedListCtrl($scope, $http, $log){
       action: 'orbital_update_feed',
       feed_id: feed.feed_id,
     };
-    $http.post(get_url.ajaxurl, data)
+    $http.post(opts.ajaxurl, data)
     .success(function(response){
       $log.info('selecting '+feed.feed_id);
       //refresh the feedlist
@@ -148,7 +148,7 @@ function FeedListCtrl($scope, $http, $log){
           action: 'orbital_mark_items_read',
           feed_id:feed.feed_id,
         };
-        $http.post(get_url.ajaxurl, data)
+        $http.post(opts.ajaxurl, data)
         .success(function(response){
           $scope.refresh();
           $scope.select($scope.nextUnreadFeed());
@@ -180,7 +180,7 @@ function EntriesCtrl($scope, $http, $log){
   $scope.displayFeed = function(id,showRead){
     $scope.currentFeedId = id;
     $scope.isLoading = true;
-    $http.get(get_url.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
@@ -192,7 +192,7 @@ function EntriesCtrl($scope, $http, $log){
 
   $scope.addMoreEntries = function(){
     $scope.isLoading = true;
-    $http.get(get_url.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId)
     .success(function  (response) {
       $scope.isLoading = false;
       $log.info('going to the server mines for more delicious content');
@@ -220,7 +220,10 @@ function EntriesCtrl($scope, $http, $log){
     url = e(entry.link);
     title = e(entry.title);
     content = e(s);
-    content = content?content:e(entry.content);
+    console.log(opts.settings);
+    if(opts.settings){
+      content = content?content:e(entry.content);
+    }
     g=f+'?u='+url+'&t='+title+'&s='+content+'&v=2';
     function a(){
       if(!w.open(g,'t','toolbar=0,resizable=0,scrollbars=1,status=1,width=720,height=570'))
@@ -252,7 +255,7 @@ function EntriesCtrl($scope, $http, $log){
     $scope.selectedEntry = entry;
     entry.isLoading = true;
     //Mark the entry read on the server
-    $http.post(get_url.ajaxurl,data)
+    $http.post(opts.ajaxurl,data)
     .success(function(data){
       //mark the entry as read in the UI
       entry.isRead= entry.isRead == 0 ? 1:0;
@@ -374,7 +377,7 @@ function SubsCtrl($scope,$http,$log){
     };
     $scope.isLoading=true;
     //ask the backend to look at it
-    $http.post(get_url.ajaxurl,data)
+    $http.post(opts.ajaxurl,data)
     .success(function(response){
       $scope.isLoading=false;
       if("feed" == response.url_type){
@@ -413,7 +416,7 @@ function SubsCtrl($scope,$http,$log){
       site_url: feed.site_url,
       is_private: feed.private,
     };
-    $http.post(get_url.ajaxurl,data)
+    $http.post(opts.ajaxurl,data)
     .success(function(response){
       if(! batchmode){
         //mark the save button not busy
@@ -438,7 +441,7 @@ function SubsCtrl($scope,$http,$log){
       action: 'orbital_unsubscribe_feed',
       feed_id: feed.feed_id,
     };
-    $http.post(get_url.ajaxurl,data)
+    $http.post(opts.ajaxurl,data)
     .success(function(response){
       //unmark the busy 
       $scope.isLoading = false;

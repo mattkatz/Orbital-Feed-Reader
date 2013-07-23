@@ -107,7 +107,7 @@ function section_one_callback() {
 }
 function field_one_callback() {
     $setting = esc_attr( get_option( 'orbital-setting' ) );
-    echo "<input type='checkbox' name='orbital-setting' value='$setting' />";
+    echo "<input type='checkbox' name='orbital-setting' value=1 ". checked( 1, $setting, false ) . " />";
 }
 
 // these are common to all of our pages
@@ -121,11 +121,13 @@ function orbital_enqueue_scripts()
   wp_enqueue_script('angular_controllers_script');
   wp_enqueue_script('scrollToEntry');
 
-  wp_localize_script( 'angular_controllers_script', 'get_url', array( 
+  wp_localize_script( 'angular_controllers_script', 'opts', array( 
     'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
     // generate a nonce with a unique ID "myajax-post-comment-nonce"
     // so that you can check it later when an AJAX request is sent
     'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
+    //our main settings
+    'settings' => get_option('orbital-setting'),
   ) );
   //add our stylesheet
   wp_enqueue_style('orbitalcss');
