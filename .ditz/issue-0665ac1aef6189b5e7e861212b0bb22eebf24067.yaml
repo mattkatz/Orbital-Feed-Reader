@@ -8,8 +8,8 @@ type: :feature
 component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2013-07-11 14:33:29.475784 Z
 references: []
 
@@ -19,3 +19,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - from adubs
+- - 2013-07-23 13:52:06.707468 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - the pressthis bookmarklet doesn't support much. maybe later.
