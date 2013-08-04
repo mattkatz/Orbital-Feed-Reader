@@ -8,6 +8,8 @@ I think that you should reduce the distance between reading and writing. Tumblr,
 
 Instead, I'd like to bring a feed reader into Wordpress that lets you blog from your blogroll.
 
+This plugin is for folks who have their own install of wordpress and want to also have a feedreader in the same place.
+
 Goals
 =====
 
