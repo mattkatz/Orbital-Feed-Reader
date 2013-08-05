@@ -33,6 +33,12 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
+= 0.1.1 = 
+* Renamed the menu to Orbital with unread count
+* Added a pointer to the Orbital Menu item on first start.
+* Add a link to settings from the plugins page
+* Add a setting to auto quote text if nothing is highlighted.
+
 = 0.1 =
 First release. 
 You should be able to 
