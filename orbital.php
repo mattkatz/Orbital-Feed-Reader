@@ -305,10 +305,11 @@ function orbital_pointer_print_scripts() {
  
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'orbital_plugin_action_links' );
 function orbital_plugin_action_links( $links ) {
+  global $orbital_settings_slug;
 
 	return array_merge(
 		array(
-			'settings' => '<a href="' . admin_url( 'tools.php?page=our-settings-page.php' ) . '">' . __( 'Settings', 'ts-fab' ) . '</a>'
+			'settings' => '<a href="' . admin_url( "admin.php?page=$orbital_settings_slug" ) . '">' . __( 'Settings', 'ts-fab' ) . '</a>'
 		),
 		$links
 	);
