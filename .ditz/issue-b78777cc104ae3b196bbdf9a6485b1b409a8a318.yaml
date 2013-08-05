@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: move images to one directory
+desc: don't mix in with everything.
+type: :task
+component: Orbital
+release: 0.1.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-08-05 01:43:26.853969 Z
+references: []
+
+id: b78777cc104ae3b196bbdf9a6485b1b409a8a318
+log_events: 
+- - 2013-08-05 01:43:29.248983 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-08-05 01:43:48.617642 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-08-05 01:46:09.594951 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

@@ -11,7 +11,7 @@
     <div id="orbital-content" >
         <div class="indicator" ng-show="isLoading">
           <img src="<?php
-            echo plugins_url("ajax-loader.gif", __FILE__);
+            echo plugins_url("img/ajax-loader.gif", __FILE__);
           ?>">
         </div>
         <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
@@ -25,7 +25,7 @@
               </div>
               <div class="indicator" ng-show="entry.isLoading">
                 <img src="<?php
-                  echo plugins_url("ajax-loader.gif", __FILE__);
+                  echo plugins_url("img/ajax-loader.gif", __FILE__);
                 ?>">
               </div>
               <div class="indicator" ng-show="entry.isRead">
@@ -60,7 +60,7 @@
   <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
     <div class='indicator' ng-show="isLoading" >
                   <img src="<?php
-                    echo plugins_url("ajax-loader.gif", __FILE__);
+                    echo plugins_url("img/ajax-loader.gif", __FILE__);
                   ?>">
     </div>
     <div ng-hide="feedCandidate">

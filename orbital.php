@@ -70,7 +70,7 @@ function orbital_plugin_menu(){
   $menu_title = $page_title;
   $capability = 'edit_posts';
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page');
+  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/Satellites_icon201001.svg',__FILE__));
   //Settings page
   $settings = add_submenu_page( $orbital_slug, 'Settings', 'Settings', $capability, $orbital_settings_slug, 'orbital_settings');
   //add hook for feed management page
