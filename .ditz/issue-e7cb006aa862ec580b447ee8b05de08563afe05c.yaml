@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.1.1
 reporter: Adubs
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2013-07-11 14:36:16.378671 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2013-08-05 01:38:30.298458 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - that seems like a thing that the feed provides, not the reader.

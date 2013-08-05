@@ -8,8 +8,8 @@ type: :feature
 component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-07-11 14:35:22.500296 Z
 references: []
 
@@ -19,3 +19,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - from adubs
+- - 2013-08-05 01:37:54.570144 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - blockquote isn't great, but it seems to work.

@@ -3,7 +3,7 @@ title: Add an icon for the sidemenu
 desc: maybe a satellite? there's a decent svg from the wikimedia foundation.
 type: :feature
 component: Orbital
-release: 
+release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2013-07-09 02:48:48.752387 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2013-08-05 01:39:39.145216 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.1 from unassigned
   - ""
