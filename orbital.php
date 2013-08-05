@@ -8,10 +8,10 @@
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
 * */
-$page_title = "Voracious Reader";
-$menu_title = "CONSUME";
-$capability = 'edit_posts';
-$slug = 'orbital.php';
+global $orbital_slug;
+$orbital_slug = 'orbital.php';
+global $orbital_settings_slug;
+$orbital_settings_slug = 'orbital_plugin_settings';
 global $orbital_db_version ;
 $orbital_db_version = '0.1';
 global $orbital_db_version_opt_string;
@@ -59,12 +59,20 @@ function orbital_sample_data_check(){
 
 add_action('admin_menu', 'orbital_plugin_menu');
 function orbital_plugin_menu(){
+  //TODO should this be global? Probably not. 
+  global $orbital_slug;
+  global $orbital_settings_slug;
+
   require_once 'backend.php';
   $unread_count = OrbitalFeeds::get_unread_count();
+
+  $page_title = '('.$unread_count.') Orbital';
+  $menu_title = $page_title;
+  $capability = 'edit_posts';
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page($unread_count.' - Orbital', '('.$unread_count.') Orbital','edit_posts','orbital.php','generate_main_page');
+  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page');
   //Settings page
-  $settings = add_submenu_page('orbital.php', 'Settings', 'Settings', 'edit_posts','edit_orbital_settings','orbital_settings');
+  $settings = add_submenu_page( $orbital_slug, 'Settings', 'Settings', $capability, $orbital_settings_slug, 'orbital_settings');
   //add hook for feed management page
   //TODO remove this. We don't need submenu pages now.
   //$feed_mgmt = add_submenu_page('orbital.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
@@ -224,7 +232,8 @@ function plugin_trigger_check() {
 //Add settings page
 add_action( 'admin_menu', 'orbital_admin_menu' );
 function orbital_admin_menu() {
-    add_options_page( 'Orbital', 'Orbital', 'manage_options', 'orbital-plugin-settings', 'orbital_options_page' );
+  global $orbital_settings_slug;
+    add_options_page( 'Orbital', 'Orbital', 'manage_options', $orbital_settings_slug, 'orbital_options_page' );
 }
 function orbital_options_page() {
   require_once "settings.php";
@@ -244,7 +253,7 @@ function orbital_enqueue_pointer_script_style( $hook_suffix ) {
   $dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
 
   // Check if our pointer is not among dismissed ones
-  if( !in_array( 'orbital_menu_settings_pointer', $dismissed_pointers ) ) {
+  if( !in_array( 'orbital_menu_pointer', $dismissed_pointers ) ) {
     $enqueue_pointer_script_style = true;
     
     // Add footer scripts using callback function
@@ -278,7 +287,7 @@ function orbital_pointer_print_scripts() {
       pointerWidth:  350,
       close:      function() {
                 $.post( ajaxurl, {
-                    pointer: 'orbital_menu_settings_pointer', // pointer ID
+                    pointer: 'orbital_menu_pointer', // pointer ID
                     action: 'dismiss-wp-pointer'
                 });
               }
@@ -288,6 +297,22 @@ function orbital_pointer_print_scripts() {
   </script>
 
 <?php
+} 
+
+/**
+ * Add action links in Plugins table
+ */
+ 
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'orbital_plugin_action_links' );
+function orbital_plugin_action_links( $links ) {
+
+	return array_merge(
+		array(
+			'settings' => '<a href="' . admin_url( 'tools.php?page=our-settings-page.php' ) . '">' . __( 'Settings', 'ts-fab' ) . '</a>'
+		),
+		$links
+	);
+
 }
 
 
