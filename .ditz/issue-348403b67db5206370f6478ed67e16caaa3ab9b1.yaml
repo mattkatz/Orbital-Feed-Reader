@@ -3,7 +3,7 @@ title: Subscriptions aren't refreshing automatically
 desc: ""
 type: :bugfix
 component: Orbital
-release: 0.1.1
+release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,12 @@ log_events:
 - - 2013-07-09 03:05:29.285541 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2013-08-06 11:26:56.441408 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1 - Feeds, Subscribed from 0.1.1
+  - ""
+- - 2013-08-06 11:28:14.254528 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2 Wordpress integration from 0.1 - Feeds, Subscribed
   - ""

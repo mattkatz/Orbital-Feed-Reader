@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.1.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-07-09 02:48:47.950917 Z
 references: []
 
@@ -24,3 +24,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from unstarted to in_progress
   - adding in a satellite icon
+- - 2013-08-06 11:26:01.303337 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
