@@ -70,7 +70,7 @@ function orbital_plugin_menu(){
   $menu_title = $page_title;
   $capability = 'edit_posts';
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/Satellites_icon201001.svg',__FILE__));
+  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/satellite.svg',__FILE__));
   //Settings page
   $settings = add_submenu_page( $orbital_slug, 'Settings', 'Settings', $capability, $orbital_settings_slug, 'orbital_settings');
   //add hook for feed management page
@@ -80,6 +80,18 @@ function orbital_plugin_menu(){
   add_action('admin_print_styles-' . $main, 'orbital_enqueue_scripts');
   add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
   //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
+
+}
+/* to style our SVG icon we need to enqueue one style to fix width */
+add_action('admin_head', 'orbital_icon_style');
+function orbital_icon_style(){
+  echo '<style>
+    #toplevel_page_orbital div.wp-menu-image img {
+      width:16px;
+    
+    }
+    </style>';
+
 
 }
 
