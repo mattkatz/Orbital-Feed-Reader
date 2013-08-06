@@ -256,6 +256,11 @@
   top: 20px;
   float:right;
 }
+
+#feed-icon,
+#opml-icon {
+  width:14px;
+}
 #wpbody-content{
   padding-bottom:0px;
 }

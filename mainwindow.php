@@ -59,12 +59,13 @@
   </div>
   <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
     <div class='indicator' ng-show="isLoading" >
-                  <img src="<?php
-                    echo plugins_url("img/ajax-loader.gif", __FILE__);
-                  ?>">
+      <img src="<?php echo plugins_url("img/ajax-loader.gif", __FILE__); ?>">
     </div>
     <div ng-hide="feedCandidate">
-      <label for='subscriptionUrl'>Drag or copy paste a feed here</label>
+      <label for='subscriptionUrl'>
+        <img id="feed-icon" class="feed icon" src="<?php echo plugins_url("img/feed-icon.svg", __FILE__); ?>">
+        Drag or copy paste a feed here
+      </label>
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
       <a class="dismiss" ng-click="toggle()">X</a>
@@ -74,6 +75,7 @@
         <div class="horizontal-form">
           <!--<form id="upload_form" enctype="multipart/form-data" method="post" onsubmit='uploadOpml()'>-->
           <label>
+            <img id='opml-icon' class='opml icon' src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">
             Select an OPML file to import
             <input type="file" name="import-opml" value="" id="import-opml" placeholder="Select an OPML file"
                onchange="angular.element(this).scope().fileSelected()"/>
