@@ -384,7 +384,7 @@ class OrbitalEntries{
  */
   static function save($entry){
     //_log('in save');
-    _log($entry);
+    //_log($entry);
 
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
@@ -464,8 +464,8 @@ class OrbitalEntries{
     $filter_fields = array(
         'owner_uid'=>$current_user->ID //logged in user
     );
-    _log('entry is ');
-    _log($entry);
+    //_log('entry is ');
+    //_log($entry);
     foreach ($entry as $key => $value){
       if(array_key_exists($key,$update_whitelist)){
         $update_fields[$update_whitelist[$key]] = $value;
