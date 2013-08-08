@@ -31,10 +31,14 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.1
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2013-08-08 01:09:18.512129 Z
   log_events: 
   - - 2013-07-09 02:46:51.140583 Z
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - bugfixes
+  - - 2013-08-08 01:09:18.512144 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - Done!
