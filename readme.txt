@@ -3,7 +3,7 @@ Contributors: mttktz
 Donate link: https://www.gittip.com/mattkatz/
 Tags: feed reader, google reader, rss, atom, 
 Requires at least: 3.0.1
-Tested up to: 3.5.2
+Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -32,6 +32,8 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.1.2 = 
+* Fixed some JS files that were missing
 
 = 0.1.1 = 
 * Renamed the menu to Orbital with unread count
