@@ -91,6 +91,31 @@ function orbital_install_db()
   ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
+
+  //Tags
+  $table_name = $wpdb->prefix.$tbl_prefix."tags";
+  $sql = "CREATE TABLE " . $table_name ." (
+    id integer NOT NULL AUTO_INCREMENT,
+    name varchar(200)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY name (name)
+  ) $charset_collate;";
+  dbDelta($sql);
+  _log("Added $table_name");
+
+  /* map tags to users feeds
+   * Users assign tags to feeds and they are a way for users to organize feeds
+   */
+  
+  $table_name = $wpdb->prefix.$tbl_prefix."user_feed_tags";
+  $sql = "CREATE TABLE " . $table_name ." (
+    tag_id integer NOT NULL DEFAULT '0',
+    user_feed_id integer NOT NULL DEFAULT '0',
+    PRIMARY KEY (tag_id,user_feed_id),
+    KEY user_feed_id (user_feed_id)
+  ) $charset_collate;";
+  dbDelta($sql);
+  _log("Added $table_name");
   add_option($orbital_db_version_opt_string,$orbital_db_version);
 }
 //TODO load in everything with admin as owner, 
