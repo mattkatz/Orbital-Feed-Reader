@@ -15,7 +15,7 @@ $orbital_settings_slug = 'orbital_plugin_settings';
 global $orbital_db_version ;
 $orbital_db_version = '0.1';
 global $orbital_db_version_opt_string;
-$orbital_db_v_opt_string = 'orbital_db_version';
+$orbital_db_version_opt_string = 'orbital_db_version';
 global $tbl_prefix;
 $tbl_prefix = 'orbital_' ;
 
@@ -28,15 +28,15 @@ require_once 'backend.php';
 //add_action('plugins_loaded', 'orbital_update_db_check');
 function orbital_update_db_check(){
   global $orbital_db_version;
-  global $orbital_db_v_opt_string;
-  if(get_site_option($orbital_db_v_opt_string) != $orbital_db_version){
-    _log(get_site_option($orbital_db_v_opt_string) );
+  global $orbital_db_version_opt_string;
+  if(get_site_option($orbital_db_version_opt_string) != $orbital_db_version){
+    _log(get_site_option($orbital_db_version_opt_string) );
     //upgrayedd the db
     _log("orbital: Installing or Upgrayedding Database");
     //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
     orbital_install_db();
-    update_option($orbital_db_v_opt_string, $orbital_db_version);
+    update_option($orbital_db_version_opt_string, $orbital_db_version);
   }
   _log('finished DB update check');
 }
@@ -183,7 +183,7 @@ function orbital_uninstall_db()
 {
 
   //We should remove the DB option for the db version
-  delete_option($orbital_db_v_opt_string);
+  delete_option($orbital_db_version_opt_string);
   //clean up all the tables
   global $wpdb;
   global $tbl_prefix;
