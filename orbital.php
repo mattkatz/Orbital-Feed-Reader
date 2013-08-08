@@ -13,7 +13,7 @@ $orbital_slug = 'orbital.php';
 global $orbital_settings_slug;
 $orbital_settings_slug = 'orbital_plugin_settings';
 global $orbital_db_version ;
-$orbital_db_version = '0.1';
+$orbital_db_version = '0.1.3';
 global $orbital_db_version_opt_string;
 $orbital_db_v_opt_string = 'orbital_db_version';
 global $tbl_prefix;
