@@ -169,7 +169,7 @@ function orbital_install_data(){
       <ul>
         <li>You can press 'u' to toggle whether an item is read or not.  </li>
         <li>'k' or ⬆ will go back to stuff you've already read. </li>
-        <li>'o' will open up a new browser tab with the feed you are looking at.  </li>
+        <li>'o' will open up a new browser tab with the item you are looking at.  </li>
       </ul>
     </p>
     ",//TODO
