@@ -15,6 +15,7 @@ Read where you write. Orbital integrates a feed reader into WordPress. Blog dire
 Feed readers turn the internet into a better place, but most of them are either hosted by someone else or they are tied to the desktop. With Orbital you can own your feeds, right in your WordPress admin panel.
 
 Even better, because it is integrated into WordPress, you can reblog the great stuff you find and share it faster. Post better content, more often, by reducing the friction between where you read and where you write.
+
 == Installation ==
 
 Just as simple as you'd expect. 
@@ -24,11 +25,16 @@ Just as simple as you'd expect.
 
 Orbital will add a few sample feeds and instructional entries to get you started. Click the `+` sign to add your favorites or import an OPML file.
 
+
 == Frequently Asked Questions ==
 
 = What if it doesn't work? =
 
 Please let me know asap! The [Orbital issue tracker is over on github](http://github.com/mattkatz/Orbital-Feed-Reader/issues).
+
+== Screenshots ==
+
+1. Quick screencast of hitting the ⬇ key, finding an article to blog, adding an image and publishing.
 
 
 == Changelog ==
