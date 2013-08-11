@@ -32,6 +32,8 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.1.3 = 
+read/unread issue
 = 0.1.2 = 
 * Fixed some JS files that were missing
 
