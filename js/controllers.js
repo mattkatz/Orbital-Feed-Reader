@@ -172,6 +172,7 @@ function FeedListCtrl($scope, $http, $log){
 function EntriesCtrl($scope, $http, $log){
   $scope.selectedEntry = null;
   $scope.currentFeedId = null;
+  $scope.isRead = false;
   $log.log("in EntriesCtrl");
   
   /*
@@ -180,7 +181,7 @@ function EntriesCtrl($scope, $http, $log){
   $scope.displayFeed = function(id,showRead){
     $scope.currentFeedId = id;
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&isRead='+showRead)
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
@@ -192,7 +193,7 @@ function EntriesCtrl($scope, $http, $log){
 
   $scope.addMoreEntries = function(){
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&isRead='+$scope.isRead)
     .success(function  (response) {
       $scope.isLoading = false;
       $log.info('going to the server mines for more delicious content');
@@ -266,7 +267,7 @@ function EntriesCtrl($scope, $http, $log){
       $scope.$emit('entryChange', {entry:entry});
     });
   }
-  $scope.displayFeed();
+  $scope.displayFeed(null,$scope.isRead);
   /*
    * Catch the feedSelected event, display entries from that feed
    */
