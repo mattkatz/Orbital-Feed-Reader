@@ -5,7 +5,7 @@ type: :bugfix
 component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2013-08-12 01:52:53.400096 Z
 references: []
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2013-08-12 02:29:42.481333 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - everything should have a key, we shouldn't allow multiple inserts in user_entries, etc.
