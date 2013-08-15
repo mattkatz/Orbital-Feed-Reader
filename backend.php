@@ -266,8 +266,14 @@ class OrbitalFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
     $now = new DateTime();
     //lets go back 1 hour
-    $then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
-    //_log($then);
+    // this won't work on php 5.2
+    //$then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
+    //_log('subtracting an hour');
+    //_log($now);
+    $now->modify('-1 hours');
+    //_log($now);
+    $then = $now->format('Y-m-d H:i:sP');
+
     $sql = "
       SELECT feeds.id,feeds.feed_name
       FROM $feeds as feeds
