@@ -25,14 +25,14 @@ if(!function_exists('_log')){
  */
 class OrbitalFeeds {
 
-/* Method to save a feed
- *   - check to see if there is a feed_id.
- *     - Yes means we are updating
- *       - Just update user_feeds
- *     - No means we are inserting
- *       - Check to see if the feed_url exists in feeds.
- *       - Then insert a link or insert into feed_url and then insert a link.
- */
+  /* Method to save a feed
+   *   - check to see if there is a feed_id.
+   *     - Yes means we are updating
+   *       - Just update user_feeds
+   *     - No means we are inserting
+   *       - Check to see if the feed_url exists in feeds.
+   *       - Then insert a link or insert into feed_url and then insert a link.
+   */
   static function save($feed){
     global $wpdb;
     global $tbl_prefix;
@@ -117,9 +117,9 @@ class OrbitalFeeds {
     return $resp;
   }
 
-/* Method to list all feeds
- *   - Just return all feeds from user_feeds
- */
+  /* Method to list all feeds
+   *   - Just return all feeds from user_feeds
+   */
   static function get(){
     global $wpdb;
     global $tbl_prefix;
@@ -161,8 +161,8 @@ class OrbitalFeeds {
     $myrows = $wpdb->get_results($sql );
     return $myrows;
   }
-/* Method to find total unread feeds
- */
+  /* Method to find total unread feeds
+   */
   static function get_unread_count(){
     global $wpdb;
     global $tbl_prefix;
@@ -181,12 +181,12 @@ class OrbitalFeeds {
 
   }
 
-/* Method to unsubscribe a feed
- *   - Should delete a feed from user_feeds for current user
- *   - Should delete all user_entries for current user
- *   - Should delete the feed from feeds if there are no more user_feeds entries
- *   - then delete all entries for the feed.
- */
+  /* Method to unsubscribe a feed
+   *   - Should delete a feed from user_feeds for current user
+   *   - Should delete all user_entries for current user
+   *   - Should delete the feed from feeds if there are no more user_feeds entries
+   *   - then delete all entries for the feed.
+   */
   static function remove($feed_id){
     global $wpdb;
     global $tbl_prefix;
@@ -346,10 +346,10 @@ class OrbitalFeeds {
         'feed_id'=>$feed_id,
         'title'=>$item->get_title(),
         'guid'=>$item->get_id(),
-        'link'=>$item->get_link(),//TODO 
-        'updated'=>date ("Y-m-d H:i:s"),
-        'content'=>$item->get_content(),//TODO
-        'entered' =>date ("Y-m-d H:i:s"),
+        'link'=>$item->get_permalink(),
+        'updated'=>$item->get_updated_date("Y-m-d H:i:s"),
+        'content'=>$item->get_content(),
+        'entered' =>$item->get_date("Y-m-d H:i:s"),
         'author' => $name
       ));
     }
