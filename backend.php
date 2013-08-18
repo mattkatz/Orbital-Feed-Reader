@@ -399,11 +399,15 @@ class OrbitalEntries{
     }
     else{
       $entry_id = null;
-      //TODO see if the entry exists using entry hash or guid?
+      //see if the entry exists using entry hash or guid?
       if(array_key_exists('guid', $entry) && $entry['guid']){
         $entry_id = OrbitalEntries::check_guid($entry['guid']);
         _log('check guid says entry id is');
         _log($entry_id);
+      }
+      else{
+        _log("Orbital shouldn't see an entry without a guid from simplepie");
+        _log($entry);
       }
 
       if(null === $entry_id){
