@@ -81,7 +81,7 @@ function orbital_plugin_menu(){
   add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
   //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
   //_log(_get_cron_array());
-  _log(date("Y-m-d H:i:s",wp_next_scheduled('orbital_update_event')));
+  //_log(date("Y-m-d H:i:s",wp_next_scheduled('orbital_update_event')));
 
 
 
