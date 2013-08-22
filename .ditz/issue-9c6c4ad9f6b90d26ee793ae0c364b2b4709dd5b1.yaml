@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Pitch it clearer - what is it supposed to do.
+desc: |-
+  Make it clearer on the website.
+  Make the first item on the intro install clearer.
+  Tell people what it is for.
+  from chris rae.
+type: :bugfix
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-08-22 00:07:42.401799 Z
+references: []
+
+id: 9c6c4ad9f6b90d26ee793ae0c364b2b4709dd5b1
+log_events: 
+- - 2013-08-22 00:07:43.382871 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
