@@ -3,10 +3,10 @@ title: Subscriptions aren't refreshing automatically
 desc: ""
 type: :bugfix
 component: Orbital
-release: 0.2 Wordpress integration
+release: 0.1.4
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-07-09 03:05:28.246967 Z
 references: []
 
@@ -24,3 +24,18 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.2 Wordpress integration from 0.1 - Feeds, Subscribed
   - ""
+- - 2013-08-15 01:52:33.082350 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.4 from 0.2 Wordpress integration
+  - figured an earlier solution
+- - 2013-08-15 01:54:21.451024 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - |-
+    Turns out the issue was due to my prod server having php 5.2 installed, while I was using 5.3 code.
+    datetime sub not introduced till 5.3
+    Also, I was bad at math.  60*60 = 3600 NOT 36000
+- - 2013-08-15 02:15:29.910068 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - seems to have done it for the 5.2

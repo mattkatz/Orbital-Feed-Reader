@@ -38,6 +38,11 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+
+= 0.1.4 = 
+* fixed some issues with running the plugin on PHP 5.2
+* Pull created and updated date directly from the feed
+
 = 0.1.3 = 
 read/unread issue
 = 0.1.2 = 

@@ -1,0 +1,32 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: get item date from feed
+desc: We should display when they say they published it, not when we found it.
+type: :bugfix
+component: Orbital
+release: 0.1.4
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-08-18 20:54:20.050292 Z
+references: []
+
+id: eb7c75593b95e8b04b17e98bb4adbd471d58c156
+log_events: 
+- - 2013-08-18 20:54:20.837075 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-08-18 21:16:11.135622 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-08-18 21:16:25.761533 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - done.
+- - 2013-08-18 21:17:03.019018 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - |-
+    It was lurking in simplepie all along.  Now I need to figure out if we have to alter for localization.
+    that will be for another day.

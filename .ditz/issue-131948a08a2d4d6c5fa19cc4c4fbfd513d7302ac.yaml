@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add feed should provide better feedback on adding
+desc: |-
+  From james boice
+  Better spinner/buttons during add.
+  let the folks know something is happening. maybe hakim's button with spinner.
+  highlight the results better.
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-08-22 00:06:30.814156 Z
+references: []
+
+id: 131948a08a2d4d6c5fa19cc4c4fbfd513d7302ac
+log_events: 
+- - 2013-08-22 00:06:32.212023 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

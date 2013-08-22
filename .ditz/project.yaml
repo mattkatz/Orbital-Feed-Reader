@@ -42,3 +42,25 @@ releases:
     - Matt Katz <ditz@morelightmorelight.com>
     - released
     - Done!
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.4
+  status: :released
+  release_time: 2013-08-18 23:24:33.069494 Z
+  log_events: 
+  - - 2013-08-15 01:51:42.315071 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - Should fix subscription refresh issues.
+  - - 2013-08-18 23:24:33.069508 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - get it out!
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.5
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2013-08-18 23:19:29.889757 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - Let's fix dupe entries here and do more work on fixing iteration/read/unread

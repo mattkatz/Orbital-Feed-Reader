@@ -3,7 +3,7 @@
 * Plugin Name: Orbital Feed Reader
 * Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
-* Version: 0.1.3
+* Version: 0.1.4
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
@@ -80,6 +80,10 @@ function orbital_plugin_menu(){
   add_action('admin_print_styles-' . $main, 'orbital_enqueue_scripts');
   add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
   //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
+  //_log(_get_cron_array());
+  //_log(date("Y-m-d H:i:s",wp_next_scheduled('orbital_update_event')));
+
+
 
 }
 /* to style our SVG icon we need to enqueue one style to fix width */
@@ -194,17 +198,19 @@ function orbital_uninstall_db()
 
   }
 }
-add_filter('cron_schedules', 'one_hour');
-function one_hour( $schedules ) {
-  $schedules['1hour'] = array(
-    'interval' => 36000, //that's how many seconds in 1 hour, for the unix timestamp
-    'display' => __('60 Minutes')
+add_filter('cron_schedules', 'orbital_add_cron_schedules');
+function orbital_add_cron_schedules( $schedules ) {
+  $schedules['5mins'] = array(
+    'interval' => 600, //that's how many seconds in 1 hour, for the unix timestamp
+    'display' => __('5 minutes')
   );
+  
+
   return $schedules;
 }
 add_action('orbital_update_event', 'orbital_update_job');
 function orbital_set_up_cron(){
-  wp_schedule_event( current_time( 'timestamp' ), '1hour', 'orbital_update_event');
+	  wp_schedule_event( time(), 'hourly', 'orbital_update_event');
 }
 
 function orbital_update_job(){

@@ -25,14 +25,14 @@ if(!function_exists('_log')){
  */
 class OrbitalFeeds {
 
-/* Method to save a feed
- *   - check to see if there is a feed_id.
- *     - Yes means we are updating
- *       - Just update user_feeds
- *     - No means we are inserting
- *       - Check to see if the feed_url exists in feeds.
- *       - Then insert a link or insert into feed_url and then insert a link.
- */
+  /* Method to save a feed
+   *   - check to see if there is a feed_id.
+   *     - Yes means we are updating
+   *       - Just update user_feeds
+   *     - No means we are inserting
+   *       - Check to see if the feed_url exists in feeds.
+   *       - Then insert a link or insert into feed_url and then insert a link.
+   */
   static function save($feed){
     global $wpdb;
     global $tbl_prefix;
@@ -117,9 +117,9 @@ class OrbitalFeeds {
     return $resp;
   }
 
-/* Method to list all feeds
- *   - Just return all feeds from user_feeds
- */
+  /* Method to list all feeds
+   *   - Just return all feeds from user_feeds
+   */
   static function get(){
     global $wpdb;
     global $tbl_prefix;
@@ -161,8 +161,8 @@ class OrbitalFeeds {
     $myrows = $wpdb->get_results($sql );
     return $myrows;
   }
-/* Method to find total unread feeds
- */
+  /* Method to find total unread feeds
+   */
   static function get_unread_count(){
     global $wpdb;
     global $tbl_prefix;
@@ -181,12 +181,12 @@ class OrbitalFeeds {
 
   }
 
-/* Method to unsubscribe a feed
- *   - Should delete a feed from user_feeds for current user
- *   - Should delete all user_entries for current user
- *   - Should delete the feed from feeds if there are no more user_feeds entries
- *   - then delete all entries for the feed.
- */
+  /* Method to unsubscribe a feed
+   *   - Should delete a feed from user_feeds for current user
+   *   - Should delete all user_entries for current user
+   *   - Should delete the feed from feeds if there are no more user_feeds entries
+   *   - then delete all entries for the feed.
+   */
   static function remove($feed_id){
     global $wpdb;
     global $tbl_prefix;
@@ -266,8 +266,14 @@ class OrbitalFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
     $now = new DateTime();
     //lets go back 1 hour
-    $then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
-    //_log($then);
+    // this won't work on php 5.2
+    //$then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
+    //_log('subtracting an hour');
+    //_log($now);
+    $now->modify('-1 hours');
+    //_log($now);
+    $then = $now->format('Y-m-d H:i:sP');
+
     $sql = "
       SELECT feeds.id,feeds.feed_name
       FROM $feeds as feeds
@@ -340,10 +346,10 @@ class OrbitalFeeds {
         'feed_id'=>$feed_id,
         'title'=>$item->get_title(),
         'guid'=>$item->get_id(),
-        'link'=>$item->get_link(),//TODO 
-        'updated'=>date ("Y-m-d H:i:s"),
-        'content'=>$item->get_content(),//TODO
-        'entered' =>date ("Y-m-d H:i:s"),
+        'link'=>$item->get_permalink(),
+        'updated'=>$item->get_updated_date("Y-m-d H:i:s"),
+        'content'=>$item->get_content(),
+        'entered' =>$item->get_date("Y-m-d H:i:s"),
         'author' => $name
       ));
     }
@@ -393,11 +399,15 @@ class OrbitalEntries{
     }
     else{
       $entry_id = null;
-      //TODO see if the entry exists using entry hash or guid?
+      //see if the entry exists using entry hash or guid?
       if(array_key_exists('guid', $entry) && $entry['guid']){
         $entry_id = OrbitalEntries::check_guid($entry['guid']);
         _log('check guid says entry id is');
         _log($entry_id);
+      }
+      else{
+        _log("Orbital shouldn't see an entry without a guid from simplepie");
+        _log($entry);
       }
 
       if(null === $entry_id){
