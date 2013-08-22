@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make sure opml categories get imported as tags
+desc: Create a tag for each ompl category we find, then add the feed to it.
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-08-22 00:19:28.261781 Z
+references: []
+
+id: 1767616822d1638dc919ffc2209ac6e25b078b4f
+log_events: 
+- - 2013-08-22 00:19:30.045749 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
