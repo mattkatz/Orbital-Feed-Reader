@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Set all as read on import
+desc: |-
+  Man - if you're already reading stuff and you import an opml file, you should be able to import with most stuff already read.
+  Maybe you should be able to pick a date and say "mark everything earlier than this read during import"
+  maybe you should just say don't import items older than that.
+  maybe you should just mark all as read during the initial import.
+type: :feature
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-08-22 00:03:51.581069 Z
+references: []
+
+id: 1238346c6cb4bf0c484920b3c6a52104f6d52d9f
+log_events: 
+- - 2013-08-22 00:03:53.316088 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
