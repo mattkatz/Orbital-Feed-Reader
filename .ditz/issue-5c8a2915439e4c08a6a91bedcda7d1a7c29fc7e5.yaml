@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Orbital TV
+desc: |-
+  Just like orbital radio - scan feeds coming in or youtube or vimeo or .ogv or .mp4 etc
+  then have a display that plays just those entries - text on the side, scrolling by itself.
+  video in the middle.
+  sit back with your own vhx style experience.
+type: :feature
+component: Orbital
+release: 
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2013-08-22 00:22:11.576631 Z
+references: []
+
+id: 5c8a2915439e4c08a6a91bedcda7d1a7c29fc7e5
+log_events: 
+- - 2013-08-22 00:22:13.184016 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
