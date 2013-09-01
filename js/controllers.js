@@ -566,7 +566,7 @@ function SubsCtrl($scope,$http,$log){
   });
 }
 
-function CommandBarCtrl($scope,$http,$log){
+function CommandBarCtrl($scope,$http,$log,feedService){
   $scope.$on('feedSelected', function(event,args){
     //$log.info('commandBar feed is:' + args['feed'].feed_name);
     $scope.currentFeed = args.feed;
