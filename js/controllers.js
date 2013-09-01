@@ -126,7 +126,8 @@ function FeedListCtrl($scope, $http, $log, feedService){
    * We should just get the feeds from the DB.
    */
   $scope.$on('refreshFeeds', function(event,args){
-    $scope.refresh();
+    feedService.refresh();
+    //$scope.refresh();
   });
   $scope.$on('updateFeed', function(event,args){
     $log.log('updateFeed event');
