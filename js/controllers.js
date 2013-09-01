@@ -1,9 +1,15 @@
 /* Controllers */
 
-function FeedListCtrl($scope, $http, $log){
+function FeedListCtrl($scope, $http, $log, feedService){
   $log.log('in feedscontrol');
   $scope.editable = false;
-  $scope.selectedFeed = null;
+  $scope.feeds = feedService.feeds();
+  $scope.isLoading = feedService.isLoading();
+  $scope.$watch(feedService.feeds,function(){
+    console.log('listener');
+    $scope.feeds = feedService.feeds();
+
+  });
 
   /*
    * let the world know a feed has been CHOSEN
@@ -30,24 +36,12 @@ function FeedListCtrl($scope, $http, $log){
     $log.info('new feed requested');
     $scope.$emit('newFeedRequested');
   }
+
   /*
    * get the list of feeds and store it
    */
   $scope.refresh = function(){
-    $scope.isLoading = true;
-    $log.info('refreshing feeds');
-    $http.get(opts.ajaxurl+'?action=orbital_get_feeds' )
-    .success(function(data){ 
-      
-      $scope.feeds = data;
-      var fresh = {
-        feed_id:null,
-        feed_name:'All Feeds',
-        unread_count:'',
-      }
-      $scope.feeds.unshift(fresh);
-      $scope.isLoading = false;
-    });
+    feedService.refresh();
   };
   //call the refresh to load it all up.
   //TODO change this to load the initial feeds variable

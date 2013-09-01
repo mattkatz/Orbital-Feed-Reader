@@ -53,6 +53,64 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], f
   }];
 });
 
+mainModule.factory('feedService',   function($http){
+  /*
+   * The Feed Service should be the interface to feeds. 
+   *
+   * It maintains a list of feeds, a pointer to a current feed, 
+   * and ways to refresh the list, select the next feed, mark a feed read
+   * or get the entries from a feed.
+   */
+  // the currently selected feed
+  var selectedFeed = null;
+  // the list of feeds;
+  var _feeds = [];
+  //is this service doing work?
+  var _isLoading = false;
+
+  return {
+    feeds : function(){
+      return _feeds;
+    },
+    isLoading : function(){
+      return _isLoading;
+    },
+
+    // get the list of feeds from backend, inject a "fresh" feed.
+    refresh : function(){
+      console.log('refresh');
+      _isLoading = true;
+      /*
+        var fresh = {
+          feed_id:null, //TODO start using neg integers for special feed ids
+          feed_name:'All Feeds',
+          unread_count:'',//TODO put in actual unread count;
+        }
+      _feeds.unshift(fresh);
+      */
+      $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
+      .success( function( data ){
+        _feeds= data;
+        var fresh = {
+          feed_id:null, //TODO start using neg integers for special feed ids
+          feed_name:'All Feeds',
+          unread_count:'',//TODO put in actual unread count;
+        }
+      _feeds.unshift(fresh);
+      _isLoading = false;
+      });
+    },
+    select : function(feed, showRead){
+      //Mark this feed as selected
+
+    }
+
+
+  };
+
+  
+});
+
 mainModule.run(function($rootScope){
   /* 
    * receive the emitted messages and rebroadcast
