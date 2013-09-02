@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make sort order a setting
+desc: You should be able choose your default sort order on the settings page
+type: :feature
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-02 11:02:37.925651 Z
+references: []
+
+id: efd4a551e8b399f4f5106e7a3096ec09897cf188
+log_events: 
+- - 2013-09-02 11:02:40.290413 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
