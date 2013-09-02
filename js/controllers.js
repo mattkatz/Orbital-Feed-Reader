@@ -25,12 +25,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
       $scope.$emit('feedSelect', {feed: feed,showRead:showRead});
       //Mark feed as loading
     }
-    //Mark feed as selected
-    $scope.feeds.forEach(function(value,index){
-      value.isSelected = value.feed_id == feed.feed_id
-    });
-    //let's cache this for later
-    $scope.selectedFeed = feed;
+    feedService.select(feed,showRead);
   };
   $scope.requestNewFeed = function () {
     $log.info('new feed requested');
@@ -567,9 +562,9 @@ function SubsCtrl($scope,$http,$log){
 }
 
 function CommandBarCtrl($scope,$http,$log,feedService){
-  $scope.$on('feedSelected', function(event,args){
-    //$log.info('commandBar feed is:' + args['feed'].feed_name);
-    $scope.currentFeed = args.feed;
+  $scope.$watch(feedService.selectedFeed, function (){
+    $scope.currentFeed = feedService.selectedFeed();
+    console.log($scope.currentFeed + ' selected');
   });
   $scope.commandBarAction = function(action){
     //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));

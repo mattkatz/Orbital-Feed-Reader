@@ -62,7 +62,7 @@ mainModule.factory('feedService',   function($http){
    * or get the entries from a feed.
    */
   // the currently selected feed
-  var selectedFeed = null;
+  var _selectedFeed = null;
   // the list of feeds;
   var _feeds = [];
   //is this service doing work?
@@ -102,8 +102,16 @@ mainModule.factory('feedService',   function($http){
     },
     select : function(feed, showRead){
       //Mark this feed as selected
+      _feeds.forEach(function(value,index){
+        value.isSelected = value.feed_id == feed.feed_id
+      });
+      //let's cache this for later
+      _selectedFeed = feed;
 
-    }
+    },
+    selectedFeed: function(){
+      return _selectedFeed;
+    },
 
 
   };
