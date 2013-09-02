@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.1.5
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-09-02 11:04:53.410027 Z
 references: []
 
@@ -19,4 +19,12 @@ log_events:
 - - 2013-09-02 11:05:25.527448 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.5 from unassigned
+  - ""
+- - 2013-09-02 11:56:27.746162 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-09-02 11:56:45.109233 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""

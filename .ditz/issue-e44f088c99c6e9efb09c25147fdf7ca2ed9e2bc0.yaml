@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Publish Date still not being properly stored
+desc: from henryv.
+type: :bugfix
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-02 11:56:14.576056 Z
+references: []
+
+id: e44f088c99c6e9efb09c25147fdf7ca2ed9e2bc0
+log_events: 
+- - 2013-09-02 11:56:15.225420 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
