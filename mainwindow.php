@@ -51,7 +51,7 @@
         </div>
       </div>
     <ul id='feeds' >
-      <li class="feed" ng-class="{'is-editable': editable}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
+      <li class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
         {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
         <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </li>
