@@ -348,7 +348,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
  * Give it a candidate and we'll hide the rest and let you edit this
  * 
  */
-function SubsCtrl($scope,$http,$log, feedService){
+function SubsCtrl($scope,$http,$log,feedService){
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
   $scope.possibleFeeds = null;
@@ -523,8 +523,7 @@ function SubsCtrl($scope,$http,$log, feedService){
               $scope.saveFeed(feed,true);
               $scope.doneFeeds++;
             });
-            feedService.refresh();
-            //$scope.feedsChanged();
+            $scope.feedsChanged();
             $scope.isLoading = false;
           }
           catch(ex){
@@ -552,7 +551,7 @@ function SubsCtrl($scope,$http,$log, feedService){
 
   //this window has been requested or dismissed
   $scope.$on('subscriptionsWindow',function(event,args){
-    //$log.info('subscriptionsWindow');
+    $log.info('subscriptionsWindow');
     //$log.info(event);
     $scope.toggle();
   });
@@ -562,7 +561,7 @@ function SubsCtrl($scope,$http,$log, feedService){
   }
 
   $scope.feedsChanged = function(){
-    $scope.$emit('feedsChanged');
+    feedService.refresh();
   }
 
   //We are going to edit a feed
