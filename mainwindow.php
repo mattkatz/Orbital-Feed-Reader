@@ -68,7 +68,7 @@
       </label>
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
-      <a class="dismiss" ng-click="toggle()">X</a>
+      <a class="dismiss clickable" ng-click="toggle()">X</a>
       <form id='opml-form' class='opml' novalidate>
         <p> -- OR -- </p>
         Have an OPML file? Upload it by dragging it here.
