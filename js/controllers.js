@@ -40,7 +40,13 @@ function FeedListCtrl($scope, $http, $log, feedService){
   };
   //call the refresh to load it all up.
   //TODO change this to load the initial feeds variable
-  $scope.refresh();
+  feedService.refresh(function(feeds){
+    if(feeds.length > 0){
+      feedService.select(feeds[0]);
+    }
+  
+  });
+  
 
   /*
    * Get the next unread feed
@@ -159,18 +165,24 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
 }
 
-function EntriesCtrl($scope, $http, $log){
+function EntriesCtrl($scope, $http, $log,feedService){
   $scope.selectedEntry = null;
   $scope.currentFeedId = null;
+  $scope.currentFeed = null;
   $log.log("in EntriesCtrl");
+  $scope.$watch(feedService.selectedFeed, function (){
+    //$scope.currentFeed = feedService.selectedFeed();
+    if(feedService.selectedFeed()){
+      $scope.displayFeed(feedService.selectedFeed().feed_id);
+    }
+  });
   
   /*
    * select a feed to display entries from
    */
-  $scope.displayFeed = function(id,showRead){
-    $scope.currentFeedId = id;
+  $scope.displayFeed = function(feed_id,showRead){
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feed_id+'&show_read='+showRead)
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
@@ -181,8 +193,9 @@ function EntriesCtrl($scope, $http, $log){
   };
 
   $scope.addMoreEntries = function(){
+    if(! feedService.selectedFeed()){ return; }
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feedService.selectedFeed().feed_id)
     .success(function  (response) {
       $scope.isLoading = false;
       $log.info('going to the server mines for more delicious content');
@@ -256,7 +269,7 @@ function EntriesCtrl($scope, $http, $log){
       $scope.$emit('entryChange', {entry:entry});
     });
   }
-  $scope.displayFeed();
+  //$scope.displayFeed();
   /*
    * Catch the feedSelected event, display entries from that feed
    */

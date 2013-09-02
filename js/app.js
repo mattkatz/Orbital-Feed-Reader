@@ -77,7 +77,7 @@ mainModule.factory('feedService',   function($http){
     },
 
     // get the list of feeds from backend, inject a "fresh" feed.
-    refresh : function(){
+    refresh : function(callback){
       console.log('refresh');
       _isLoading = true;
       /*
@@ -98,6 +98,9 @@ mainModule.factory('feedService',   function($http){
         }
       _feeds.unshift(fresh);
       _isLoading = false;
+      if(callback){
+        callback(_feeds);
+      }
       });
     },
     select : function(feed, showRead){
