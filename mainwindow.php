@@ -5,8 +5,6 @@
     </ul>
     {{currentFeed.feed_name}}
   </div>
-  <div id="y-indicator" class="does not provide funding" >
-  </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id="orbital-content" >
         <div class="indicator" ng-show="isLoading">
