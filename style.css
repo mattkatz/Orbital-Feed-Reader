@@ -92,6 +92,9 @@
 
 /* The Feed Head
  */
+#orbital-feedlist {
+  height:100%;
+}
 #feed-head > h2{
   display:inline;
 }

@@ -23,12 +23,12 @@ jQuery(document).ready(function($){
   }
   $(window).resize(function(){
     setContentHeight('#orbital-content',$('#wpadminbar').height()+$('#commandbar').height());
-    setContentHeight('#orbital-feedlist',0);
+    setContentHeight('#orbital-feedlist',$('#wpadminbar').height());
     var w =$('#orbital-container').width();
 
     $('#orbital-content').css({'width':((w * .8)- 10 +'px')});
     //scrollbar.width probably is 10 px.
-    $('#feeds').css({'height':(($('#orbital-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
+    //$('#feeds').css({'height':(($('#orbital-feedlist').height()-($('#feed-head').height()+ 10 )) +'px')});
   });
   $(window).resize();
 });
