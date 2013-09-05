@@ -127,7 +127,7 @@ mainModule.factory('feedService',   function($http){
         
       });
 
-    }
+    },
     selectedFeed: function(){
       return _selectedFeed;
     },
