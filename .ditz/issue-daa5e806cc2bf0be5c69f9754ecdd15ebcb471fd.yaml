@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix layout issue
+desc: The feedlist is somehow causing a scrollbar to pop up inappropriately.
+type: :bugfix
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-05 01:39:55.572912 Z
+references: []
+
+id: daa5e806cc2bf0be5c69f9754ecdd15ebcb471fd
+log_events: 
+- - 2013-09-05 01:39:56.515485 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-09-05 01:40:42.479612 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - needed to account for adminbar
