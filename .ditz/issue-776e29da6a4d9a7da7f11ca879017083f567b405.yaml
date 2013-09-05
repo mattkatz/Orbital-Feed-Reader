@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: When accessed by a new user, add sample feeds if they don't have anything.
+desc: and add some posts too.
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-01 22:45:22.683590 Z
+references: []
+
+id: 776e29da6a4d9a7da7f11ca879017083f567b405
+log_events: 
+- - 2013-09-01 22:45:23.668338 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -49,7 +49,7 @@
         </div>
       </div>
     <ul id='feeds' >
-      <li class="feed" ng-class="{'is-editable': editable}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
+      <li class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
         {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
         <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </li>
@@ -66,7 +66,7 @@
       </label>
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
-      <a class="dismiss" ng-click="toggle()">X</a>
+      <a class="dismiss clickable" ng-click="toggle()">X</a>
       <form id='opml-form' class='opml' novalidate>
         <p> -- OR -- </p>
         Have an OPML file? Upload it by dragging it here.

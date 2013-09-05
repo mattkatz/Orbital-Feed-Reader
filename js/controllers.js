@@ -1,9 +1,15 @@
 /* Controllers */
 
-function FeedListCtrl($scope, $http, $log){
+function FeedListCtrl($scope, $http, $log, feedService){
   $log.log('in feedscontrol');
   $scope.editable = false;
-  $scope.selectedFeed = null;
+  $scope.feeds = feedService.feeds();
+  $scope.isLoading = feedService.isLoading();
+  $scope.$watch(feedService.feeds,function(){
+    console.log('listener');
+    $scope.feeds = feedService.feeds();
+
+  });
 
   /*
    * let the world know a feed has been CHOSEN
@@ -19,39 +25,28 @@ function FeedListCtrl($scope, $http, $log){
       $scope.$emit('feedSelect', {feed: feed,showRead:showRead});
       //Mark feed as loading
     }
-    //Mark feed as selected
-    $scope.feeds.forEach(function(value,index){
-      value.isSelected = value.feed_id == feed.feed_id
-    });
-    //let's cache this for later
-    $scope.selectedFeed = feed;
+    feedService.select(feed,showRead);
   };
   $scope.requestNewFeed = function () {
     $log.info('new feed requested');
     $scope.$emit('newFeedRequested');
   }
+
   /*
    * get the list of feeds and store it
    */
   $scope.refresh = function(){
-    $scope.isLoading = true;
-    $log.info('refreshing feeds');
-    $http.get(opts.ajaxurl+'?action=orbital_get_feeds' )
-    .success(function(data){ 
-      
-      $scope.feeds = data;
-      var fresh = {
-        feed_id:null,
-        feed_name:'All Feeds',
-        unread_count:'',
-      }
-      $scope.feeds.unshift(fresh);
-      $scope.isLoading = false;
-    });
+    feedService.refresh();
   };
   //call the refresh to load it all up.
   //TODO change this to load the initial feeds variable
-  $scope.refresh();
+  feedService.refresh(function(feeds){
+    if(feeds.length > 0){
+      feedService.select(feeds[0]);
+    }
+  
+  });
+  
 
   /*
    * Get the next unread feed
@@ -87,6 +82,7 @@ function FeedListCtrl($scope, $http, $log){
 
   /*
    * Update this feed
+   * TODO move this into the feedService
    */
   $scope.update = function(feed){
     //update feed 
@@ -132,7 +128,8 @@ function FeedListCtrl($scope, $http, $log){
    * We should just get the feeds from the DB.
    */
   $scope.$on('refreshFeeds', function(event,args){
-    $scope.refresh();
+    feedService.refresh();
+    //$scope.refresh();
   });
   $scope.$on('updateFeed', function(event,args){
     $log.log('updateFeed event');
@@ -169,18 +166,24 @@ function FeedListCtrl($scope, $http, $log){
   });
 }
 
-function EntriesCtrl($scope, $http, $log){
+function EntriesCtrl($scope, $http, $log,feedService){
   $scope.selectedEntry = null;
   $scope.currentFeedId = null;
+  $scope.currentFeed = null;
   $log.log("in EntriesCtrl");
+  $scope.$watch(feedService.selectedFeed, function (){
+    //$scope.currentFeed = feedService.selectedFeed();
+    if(feedService.selectedFeed()){
+      $scope.displayFeed(feedService.selectedFeed().feed_id);
+    }
+  });
   
   /*
    * select a feed to display entries from
    */
-  $scope.displayFeed = function(id,showRead){
-    $scope.currentFeedId = id;
+  $scope.displayFeed = function(feed_id,showRead){
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId+'&show_read='+showRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feed_id+'&show_read='+showRead)
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
@@ -191,8 +194,9 @@ function EntriesCtrl($scope, $http, $log){
   };
 
   $scope.addMoreEntries = function(){
+    if(! feedService.selectedFeed()){ return; }
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+$scope.currentFeedId)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feedService.selectedFeed().feed_id)
     .success(function  (response) {
       $scope.isLoading = false;
       $log.info('going to the server mines for more delicious content');
@@ -266,7 +270,7 @@ function EntriesCtrl($scope, $http, $log){
       $scope.$emit('entryChange', {entry:entry});
     });
   }
-  $scope.displayFeed();
+  //$scope.displayFeed();
   /*
    * Catch the feedSelected event, display entries from that feed
    */
@@ -345,7 +349,7 @@ function EntriesCtrl($scope, $http, $log){
  * Give it a candidate and we'll hide the rest and let you edit this
  * 
  */
-function SubsCtrl($scope,$http,$log){
+function SubsCtrl($scope,$http,$log,feedService){
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
   $scope.possibleFeeds = null;
@@ -410,24 +414,16 @@ function SubsCtrl($scope,$http,$log){
   $scope.saveFeed = function(feed, batchmode){
     //mark the save button busy
     if(! batchmode) {$scope.isLoading = true;}
-    var data = {
-      action: 'orbital_save_feed',
-      feed_id: feed.feed_id,
-      feed_url: feed.feed_url,
-      feed_name: feed.feed_name,
-      site_url: feed.site_url,
-      is_private: feed.private,
-    };
-    $http.post(opts.ajaxurl,data)
-    .success(function(response){
-      if(! batchmode){
-        //mark the save button not busy
-        $scope.isLoading = false;
-        //hide the feed away
-        $scope.toggle();
-        $scope.feedSaved(response);
-        $scope.feedsChanged();
-      }
+    feedService.saveFeed(feed,function(response,data){
+        if(! batchmode){
+          //mark the save button not busy
+          $scope.isLoading = false;
+          //hide the feed away
+          $scope.toggle();
+          $scope.feedSaved(response);
+          $scope.feedsChanged();
+        }
+
     });
   }
   /*
@@ -558,7 +554,7 @@ function SubsCtrl($scope,$http,$log){
   }
 
   $scope.feedsChanged = function(){
-    $scope.$emit('feedsChanged');
+    feedService.refresh();
   }
 
   //We are going to edit a feed
@@ -571,10 +567,10 @@ function SubsCtrl($scope,$http,$log){
   });
 }
 
-function CommandBarCtrl($scope,$http,$log){
-  $scope.$on('feedSelected', function(event,args){
-    //$log.info('commandBar feed is:' + args['feed'].feed_name);
-    $scope.currentFeed = args.feed;
+function CommandBarCtrl($scope,$http,$log,feedService){
+  $scope.$watch(feedService.selectedFeed, function (){
+    $scope.currentFeed = feedService.selectedFeed();
+    console.log($scope.currentFeed + ' selected');
   });
   $scope.commandBarAction = function(action){
     //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));
