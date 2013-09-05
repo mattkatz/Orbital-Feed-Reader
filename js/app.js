@@ -112,6 +112,22 @@ mainModule.factory('feedService',   function($http){
       _selectedFeed = feed;
 
     },
+    saveFeed: function(feed, successCallback){
+      var data = {
+        action: 'orbital_save_feed',
+        feed_id: feed.feed_id,
+        feed_url: feed.feed_url,
+        feed_name: feed.feed_name,
+        site_url: feed.site_url,
+        is_private: feed.private,
+      };
+      $http.post(opts.ajaxurl,data)
+      .success(function(response){
+        if(successCallback){ successCallback(response, data);}
+        
+      });
+
+    }
     selectedFeed: function(){
       return _selectedFeed;
     },

@@ -82,6 +82,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
 
   /*
    * Update this feed
+   * TODO move this into the feedService
    */
   $scope.update = function(feed){
     //update feed 
@@ -413,24 +414,16 @@ function SubsCtrl($scope,$http,$log,feedService){
   $scope.saveFeed = function(feed, batchmode){
     //mark the save button busy
     if(! batchmode) {$scope.isLoading = true;}
-    var data = {
-      action: 'orbital_save_feed',
-      feed_id: feed.feed_id,
-      feed_url: feed.feed_url,
-      feed_name: feed.feed_name,
-      site_url: feed.site_url,
-      is_private: feed.private,
-    };
-    $http.post(opts.ajaxurl,data)
-    .success(function(response){
-      if(! batchmode){
-        //mark the save button not busy
-        $scope.isLoading = false;
-        //hide the feed away
-        $scope.toggle();
-        $scope.feedSaved(response);
-        $scope.feedsChanged();
-      }
+    feedService.saveFeed(feed,function(response,data){
+        if(! batchmode){
+          //mark the save button not busy
+          $scope.isLoading = false;
+          //hide the feed away
+          $scope.toggle();
+          $scope.feedSaved(response);
+          $scope.feedsChanged();
+        }
+
     });
   }
   /*
