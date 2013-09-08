@@ -193,6 +193,10 @@ function EntriesCtrl($scope, $http, $log,feedService){
     });
   };
 
+  $scope.selectFeed = function(entry){
+    feedService.select(feedService.getFeed(entry.feed_id));
+  }
+
   $scope.addMoreEntries = function(){
     if(! feedService.selectedFeed()){ return; }
     $scope.isLoading = true;
@@ -269,6 +273,10 @@ function EntriesCtrl($scope, $http, $log,feedService){
       //tell the feed list that the entry was toggled read.
       $scope.$emit('entryChange', {entry:entry});
     });
+  }
+
+  $scope.getFeedName = function (entry){
+    return feedService.getFeedName(entry.feed_id);
   }
   //$scope.displayFeed();
   /*

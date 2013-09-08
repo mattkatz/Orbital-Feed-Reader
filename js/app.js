@@ -128,6 +128,17 @@ mainModule.factory('feedService',   function($http){
       });
 
     },
+    getFeed: function(feed_id){
+      return _.find(_feeds, function(feed){return feed.feed_id == feed_id});
+    },
+    getFeedName: function(feed_id){
+      var feed = _.find(_feeds, function(feed){return feed.feed_id == feed_id});
+      if (feed){
+        return feed.feed_name;
+      }else{
+        return null;
+      }
+    },
     selectedFeed: function(){
       return _selectedFeed;
     },
