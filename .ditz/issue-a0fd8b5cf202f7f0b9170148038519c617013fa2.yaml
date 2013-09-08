@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make Drag and Drop url handling work in subs window
+desc: ""
+type: :feature
+component: Orbital
+release: 
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2013-09-08 23:12:02.106723 Z
+references: []
+
+id: a0fd8b5cf202f7f0b9170148038519c617013fa2
+log_events: 
+- - 2013-09-08 23:12:05.345551 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

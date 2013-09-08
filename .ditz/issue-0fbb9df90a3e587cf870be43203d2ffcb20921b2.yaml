@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make orbital default rss handler in chrome
+desc: dunno how, but there should be a way.
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-08 23:12:33.011711 Z
+references: []
+
+id: 0fbb9df90a3e587cf870be43203d2ffcb20921b2
+log_events: 
+- - 2013-09-08 23:12:33.900766 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
