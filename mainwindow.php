@@ -63,7 +63,7 @@
     <div ng-hide="feedCandidate">
       <label for='subscriptionUrl'>
         <img id="feed-icon" class="feed icon" src="<?php echo plugins_url("img/feed-icon.svg", __FILE__); ?>">
-        Drag or copy paste a feed here
+        Put a website or a feed URL here:
       </label>
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
