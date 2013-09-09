@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2012-04-22 11:06:12.623551 Z
 references: []
 
@@ -20,3 +20,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.2 Wordpress integration from unassigned
   - People should be clicking on explanatory names, not feed urls.
+- - 2013-09-09 10:27:45.683970 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - instead we are just parsing the feed body that simplepie already sends back to us for channel title.

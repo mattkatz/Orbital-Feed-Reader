@@ -408,8 +408,22 @@ function SubsCtrl($scope,$http,$log,feedService){
         $scope.possibleFeeds=null;
       }
       else{
+        console.log('sticking in feed names');
+        _.each(response.feeds,function(feed){
+          console.log('looking for a title for '+ feed);
+          console.log(feed);
+          if(feed.body){
+            //TODO this all seeems a bit fragile. Could be done better
+            var xml = jQuery.parseXML(feed.body);
+            xml = jQuery(xml);
+            var title = xml.find('channel > title');
+            feed.name = title.text();
+            console.log(feed.name);
+          }
+        });
         //if it returns possibleFeeds, display them.
         $scope.possibleFeeds = response.feeds;
+
         //remove the old feedCandidate if there is one
         $scope.feedCandidate = null;
       }

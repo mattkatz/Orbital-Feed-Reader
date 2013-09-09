@@ -97,7 +97,7 @@
         </div>
         <ul>
           <li ng-repeat="feed in possibleFeeds" >
-            <a ng-click="checkUrl(feed.url)" >{{feed.url}}</a>
+            <a ng-click="checkUrl(feed.url)" ><span class="feed name" ng-show="feed.name">{{feed.name}} - </span>{{feed.url}}</a>
           </li>
         </ul>
       </div>
