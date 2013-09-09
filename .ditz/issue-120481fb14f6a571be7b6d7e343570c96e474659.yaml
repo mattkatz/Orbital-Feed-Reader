@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: sort order should be specified to feed get
+desc: ""
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-09 11:02:10.186107 Z
+references: []
+
+id: 120481fb14f6a571be7b6d7e343570c96e474659
+log_events: 
+- - 2013-09-09 11:02:11.115681 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
