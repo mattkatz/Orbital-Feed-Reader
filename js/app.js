@@ -67,6 +67,15 @@ mainModule.factory('feedService',   function($http){
   var _feeds = [];
   //is this service doing work?
   var _isLoading = false;
+  var _sortOrder = -1;
+  var _sortOptions = [
+    { sortOrder: -1,
+      sortName: "Newest First",
+    },
+    { sortOrder: 1,
+      sortName: "Oldest First",
+    },
+  ];
 
   return {
     feeds : function(){
@@ -142,8 +151,12 @@ mainModule.factory('feedService',   function($http){
     selectedFeed: function(){
       return _selectedFeed;
     },
-
-
+    sortOrder: function(){
+      return _sortOrder;
+    },
+    sortOptions: function(){
+      return _sortOptions;
+    },
   };
 
   

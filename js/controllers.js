@@ -594,6 +594,10 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     $scope.currentFeed = feedService.selectedFeed();
     console.log($scope.currentFeed + ' selected');
   });
+  $scope.$watch(feedService.sortOrder, function(){
+    $scope.sortOrder = feedService.sortOrder();
+    $scope.sortOptions = feedService.sortOptions();
+  });
   $scope.commandBarAction = function(action){
     //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
@@ -609,14 +613,5 @@ function CommandBarCtrl($scope,$http,$log,feedService){
       name: 'showRead',
     },
   ];
-  $scope.sortOptions = [
-    { sortOrder: -1,
-      sortName: "Newest First",
-    },
-    { sortOrder: 1,
-      sortName: "Oldest First",
-    },
-  ];
-  $scope.sortOrder = -1;
 
 }
