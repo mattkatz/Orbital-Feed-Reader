@@ -2,6 +2,10 @@
   <div id="commandbar" class="quicklinks" ng-controller="CommandBarCtrl">
     <ul>
       <li class="command" ng-repeat="command in commands" ><a href="#" ng-click="commandBarAction(command)">{{command.title}}</a></li>
+      <li class="command">
+        <select ng-model="sortOrder" ng-options="item.sortOrder as item.sortName for item in sortOptions"> </select>
+      </li>
+
     </ul>
     {{currentFeed.feed_name}}
   </div>

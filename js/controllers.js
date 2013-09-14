@@ -609,5 +609,14 @@ function CommandBarCtrl($scope,$http,$log,feedService){
       name: 'showRead',
     },
   ];
+  $scope.sortOptions = [
+    { sortOrder: -1,
+      sortName: "Newest First",
+    },
+    { sortOrder: 1,
+      sortName: "Oldest First",
+    },
+  ];
+  $scope.sortOrder = -1;
 
 }
