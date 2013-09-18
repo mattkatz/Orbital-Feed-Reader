@@ -876,21 +876,28 @@ function orbital_mark_item_read(){
 add_action('wp_ajax_orbital_mark_item_read','orbital_mark_item_read');
 //No non logged in way to mark an item read for me yet
 
-//Get the current entry sort order for this user
-function orbital_get_sort_order(){
+//Get the current settings for this user
+function orbital_get_user_settings(){
 
-  $settings = (array) get_option( 'orbital-setting' );
+  $settings = (array) get_user_option( 'orbital-settings' );
+  //TODO what if the settings haven't been set? we should default them.
   $sort_order = esc_attr($settings['sort-order']);
   echo json_encode($settings);
+  exit;
 }
-add_action('wp_ajax_orbital_get_sort_order','orbital_get_sort_order');
+add_action('wp_ajax_orbital_get_user_settings','orbital_get_user_settings');
 
 //set the current entry sort order for this user
-function orbital_set_sort_order(){
-  $sort_order = filter_input(INPUT_POST, 'sort-order', FILTER_SANITIZE_NUMBER_INT);
-  $settings = (array) get_option( 'orbital-setting' );
-  $settings['sort-order'] = $sort_order;
-  update_option('orbital-setting',  $settings);
+function orbital_set_user_settings(){
+  $sort_order = filter_input(INPUT_POST, 'user-settings', FILTER_SANITIZE_NUMBER_INT);
+  $settings = (array) get_user_option( 'orbital-settings' );
+  //$settings['sort-order'] = $sort_order;
+  if(update_option('orbital-setting',  $settings)){
+    // Send back what we now know
+    echo json_encode($settings);
+  }
+  else echo false;
+  exit;
 }
-add_action('wp_ajax_orbital_set_sort_order','orbital_set_sort_order');
+add_action('wp_ajax_orbital_set_user_settings','orbital_set_user_settings');
 ?>
