@@ -889,8 +889,10 @@ add_action('wp_ajax_orbital_get_user_settings','orbital_get_user_settings');
 
 //set the current entry sort order for this user
 function orbital_set_user_settings(){
-  $sort_order = filter_input(INPUT_POST, 'user-settings', FILTER_SANITIZE_NUMBER_INT);
+  $user_orbital_settings = filter_input(INPUT_POST, 'user-settings', FILTER_SANITIZE_NUMBER_INT);
   $settings = (array) get_user_option( 'orbital-settings' );
+  //merge arrays
+  $settings = $user_orbital_settings + $settings;
   //$settings['sort-order'] = $sort_order;
   if(update_option('orbital-setting',  $settings)){
     // Send back what we now know
