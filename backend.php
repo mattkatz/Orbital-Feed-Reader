@@ -875,4 +875,22 @@ function orbital_mark_item_read(){
 }
 add_action('wp_ajax_orbital_mark_item_read','orbital_mark_item_read');
 //No non logged in way to mark an item read for me yet
+
+//Get the current entry sort order for this user
+function orbital_get_sort_order(){
+
+  $settings = (array) get_option( 'orbital-setting' );
+  $sort_order = esc_attr($settings['sort-order']);
+  echo json_encode($settings);
+}
+add_action('wp_ajax_orbital_get_sort_order','orbital_get_sort_order');
+
+//set the current entry sort order for this user
+function orbital_set_sort_order(){
+  $sort_order = filter_input(INPUT_POST, 'sort-order', FILTER_SANITIZE_NUMBER_INT);
+  $settings = (array) get_option( 'orbital-setting' );
+  $settings['sort-order'] = $sort_order;
+  update_option('orbital-setting',  $settings);
+}
+add_action('wp_ajax_orbital_set_sort_order','orbital_set_sort_order');
 ?>
