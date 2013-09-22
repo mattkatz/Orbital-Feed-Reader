@@ -602,6 +602,10 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
+  $scope.changeSortOrder = function(){
+    feedService.saveSettings();
+    console.log($scope.sortOrder);
+  };
   $scope.commands = [
     { title: "Mark All As Read",
       name: 'markRead',

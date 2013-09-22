@@ -157,6 +157,28 @@ mainModule.factory('feedService',   function($http){
     sortOptions: function(){
       return _sortOptions;
     },
+    saveSettings: function(){
+      var data = {
+        action: 'orbital_set_user_settings',
+        orbital_settings: {
+          sort_order: _sortOrder,
+        },
+      };
+      $http.post(opts.ajaxurl, data)
+      .success(function(response){
+        //TODO Store the settings somewhere?
+        console.log(response);
+
+      });
+
+    },
+
+    changeSortOrder: function( sortOrder){
+
+      console.log(sortOrder);
+      //todo post the sort order to the settings.
+      
+    },
   };
 
   

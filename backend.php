@@ -879,9 +879,9 @@ add_action('wp_ajax_orbital_mark_item_read','orbital_mark_item_read');
 //Get the current settings for this user
 function orbital_get_user_settings(){
 
-  $settings = (array) get_user_option( 'orbital-settings' );
+  $settings = (array) get_user_option( 'orbital_settings' );
   //TODO what if the settings haven't been set? we should default them.
-  $sort_order = esc_attr($settings['sort-order']);
+  //$sort_order = esc_attr($settings['sort-order']);
   echo json_encode($settings);
   exit;
 }
@@ -889,12 +889,14 @@ add_action('wp_ajax_orbital_get_user_settings','orbital_get_user_settings');
 
 //set the current entry sort order for this user
 function orbital_set_user_settings(){
-  $user_orbital_settings = filter_input(INPUT_POST, 'user-settings', FILTER_SANITIZE_NUMBER_INT);
-  $settings = (array) get_user_option( 'orbital-settings' );
+  global $current_user;
+  //TODO this is the better way, but I can't get it to work.
+  //$user_orbital_settings = filter_input(INPUT_POST, 'orbital_settings', FILTER_SANITIZE_STRING);
+  $user_orbital_settings = $_POST['orbital_settings'];
+  $settings = (array) get_user_option( 'orbital_settings' );
   //merge arrays
   $settings = $user_orbital_settings + $settings;
-  //$settings['sort-order'] = $sort_order;
-  if(update_option('orbital-setting',  $settings)){
+  if(update_user_option($current_user, 'orbital_setting',  $settings)){
     // Send back what we now know
     echo json_encode($settings);
   }
