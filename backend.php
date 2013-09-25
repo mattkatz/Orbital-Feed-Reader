@@ -543,7 +543,10 @@ class OrbitalEntries{
             FROM ".$user_feeds." 
             WHERE feed_id = %d" ;
     $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
-    $resp->inserted = $wpdb->query($sql);
+    $resp->entry_inserted = $wpdb->query($sql);
+    if(false=== $resp->entry_inserted){
+      $resp->entries_error = $wpdb->print_error();
+    }
     
     //update the last updated time for the feed
     $resp->last_update = $wpdb->update(
