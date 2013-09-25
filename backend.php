@@ -87,7 +87,7 @@ class OrbitalFeeds {
         $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
         //TODO we should have some sane error checking here
         $ret = $wpdb->query($sql);
-        $resp->inserted = $ret;
+        $resp->feed_inserted = $ret;
         if(false=== $ret){
           $resp->feeds_error = $wpdb->print_error();
         }
@@ -100,7 +100,8 @@ class OrbitalFeeds {
          VALUES
          (%d,%s,%s,%d,%d,0)';
       $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
-      if(false=== $wpdb->query($sql)){
+      $resp->user_feeds_inserted = $wpdb->query($sql);
+      if(false=== $resp->user_feeds_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
       }
     }
