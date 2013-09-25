@@ -321,6 +321,9 @@ class OrbitalFeeds {
     $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
+    //If you're cache isn't writable, this is a big deal
+    //Better to just disable it for now
+    $feed->enable_cache(false);
     $feed->set_feed_url($feedrow->feed_url);
     $feed->force_feed(true);
 
@@ -660,6 +663,9 @@ function orbital_find_feed(){
   //if( !class_exists( 'WP_Http' ) )
     include_once(ABSPATH . WPINC . '/class-feed.php');
     $feed = new SimplePie();
+    //If you're cache isn't writable, this is a big deal
+    //Better to just disable it for now
+    $feed->enable_cache(false);
     $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);
     /*
     //TODO: LOOK, I know this is dumb.
@@ -692,7 +698,8 @@ function orbital_find_feed(){
     $resp->feed_name = $feed->get_title();
     //set the site_url to the site_url element on this feed
     $resp->site_url = $feed->get_link();
-    $resp->favicon = $feed->get_favicon();
+    //Simplepie doesn't support favicon anymore
+    //$resp->favicon = $feed->get_favicon();
 
 
     //TODO return!
