@@ -65,8 +65,8 @@ class OrbitalFeeds {
               WHERE feed_id = %d
               AND owner = %d";
       $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
-      $resp->updated = $wpdb->query($sql);
-      if(false=== $resp->updated ) {
+      $resp->feed_updated = $wpdb->query($sql);
+      if(false=== $resp->feed_updated ) {
         $resp->update_error = $wpdb->print_error();
       }
     }
@@ -86,9 +86,8 @@ class OrbitalFeeds {
         ';
         $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
         //TODO we should have some sane error checking here
-        $ret = $wpdb->query($sql);
-        $resp->inserted = $ret;
-        if(false=== $ret){
+        $resp->feed_inserted = $wpdb->query($sql);
+        if(false=== $resp->feed_inserted){
           $resp->feeds_error = $wpdb->print_error();
         }
 
@@ -100,7 +99,8 @@ class OrbitalFeeds {
          VALUES
          (%d,%s,%s,%d,%d,0)';
       $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
-      if(false=== $wpdb->query($sql)){
+      $resp->user_feed_inserted = $wpdb->query($sql);
+      if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
       }
     }
