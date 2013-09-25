@@ -669,7 +669,7 @@ function orbital_find_feed(){
     //WE'LL DO IT LATER
     //http://knowyourmeme.com/memes/bill-oreilly-rant
 
-    $resp->ofeed_type = $feed->get_type() ;
+    $resp->feed_type = $feed->get_type() ;
     $resp->feed_none = SIMPLEPIE_TYPE_NONE;
   
     if(($feed->get_type() & SIMPLEPIE_TYPE_NONE) == SIMPLEPIE_TYPE_NONE){
@@ -687,12 +687,15 @@ function orbital_find_feed(){
     $resp->url_type ='feed';
     //$feed->set_feed_url($orig_url);
     $feed->set_raw_data($contents);
+    //If your cache isn't writable, this is a big issue
+    $feed->enable_cache(false);
     $feed->init();
     //set the feed_name
     $resp->feed_name = $feed->get_title();
     //set the site_url to the site_url element on this feed
     $resp->site_url = $feed->get_link();
-    $resp->favicon = $feed->get_favicon();
+    //Simplepie doesn't support getfavicon anymore
+    //$resp->favicon = $feed->get_favicon();
 
 
     //TODO return!
@@ -701,6 +704,8 @@ function orbital_find_feed(){
     $resp->url_type = "html";
     //if this is an html file, let's see what feeds lurk within.
     $feed->set_feed_url($orig_url);
+    //If your cache isn't writable, this is a big issue
+    $feed->enable_cache(false);
     $feed->init();
     //add those feeds to the array of feed
     $feeds = $feed->get_all_discovered_feeds();
@@ -895,12 +900,22 @@ function orbital_set_user_settings(){
   $user_orbital_settings = $_POST['orbital_settings'];
   $settings = (array) get_user_option( 'orbital_settings' );
   //merge arrays
-  $settings = $user_orbital_settings + $settings;
-  if(update_user_option($current_user, 'orbital_setting',  $settings)){
+  $new_settings = $user_orbital_settings + $settings;
+  _log("posted settings");
+  _log($user_orbital_settings);
+  _log("db settings");
+  _log($settings);
+  _log("merged settings");
+  _log($new_settings);
+  
+  if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
     // Send back what we now know
-    echo json_encode($settings);
+    echo json_encode($new_settings);
   }
-  else echo false;
+  else {
+    echo false;
+    _log('update failed');
+  }
   exit;
 }
 add_action('wp_ajax_orbital_set_user_settings','orbital_set_user_settings');
