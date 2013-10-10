@@ -157,13 +157,14 @@ mainModule.factory('feedService',   function($http){
     sortOptions: function(){
       return _sortOptions;
     },
-    saveSettings: function(){
+    saveSort: function(sortOrder){
       var data = {
         action: 'orbital_set_user_settings',
         orbital_settings: {
-          sort_order: _sortOrder,
+          sort_order: sortOrder,
         },
       };
+      console.log('And app thinks data is : ' + _sortOrder );
       $http.post(opts.ajaxurl, data)
       .success(function(response){
         //TODO Store the settings somewhere?

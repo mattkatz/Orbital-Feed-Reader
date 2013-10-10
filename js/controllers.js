@@ -6,7 +6,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
   $scope.feeds = feedService.feeds();
   $scope.isLoading = feedService.isLoading();
   $scope.$watch(feedService.feeds,function(){
-    console.log('listener');
+    //console.log('listener');
     $scope.feeds = feedService.feeds();
 
   });
@@ -603,8 +603,9 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
   $scope.changeSortOrder = function(){
-    feedService.saveSettings();
-    console.log($scope.sortOrder);
+    console.log("pre saving " + $scope.sortOrder);
+    feedService.saveSort($scope.sortOrder);
+    console.log("post saving " + $scope.sortOrder);
   };
   $scope.commands = [
     { title: "Mark All As Read",
