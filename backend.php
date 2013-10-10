@@ -568,6 +568,15 @@ class OrbitalEntries{
     $current_user = wp_get_current_user();
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $user_settings = (array) get_user_option( 'orbital_settings' );
+    $sort_order = $user_settings['sort_order'];
+    $sort = "ORDER BY entries.updated ";
+    if("-1" == $sort_order ){
+      $sort = $sort . "DESC";
+    }
+    else{
+      $sort = $sort ."ASC";
+    }
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
     //_log($filters);
@@ -600,6 +609,7 @@ class OrbitalEntries{
         on ue.entry_id=entries.id
         where ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
+        ". $sort . "
         limit 30
     ;";
     //_log($sql);
