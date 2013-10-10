@@ -604,7 +604,7 @@ function CommandBarCtrl($scope,$http,$log,feedService){
   };
   $scope.changeSortOrder = function(){
     //console.log("pre saving " + $scope.sortOrder);
-    feedService.saveSort($scope.sortOrder);
+    feedService.saveSort($scope.sortOrder,function(){$scope.$emit('feedSelect', {feed: feedService.selectedFeed()})});
     //console.log("post saving " + $scope.sortOrder);
   };
   $scope.commands = [
