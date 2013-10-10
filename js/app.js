@@ -67,12 +67,12 @@ mainModule.factory('feedService',   function($http){
   var _feeds = [];
   //is this service doing work?
   var _isLoading = false;
-  var _sortOrder = -1;
+  var _sortOrder = "-1";
   var _sortOptions = [
-    { sortOrder: -1,
+    { sortOrder: "-1",
       sortName: "Newest First",
     },
-    { sortOrder: 1,
+    { sortOrder: "1",
       sortName: "Oldest First",
     },
   ];
@@ -105,11 +105,16 @@ mainModule.factory('feedService',   function($http){
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
         }
-      _feeds.unshift(fresh);
-      _isLoading = false;
-      if(callback){
-        callback(_feeds);
-      }
+        _feeds.unshift(fresh);
+        _isLoading = false;
+        if(callback){
+          callback(_feeds);
+        }
+      });
+      $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
+      .success(function(data){
+        console.log(data);
+        _sortOrder = data['sort_order'];
       });
     },
     select : function(feed, showRead){
