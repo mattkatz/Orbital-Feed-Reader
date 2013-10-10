@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make the entries display according to my chosen sort order
+desc: |-
+  whatever my sort order is in my user settings, respect that when I get from db.
+  when I change my sort option, refresh entries from db
+type: :feature
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :in_progress
+disposition: 
+creation_time: 2013-10-10 01:00:31.522959 Z
+references: []
+
+id: f3aa9949f3b1c072f71cae9d15e4e75efa19e585
+log_events: 
+- - 2013-10-10 01:00:33.516214 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-10-10 01:00:48.169082 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
