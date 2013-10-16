@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Default sort order should be newest first
+desc: ""
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-09 11:01:46.968273 Z
+references: []
+
+id: 4179b5641aaf17a610a824157101ad5722a0c4c4
+log_events: 
+- - 2013-09-09 11:01:48.697345 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

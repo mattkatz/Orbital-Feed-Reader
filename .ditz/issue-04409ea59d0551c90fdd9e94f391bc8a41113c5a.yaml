@@ -5,7 +5,7 @@ type: :bugfix
 component: Orbital
 release: 0.1.5
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
+status: :paused
 disposition: 
 creation_time: 2013-08-12 01:52:53.400096 Z
 references: []
@@ -28,3 +28,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.5 from 0.1.4
   - dunno yet, so moving so I can get other features out.
+- - 2013-10-10 00:57:06.054998 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from in_progress to paused
+  - ""

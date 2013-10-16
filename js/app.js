@@ -67,6 +67,15 @@ mainModule.factory('feedService',   function($http){
   var _feeds = [];
   //is this service doing work?
   var _isLoading = false;
+  var _sortOrder = "-1";
+  var _sortOptions = [
+    { sortOrder: "-1",
+      sortName: "Newest First",
+    },
+    { sortOrder: "1",
+      sortName: "Oldest First",
+    },
+  ];
 
   return {
     feeds : function(){
@@ -96,11 +105,16 @@ mainModule.factory('feedService',   function($http){
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
         }
-      _feeds.unshift(fresh);
-      _isLoading = false;
-      if(callback){
-        callback(_feeds);
-      }
+        _feeds.unshift(fresh);
+        _isLoading = false;
+        if(callback){
+          callback(_feeds);
+        }
+      });
+      $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
+      .success(function(data){
+        console.log(data);
+        _sortOrder = data['sort_order'];
       });
     },
     select : function(feed, showRead){
@@ -142,8 +156,37 @@ mainModule.factory('feedService',   function($http){
     selectedFeed: function(){
       return _selectedFeed;
     },
+    sortOrder: function(){
+      return _sortOrder;
+    },
+    sortOptions: function(){
+      return _sortOptions;
+    },
+    saveSort: function(sortOrder, callback){
+      var data = {
+        action: 'orbital_set_user_settings',
+        orbital_settings: {
+          sort_order: sortOrder,
+        },
+      };
+      //console.log('And app thinks data is : ' + _sortOrder );
+      $http.post(opts.ajaxurl, data)
+      .success(function(response){
+        //TODO Store the settings somewhere?
+        console.log(response);
+        if(callback){
+          callback();
+        }
+      });
 
+    },
 
+    changeSortOrder: function( sortOrder){
+
+      console.log(sortOrder);
+      //todo post the sort order to the settings.
+      
+    },
   };
 
   
