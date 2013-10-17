@@ -39,12 +39,23 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
+= 0.1.5 - Sort Order -  = 
+* bugfix: The subscription window says RSS url, not URL or RSS URL
+* bugfix: Make the feed edit add refresh bigger! People must click!
+* bugfix: remove this y-indicator idea inspired by newsblur.
+* bugfix: fix layout issue
+* show feed title when autodiscovering feeds
+* Dynamically change sort order
+* Make sort order a setting
+* make the entries display according to my chosen sort order
+
 = 0.1.4 = 
 * fixed some issues with running the plugin on PHP 5.2
 * Pull created and updated date directly from the feed
 
 = 0.1.3 = 
 read/unread issue
+
 = 0.1.2 = 
 * Fixed some JS files that were missing
 
