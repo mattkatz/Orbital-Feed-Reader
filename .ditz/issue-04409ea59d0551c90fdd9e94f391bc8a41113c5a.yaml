@@ -3,7 +3,7 @@ title: Shouldn't insert duplicate user entries
 desc: Sometimes an update will trigger two inserts.  Each insert should ensure it is unique
 type: :bugfix
 component: Orbital
-release: 0.1.5
+release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :paused
 disposition: 
@@ -32,3 +32,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from in_progress to paused
   - ""
+- - 2013-10-17 00:03:24.825223 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.6 from 0.1.5
+  - Moving to a new release

@@ -3,7 +3,7 @@ title: Publish Date still not being properly stored
 desc: from henryv.
 type: :bugfix
 component: Orbital
-release: 0.1.5
+release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2013-09-02 11:56:15.225420 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2013-10-17 00:03:38.967038 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.6 from 0.1.5
   - ""
