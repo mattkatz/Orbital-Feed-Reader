@@ -3,10 +3,10 @@ title: sort order should be specified to feed get
 desc: ""
 type: :feature
 component: Orbital
-release: 
+release: 0.1.5
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-09-09 11:02:10.186107 Z
 references: []
 
@@ -15,4 +15,12 @@ log_events:
 - - 2013-09-09 11:02:11.115681 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2013-10-24 08:50:17.644612 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
+- - 2013-10-24 08:50:41.366230 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.5 from unassigned
   - ""
