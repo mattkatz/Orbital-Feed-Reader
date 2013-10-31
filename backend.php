@@ -117,7 +117,98 @@ class OrbitalFeeds {
     return $resp;
   }
 
-  /* Method to list all feeds
+  /* OrbitalFeeds::getTags
+   *
+   * Method to list all feeds by tag
+   * 
+   * We list each tag that the user has and then union
+   * all of the feeds which aren't linked by a tag
+   */
+  static function getTags(){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
+    $sql = "
+select 
+  COALESCE(tags.name,'Untagged') as tag, 
+  feeds.id as feed_id,
+  COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
+  feeds.feed_url, 
+  COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
+  COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
+  feeds.last_updated,
+  feeds.last_error,
+  u_feeds.private,
+  sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
+from $user_feed_tags as uft
+  inner join $tags as tags
+    on tags.id = uft.tag_id 
+  inner join $user_feeds  as u_feeds
+    on uft.user_feed_id = u_feeds.id
+  inner join  $feeds  as feeds
+    on u_feeds.feed_id = feeds.id 
+  left outer join $user_entries as ue
+    on ue.feed_id=feeds.id
+where 
+  u_feeds.owner = 1
+group by 
+  feeds.id,
+  feeds.feed_url,
+  feeds.feed_name,
+  feeds.icon_url,
+  feeds.site_url,
+  feeds.last_updated,
+  feeds.last_error,
+  u_feeds.private,
+  tags.name
+
+  UNION
+select 
+  'Untagged' as tag, 
+  feeds.id as feed_id,
+  COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
+  feeds.feed_url, 
+  COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
+  COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
+  feeds.last_updated,
+  feeds.last_error,
+  u_feeds.private,
+  sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
+
+from $user_feeds as u_feeds
+left outer join $user_feed_tags as uft
+  on uft.user_feed_id = u_feeds.id
+inner join $feeds as feeds
+  on u_feeds.feed_id = feeds.id 
+left outer join $user_entries as ue
+  on ue.feed_id=feeds.id
+where 
+        u_feeds.owner = 1
+        and isnull(uft.user_feed_id)
+group by 
+        feeds.id,
+        feeds.feed_url,
+        feeds.feed_name,
+        feeds.icon_url,
+        feeds.site_url,
+        feeds.last_updated,
+        feeds.last_error,
+        u_feeds.private
+
+        ";
+    $myrows = $wpdb->get_results($sql );
+    return $myrows;
+    
+  }
+
+  /* OrbitalFeeds::get
+   *
+   * Method to list all feeds
    *   - Just return all feeds from user_feeds
    */
   static function get(){
