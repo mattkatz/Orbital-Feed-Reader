@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: sort order should be specified in the ui
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.5
+reporter: .
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-09 11:02:33.458760 Z
+references: []
+
+id: d270f1a19df7c4dd10c7f45fc6d4881e9937310a
+log_events: 
+- - 2013-09-09 11:02:34.603550 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-10-24 08:50:58.715136 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.5 from unassigned
+  - ""
+- - 2013-10-24 08:51:23.970103 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

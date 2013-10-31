@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: The subscription window says RSS url, not URL or RSS URL
+desc: From henry v
+type: :bugfix
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-08 23:10:18.083881 Z
+references: []
+
+id: 9eab8de3adbf81a0076bb9f2518b6009ee5ce9f5
+log_events: 
+- - 2013-09-08 23:10:19.809587 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-09-08 23:13:10.104998 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-09-08 23:17:59.486636 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - better text

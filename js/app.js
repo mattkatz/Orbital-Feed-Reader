@@ -53,6 +53,145 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], f
   }];
 });
 
+mainModule.factory('feedService',   function($http){
+  /*
+   * The Feed Service should be the interface to feeds. 
+   *
+   * It maintains a list of feeds, a pointer to a current feed, 
+   * and ways to refresh the list, select the next feed, mark a feed read
+   * or get the entries from a feed.
+   */
+  // the currently selected feed
+  var _selectedFeed = null;
+  // the list of feeds;
+  var _feeds = [];
+  //is this service doing work?
+  var _isLoading = false;
+  var _sortOrder = "-1";
+  var _sortOptions = [
+    { sortOrder: "-1",
+      sortName: "Newest First",
+    },
+    { sortOrder: "1",
+      sortName: "Oldest First",
+    },
+  ];
+
+  return {
+    feeds : function(){
+      return _feeds;
+    },
+    isLoading : function(){
+      return _isLoading;
+    },
+
+    // get the list of feeds from backend, inject a "fresh" feed.
+    refresh : function(callback){
+      console.log('refresh');
+      _isLoading = true;
+      /*
+        var fresh = {
+          feed_id:null, //TODO start using neg integers for special feed ids
+          feed_name:'All Feeds',
+          unread_count:'',//TODO put in actual unread count;
+        }
+      _feeds.unshift(fresh);
+      */
+      $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
+      .success( function( data ){
+        _feeds= data;
+        var fresh = {
+          feed_id:null, //TODO start using neg integers for special feed ids
+          feed_name:'All Feeds',
+          unread_count:'',//TODO put in actual unread count;
+        }
+        _feeds.unshift(fresh);
+        _isLoading = false;
+        if(callback){
+          callback(_feeds);
+        }
+      });
+      $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
+      .success(function(data){
+        console.log(data);
+        _sortOrder = data['sort_order'];
+      });
+    },
+    select : function(feed, showRead){
+      //Mark this feed as selected
+      _feeds.forEach(function(value,index){
+        value.isSelected = value.feed_id == feed.feed_id
+      });
+      //let's cache this for later
+      _selectedFeed = feed;
+
+    },
+    saveFeed: function(feed, successCallback){
+      var data = {
+        action: 'orbital_save_feed',
+        feed_id: feed.feed_id,
+        feed_url: feed.feed_url,
+        feed_name: feed.feed_name,
+        site_url: feed.site_url,
+        is_private: feed.private,
+      };
+      $http.post(opts.ajaxurl,data)
+      .success(function(response){
+        if(successCallback){ successCallback(response, data);}
+        
+      });
+
+    },
+    getFeed: function(feed_id){
+      return _.find(_feeds, function(feed){return feed.feed_id == feed_id});
+    },
+    getFeedName: function(feed_id){
+      var feed = _.find(_feeds, function(feed){return feed.feed_id == feed_id});
+      if (feed){
+        return feed.feed_name;
+      }else{
+        return null;
+      }
+    },
+    selectedFeed: function(){
+      return _selectedFeed;
+    },
+    sortOrder: function(){
+      return _sortOrder;
+    },
+    sortOptions: function(){
+      return _sortOptions;
+    },
+    saveSort: function(sortOrder, callback){
+      var data = {
+        action: 'orbital_set_user_settings',
+        orbital_settings: {
+          sort_order: sortOrder,
+        },
+      };
+      //console.log('And app thinks data is : ' + _sortOrder );
+      $http.post(opts.ajaxurl, data)
+      .success(function(response){
+        //TODO Store the settings somewhere?
+        console.log(response);
+        if(callback){
+          callback();
+        }
+      });
+
+    },
+
+    changeSortOrder: function( sortOrder){
+
+      console.log(sortOrder);
+      //todo post the sort order to the settings.
+      
+    },
+  };
+
+  
+});
+
 mainModule.run(function($rootScope){
   /* 
    * receive the emitted messages and rebroadcast
@@ -75,10 +214,6 @@ mainModule.run(function($rootScope){
   $rootScope.$on('newFeedRequested', function(event,args){
     //console.log('caught newFeedRequested');
     $rootScope.$broadcast('subscriptionsWindow',args);
-  });
-  $rootScope.$on('feedsChanged', function(event,args){
-    //console.log('the feeds are changing');
-    $rootScope.$broadcast('refreshFeeds',args);
   });
   $rootScope.$on('feedSaved', function(event,args){
     //console.log('the feeds are changing');

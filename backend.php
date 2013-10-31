@@ -65,8 +65,8 @@ class OrbitalFeeds {
               WHERE feed_id = %d
               AND owner = %d";
       $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
-      $resp->updated = $wpdb->query($sql);
-      if(false=== $resp->updated ) {
+      $resp->feed_updated = $wpdb->query($sql);
+      if(false=== $resp->feed_updated ) {
         $resp->update_error = $wpdb->print_error();
       }
     }
@@ -86,9 +86,8 @@ class OrbitalFeeds {
         ';
         $sql = $wpdb->prepare($sql, $feed['feed_url'], $feed['feed_name'],$feed['site_url']);
         //TODO we should have some sane error checking here
-        $ret = $wpdb->query($sql);
-        $resp->inserted = $ret;
-        if(false=== $ret){
+        $resp->feed_inserted = $wpdb->query($sql);
+        if(false=== $resp->feed_inserted){
           $resp->feeds_error = $wpdb->print_error();
         }
 
@@ -100,7 +99,8 @@ class OrbitalFeeds {
          VALUES
          (%d,%s,%s,%d,%d,0)';
       $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
-      if(false=== $wpdb->query($sql)){
+      $resp->user_feed_inserted = $wpdb->query($sql);
+      if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
       }
     }
@@ -321,6 +321,9 @@ class OrbitalFeeds {
     $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
+    //If you're cache isn't writable, this is a big deal
+    //Better to just disable it for now
+    $feed->enable_cache(false);
     $feed->set_feed_url($feedrow->feed_url);
     $feed->force_feed(true);
 
@@ -540,7 +543,10 @@ class OrbitalEntries{
             FROM ".$user_feeds." 
             WHERE feed_id = %d" ;
     $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
-    $resp->inserted = $wpdb->query($sql);
+    $resp->entry_inserted = $wpdb->query($sql);
+    if(false=== $resp->entry_inserted){
+      $resp->entries_error = $wpdb->print_error();
+    }
     
     //update the last updated time for the feed
     $resp->last_update = $wpdb->update(
@@ -564,6 +570,15 @@ class OrbitalEntries{
     $current_user = wp_get_current_user();
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $user_settings = (array) get_user_option( 'orbital_settings' );
+    $sort_order = $user_settings['sort_order'];
+    $sort = "ORDER BY entries.updated ";
+    if("-1" == $sort_order ){
+      $sort = $sort . "DESC";
+    }
+    else{
+      $sort = $sort ."ASC";
+    }
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
     //_log($filters);
@@ -596,6 +611,7 @@ class OrbitalEntries{
         on ue.entry_id=entries.id
         where ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
+        ". $sort . "
         limit 30
     ;";
     //_log($sql);
@@ -660,6 +676,9 @@ function orbital_find_feed(){
   //if( !class_exists( 'WP_Http' ) )
     include_once(ABSPATH . WPINC . '/class-feed.php');
     $feed = new SimplePie();
+    //If you're cache isn't writable, this is a big deal
+    //Better to just disable it for now
+    $feed->enable_cache(false);
     $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);
     /*
     //TODO: LOOK, I know this is dumb.
@@ -669,7 +688,7 @@ function orbital_find_feed(){
     //WE'LL DO IT LATER
     //http://knowyourmeme.com/memes/bill-oreilly-rant
 
-    $resp->ofeed_type = $feed->get_type() ;
+    $resp->feed_type = $feed->get_type() ;
     $resp->feed_none = SIMPLEPIE_TYPE_NONE;
   
     if(($feed->get_type() & SIMPLEPIE_TYPE_NONE) == SIMPLEPIE_TYPE_NONE){
@@ -687,12 +706,15 @@ function orbital_find_feed(){
     $resp->url_type ='feed';
     //$feed->set_feed_url($orig_url);
     $feed->set_raw_data($contents);
+    //If your cache isn't writable, this is a big issue
+    $feed->enable_cache(false);
     $feed->init();
     //set the feed_name
     $resp->feed_name = $feed->get_title();
     //set the site_url to the site_url element on this feed
     $resp->site_url = $feed->get_link();
-    $resp->favicon = $feed->get_favicon();
+    //Simplepie doesn't support favicon anymore
+    //$resp->favicon = $feed->get_favicon();
 
 
     //TODO return!
@@ -701,6 +723,8 @@ function orbital_find_feed(){
     $resp->url_type = "html";
     //if this is an html file, let's see what feeds lurk within.
     $feed->set_feed_url($orig_url);
+    //If your cache isn't writable, this is a big issue
+    $feed->enable_cache(false);
     $feed->init();
     //add those feeds to the array of feed
     $feeds = $feed->get_all_discovered_feeds();
@@ -875,4 +899,43 @@ function orbital_mark_item_read(){
 }
 add_action('wp_ajax_orbital_mark_item_read','orbital_mark_item_read');
 //No non logged in way to mark an item read for me yet
+
+//Get the current settings for this user
+function orbital_get_user_settings(){
+
+  $settings = (array) get_user_option( 'orbital_settings' );
+  //TODO what if the settings haven't been set? we should default them.
+  //$sort_order = esc_attr($settings['sort-order']);
+  echo json_encode($settings);
+  exit;
+}
+add_action('wp_ajax_orbital_get_user_settings','orbital_get_user_settings');
+
+//set the current entry sort order for this user
+function orbital_set_user_settings(){
+  global $current_user;
+  //TODO this is the better way, but I can't get it to work.
+  //$user_orbital_settings = filter_input(INPUT_POST, 'orbital_settings', FILTER_SANITIZE_STRING);
+  $user_orbital_settings = $_POST['orbital_settings'];
+  $settings = (array) get_user_option( 'orbital_settings' );
+  //merge arrays
+  $new_settings = $user_orbital_settings + $settings;
+  _log("posted settings");
+  _log($user_orbital_settings);
+  _log("db settings");
+  _log($settings);
+  _log("merged settings");
+  _log($new_settings);
+  
+  if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
+    // Send back what we now know
+    echo json_encode($new_settings);
+  }
+  else {
+    echo false;
+    _log('update failed');
+  }
+  exit;
+}
+add_action('wp_ajax_orbital_set_user_settings','orbital_set_user_settings');
 ?>

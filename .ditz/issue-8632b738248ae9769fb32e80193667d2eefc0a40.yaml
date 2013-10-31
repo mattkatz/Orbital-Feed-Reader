@@ -1,0 +1,28 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Dynamically change sort order
+desc: |-
+  You should be able to change the sort order on the commandbar
+  maybe a drop down?
+type: :feature
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-02 11:03:16.685827 Z
+references: []
+
+id: 8632b738248ae9769fb32e80193667d2eefc0a40
+log_events: 
+- - 2013-09-02 11:03:17.404151 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-10-10 00:57:31.735441 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-10-10 00:58:17.725060 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

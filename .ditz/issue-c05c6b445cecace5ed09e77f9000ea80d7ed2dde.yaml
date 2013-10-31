@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make the feed edit add refresh bigger
+desc: HenryV says they are too small and hard to see or click on.
+type: :bugfix
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-02 11:04:08.716608 Z
+references: []
+
+id: c05c6b445cecace5ed09e77f9000ea80d7ed2dde
+log_events: 
+- - 2013-09-02 11:04:09.333459 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-09-05 01:09:47.275187 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-09-05 01:10:02.569587 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

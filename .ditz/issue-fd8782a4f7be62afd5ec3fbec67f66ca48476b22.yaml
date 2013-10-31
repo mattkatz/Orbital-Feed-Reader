@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: unsubscribe button isn't on newline
+desc: very confusing looking
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-10-27 11:54:06.143696 Z
+references: []
+
+id: fd8782a4f7be62afd5ec3fbec67f66ca48476b22
+log_events: 
+- - 2013-10-27 11:54:07.306491 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

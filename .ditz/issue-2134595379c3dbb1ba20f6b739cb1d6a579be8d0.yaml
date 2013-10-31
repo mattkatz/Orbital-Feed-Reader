@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: show feed title when autodiscovering feeds
+desc: get it from feed body simplepie sends back
+type: :feature
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-09 10:28:22.901966 Z
+references: []
+
+id: 2134595379c3dbb1ba20f6b739cb1d6a579be8d0
+log_events: 
+- - 2013-09-09 10:28:23.730872 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-09-09 10:57:21.908201 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

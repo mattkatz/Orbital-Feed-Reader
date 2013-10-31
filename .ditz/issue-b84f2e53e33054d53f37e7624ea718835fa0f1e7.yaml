@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: make orbital default rss handler in firefox
+desc: just like tt-rss does it.
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-09-08 23:11:25.503523 Z
+references: []
+
+id: b84f2e53e33054d53f37e7624ea718835fa0f1e7
+log_events: 
+- - 2013-09-08 23:11:27.201650 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -1,0 +1,30 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: remove the y-indicator
+desc: if we aren't doing the newsblur thing, don't do it.
+type: :bugfix
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-02 11:04:53.410027 Z
+references: []
+
+id: c10b118caefc4521143ed8f6e063c058ab0630e1
+log_events: 
+- - 2013-09-02 11:04:57.448970 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - from henryv
+- - 2013-09-02 11:05:25.527448 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.5 from unassigned
+  - ""
+- - 2013-09-02 11:56:27.746162 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2013-09-02 11:56:45.109233 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

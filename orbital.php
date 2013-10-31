@@ -3,7 +3,7 @@
 * Plugin Name: Orbital Feed Reader
 * Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
-* Version: 0.1.4
+* Version: 0.1.5
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
@@ -120,7 +120,7 @@ function orbital_admin_init(){
   wp_register_style( 'orbitalcss', plugins_url('style.css', __FILE__) );
 
   /* Register some settings for the settings menu */
-  register_setting( 'orbital-settings-group', 'orbital-setting' );
+  register_setting( 'orbital-settings-group', 'orbital-settings' );
   add_settings_section( 'section-one', 'Blog This Settings', 'section_one_callback',  'orbital-plugin-settings');
   add_settings_field( 'field-one', 'I want to quote the whole article if there is no text selected', 'field_one_callback',   'orbital-plugin-settings', 'section-one' );
   
@@ -130,9 +130,9 @@ function section_one_callback() {
     echo 'How should the Blog This! button work?';
 }
 function field_one_callback() {
-    $settings = (array) get_option( 'orbital-setting' );
+    $settings = (array) get_option( 'orbital-settings' );
     $quote_text = esc_attr($settings['quote-text']);
-    echo "<input type='checkbox' name='orbital-setting[quote-text]' value=1 ". checked( 1, $quote_text, false ) . " />";
+    echo "<input type='checkbox' name='orbital-settings[quote-text]' value=1 ". checked( 1, $quote_text, false ) . " />";
 }
 
 // these are common to all of our pages

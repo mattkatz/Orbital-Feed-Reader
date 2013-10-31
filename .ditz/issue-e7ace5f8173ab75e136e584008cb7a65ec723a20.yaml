@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: sort order should be saved when changed in the ui
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.5
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-09-09 11:02:54.133924 Z
+references: []
+
+id: e7ace5f8173ab75e136e584008cb7a65ec723a20
+log_events: 
+- - 2013-09-09 11:02:55.341236 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2013-10-24 08:51:07.610363 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.5 from unassigned
+  - ""
+- - 2013-10-24 08:51:30.905088 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

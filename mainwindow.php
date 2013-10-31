@@ -1,11 +1,13 @@
 <div id='orbital-container' ng-app="mainModule" >
   <div id="commandbar" class="quicklinks" ng-controller="CommandBarCtrl">
     <ul>
-      <li class="command" ng-repeat="command in commands" ><a href="#" ng-click="commandBarAction(command)">{{command.title}}</a></li>
+      <li class="command" ng-repeat="command in commands" ><a href="#" ng-click="commandBarAction(command)" >{{command.title}}</a></li>
+      <li class="command">
+        <select ng-model="sortOrder" ng-options="item.sortOrder as item.sortName for item in sortOptions" ng-change="changeSortOrder()"> </select>
+      </li>
+
     </ul>
     {{currentFeed.feed_name}}
-  </div>
-  <div id="y-indicator" class="does not provide funding" >
   </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id="orbital-content" >
@@ -33,7 +35,8 @@
               </div>
               <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               <div class='entry-tools'>
-              <a href="#" class="button" ng-click="pressThis(entry,'<?php echo admin_url('press-this.php') ?>')">Blog This!</a>
+                <a href="#" class="button" ng-click="pressThis(entry,'<?php echo admin_url('press-this.php') ?>')">Blog This!</a>
+                <a href='#' ng-click="selectFeed(entry)" ng-bind-html="getFeedName(entry)" ></a>
               </div>
           </li>
         </ul>
@@ -51,7 +54,7 @@
         </div>
       </div>
     <ul id='feeds' >
-      <li class="feed" ng-class="{'is-editable': editable}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
+      <li class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
         {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
         <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </li>
@@ -64,12 +67,12 @@
     <div ng-hide="feedCandidate">
       <label for='subscriptionUrl'>
         <img id="feed-icon" class="feed icon" src="<?php echo plugins_url("img/feed-icon.svg", __FILE__); ?>">
-        Drag or copy paste a feed here
+        Put a website or a feed URL here:
       </label>
       <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
       <a class='button' ng-click='checkUrl()'>Check a URL</a>
-      <a class="dismiss" ng-click="toggle()">X</a>
-      <form id='opml-form' class='opml' novalidate>
+      <a class="dismiss clickable" ng-click="toggle()">X</a>
+      <form id='opml-form' ng-hide="possibleFeeds.length > 0" class='opml' novalidate>
         <p> -- OR -- </p>
         Have an OPML file? Upload it by dragging it here.
         <div class="horizontal-form">
@@ -98,7 +101,7 @@
         </div>
         <ul>
           <li ng-repeat="feed in possibleFeeds" >
-            <a ng-click="checkUrl(feed.url)" >{{feed.url}}</a>
+            <a ng-click="checkUrl(feed.url)" ><span class="feed name" ng-show="feed.name">{{feed.name}} - </span>{{feed.url}}</a>
           </li>
         </ul>
       </div>

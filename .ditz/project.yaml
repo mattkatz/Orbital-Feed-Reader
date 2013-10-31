@@ -57,10 +57,23 @@ releases:
     - get it out!
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.5
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2013-10-17 00:21:56.110852 Z
   log_events: 
   - - 2013-08-18 23:19:29.889757 Z
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - Let's fix dupe entries here and do more work on fixing iteration/read/unread
+  - - 2013-10-17 00:21:56.110867 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - Releasing mighty sort order and logging changes to the world.
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.6
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2013-10-16 22:36:28.669259 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - Moving forward with better logging etc.

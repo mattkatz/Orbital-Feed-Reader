@@ -3,10 +3,10 @@ title: figure out sort order
 desc: we should get the sort order to make sense - unread, oldest first.
 type: :bugfix
 component: Orbital
-release: 0.2 Wordpress integration
+release: 0.1.5
 reporter: matt <matt@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-10-22 12:22:42.212106 Z
 references: []
 
@@ -15,4 +15,12 @@ log_events:
 - - 2012-10-22 12:22:48.587264 Z
   - matt <matt@morelightmorelight.com>
   - created
+  - ""
+- - 2013-10-24 08:52:47.838806 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.5 from 0.2 Wordpress integration
+  - ""
+- - 2013-10-24 08:53:01.555889 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""
