@@ -661,6 +661,8 @@ class OrbitalEntries{
     $current_user = wp_get_current_user();
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $user_settings = (array) get_user_option( 'orbital_settings' );
     $sort_order = $user_settings['sort_order'];
     $sort = "ORDER BY entries.updated ";
@@ -674,7 +676,7 @@ class OrbitalEntries{
     //could be a sql injection vulnerability.
     //_log($filters);
     //TODO allow like queries
-    $filter_whitelist = array('entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
+    $filter_whitelist = array('tag'=>'name','entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
@@ -700,6 +702,10 @@ class OrbitalEntries{
         from  $entries  as entries
         inner join  $user_entries  as ue
         on ue.entry_id=entries.id
+        left outer join $user_feed_tags uft 
+on uft.user_feed_id = ue.feed_id
+        left outer join $tags tags
+on tags.id = uft.tag_id
         where ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
         ". $sort . "
@@ -887,9 +893,13 @@ add_action('wp_ajax_orbital_save_feed','orbital_save_feed');
 
 //get feed entries
 function orbital_get_feed_entries(){
+  $filters = array();
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
-  $filters = array();
+  $tag = filter_input(INPUT_GET, 'tag',FILTER_SANITIZE_STRING);
+  if($tag !=""){
+    $filters['tag'] = $tag;
+  }
   if($feed_id == ""){
     //TODO "" should mean return latest entries
    }else{
