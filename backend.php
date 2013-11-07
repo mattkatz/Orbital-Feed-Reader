@@ -739,6 +739,7 @@ add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
 
 function orbital_list_feeds_by_tag(){
   echo json_encode(OrbitalFeeds::getTags());
+  exit;
 }
 add_action('wp_ajax_orbital_get_feed_tags','orbital_list_feeds_by_tag');
 
