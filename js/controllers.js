@@ -3,8 +3,9 @@
 function FeedListCtrl($scope, $http, $log, feedService){
   $log.log('in feedscontrol');
   $scope.showByTags=true;
-  $scope.tags = 
-    [
+  $scope.taglist = [{"tag":"top","feed_id":"1","feed_name":"More Light! More Light!","feed_url":"http:\/\/www.morelightmorelight.com\/feed\/","icon_url":"","site_url":"http:\/\/www.morelightmorelight.com","last_updated":"2013-11-07 00:45:25","last_error":"","private":"0","unread_count":"4"},{"tag":"top","feed_id":"3","feed_name":"Boing Boing","feed_url":"http:\/\/boingboing.net\/feed\/","icon_url":"","site_url":"http:\/\/boingboing.net","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"86"},{"tag":"art","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"5"},{"tag":"top","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"5"},{"tag":"art","feed_id":"5","feed_name":"Steve Lambert, art etc.","feed_url":"http:\/\/visitsteve.com\/feed","icon_url":"","site_url":"http:\/\/visitsteve.com\/","last_updated":"2013-11-07 00:45:29","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","feed_id":"2","feed_name":"Orbital Changes","feed_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/ditz\/html\/feed.xml","icon_url":"","site_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/","last_updated":"2013-11-07 00:45:26","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","feed_id":"8","feed_name":"Thread for Thought","feed_url":"http:\/\/www.threadforthought.net\/feed\/","icon_url":"","site_url":"http:\/\/www.threadforthought.net\/","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","feed_id":"9","feed_name":"Sky Blastula","feed_url":"http:\/\/localhost\/wp\/?feed=rss2","icon_url":"","site_url":"http:\/\/localhost\/wp","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","feed_id":"10","feed_name":"mr. div","feed_url":"http:\/\/mrdiv.tumblr.com\/rss","icon_url":"","site_url":"http:\/\/mrdiv.tumblr.com\/","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"1"}];
+  $scope.tags = _.groupBy($scope.taglist, "tag"); 
+    /*[
       { tagname:"Top",
         feeds:
           [ 
@@ -31,7 +32,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
             },
           ],
       },
-    ];
+    ];*/
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
   $scope.isLoading = feedService.isLoading();
@@ -74,9 +75,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
     if(feeds.length > 0){
       feedService.select(feeds[0]);
     }
-  
   });
-  
 
   /*
    * Get the next unread feed

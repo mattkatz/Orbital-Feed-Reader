@@ -60,10 +60,10 @@
         {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
         <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </li>
-      <li ng-show="showByTags" class="tag" ng-repeat="tag in tags" ng-class="{'is-selected': tag.isSelected}" >
-        <div>{{tag.tagname}}</div>
+      <li ng-show="showByTags" class="tag" ng-repeat="(tag, feeds) in tags" ng-class="{'is-selected': tag.isSelected}" >
+        <div>{{tag}}</div>
         <ul>
-          <li ng-repeat="feed in tag.feeds">
+          <li ng-repeat="feed in feeds">
             {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
           </li>
         </ul>
