@@ -49,14 +49,25 @@
         <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
         <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
         <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
+        <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="showByTags=true">Tags</a>
+        <a class="action" ng-show="showByTags" title="Show feeds organized alpha" ng-click="showByTags=false">Alpha</a>
+
         <div ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
           You are in edit mode, click here to exit.
         </div>
       </div>
     <ul id='feeds' >
-      <li class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
+      <li ng-hide="showByTags" class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
         {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
         <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
+      </li>
+      <li ng-show="showByTags" class="tag" ng-repeat="tag in tags">
+        <div>{{tag.tagname}}</div>
+        <ul>
+          <li ng-repeat="feed in tag.feeds">
+            {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

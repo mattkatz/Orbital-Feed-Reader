@@ -120,6 +120,9 @@
   border-top: 1px solid #F9F9F9;
   margin-bottom: 0px; /*override something in main wp styles.*/
 }
+.tag ul>li {
+  padding-left: 1em;
+}
 .feedcounter{
   font-size: xx-small;
   vertical-align: top;

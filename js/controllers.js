@@ -2,6 +2,36 @@
 
 function FeedListCtrl($scope, $http, $log, feedService){
   $log.log('in feedscontrol');
+  $scope.showByTags=true;
+  $scope.tags = 
+    [
+      { tagname:"Top",
+        feeds:
+          [ 
+            {
+              feed_name: "blah",
+              unread_count: 32,
+            },
+            {
+              feed_name: "blurt",
+              unread_count:42,
+            },
+          ],
+      },
+      { tagname:"less",
+        feeds:
+          [ 
+            {
+              feed_name: "blah",
+              unread_count: 32,
+            },
+            {
+              feed_name: "blurt",
+              unread_count:42,
+            },
+          ],
+      },
+    ];
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
   $scope.isLoading = feedService.isLoading();
