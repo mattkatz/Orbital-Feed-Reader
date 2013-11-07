@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add tagging entry to add feed form
+desc: There should be a place near the save space where you can add or remove tags for a feed
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2013-11-07 00:31:48.081693 Z
+references: []
+
+id: 84257517fac8b6b69b904be5aa20e1f94eb70c2f
+log_events: 
+- - 2013-11-07 00:31:50.121372 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

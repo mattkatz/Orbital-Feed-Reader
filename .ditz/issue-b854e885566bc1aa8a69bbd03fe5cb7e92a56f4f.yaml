@@ -1,0 +1,23 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Set up tagging in the install
+desc: |-
+  The install should have some sample tags for each feed.
+  Should also have a quick entry or description in the intro for what tagging is and how it works.
+  The starter feeds should all be tagged with starter feed
+  Also we should have tagging on entry of a feed.
+  that's a lot of tasks, I should break these up.
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-11-07 00:30:50.494981 Z
+references: []
+
+id: b854e885566bc1aa8a69bbd03fe5cb7e92a56f4f
+log_events: 
+- - 2013-11-07 00:30:52.404500 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

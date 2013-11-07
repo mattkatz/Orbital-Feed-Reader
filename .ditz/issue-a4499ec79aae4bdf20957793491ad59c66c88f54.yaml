@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add tagging instructions to the intro entries
+desc: ""
+type: :task
+component: Orbital
+release: 0.1.6
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2013-11-07 00:32:24.816812 Z
+references: []
+
+id: a4499ec79aae4bdf20957793491ad59c66c88f54
+log_events: 
+- - 2013-11-07 00:32:26.724587 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
