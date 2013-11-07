@@ -155,7 +155,7 @@ from $user_feed_tags as uft
   left outer join $user_entries as ue
     on ue.feed_id=feeds.id
 where 
-  u_feeds.owner = 1
+  u_feeds.owner = $current_user->ID
 group by 
   feeds.id,
   feeds.feed_url,
@@ -188,7 +188,7 @@ inner join $feeds as feeds
 left outer join $user_entries as ue
   on ue.feed_id=feeds.id
 where 
-        u_feeds.owner = 1
+        u_feeds.owner = $current_user->ID
         and isnull(uft.user_feed_id)
 group by 
         feeds.id,
@@ -736,7 +736,11 @@ function orbital_list_feeds(){
   echo json_encode($myrows);
 }
 add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
-add_action('wp_ajax_nopriv_orbital_get_feeds','orbital_list_feeds_die');
+
+function orbital_list_feeds_by_tag(){
+  echo json_encode(OrbitalFeeds::getTags());
+}
+add_action('wp_ajax_orbital_get_feed_tags','orbital_list_feeds_by_tag');
 
 //remove feed 
 function orbital_unsubscribe_feed(){
