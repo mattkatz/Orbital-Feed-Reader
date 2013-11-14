@@ -5,34 +5,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
   $scope.showByTags=true;
   $scope.taglist = [{"tag":"top","feed_id":"1","feed_name":"More Light! More Light!","feed_url":"http:\/\/www.morelightmorelight.com\/feed\/","icon_url":"","site_url":"http:\/\/www.morelightmorelight.com","last_updated":"2013-11-07 00:45:25","last_error":"","private":"0","unread_count":"4"},{"tag":"top","feed_id":"3","feed_name":"Boing Boing","feed_url":"http:\/\/boingboing.net\/feed\/","icon_url":"","site_url":"http:\/\/boingboing.net","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"86"},{"tag":"art","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"5"},{"tag":"top","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"5"},{"tag":"art","feed_id":"5","feed_name":"Steve Lambert, art etc.","feed_url":"http:\/\/visitsteve.com\/feed","icon_url":"","site_url":"http:\/\/visitsteve.com\/","last_updated":"2013-11-07 00:45:29","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","feed_id":"2","feed_name":"Orbital Changes","feed_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/ditz\/html\/feed.xml","icon_url":"","site_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/","last_updated":"2013-11-07 00:45:26","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","feed_id":"8","feed_name":"Thread for Thought","feed_url":"http:\/\/www.threadforthought.net\/feed\/","icon_url":"","site_url":"http:\/\/www.threadforthought.net\/","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","feed_id":"9","feed_name":"Sky Blastula","feed_url":"http:\/\/localhost\/wp\/?feed=rss2","icon_url":"","site_url":"http:\/\/localhost\/wp","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","feed_id":"10","feed_name":"mr. div","feed_url":"http:\/\/mrdiv.tumblr.com\/rss","icon_url":"","site_url":"http:\/\/mrdiv.tumblr.com\/","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"1"}];
   $scope.tags = _.groupBy($scope.taglist, "tag"); 
-    /*[
-      { tagname:"Top",
-        feeds:
-          [ 
-            {
-              feed_name: "blah",
-              unread_count: 32,
-            },
-            {
-              feed_name: "blurt",
-              unread_count:42,
-            },
-          ],
-      },
-      { tagname:"less",
-        feeds:
-          [ 
-            {
-              feed_name: "blah",
-              unread_count: 32,
-            },
-            {
-              feed_name: "blurt",
-              unread_count:42,
-            },
-          ],
-      },
-    ];*/
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
   $scope.isLoading = feedService.isLoading();
@@ -203,23 +175,33 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.$watch(feedService.selectedFeed, function (){
     //$scope.currentFeed = feedService.selectedFeed();
     if(feedService.selectedFeed()){
-      $scope.displayFeed(feedService.selectedFeed().feed_id);
+      $scope.displayFeed(feedService.selectedFeed());
     }
   });
   
   /*
    * select a feed to display entries from
    */
-  $scope.displayFeed = function(feed_id,showRead){
-    $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feed_id+'&show_read='+showRead)
-    .success(function(data){
-      $scope.isLoading = false;
-      //$log.info(data);
-      $scope.entries = data;
-      $scope.selectedEntry = null;
-      scrollToEntry(null);
-    });
+  $scope.displayFeed = function(feed,showRead){
+    $log.log(feed);
+    if(null == feed){
+      qualifier =  'feed_id='+feed;
+    }
+    else if(feed.feed_id){
+      qualifier = 'feed_id='+feed.feed_id;
+    }
+    else {
+      qualifier = 'tag='+feed;
+    }
+      $scope.isLoading = true;
+      $http.get(opts.ajaxurl+'?action=orbital_get_entries&'+qualifier+'&show_read='+showRead)
+      .success(function(data){
+        $scope.isLoading = false;
+        //$log.info(data);
+        $scope.entries = data;
+        $scope.selectedEntry = null;
+        scrollToEntry(null);
+      });
   };
 
   $scope.selectFeed = function(entry){
@@ -313,7 +295,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
    */
   $scope.$on('feedSelected',function(event,args){
     //$log.log('feedSelected in Entries!');
-    $scope.displayFeed(args['feed'].feed_id, args['showRead']);
+    $scope.displayFeed(args['feed'], args['showRead']);
   });
   $scope.nextEntry = function(currentEntry){
     $log.info('next entry finds the entry after the current entry, selects it');
