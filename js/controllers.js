@@ -38,16 +38,16 @@ function FeedListCtrl($scope, $http, $log, feedService){
   /*
    * get the list of feeds and store it
    */
-  $scope.refresh = function(){
-    feedService.refresh();
+  $scope.refresh = function(callback){
+    feedService.refresh(callback);
   };
   //call the refresh to load it all up.
   //TODO change this to load the initial feeds variable
-  feedService.refresh(function(feeds){
-    if(feeds.length > 0){
-      feedService.select(feeds[0]);
-    }
-  });
+//  feedService.refresh(function(feeds){
+ //   if(feeds.length > 0){
+  //    feedService.select(feeds[0]);
+   // }
+ // });
 
   /*
    * Get the next unread feed
@@ -175,6 +175,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.$watch(feedService.selectedFeed, function (){
     //$scope.currentFeed = feedService.selectedFeed();
     if(feedService.selectedFeed()){
+      $log.log('feedservice.selectedFeed = ' +feedService.selectedFeed());
       $scope.displayFeed(feedService.selectedFeed());
     }
   });
