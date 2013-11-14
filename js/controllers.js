@@ -184,8 +184,8 @@ function EntriesCtrl($scope, $http, $log,feedService){
    */
   $scope.displayFeed = function(feed,showRead){
     $log.log(feed);
-    if(null == feed){
-      qualifier =  'feed_id='+feed;
+    if(null == feed || null == feed.feed_id){
+      qualifier =  'feed_id='+null;
     }
     else if(feed.feed_id){
       qualifier = 'feed_id='+feed.feed_id;
@@ -193,15 +193,16 @@ function EntriesCtrl($scope, $http, $log,feedService){
     else {
       qualifier = 'tag='+feed;
     }
-      $scope.isLoading = true;
-      $http.get(opts.ajaxurl+'?action=orbital_get_entries&'+qualifier+'&show_read='+showRead)
-      .success(function(data){
-        $scope.isLoading = false;
-        //$log.info(data);
-        $scope.entries = data;
-        $scope.selectedEntry = null;
-        scrollToEntry(null);
-      });
+    $log.log('qualifier='+qualifier);
+    $scope.isLoading = true;
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries&'+qualifier+'&show_read='+showRead)
+    .success(function(data){
+      $scope.isLoading = false;
+      //$log.info(data);
+      $scope.entries = data;
+      $scope.selectedEntry = null;
+      scrollToEntry(null);
+    });
   };
 
   $scope.selectFeed = function(entry){
@@ -288,7 +289,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.getFeedName = function (entry){
     return feedService.getFeedName(entry.feed_id);
   }
-  $scope.displayFeed(null,$scope.isRead);
+  $scope.displayFeed({feed_id:null},$scope.isRead);
   //$scope.displayFeed();
   /*
    * Catch the feedSelected event, display entries from that feed
