@@ -212,6 +212,7 @@
 
 #commandbar li:hover,
 .feed:hover,
+.tag div:hover,
 .ember-button:hover
 {
   cursor: pointer;

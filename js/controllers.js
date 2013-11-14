@@ -184,7 +184,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
    */
   $scope.displayFeed = function(feed,showRead){
     $log.log(feed);
-    if(null == feed || null == feed.feed_id){
+    if(null == feed ){
       qualifier =  'feed_id='+null;
     }
     else if(feed.feed_id){
@@ -289,7 +289,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.getFeedName = function (entry){
     return feedService.getFeedName(entry.feed_id);
   }
-  $scope.displayFeed({feed_id:null},$scope.isRead);
+  $scope.displayFeed(null,$scope.isRead);
   //$scope.displayFeed();
   /*
    * Catch the feedSelected event, display entries from that feed

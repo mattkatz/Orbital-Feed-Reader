@@ -50,7 +50,7 @@
       <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
       <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
       <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="showByTags=true">#</a>
-      <a class="action" ng-show="showByTags" title="Show feeds organized alpha" ng-click="showByTags=false">A</a>
+      <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="showByTags=false">≣</a>
       <div ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
         You are in edit mode, click here to exit.
       </div>
@@ -66,7 +66,7 @@
     </ul>
     <ul id='tags' ng-show="showByTags">
       <li class="tag" ng-repeat="(tag, feeds) in tags" >
-        <div class="clickable" ng-click="select(tag)" ng-class="{'is-selected':tag.isSelected}" >#{{tag}}</div>
+        <div ng-click="select(tag)" ng-class="{'is-selected':tag.isSelected}" >#{{tag}}</div>
         <ul>
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
         </ul>
