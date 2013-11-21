@@ -205,7 +205,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
         qualifier = '&tag='+feed;
       }
     }
-    if(null == showRead){
+    if(!showRead){
       showRead=0;
     }
     $log.log('qualifier='+qualifier);
