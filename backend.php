@@ -136,6 +136,7 @@ class OrbitalFeeds {
     $sql = "
 select 
   COALESCE(tags.name,'Untagged') as tag, 
+  COALESCE(tags.id, null) as tag_id,
   feeds.id as feed_id,
   COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
   feeds.feed_url, 
@@ -170,6 +171,7 @@ group by
   UNION
 select 
   'Untagged' as tag, 
+  null as tag_id,
   feeds.id as feed_id,
   COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
   feeds.feed_url, 
@@ -678,10 +680,24 @@ class OrbitalEntries{
     //TODO allow like queries
     $filter_whitelist = array('tag'=>'name','entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
+
+    _log('constructing get filters');
+    _log('filters are');
+    _log($filters);
+
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
-        $filter = $filter . 
-          $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
+
+        _log("filterName: $filter_name, value: $value");
+        if(null == $value || 'null' == $value){
+          $filter= $filter. " AND $filter_whitelist[$filter_name] is null ";
+        }
+        else{
+          $filter = $filter . 
+            $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
+        }
+        _log("Filter: $filter");
+
       }
     }
 
@@ -711,10 +727,9 @@ on tags.id = uft.tag_id
         ". $sort . "
         limit 30
     ;";
-    //_log($sql);
+    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
-
   }
 }
 

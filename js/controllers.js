@@ -3,8 +3,9 @@
 function FeedListCtrl($scope, $http, $log, feedService){
   $log.log('in feedscontrol');
   $scope.showByTags=true;
-  $scope.taglist = [{"tag":"top","feed_id":"1","feed_name":"More Light! More Light!","feed_url":"http:\/\/www.morelightmorelight.com\/feed\/","icon_url":"","site_url":"http:\/\/www.morelightmorelight.com","last_updated":"2013-11-07 00:45:25","last_error":"","private":"0","unread_count":"4"},{"tag":"top","feed_id":"3","feed_name":"Boing Boing","feed_url":"http:\/\/boingboing.net\/feed\/","icon_url":"","site_url":"http:\/\/boingboing.net","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"86"},{"tag":"art","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"5"},{"tag":"top","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-07 00:45:27","last_error":"","private":"0","unread_count":"5"},{"tag":"art","feed_id":"5","feed_name":"Steve Lambert, art etc.","feed_url":"http:\/\/visitsteve.com\/feed","icon_url":"","site_url":"http:\/\/visitsteve.com\/","last_updated":"2013-11-07 00:45:29","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","feed_id":"2","feed_name":"Orbital Changes","feed_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/ditz\/html\/feed.xml","icon_url":"","site_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/","last_updated":"2013-11-07 00:45:26","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","feed_id":"8","feed_name":"Thread for Thought","feed_url":"http:\/\/www.threadforthought.net\/feed\/","icon_url":"","site_url":"http:\/\/www.threadforthought.net\/","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","feed_id":"9","feed_name":"Sky Blastula","feed_url":"http:\/\/localhost\/wp\/?feed=rss2","icon_url":"","site_url":"http:\/\/localhost\/wp","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","feed_id":"10","feed_name":"mr. div","feed_url":"http:\/\/mrdiv.tumblr.com\/rss","icon_url":"","site_url":"http:\/\/mrdiv.tumblr.com\/","last_updated":"2013-11-07 00:45:36","last_error":"","private":"0","unread_count":"1"}];
+  $scope.taglist = [{"tag":"top","tag_id":"2","feed_id":"1","feed_name":"More Light! More Light!","feed_url":"http:\/\/www.morelightmorelight.com\/feed\/","icon_url":"","site_url":"http:\/\/www.morelightmorelight.com","last_updated":"2013-11-14 03:54:38","last_error":"","private":"0","unread_count":"4"},{"tag":"top","tag_id":"2","feed_id":"3","feed_name":"Boing Boing","feed_url":"http:\/\/boingboing.net\/feed\/","icon_url":"","site_url":"http:\/\/boingboing.net","last_updated":"2013-11-14 03:54:39","last_error":"","private":"0","unread_count":"130"},{"tag":"art","tag_id":"1","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-14 03:54:42","last_error":"","private":"0","unread_count":"5"},{"tag":"top","tag_id":"2","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-14 03:54:42","last_error":"","private":"0","unread_count":"5"},{"tag":"art","tag_id":"1","feed_id":"5","feed_name":"Steve Lambert, art etc.","feed_url":"http:\/\/visitsteve.com\/feed","icon_url":"","site_url":"http:\/\/visitsteve.com\/","last_updated":"2013-11-14 03:54:46","last_error":"","private":"0","unread_count":"2"},{"tag":"Untagged","tag_id":null,"feed_id":"2","feed_name":"Orbital Changes","feed_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/ditz\/html\/feed.xml","icon_url":"","site_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/","last_updated":"2013-11-14 03:54:39","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","tag_id":null,"feed_id":"8","feed_name":"Thread for Thought","feed_url":"http:\/\/www.threadforthought.net\/feed\/","icon_url":"","site_url":"http:\/\/www.threadforthought.net\/","last_updated":"2013-11-14 03:54:51","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","tag_id":null,"feed_id":"9","feed_name":"Sky Blastula","feed_url":"http:\/\/localhost\/wp\/?feed=rss2","icon_url":"","site_url":"http:\/\/localhost\/wp","last_updated":"2013-11-14 03:54:51","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","tag_id":null,"feed_id":"10","feed_name":"mr. div","feed_url":"http:\/\/mrdiv.tumblr.com\/rss","icon_url":"","site_url":"http:\/\/mrdiv.tumblr.com\/","last_updated":"2013-11-14 03:54:51","last_error":"","private":"0","unread_count":"1"}];
   $scope.tags = _.groupBy($scope.taglist, "tag"); 
+  $log.log($scope.tags);
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
   $scope.isLoading = feedService.isLoading();
@@ -20,7 +21,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
    */
 
   $scope.select = function(feed,showRead){
-    $log.log(feed.feed_id);
+    $log.log("selecting " + feed);
     if( $scope.editable){
       $scope.$emit('feedEdit',{feed: feed}); 
     }
@@ -185,18 +186,32 @@ function EntriesCtrl($scope, $http, $log,feedService){
    */
   $scope.displayFeed = function(feed,showRead){
     $log.log(feed);
+    $log.log('showRead='+showRead);
+    var qualifier = '';
+    //If we aren't passed a feed filter, don't create one
     if(null == feed ){
-      qualifier =  'feed_id='+null;
+      //qualifier =  'feed_id='+null;
     }
     else if(feed.feed_id){
-      qualifier = 'feed_id='+feed.feed_id;
+      qualifier = '&feed_id='+feed.feed_id;
+      //if it has a feed_id, we can assume it is a feed
     }
     else {
-      qualifier = 'tag='+feed;
+      //we should assume it is a tag
+      if('Untagged' == feed){
+        qualifier = '&tag='+null;
+      }
+      else{
+        qualifier = '&tag='+feed;
+      }
+    }
+    if(null == showRead){
+      showRead=0;
     }
     $log.log('qualifier='+qualifier);
+    $log.log('showRead='+showRead);
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&'+qualifier+'&show_read='+showRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead)
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
