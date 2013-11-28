@@ -65,6 +65,7 @@ mainModule.factory('feedService',   function($http){
   var _selectedFeed = null;
   // the list of feeds;
   var _feeds = [];
+  var _tags = [];
   //is this service doing work?
   var _isLoading = false;
   var _sortOrder = "-1";
@@ -76,17 +77,7 @@ mainModule.factory('feedService',   function($http){
       sortName: "Oldest First",
     },
   ];
-
-  return {
-    feeds : function(){
-      return _feeds;
-    },
-    isLoading : function(){
-      return _isLoading;
-    },
-
-    // get the list of feeds from backend, inject a "fresh" feed.
-    refresh : function(callback){
+  var _refresh = function refresh(callback){
       console.log('refresh');
       _isLoading = true;
       /*
@@ -111,12 +102,43 @@ mainModule.factory('feedService',   function($http){
           callback(_feeds);
         }
       });
+
+      //Tags
+      _isLoading = true;
+      $http.get(opts.ajaxurl + '?action=orbital_get_feed_tags')
+      .success( function( data ){
+        _tags= _.groupBy(data, "tag"); 
+        _isLoading = false;
+        if(callback){
+          callback(_tags);
+        }
+      });
       $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
         console.log(data);
         _sortOrder = data['sort_order'];
       });
+    };
+
+  return {
+    feeds : function(){
+      if(  _feeds.length == 0 && ! _isLoading){
+        _refresh();
+      }
+      return _feeds;
     },
+    isLoading : function(){
+      return _isLoading;
+    },
+
+    tags: function(){
+      if(_tags.length == 0 && ! _isLoading ){ _refresh();}
+      return _tags; 
+    },
+
+
+    // get the list of feeds from backend, inject a "fresh" feed.
+    refresh : _refresh,
     select : function(feed, showRead){
       //Mark this feed as selected
       _feeds.forEach(function(value,index){
@@ -138,7 +160,6 @@ mainModule.factory('feedService',   function($http){
       $http.post(opts.ajaxurl,data)
       .success(function(response){
         if(successCallback){ successCallback(response, data);}
-        
       });
 
     },
