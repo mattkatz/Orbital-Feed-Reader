@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add readcount decrement to feeds by tags
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-11-21 03:18:56.667514 Z
+references: []
+
+id: 99a6b25042f128c912e87158fa13861df9b49328
+log_events: 
+- - 2013-11-21 03:18:58.354439 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

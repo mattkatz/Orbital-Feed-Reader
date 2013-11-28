@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add tags unread count
+desc: tags should show unread count of all feeds under them. Should increment decrement.
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2013-11-21 03:19:43.509313 Z
+references: []
+
+id: b1502a37185ca27a851ff96770d54437db872e95
+log_events: 
+- - 2013-11-21 03:19:45.091968 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
