@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: decrement tag unread_count
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-12-01 20:41:44.619669 Z
+references: []
+
+id: 331bddb485e849bea901fa3d52de5d1f492750b6
+log_events: 
+- - 2013-12-01 20:41:45.982745 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
