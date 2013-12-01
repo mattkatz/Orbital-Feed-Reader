@@ -108,6 +108,13 @@ mainModule.factory('feedService',   function($http){
       $http.get(opts.ajaxurl + '?action=orbital_get_feed_tags')
       .success( function( data ){
         _tags= _.groupBy(data, "tag"); 
+        var keys = _.keys(_tags);
+        for ( key in _tags ){
+          feeds = _tags[key];
+          unread_count = _.reduce(feeds,function( count, feed){
+            return count + Number.parseInt(feed.unread_count);},0);
+          _tags[key].unread_count = unread_count;
+        }
         _isLoading = false;
         if(callback){
           callback(_tags);
