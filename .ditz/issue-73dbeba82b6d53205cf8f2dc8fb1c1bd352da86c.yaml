@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Show Read items doesn't untoggle
+desc: toggle on works, but toggle again doesn't reset
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-12-01 21:05:20.137315 Z
+references: []
+
+id: 73dbeba82b6d53205cf8f2dc8fb1c1bd352da86c
+log_events: 
+- - 2013-12-01 21:05:34.681496 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
