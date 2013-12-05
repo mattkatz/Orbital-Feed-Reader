@@ -20,7 +20,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
   $scope.$watch(feedService.isLoading,function(){
     //console.log('listener');
-    $scope.tags = feedService.isLoading();
+    $scope.isLoading = feedService.isLoading();
   });
 
   /*
@@ -50,6 +50,13 @@ function FeedListCtrl($scope, $http, $log, feedService){
   $scope.refresh = function(callback){
     feedService.refresh(callback);
   };
+
+  $scope.tagUnreadCount = function(tagname){
+      feeds = $scope.tags[tagname];
+      console.log('tagUnreadCount (' + tagname+')');
+      return _.reduce(feeds,function(count, feed){
+        return count + Number.parseInt(feed.unread_count);},0);
+    };
   //call the refresh to load it all up.
   //TODO change this to load the initial feeds variable
 //  feedService.refresh(function(feeds){
