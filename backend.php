@@ -220,6 +220,8 @@ group by
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
+    $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
         select 
         feeds.id as feed_id,
@@ -230,14 +232,18 @@ group by
         feeds.last_updated,
         feeds.last_error,
         u_feeds.private,
-        sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
-        from ".$user_feeds." as u_feeds
-        inner join ".$feeds." as feeds
-        on u_feeds.feed_id = feeds.id
-        left outer join ".$user_entries." as ue
-        on ue.feed_id=feeds.id
-
-        and u_feeds.owner = ". $current_user->ID."
+        sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count,
+        group_concat(distinct coalesce(tags.name,'Untagged')) as tags
+        from $user_feeds as u_feeds
+        inner join $feeds as feeds
+          on u_feeds.feed_id = feeds.id
+          and u_feeds.owner =  $current_user->ID.
+        left outer join $user_entries as ue
+          on ue.feed_id=feeds.id
+        left outer join $user_feed_tags uft
+          on uft.user_feed_id = u_feeds.id
+        left outer join $tags tags
+          on uft.tag_id = tags.id
         group by feeds.id,
         feeds.feed_url,
         feeds.feed_name,
@@ -246,8 +252,6 @@ group by
         feeds.last_updated,
         feeds.last_error,
         u_feeds.private
-        
-
         ";
         //sum( if ue.isRead then 0 else 1 end) as unread_count,
     // AND feeds.owner = " . $current_user->ID."

@@ -65,7 +65,7 @@ mainModule.factory('feedService',   function($http){
   var _selectedFeed = null;
   // the list of feeds;
   var _feeds = [];
-  var _tags = [];
+  var _tags = {};
   //is this service doing work?
   var _isLoading = false;
   var _sortOrder = "-1";
@@ -78,48 +78,38 @@ mainModule.factory('feedService',   function($http){
     },
   ];
   var _refresh = function refresh(callback){
-      console.log('refresh');
       _isLoading = true;
-      /*
-        var fresh = {
-          feed_id:null, //TODO start using neg integers for special feed ids
-          feed_name:'All Feeds',
-          unread_count:'',//TODO put in actual unread count;
-        }
-      _feeds.unshift(fresh);
-      */
       $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
+        //Here is our simple feed list
         _feeds= data;
+
+        //Now lets get a list of all the unique tags in those feeds
+        var taga = _.unique(_.pluck(_feeds, 'tags').join().split(","));
+
+        //For each tag, lets build up a list of the feeds that have that tag
+        _.each(taga, function(tag){
+          _tags[tag] = _.filter(_feeds,function(feed){
+                          return feed.tags.contains(tag);
+                        });
+        })
+        //Stick in our special All Feeds 
+        //We have to do this AFTER the tag building 
+        //because this has no tags and throws an exception
         var fresh = {
           feed_id:null, //TODO start using neg integers for special feed ids
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
         }
         _feeds.unshift(fresh);
+
         _isLoading = false;
+        //Should we do some extra work?
         if(callback){
           callback(_feeds);
         }
       });
 
-      //Tags
-      _isLoading = true;
-      $http.get(opts.ajaxurl + '?action=orbital_get_feed_tags')
-      .success( function( data ){
-        _tags= _.groupBy(data, "tag"); 
-        var keys = _.keys(_tags);
-        for ( key in _tags ){
-          feeds = _tags[key];
-          unread_count = _.reduce(feeds,function( count, feed){
-            return count + Number.parseInt(feed.unread_count);},0);
-          _tags[key].unread_count = unread_count;
-        }
-        _isLoading = false;
-        if(callback){
-          callback(_tags);
-        }
-      });
       $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
         console.log(data);
@@ -127,7 +117,7 @@ mainModule.factory('feedService',   function($http){
       });
     };
 
-  return {
+  var feedservice =  {
     feeds : function(){
       if(  _feeds.length == 0 && ! _isLoading){
         _refresh();
@@ -216,6 +206,7 @@ mainModule.factory('feedService',   function($http){
       
     },
   };
+  return feedservice;
 
   
 });
