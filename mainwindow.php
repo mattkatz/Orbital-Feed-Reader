@@ -128,6 +128,9 @@
         <label>Site Url
           <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
         </label>
+        <label>Tags:
+          <input id='taglabels' type='text' ng-model="feedCandidate.tags" placeholder="top,art,awesomeness" />
+        </label>
         <label>
           <input type='checkbox' ng-model="feedCandidate.private" title="" />
           This Feed is Private! Do not show it to other people.
