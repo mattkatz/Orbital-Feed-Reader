@@ -20,3 +20,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from unstarted to in_progress
   - ""
+- - 2013-12-06 17:57:49.765554 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - looks like I've got a mismatch between user_feed_id and feed_id somewhere.
