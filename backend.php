@@ -105,7 +105,7 @@ class OrbitalFeeds {
       }
     }
 
-    //TODO: Add Tag update here
+    //Tag update here
     //We should always expect a feed_id at this point.
     OrbitalFeeds::saveFeedTags($feed);
 
@@ -154,11 +154,29 @@ class OrbitalFeeds {
       WHERE name = %s";
     $tag_id = $wpdb->get_var($wpdb->prepare($sql, $tag));
     if($tag_id){
-      //TODO: save a link to this tag_id
-
+      // save a link to this tag_id
+      OrbitalFeeds::linkTag($feed_id, $tag_id);
     }else{
       //TODO: save the tag to tags, then save a link 
+      $wpdb->insert( $tags, array('name'=>$tag));
+      OrbitalFeeds::linkTag($feed_id, $wpdb->insert_id);
     }
+  }
+  static function linkTag ($feed_id, $tag_id){
+    global $wpdb;
+    global $tbl_prefix;
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $rows_affected = $wpdb->replace(
+      $user_feed_tags,
+      array(
+        'tag_id' =>$tag_id,
+        'user_feed_id' =>$feed_id
+      ),
+      array(
+        '%d',
+        '%d',
+      )
+    );
   }
 
 

@@ -77,7 +77,26 @@ mainModule.factory('feedService',   function($http){
       sortName: "Oldest First",
     },
   ];
-  var _refresh = function refresh(callback){
+
+  var feedservice =  {
+    feeds : function(){
+      if(  _feeds.length == 0 && ! _isLoading){
+        feedservice.refresh();
+      }
+      return _feeds;
+    },
+    isLoading : function(){
+      return _isLoading;
+    },
+
+    tags: function(){
+      if(_tags.length == 0 && ! _isLoading ){ _refresh();}
+      return _tags; 
+    },
+
+
+    // get the list of feeds from backend, inject a "fresh" feed.
+    refresh : function refresh(callback){
       _isLoading = true;
       $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
@@ -112,30 +131,9 @@ mainModule.factory('feedService',   function($http){
 
       $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
-        console.log(data);
         _sortOrder = data['sort_order'];
       });
-    };
-
-  var feedservice =  {
-    feeds : function(){
-      if(  _feeds.length == 0 && ! _isLoading){
-        _refresh();
-      }
-      return _feeds;
     },
-    isLoading : function(){
-      return _isLoading;
-    },
-
-    tags: function(){
-      if(_tags.length == 0 && ! _isLoading ){ _refresh();}
-      return _tags; 
-    },
-
-
-    // get the list of feeds from backend, inject a "fresh" feed.
-    refresh : _refresh,
     select : function(feed, showRead){
       //Mark this feed as selected
       _feeds.forEach(function(value,index){
@@ -158,6 +156,7 @@ mainModule.factory('feedService',   function($http){
       $http.post(opts.ajaxurl,data)
       .success(function(response){
         if(successCallback){ successCallback(response, data);}
+        feedservice.refresh();
       });
 
     },
