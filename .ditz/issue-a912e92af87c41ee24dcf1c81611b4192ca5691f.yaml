@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix save to only use user_feed_id
+desc: A user only needs to care about their feeds, not the underlying feeds
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-12-06 18:01:16.086329 Z
+references: []
+
+id: a912e92af87c41ee24dcf1c81611b4192ca5691f
+log_events: 
+- - 2013-12-06 18:01:16.883387 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
