@@ -153,6 +153,7 @@ mainModule.factory('feedService',   function($http){
         feed_name: feed.feed_name,
         site_url: feed.site_url,
         is_private: feed.private,
+        tags: feed.tags,
       };
       $http.post(opts.ajaxurl,data)
       .success(function(response){
