@@ -128,13 +128,17 @@
         <label>Site Url
           <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
         </label>
+        <label>Tags:
+          <input id='taglabels' type='text' ng-model="feedCandidate.tags" placeholder="top,art,awesomeness" />
+        </label>
         <label>
           <input type='checkbox' ng-model="feedCandidate.private" title="" />
           This Feed is Private! Do not show it to other people.
         </label>
         <label ng-show="feedCandidate.feed_id">
-            <div>Get rid of this feed! Seriously!<a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a> </div>
-            
+          <div>Get rid of this feed! Seriously!
+            <a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a> 
+          </div>
         </label>
         <br/>
         <div class="clickable button" ng-click="saveFeed(feedCandidate)" }}>

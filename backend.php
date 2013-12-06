@@ -105,6 +105,10 @@ class OrbitalFeeds {
       }
     }
 
+    //Tag update here
+    //We should always expect a feed_id at this point.
+    OrbitalFeeds::saveFeedTags($feed);
+
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
@@ -116,6 +120,65 @@ class OrbitalFeeds {
     $resp->unread_count ="0";
     return $resp;
   }
+  /* OrbitalFeeds::saveFeedTags($feed);
+   *
+   * Method to save the tags for a feed
+   *
+   * We split the tags out into individual tags
+   * for each we find the tag.id and save a link.
+   * If there is no link, we save a new tag
+   *
+   * Finally we do some cleanup - check orphan tags
+   * and kill the orphans
+   */
+  static function saveFeedTags($feed){
+    $feedtags = preg_split("/[\s,]+/", $feed["tags"]);
+    foreach($feedtags as $tag){
+      OrbitalFeeds::saveFeedTag($feed["feed_id"],$tag);
+    }
+  }
+
+  static function saveFeedTag($feed_id, $tag){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
+
+    //let's find the tag_id for this tag
+    $sql = " SELECT id
+      FROM $tags
+      WHERE name = %s";
+    $tag_id = $wpdb->get_var($wpdb->prepare($sql, $tag));
+    if($tag_id){
+      // save a link to this tag_id
+      OrbitalFeeds::linkTag($feed_id, $tag_id);
+    }else{
+      //TODO: save the tag to tags, then save a link 
+      $wpdb->insert( $tags, array('name'=>$tag));
+      OrbitalFeeds::linkTag($feed_id, $wpdb->insert_id);
+    }
+  }
+  static function linkTag ($feed_id, $tag_id){
+    global $wpdb;
+    global $tbl_prefix;
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $rows_affected = $wpdb->replace(
+      $user_feed_tags,
+      array(
+        'tag_id' =>$tag_id,
+        'user_feed_id' =>$feed_id
+      ),
+      array(
+        '%d',
+        '%d',
+      )
+    );
+  }
+
 
   /* OrbitalFeeds::getTags
    *
@@ -902,9 +965,10 @@ function orbital_save_feed(){
   $feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
   //$is_private = $_POST['is_private']=="true"?1:0;
   $is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
+  $tags = filter_input(INPUT_POST, 'tags', FILTER_SANITIZE_STRING);
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  $resp = OrbitalFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private));
+  $resp = OrbitalFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private,'tags'=>$tags));
   echo json_encode($resp);
   exit;
 }
