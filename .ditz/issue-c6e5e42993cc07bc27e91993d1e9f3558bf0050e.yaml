@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add unread count to All feed
+desc: I think this should be doable by creating a get property that does the computation
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2013-12-06 11:42:30.983820 Z
+references: []
+
+id: c6e5e42993cc07bc27e91993d1e9f3558bf0050e
+log_events: 
+- - 2013-12-06 11:42:31.882379 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
