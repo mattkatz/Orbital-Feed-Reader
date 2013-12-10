@@ -172,6 +172,7 @@ mainModule.factory('feedService',   function($http){
       }
     },
     selectedFeed: function(){
+      if(! _selectedFeed) {_selectedFeed = _feeds[0];}
       return _selectedFeed;
     },
     sortOrder: function(){

@@ -53,17 +53,19 @@ function FeedListCtrl($scope, $http, $log, feedService){
 
   $scope.tagUnreadCount = function(tagname){
       feeds = $scope.tags[tagname];
-      console.log('tagUnreadCount (' + tagname+')');
+      //console.log('tagUnreadCount (' + tagname+')');
       return _.reduce(feeds,function(count, feed){
         return count + Number.parseInt(feed.unread_count);},0);
     };
   //call the refresh to load it all up.
   //TODO change this to load the initial feeds variable
-//  feedService.refresh(function(feeds){
- //   if(feeds.length > 0){
-  //    feedService.select(feeds[0]);
-   // }
- // });
+    /*
+  feedService.refresh(function(feeds){
+    if(feeds.length > 0){
+      feedService.select(feedService.selectedFeed());
+    }
+  });
+  */
 
   /*
    * Get the next unread feed
