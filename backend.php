@@ -145,9 +145,8 @@ class OrbitalFeeds {
     foreach($feedtags as $tag){
       OrbitalFeeds::saveFeedTag($feed["feed_id"],$tag);
     }
+    //TODO - this looks like a security risk, should go through $wpdb->prepare
     $tagsarray = '"' . implode('","', $feedtags) . '"';
-    _log('tags = ');
-    _log($tagsarray);
 
     $sql = $wpdb->prepare("
       SELECT uft.tag_id,tags.name
@@ -160,10 +159,10 @@ class OrbitalFeeds {
 
     $tag_ids = $wpdb->get_col($sql, 0);
 
-    _log($tag_ids);
-    _log($wpdb->get_col($sql,1));
+    //_log($tag_ids);
+    //_log($wpdb->get_col($sql,1));
     $tag_ids = implode(',',$tag_ids);
-    _log($tag_ids);
+    //_log($tag_ids);
     $wpdb->query("
       DELETE 
       FROM $user_feed_tags
@@ -172,10 +171,7 @@ class OrbitalFeeds {
     //clean up tags not in feed tags
     //delete all tag links where tag isn't in feedtags
     /*
-     *
-     * select * from wp_orbital_user_feeds
-where id = 13;
-
+     This should work, but doesn't
 
 DELETE 
 FROM wp_orbital_user_feed_tags uft
