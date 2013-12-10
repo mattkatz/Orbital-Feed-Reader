@@ -209,9 +209,15 @@ function EntriesCtrl($scope, $http, $log,feedService){
     if(null == feed ){
       //qualifier =  'feed_id='+null;
     }
-    else if(feed.feed_id){
+    else if(feed.feed_id && feed.feed_id >-1){
       qualifier = '&feed_id='+feed.feed_id;
       //if it has a feed_id, we can assume it is a feed
+    }
+    else if (feed.feed_id <0){
+      //handles special feeds
+      //
+      // -1 = ALL FEEDS
+
     }
     else {
       //we should assume it is a tag

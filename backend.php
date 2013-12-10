@@ -618,7 +618,7 @@ group by
  *
  * */
 class OrbitalEntries{
-/*
+/* OrbitalEntries::save
  * Insert an entry for a feed
  *    - TODO check to see if entry exists, using entry hash?
  *    - insert entry, then link for each user subscribed to the feed.
@@ -796,6 +796,7 @@ class OrbitalEntries{
 
   /* Get entries for a feed
    *    - for a user, filter by a condition - unread = true..
+   *    OrbitalEntries::get
    */
   static function get($filters){
     global $wpdb;

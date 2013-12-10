@@ -116,7 +116,7 @@ mainModule.factory('feedService',   function($http){
         //We have to do this AFTER the tag building 
         //because this has no tags and throws an exception
         var fresh = {
-          feed_id:null, //TODO start using neg integers for special feed ids
+          feed_id:-1, //TODO start using neg integers for special feed ids
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
         }
