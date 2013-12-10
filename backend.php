@@ -155,7 +155,7 @@ class OrbitalFeeds {
         ON tags.id = uft.tag_id
         AND uft.user_feed_id = %d
       WHERE COALESCE(tags.name,'Untagged') NOT IN ($tagsarray )",$feed['feed_id']);
-    _log($sql);
+    //_log($sql);
 
     $tag_ids = $wpdb->get_col($sql, 0);
 
