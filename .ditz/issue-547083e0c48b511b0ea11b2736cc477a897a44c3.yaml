@@ -3,7 +3,7 @@ title: Tag/Categorize feeds
 desc: ""
 type: :feature
 component: Orbital
-release: 
+release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2011-12-16 00:52:47.950363 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2013-12-11 12:09:55.546389 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.6 from unassigned
   - ""

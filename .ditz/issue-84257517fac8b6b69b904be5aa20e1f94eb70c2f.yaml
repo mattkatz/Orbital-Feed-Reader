@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.1.6
 reporter: .
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-11-07 00:31:48.081693 Z
 references: []
 
@@ -24,3 +24,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - commented
   - looks like I've got a mismatch between user_feed_id and feed_id somewhere.
+- - 2013-12-10 20:08:44.439780 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
