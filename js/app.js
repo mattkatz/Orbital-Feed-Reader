@@ -109,7 +109,7 @@ mainModule.factory('feedService',   function($http){
         //For each tag, lets build up a list of the feeds that have that tag
         _.each(taga, function(tag){
           _tags[tag] = _.filter(_feeds,function(feed){
-                          return feed.tags.contains(tag);
+                          return _.contains(feed.tags.split(","),tag);
                         });
         })
         //Stick in our special All Feeds 
