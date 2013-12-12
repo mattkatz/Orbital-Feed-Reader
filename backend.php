@@ -331,35 +331,36 @@ group by
     $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
     $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
-        select 
-        u_feeds.id as feed_id,
-        COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
-        feeds.feed_url, 
-        COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
-        COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
-        feeds.last_updated,
-        feeds.last_error,
-        u_feeds.private,
-        sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count,
-        group_concat(distinct coalesce(tags.name,'Untagged')) as tags
-        from $user_feeds as u_feeds
-        inner join $feeds as feeds
-          on u_feeds.feed_id = feeds.id
-          and u_feeds.owner =  $current_user->ID.
-        left outer join $user_entries as ue
-          on ue.feed_id=feeds.id
-        left outer join $user_feed_tags uft
-          on uft.user_feed_id = u_feeds.id
-        left outer join $tags tags
-          on uft.tag_id = tags.id
-        group by feed_id,
-        feed_url,
-        feed_name,
-        icon_url,
-        site_url,
-        last_updated,
-        last_error,
-        private
+        SELECT 
+          u_feeds.id AS feed_id,
+          COALESCE(u_feeds.feed_name,feeds.feed_name ) AS feed_name,
+          feeds.feed_url, 
+          COALESCE(u_feeds.icon_url, feeds.icon_url ) AS icon_url,
+          COALESCE(u_feeds.site_url, feeds.site_url ) AS site_url,
+          feeds.last_updated,
+          feeds.last_error,
+          u_feeds.private,
+          SUM(IF(COALESCE(ue.isRead,1)=0,1,0)) AS unread_count,
+          GROUP_CONCAT(DISTINCT COALESCE(tags.name,'Untagged')) as tags
+        FROM $user_feeds AS u_feeds
+        INNER JOIN $feeds AS feeds
+          ON u_feeds.feed_id = feeds.id
+          AND u_feeds.owner =  $current_user->ID.
+        LEFT OUTER JOIN $user_entries AS ue
+          ON ue.feed_id=feeds.id
+        LEFT OUTER JOIN $user_feed_tags uft
+          ON uft.user_feed_id = u_feeds.id
+        LEFT OUTER JOIN $tags tags
+          ON uft.tag_id = tags.id
+        GROUP BY 
+          feed_id,
+          feed_url,
+          feed_name,
+          icon_url,
+          site_url,
+          last_updated,
+          last_error,
+          private
         ";
         //sum( if ue.isRead then 0 else 1 end) as unread_count,
     // AND feeds.owner = " . $current_user->ID."
