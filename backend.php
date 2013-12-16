@@ -556,7 +556,7 @@ group by
     $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
-    //If you're cache isn't writable, this is a big deal
+    //If your cache isn't writable, this is a big deal
     //Better to just disable it for now
     $feed->enable_cache(false);
     $feed->set_feed_url($feedrow->feed_url);
