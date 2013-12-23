@@ -22,7 +22,7 @@
               <div class="author" ng-show="entry.author">
                 {{entry.author}}
               </div>
-              <div class="date">
+              <div class="date" title="{{entry.entered | date:mediumTime }}">
                 {{entry.entered | date:medium }}
               </div>
               <div class="indicator" ng-show="entry.isLoading">
