@@ -762,10 +762,10 @@ class OrbitalEntries{
       'feed_id'=>$entry['feed_id'],
       'title'=>$entry['title'],
       'guid'=>$entry['guid'],
-      'link'=>$entry['link'],//TODO 
-      'updated'=>date ("Y-m-d H:i:s"),
-      'content'=>$entry['content'],//TODO
-      'entered' =>date ("Y-m-d H:i:s"),
+      'link'=>$entry['link'],
+      'updated'=>$entry['update'],
+      'content'=>$entry['content'],
+      'entered' =>$entry['entered'],
       'author' => $entry['author']
     ));
     $entry_id = $wpdb->insert_id;
@@ -833,7 +833,7 @@ class OrbitalEntries{
 
         _log("filterName: $filter_name, value: $value");
         if(null == $value || 'null' == $value){
-          $filter= $filter. " AND $filter_whitelist[$filter_name] is null ";
+          $filter= $filter. " AND $filter_whitelist[$filter_name] IS NULL ";
         }
         else{
           $filter = $filter . 
@@ -845,26 +845,30 @@ class OrbitalEntries{
     }
 
     //TODO change get feed entries to support non logged in use
-    $sql = "select entries.id as entry_id,
-        entries.title as title,
-        entries.guid as guid,
-        entries.link as link,
-        entries.content as content,
-        entries.author as author,
-        ue.isRead as isRead,
-        ue.marked as marked,
-        ue.id as id,
-        ue.feed_id as feed_id,
-        DATE_FORMAT(entries.entered , '%Y-%m-%dT%TZ') as entered,
-        DATE_FORMAT(entries.updated, '%Y-%m-%dT%TZ') as updated
+    $sql = "select entries.id AS entry_id,
+        entries.title AS title,
+        entries.guid AS guid,
+        entries.link AS link,
+        entries.content AS content,
+        entries.author AS author,
+        ue.isRead AS isRead,
+        ue.marked AS marked,
+        ue.id AS id,
+        ue.feed_id AS feed_id,
+        DATE_FORMAT(entries.entered , '%Y-%m-%dT%TZ') AS entered,
+        DATE_FORMAT(entries.updated, '%Y-%m-%dT%TZ') AS updated
 
-        from  $entries  as entries
-        inner join  $user_entries  as ue
-        on ue.entry_id=entries.id
-        where ue.owner_uid = ". $current_user->ID."
+        FROM  $entries  AS entries
+        INNER JOIN  $user_entries  AS ue
+          ON ue.entry_id=entries.id
+        LEFT OUTER JOIN $user_feed_tags AS user_feed_tags
+          ON user_feed_tags.user_feed_id = ue.feed_id
+        LEFT OUTER JOIN $tags AS tags
+          ON tags.id = user_feed_tags.tag_id
+        WHERE ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
         ". $sort . "
-        limit 30
+        LIMIT 30
     ;";
     _log($sql);
     $myrows = $wpdb->get_results($sql);
