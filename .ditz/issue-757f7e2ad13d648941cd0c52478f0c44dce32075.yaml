@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Remember tagview or listview when user switches.
+desc: Which ever view a user chooses, we should show that.
+type: :feature
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 05:48:27.498543 Z
+references: []
+
+id: 757f7e2ad13d648941cd0c52478f0c44dce32075
+log_events: 
+- - 2014-01-02 05:48:28.260586 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
