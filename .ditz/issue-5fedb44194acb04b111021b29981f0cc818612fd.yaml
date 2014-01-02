@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-12-16 04:02:31.551050 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2014-01-02 05:18:02.317495 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - we weren't passing the feed_id that we just generated.
