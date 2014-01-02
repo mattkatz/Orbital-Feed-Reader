@@ -65,6 +65,7 @@ mainModule.factory('feedService',   function($http){
   var _selectedFeed = null;
   // the list of feeds;
   var _feeds = [];
+  // feeds organized by tags
   var _tags = {};
   //is this service doing work?
   var _isLoading = false;

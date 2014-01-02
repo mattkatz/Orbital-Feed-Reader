@@ -3,13 +3,13 @@
 function FeedListCtrl($scope, $http, $log, feedService){
   $log.log('in feedscontrol');
   $scope.showByTags = feedService.showByTags()
-  //$scope.taglist = [{"tag":"top","tag_id":"2","feed_id":"1","feed_name":"More Light! More Light!","feed_url":"http:\/\/www.morelightmorelight.com\/feed\/","icon_url":"","site_url":"http:\/\/www.morelightmorelight.com","last_updated":"2013-11-14 03:54:38","last_error":"","private":"0","unread_count":"4"},{"tag":"top","tag_id":"2","feed_id":"3","feed_name":"Boing Boing","feed_url":"http:\/\/boingboing.net\/feed\/","icon_url":"","site_url":"http:\/\/boingboing.net","last_updated":"2013-11-14 03:54:39","last_error":"","private":"0","unread_count":"130"},{"tag":"art","tag_id":"1","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-14 03:54:42","last_error":"","private":"0","unread_count":"5"},{"tag":"top","tag_id":"2","feed_id":"4","feed_name":"But does it float?","feed_url":"http:\/\/feeds.feedburner.com\/ButDoesItFloat?format=xml","icon_url":"","site_url":"http:\/\/butdoesitfloat.com","last_updated":"2013-11-14 03:54:42","last_error":"","private":"0","unread_count":"5"},{"tag":"art","tag_id":"1","feed_id":"5","feed_name":"Steve Lambert, art etc.","feed_url":"http:\/\/visitsteve.com\/feed","icon_url":"","site_url":"http:\/\/visitsteve.com\/","last_updated":"2013-11-14 03:54:46","last_error":"","private":"0","unread_count":"2"},{"tag":"Untagged","tag_id":null,"feed_id":"2","feed_name":"Orbital Changes","feed_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/ditz\/html\/feed.xml","icon_url":"","site_url":"http:\/\/mattkatz.github.com\/Orbital-Feed-Reader\/","last_updated":"2013-11-14 03:54:39","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","tag_id":null,"feed_id":"8","feed_name":"Thread for Thought","feed_url":"http:\/\/www.threadforthought.net\/feed\/","icon_url":"","site_url":"http:\/\/www.threadforthought.net\/","last_updated":"2013-11-14 03:54:51","last_error":"","private":"0","unread_count":"0"},{"tag":"Untagged","tag_id":null,"feed_id":"9","feed_name":"Sky Blastula","feed_url":"http:\/\/localhost\/wp\/?feed=rss2","icon_url":"","site_url":"http:\/\/localhost\/wp","last_updated":"2013-11-14 03:54:51","last_error":"","private":"0","unread_count":"1"},{"tag":"Untagged","tag_id":null,"feed_id":"10","feed_name":"mr. div","feed_url":"http:\/\/mrdiv.tumblr.com\/rss","icon_url":"","site_url":"http:\/\/mrdiv.tumblr.com\/","last_updated":"2013-11-14 03:54:51","last_error":"","private":"0","unread_count":"1"}];
   //$scope.tags = _.groupBy($scope.taglist, "tag"); 
   //$log.log($scope.tags);
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
   $scope.tags = feedService.tags();
   $scope.isLoading = feedService.isLoading();
+  $scope.showRead = 0;
   $scope.$watch(feedService.feeds,function(newValue){
     //console.log('listener');
     //$scope.feeds = feedService.feeds();
@@ -123,7 +123,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
       $scope.refresh();
       //refresh the feed if it is still selected
       if(feed == $scope.selectedFeed){
-        $scope.select(feed);
+        $scope.select(feed, $scope.showRead);
       }
     });
   }
@@ -183,7 +183,10 @@ function FeedListCtrl($scope, $http, $log, feedService){
         break;
       case "showRead":
         //refresh this feed, but display read items
-        $scope.select(feed,1);
+        $log.info('in showRead');
+        //feedService.setShowRead(1 -feedService.getShowRead() );
+        $scope.showRead = 1 - $scope.showRead;
+        $scope.select(feed,$scope.showRead);
         break;
       default:
         $log.log('requested commandBar action ' + args.name + ' - not implemented yet');
@@ -672,7 +675,7 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     { title: "Update Feed",
       name: 'updateFeed',
     },
-    { title: "Show Read Items",
+    { title: "Toggle Read Items",
       name: 'showRead',
     },
   ];
