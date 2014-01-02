@@ -69,6 +69,7 @@ mainModule.factory('feedService',   function($http){
   //is this service doing work?
   var _isLoading = false;
   var _sortOrder = "-1";
+  var _showByTags = false;
   var _sortOptions = [
     { sortOrder: "-1",
       sortName: "Newest First",
@@ -132,6 +133,7 @@ mainModule.factory('feedService',   function($http){
       $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
         _sortOrder = data['sort_order'];
+        _showByTags = data['show_by_tags'];
       });
     },
     select : function(feed, showRead){
@@ -181,30 +183,32 @@ mainModule.factory('feedService',   function($http){
     sortOptions: function(){
       return _sortOptions;
     },
-    saveSort: function(sortOrder, callback){
+    showByTags: function(){
+      return _showByTags;
+    },
+    saveSetting: function(setting, callback){
       var data = {
         action: 'orbital_set_user_settings',
-        orbital_settings: {
-          sort_order: sortOrder,
-        },
+        orbital_settings: setting ,
       };
       //console.log('And app thinks data is : ' + _sortOrder );
       $http.post(opts.ajaxurl, data)
       .success(function(response){
-        //TODO Store the settings somewhere?
-        console.log(response);
+        //Store the settings 
+        _showByTags = response['show_by_tags'];
+        _sortOrder = response['sort_order'];
         if(callback){
           callback();
         }
       });
-
     },
-
-    changeSortOrder: function( sortOrder){
-
-      console.log(sortOrder);
-      //todo post the sort order to the settings.
-      
+    saveSort: function(sortOrder, callback){
+      feedservice.saveSetting({ sort_order: sortOrder },callback);
+    },
+    saveTagView: function(showTags, callback){
+      console.log('save tag view app ' + showTags);
+      feedservice.saveSetting({show_by_tags:showTags},callback);
+      //_showByTags = showTags;
     },
   };
   return feedservice;
