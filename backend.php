@@ -100,9 +100,9 @@ class OrbitalFeeds {
       }
       //Now let's link in the feed to user_feeds
       $sql = 'INSERT INTO ' .$user_feeds.'
-        (feed_id, feed_name, site_url,owner, private,unread_count)
+        (feed_id, feed_name, site_url,owner, private)
          VALUES
-         (%d,%s,%s,%d,%d,0)';
+         (%d,%s,%s,%d,%d)';
       $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
       $resp->user_feed_inserted = $wpdb->query($sql);
       if(false=== $resp->user_feed_inserted){
