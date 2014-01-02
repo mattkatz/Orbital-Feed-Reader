@@ -170,7 +170,7 @@ function orbital_install_data(){
   //'feed_url'=>'http://localhost/morelightmorelight/feed',
   'site_url'=> 'http://www.morelightmorelight.com',
   'is_private'=>0,
-  'tags'=>'orbital,people,awesome,default',
+  'tags'=>'orbital,mutants',
   //'owner' => $current_user->ID,
   'feed_name' =>'More Light! More Light!'));
   
@@ -180,7 +180,7 @@ function orbital_install_data(){
     //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
     'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
     'is_private'=>0,
-    'tags'=>'orbital,software,default',
+    'tags'=>'orbital,software',
     //'owner' => $current_user->ID,
     'feed_name' => 'Orbital Changes'));
 
@@ -216,7 +216,7 @@ function orbital_install_data(){
     A better way to do this is to take your hand off the mouse and just click the 'j' key or the ⬇ key.
     Watch as you are taken to the next item to be read - we'll also mark it as something you've looked at.
     <p>Go ahead and try it now - see you at the next post.
-    </p>    ",//TODO
+    </p>    ",
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -224,7 +224,7 @@ function orbital_install_data(){
     'feed_id'=> $orbitalfeed->feed_id,
     'title'=>'More Keyboard Shortcuts',
     'guid'=>'FAKEGUID' . $i++,
-    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"<p>What else?</p>
     <p>
@@ -234,7 +234,7 @@ function orbital_install_data(){
         <li>'o' will open up a new browser tab with the item you are looking at.  </li>
       </ul>
     </p>
-    ",//TODO
+    ",
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -242,7 +242,7 @@ function orbital_install_data(){
     'feed_id'=> $orbitalfeed->feed_id,
     'title'=>'The feedlist',
     'guid'=>'FAKEGUID' . $i++,
-    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>Over in the feed list on the right hand side, look for three icons:
@@ -254,10 +254,13 @@ function orbital_install_data(){
         <li>
         ✎ - Edit and manage your feeds. Rename them, set them as private or public, etc. 
         </li>
+        <li>
+        ≣ - You'll see this or # as a way to toggle between list or #tag view. More on that later!
+        </li>
       </ul>
       Underneath you'll find a list of all your feeds, ready to click on. Click one to just see that or click All to drink from the firehose.
     </p>
-    ",//TODO
+    ",
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -265,7 +268,7 @@ function orbital_install_data(){
     'feed_id'=> $orbitalfeed->feed_id,
     'title'=>'Adding your own sites to monitor',
     'guid'=>'FAKEGUID' . $i++,
-    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>
@@ -282,7 +285,7 @@ function orbital_install_data(){
       </li>
       </ol>
       </p>
-    ",//TODO
+    ",
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -290,11 +293,11 @@ function orbital_install_data(){
     'feed_id'=> $orbitalfeed->feed_id,
     'title'=>"Press This!",
     'guid'=>'FAKEGUID' . $i++,
-    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>So the real benefit of the Orbital Feed Reader is that it should encourage you to write more! All this stuff in your feed reader is really just inspiration juice. So here's how we do that. Highlight the first sentence on this post and click the PressThis! link below. You'll see attribution and citation in a ready to edit Blog Post!</p>
-    ",//TODO
+    ",
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -302,14 +305,14 @@ function orbital_install_data(){
     'feed_id'=> $orbitalfeed->feed_id,
     'title'=>"Organize feeds with #Tags",
     'guid'=>'FAKEGUID' . $i++,
-    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>When you're reading feeds, you want to read related stuff together. Rather than reading either ALL of your feeds as one river or just a single feed, you want to read a bundle of similar sites.</p>
     <p>You can do that with #tags in Orbital. Your sample feeds are already organized in some sample tags right now.</p>
     <p>At the top of the feed list, click on # or ≣ to toggle between viewing your feeds by #tag or in a ≣list. Try it now.</p>
     <p>When you save a new feed you can give it tags to organize it with others... Just type your tags seperated by commas:  'gadgets,boredom,timewasting'</p>
-    ",//TODO
+    ",
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -321,7 +324,7 @@ function orbital_install_data(){
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>Try adding some of your favorite sites to get started. When you find something you like, click PressThis!</p>
-    ",//TODO
+    ",
     'author' => 'Matt Katz'
   ));
 
@@ -331,7 +334,7 @@ function orbital_install_data(){
     //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://boingboing.net',
     'is_private'=>0,
-    'tags'=>'awesome',
+    'tags'=>'mutants',
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
   OrbitalFeeds::save(
@@ -346,15 +349,36 @@ function orbital_install_data(){
     'feed_url'=>'http://visitsteve.com/feed',
     'site_url'=> 'http://visitsteve.com/',
     'is_private'=>0,
-    'tags'=>'art,people',
+    'tags'=>'art,mutants',
     'feed_name' => 'Steve Lambert, art etc.'));
   OrbitalFeeds::save(
   array(
     'feed_url'=>'http://www.techdirt.com/techdirt_rss.xml',
     'site_url'=> 'http://www.techdirt.com/',
     'is_private'=>0,
-    'tags'=>'news,economics',
+    'tags'=>'news,economics,copyfight',
     'feed_name' => 'Techdirt.'));
+  OrbitalFeeds::save(
+  array(
+    'feed_url'=>'http://www.lessig.org/blog/index.rdf',
+    'site_url'=> 'http://www.lessig.org/',
+    'is_private'=>0,
+    'tags'=>'copyfight',
+    'feed_name' => 'Lessig Blog'));
+  OrbitalFeeds::save(
+  array(
+    'feed_url'=>'http://bldgblog.blogspot.com/atom.xml',
+    'site_url'=> 'http://bldgblog.blogspot.com/',
+    'is_private'=>0,
+    'tags'=>'mutants',
+    'feed_name' => 'BLDGBLOG'));
+  OrbitalFeeds::save(
+  array(
+    'feed_url'=>'http://feeds.feedburner.com/wiredbeyond',
+    'site_url'=> 'http://www.wired.com/beyond_the_beyond',
+    'is_private'=>0,
+    'tags'=>'mutants',
+    'feed_name' => 'Bruce Sterling'));
 }
 /*
 function orbital_uninstall_db()
