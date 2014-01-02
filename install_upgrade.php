@@ -126,7 +126,6 @@ function orbital_install_db()
     published datetime NOT NULL,
     content longtext NOT NULL,
     content_hash varchar(250) NOT NULL,
-    no_orig_date bool NOT NULL DEFAULT 0,
     author varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   ) $charset_collate;";
