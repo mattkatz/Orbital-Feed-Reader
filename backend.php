@@ -865,10 +865,12 @@ class OrbitalEntries{
           ON tags.id = user_feed_tags.tag_id
         WHERE ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
+        GROUP BY 
+          title, guid, link, content, author, isRead, marked, id, feed_id, published
         ". $sort . "
         LIMIT 30
     ;";
-    //_log($sql);
+    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
   }
