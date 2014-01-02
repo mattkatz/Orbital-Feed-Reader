@@ -77,3 +77,12 @@ releases:
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - Moving forward with better logging etc.
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.7
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2014-01-02 05:39:33.199921 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - Multi-user
