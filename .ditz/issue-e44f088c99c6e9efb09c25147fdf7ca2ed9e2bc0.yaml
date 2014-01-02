@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-09-02 11:56:14.576056 Z
 references: []
 
@@ -30,3 +30,7 @@ log_events:
   - |-
     actually publish date is fine - it is update date that stinks.
     If we eliminate it, what is the impact? nothing. We can just use the one date field.
+- - 2014-01-02 05:08:38.088532 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - it wasn't publish_date not being stored it was update date!
