@@ -81,6 +81,7 @@ class OrbitalFeeds {
             WHERE feed_url = %s';
       $sql = $wpdb->prepare($sql, $feed['feed_url']);
       $feed_id = $wpdb->get_var($sql);
+      //$feed->feed_id = $wpdb->get_var($sql);
       if (! $feed_id){//we will insert the feed id and then link
         //insert the feed and get the feed_id.
         $sql = 'INSERT INTO ' . $feeds.'
@@ -102,14 +103,15 @@ class OrbitalFeeds {
         (feed_id, feed_name, site_url,owner, private,unread_count)
          VALUES
          (%d,%s,%s,%d,%d,0)';
-      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
+      $sql = $wpdb->prepare($sql, $feed->feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
       $resp->user_feed_inserted = $wpdb->query($sql);
       if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
+        return resp;
       }
       else{
         // we really want to show the USER_FEEDS.id, not the FEEDS.ID
-        $feed_id = $wpdb->insert_id;
+        $feed->feed_id = $wpdb->insert_id;
       }
     }
 
@@ -120,12 +122,12 @@ class OrbitalFeeds {
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
-    $resp->feed_id = "".$feed_id;
+    $resp->feed_id = $feed->feed_id;
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
     $resp->is_private = $feed['is_private'];
-    $resp->unread_count ="0";
+    $resp->unread_count ="0";//TODO: A LIE. But it gets corrected quickly
     return $resp;
   }
   /* OrbitalFeeds::saveFeedTags($feed);
@@ -522,6 +524,19 @@ group by
 
   }
 
+  // OrbitalFeeds::refresh_user_feed
+  /* Function: refresh_user_feed
+   *
+   * takes a user feed id, figures out the underlying feed
+   * then calls to refresh the main feed
+   * 
+   * returns: a count of updates and inserts made
+   */
+  static function refresh_user_feed($user_feed_id){
+    //If we are looking up by user_feed, we need the original feed id
+    $feed_id = OrbitalFeeds::get_orig_feed_id($user_feed_id);
+    return OrbitalFeeds::refresh($feed_id);
+  }
 
 
   // OrbitalFeeds::refresh 
@@ -532,15 +547,9 @@ group by
    *
    * Returns: a count of updates and inserts made
    */
-  static function refresh($feed_id, $user_feed_id){
+  static function refresh($feed_id){
     //TODO update the feeds last updated time
     include_once(ABSPATH . WPINC . '/class-feed.php');
-    //If we are looking up by user_feed, we need the original feed id
-    if(null != $user_feed_id){
-      $feed_id = OrbitalFeeds::get_orig_feed_id($user_feed_id);
-    }
-    //_log($feedrow);
-    //echo $feedrow->feed_url;
     $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
@@ -1081,7 +1090,6 @@ function orbital_update_feeds(){
   foreach( $feeds as $feed){
     _log($feed);
     OrbitalFeeds::refresh($feed->id);
-    //orbital_update_feed($feed->id);
   }
 }
 add_action('wp_ajax_orbital_update_feeds','orbital_update_feeds');
@@ -1103,7 +1111,7 @@ function orbital_update_feed($feed_id="",$feed_url=""){
     }
   }
   //if this is coming from a user call with a user_feeds.id
-  $resp = OrbitalFeeds::refresh(null,$feed_id);
+  $resp = OrbitalFeeds::refresh_user_feed($feed_id);
 
   echo json_encode($resp);
   exit;
