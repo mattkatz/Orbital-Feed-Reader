@@ -1,4 +1,8 @@
 <?php
+if ( !function_exists( 'add_action' ) ) {
+  echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
+  exit;
+}
 if(!function_exists('_log')){
   function _log( $message ) {
     if( WP_DEBUG === true ){
@@ -39,7 +43,7 @@ class OrbitalFeeds {
     global $current_user;
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
-    $resp = "";
+    $resp = new stdClass;
     $feed_id = '';
     if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
     /*
@@ -163,29 +167,13 @@ class OrbitalFeeds {
     //_log($wpdb->get_col($sql,1));
     $tag_ids = implode(',',$tag_ids);
     //_log($tag_ids);
-    $wpdb->query("
-      DELETE 
-      FROM $user_feed_tags
-      WHERE tag_id IN ( $tag_ids )");
-
-    //clean up tags not in feed tags
-    //delete all tag links where tag isn't in feedtags
-    /*
-     This should work, but doesn't
-
-DELETE 
-FROM wp_orbital_user_feed_tags uft
-WHERE uft.tag_id IN (
-  SELECT uft.tag_id 
-  FROM 	wp_orbital_user_feed_tags uft
-  INNER JOIN wp_orbital_tags tags 
-    ON tags.id = uft.tag_id
-    AND uft.user_feed_id = 13
-
-  WHERE tags.name NOT IN( 'gifs')
-)
-     */
-
+    //do nothing if we don't have any ids to process
+    if($tag_ids){
+      $wpdb->query("
+        DELETE 
+        FROM $user_feed_tags
+        WHERE tag_id IN ( $tag_ids )");
+    }
   }
 
   static function saveFeedTag($feed_id, $tag){
@@ -580,14 +568,15 @@ group by
       if(null != $author){
         $name =$author->get_name(); 
       }
+      //_log('saving an item');
+      //_log($item); 
       OrbitalEntries::save(array(
         'feed_id'=>$feed_id,
         'title'=>$item->get_title(),
         'guid'=>$item->get_id(),
         'link'=>$item->get_permalink(),
-        'updated'=>$item->get_updated_date("Y-m-d H:i:s"),
+        'published'=>$item->get_date("Y-m-d H:i:s"), // this is really updated or entered
         'content'=>$item->get_content(),
-        'entered' =>$item->get_date("Y-m-d H:i:s"),
         'author' => $name
       ));
     }
@@ -627,8 +616,8 @@ class OrbitalEntries{
  *    - TODO compare the content_hash on old and new before resetting isread
  */
   static function save($entry){
-    //_log('in save');
-    //_log($entry);
+    _log('in save');
+    _log($entry);
 
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
@@ -756,16 +745,15 @@ class OrbitalEntries{
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
     
-    $resp;
+    $resp=new stdClass;
 
     $wpdb->insert($entries, array(
       'feed_id'=>$entry['feed_id'],
       'title'=>$entry['title'],
       'guid'=>$entry['guid'],
       'link'=>$entry['link'],
-      'updated'=>$entry['update'],
+      'published'=>$entry['published'],
       'content'=>$entry['content'],
-      'entered' =>$entry['entered'],
       'author' => $entry['author']
     ));
     $entry_id = $wpdb->insert_id;
@@ -810,7 +798,7 @@ class OrbitalEntries{
     $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $user_settings = (array) get_user_option( 'orbital_settings' );
     $sort_order = $user_settings['sort_order'];
-    $sort = "ORDER BY entries.updated ";
+    $sort = "ORDER BY entries.published ";
     if("-1" == $sort_order ){
       $sort = $sort . "DESC";
     }
@@ -824,14 +812,16 @@ class OrbitalEntries{
     $filter_whitelist = array('tag'=>'name','entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
 
+    /*
     _log('constructing get filters');
     _log('filters are');
     _log($filters);
+     */
 
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
 
-        _log("filterName: $filter_name, value: $value");
+        //_log("filterName: $filter_name, value: $value");
         if(null == $value || 'null' == $value){
           $filter= $filter. " AND $filter_whitelist[$filter_name] IS NULL ";
         }
@@ -839,7 +829,7 @@ class OrbitalEntries{
           $filter = $filter . 
             $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
         }
-        _log("Filter: $filter");
+        //_log("Filter: $filter");
 
       }
     }
@@ -855,8 +845,7 @@ class OrbitalEntries{
         ue.marked AS marked,
         ue.id AS id,
         ue.feed_id AS feed_id,
-        DATE_FORMAT(entries.entered , '%Y-%m-%dT%TZ') AS entered,
-        DATE_FORMAT(entries.updated, '%Y-%m-%dT%TZ') AS updated
+        DATE_FORMAT(entries.published, '%Y-%m-%dT%TZ') AS published
 
         FROM  $entries  AS entries
         INNER JOIN  $user_entries  AS ue
@@ -870,7 +859,7 @@ class OrbitalEntries{
         ". $sort . "
         LIMIT 30
     ;";
-    _log($sql);
+    //_log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
   }

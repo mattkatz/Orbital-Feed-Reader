@@ -2,6 +2,46 @@
 
 require_once 'backend.php';
 
+// perform migrations if needed
+function orbital_migrate_db(){
+  global $wpdb;
+  global $orbital_db_version;
+  global $orbital_db_version_opt_string;
+  global $tbl_prefix;
+  $current_version = get_site_option($orbital_db_version_opt_string);
+  if(null == $current_version){
+    //This is a new install, exit
+    return;
+  }
+  if ( version_compare($current_version,'0.1.3','<=') ){
+    _log("migrating from 0.1.3 or less
+       We had an entered and updated entry column
+       We are consolidating this to just an updated column and 
+       moving the entry data, which is good into updated.
+     ");
+    $entries = $wpdb->prefix.$tbl_prefix."entries";
+    $sql = "
+      ALTER TABLE $entries
+        DROP COLUMN updated;
+      ";
+    $res = $wpdb->query($sql);
+    if(false === $res){
+      _log('something went wrong migrating from 0.1.3. Here is the error');
+      _log($wpdb->print_error());
+      exit;
+    }
+    $sql = "
+      ALTER TABLE $entries
+        CHANGE COLUMN entered published DATETIME NOT NULL;
+      ";
+    $res = $wpdb->query($sql);
+    if(false === $res){
+      _log('something went wrong migrating from 0.1.3. Here is the error');
+      _log($wpdb->print_error());
+      exit;
+    }
+  }
+}
 
 # create the database tables.
 function orbital_install_db()
@@ -18,6 +58,8 @@ function orbital_install_db()
     $charset_collate .= " COLLATE $wpdb->collate";
 
   require_once(ABSPATH. 'wp-admin/includes/upgrade.php');
+  //perform any migrations dbdelta can't handle
+  orbital_migrate_db();
   //feeds
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
 
@@ -81,11 +123,10 @@ function orbital_install_db()
     title text NOT NULL,
     guid varchar(255) NOT NULL UNIQUE,
     link text NOT NULL,
-    updated datetime NOT NULL,
+    published datetime NOT NULL,
     content longtext NOT NULL,
     content_hash varchar(250) NOT NULL,
     no_orig_date bool NOT NULL DEFAULT 0,
-    entered datetime NOT NULL,
     author varchar(250) NOT NULL DEFAULT '',
     UNIQUE KEY id (id)
   ) $charset_collate;";
@@ -97,8 +138,7 @@ function orbital_install_db()
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
     name varchar(200)  NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE KEY name (name)
+    UNIQUE KEY id (id)
   ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
@@ -111,20 +151,20 @@ function orbital_install_db()
   $sql = "CREATE TABLE " . $table_name ." (
     tag_id integer NOT NULL DEFAULT '0',
     user_feed_id integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (tag_id,user_feed_id),
-    KEY user_feed_id (user_feed_id)
+    PRIMARY KEY (tag_id,user_feed_id)
   ) $charset_collate;";
   dbDelta($sql);
   _log("Added $table_name");
-  add_option($orbital_db_version_opt_string,$orbital_db_version);
+  update_option($orbital_db_version_opt_string,$orbital_db_version);
 }
 //TODO load in everything with admin as owner, 
 # load all the first installation data in.
 function orbital_install_data(){
+  get_currentuserinfo();
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
-  $user_id = $current_user->ID;
+  //$user_id = $current_user->ID;
   //install some sample feeds
   $feed = OrbitalFeeds::save(
   array(
@@ -132,6 +172,7 @@ function orbital_install_data(){
   //'feed_url'=>'http://localhost/morelightmorelight/feed',
   'site_url'=> 'http://www.morelightmorelight.com',
   'is_private'=>0,
+  'tags'=>'orbital,people,awesome,default',
   //'owner' => $current_user->ID,
   'feed_name' =>'More Light! More Light!'));
   
@@ -141,6 +182,7 @@ function orbital_install_data(){
     //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
     'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
     'is_private'=>0,
+    'tags'=>'orbital,software,default',
     //'owner' => $current_user->ID,
     'feed_name' => 'Orbital Changes'));
 
@@ -150,9 +192,8 @@ function orbital_install_data(){
     'title'=>'Welcome to Orbital!',
     'guid'=>'FAKEGUID',
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/welcome.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   $i = 0;
@@ -162,9 +203,8 @@ function orbital_install_data(){
     'title'=>'Getting Started',
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"This is <b>your</b> Orbital Reader, a feed reading platform for WordPress. I'll handle polling all your favorite websites for new posts. I've put some favorite samples in the side bar on the right. You'll see those start getting populated with new posts.",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -173,13 +213,12 @@ function orbital_install_data(){
     'title'=>'Keyboard Shortcuts',
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"You can mark entries as read and Orbital will remember for you. As you scroll down, just click on an entry to mark it as read.
     A better way to do this is to take your hand off the mouse and just click the 'j' key or the ⬇ key.
     Watch as you are taken to the next item to be read - we'll also mark it as something you've looked at.
     <p>Go ahead and try it now - see you at the next post.
     </p>    ",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -188,7 +227,7 @@ function orbital_install_data(){
     'title'=>'More Keyboard Shortcuts',
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"<p>What else?</p>
     <p>
       <ul>
@@ -198,7 +237,6 @@ function orbital_install_data(){
       </ul>
     </p>
     ",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -207,7 +245,7 @@ function orbital_install_data(){
     'title'=>'The feedlist',
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>Over in the feed list on the right hand side, look for three icons:
       <ul>
@@ -222,7 +260,6 @@ function orbital_install_data(){
       Underneath you'll find a list of all your feeds, ready to click on. Click one to just see that or click All to drink from the firehose.
     </p>
     ",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -231,7 +268,7 @@ function orbital_install_data(){
     'title'=>'Adding your own sites to monitor',
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>
       I've started you out with some great feeds that I like, but you probably want to add your own. That's easy!
@@ -248,7 +285,6 @@ function orbital_install_data(){
       </ol>
       </p>
     ",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -257,11 +293,10 @@ function orbital_install_data(){
     'title'=>"Press This!",
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>So the real benefit of the Orbital Feed Reader is that it should encourage you to write more! All this stuff in your feed reader is really just inspiration juice. So here's how we do that. Highlight the first sentence on this post and click the PressThis! link below. You'll see attribution and citation in a ready to edit Blog Post!</p>
     ",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
   //Insert a sample entry
@@ -270,11 +305,10 @@ function orbital_install_data(){
     'title'=>"That's it for now!",
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
-    'updated'=>date ("Y-m-d H:i:s"),
+    'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
     <p>Try adding some of your favorite sites to get started. When you find something you like, click PressThis!</p>
     ",//TODO
-    'entered' =>date ("Y-m-d H:i:s"),
     'author' => 'Matt Katz'
   ));
 
@@ -284,6 +318,7 @@ function orbital_install_data(){
     //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://boingboing.net',
     'is_private'=>0,
+    'tags'=>'default,awesome',
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
   OrbitalFeeds::save(
@@ -292,6 +327,7 @@ function orbital_install_data(){
     //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://butdoesitfloat.com',
     'is_private'=>0,
+    'tags'=>'art,default',
     //'owner' => $current_user->ID,
     'feed_name' => 'But does it float?'));
   OrbitalFeeds::save(
@@ -300,6 +336,7 @@ function orbital_install_data(){
     //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://visitsteve.com/',
     'is_private'=>0,
+    'tags'=>'art,default,people',
     //'owner' => $current_user->ID,
     'feed_name' => 'Steve Lambert, art etc.'));
 }

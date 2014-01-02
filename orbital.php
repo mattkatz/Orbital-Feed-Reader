@@ -13,7 +13,9 @@ $orbital_slug = 'orbital.php';
 global $orbital_settings_slug;
 $orbital_settings_slug = 'orbital_plugin_settings';
 global $orbital_db_version ;
-$orbital_db_version = '0.1.3';
+$orbital_db_version = '0.1.6';
+global $orbital_samples_version ;
+$orbital_samples_version = '0.1.6';
 global $orbital_db_version_opt_string;
 $orbital_db_version_opt_string = 'orbital_db_version';
 global $tbl_prefix;
@@ -25,7 +27,7 @@ if ( !function_exists( 'add_action' ) ) {
 }
 require_once 'backend.php';
 
-//add_action('plugins_loaded', 'orbital_update_db_check');
+add_action('plugins_loaded', 'orbital_update_db_check');
 function orbital_update_db_check(){
   global $orbital_db_version;
   global $orbital_db_version_opt_string;
@@ -36,20 +38,22 @@ function orbital_update_db_check(){
     //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
     orbital_install_db();
-    update_option($orbital_db_version_opt_string, $orbital_db_version);
   }
   _log('finished DB update check');
 }
+add_action('plugins_loaded', 'orbital_sample_data_check');
 function orbital_sample_data_check(){
+  global $orbital_samples_version ;
   _log('check for sampledata');
   $samples_loaded = get_site_option('orbital_sample_data_loaded');
   _log("Are the samples loaded: $samples_loaded ");
-  if( $samples_loaded != 1)
+  if( $samples_loaded !== $orbital_samples_version)
   {
     _log("orbital: Installing Sample Data");
     require_once 'install_upgrade.php';
     orbital_install_data();
-    update_option('orbital_sample_data_loaded', 1);
+    //TODO: should this be inside the install data function?
+    update_option('orbital_sample_data_loaded', $orbital_samples_version);
   }
   else{
     _log('Sample Date already in there, never mind');
@@ -221,10 +225,10 @@ function orbital_update_job(){
 }
 
 function orbital_activate(){
-  _log('orbital activate begin');
-  orbital_update_db_check();
-  _log('orbital sample begin');
-  orbital_sample_data_check();
+  //_log('orbital activate begin');
+  //orbital_update_db_check();
+  //_log('orbital sample begin');
+  //orbital_sample_data_check();
   orbital_set_up_cron();
   _log('orbital activate end');
 }
