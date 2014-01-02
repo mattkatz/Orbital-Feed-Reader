@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fix post updates
+desc: |-
+  if a feed updates an entry, we should update the post we have.
+  we should not mark it as unread unless the user wants that.
+  maybe that should be a user option
+type: :bugfix
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 05:15:14.466687 Z
+references: []
+
+id: 62817317970d4e40c31a51302ce39ad8f9402ad3
+log_events: 
+- - 2014-01-02 05:15:15.346001 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
