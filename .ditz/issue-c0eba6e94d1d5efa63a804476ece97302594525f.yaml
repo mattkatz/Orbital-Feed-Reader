@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "Test fresh install "
+desc: test that installing this with nothing in the db works properly
+type: :task
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 03:02:44.376438 Z
+references: []
+
+id: c0eba6e94d1d5efa63a804476ece97302594525f
+log_events: 
+- - 2014-01-02 03:02:47.398906 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

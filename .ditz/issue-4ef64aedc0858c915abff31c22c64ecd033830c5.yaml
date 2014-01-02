@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: test upgrade install
+desc: |-
+  install on a fresh WP from prod
+  then copy in new code and check that upgrade works properly
+type: :task
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 03:03:38.451052 Z
+references: []
+
+id: 4ef64aedc0858c915abff31c22c64ecd033830c5
+log_events: 
+- - 2014-01-02 03:03:39.550712 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

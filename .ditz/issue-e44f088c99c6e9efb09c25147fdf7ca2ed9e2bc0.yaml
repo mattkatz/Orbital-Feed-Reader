@@ -24,3 +24,9 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from unstarted to in_progress
   - ""
+- - 2014-01-02 00:13:49.151563 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - commented
+  - |-
+    actually publish date is fine - it is update date that stinks.
+    If we eliminate it, what is the impact? nothing. We can just use the one date field.
