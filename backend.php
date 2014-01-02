@@ -1184,12 +1184,14 @@ function orbital_set_user_settings(){
   $settings = (array) get_user_option( 'orbital_settings' );
   //merge arrays
   $new_settings = $user_orbital_settings + $settings;
+  /*
   _log("posted settings");
   _log($user_orbital_settings);
   _log("db settings");
   _log($settings);
   _log("merged settings");
   _log($new_settings);
+   */
   
   if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
     // Send back what we now know
