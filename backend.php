@@ -103,7 +103,7 @@ class OrbitalFeeds {
         (feed_id, feed_name, site_url,owner, private,unread_count)
          VALUES
          (%d,%s,%s,%d,%d,0)';
-      $sql = $wpdb->prepare($sql, $feed->feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
+      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
       $resp->user_feed_inserted = $wpdb->query($sql);
       if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
@@ -111,7 +111,7 @@ class OrbitalFeeds {
       }
       else{
         // we really want to show the USER_FEEDS.id, not the FEEDS.ID
-        $feed->feed_id = $wpdb->insert_id;
+        $feed['feed_id'] = $wpdb->insert_id;
       }
     }
 
@@ -122,7 +122,7 @@ class OrbitalFeeds {
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
-    $resp->feed_id = $feed->feed_id;
+    $resp->feed_id = $feed['feed_id'];
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
