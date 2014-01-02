@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Suggest tags?
+desc: If we are saving a new feed, maybe that feed can suggest tags
+type: :feature
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 06:15:14.888902 Z
+references: []
+
+id: 3eff5a23ac35123f4c89aeb00c0bb2d141cf9ede
+log_events: 
+- - 2014-01-02 06:15:15.638473 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -300,6 +300,21 @@ function orbital_install_data(){
   //Insert a sample entry
   OrbitalEntries::save(array(
     'feed_id'=> $orbitalfeed->feed_id,
+    'title'=>"Organize feeds with #Tags",
+    'guid'=>'FAKEGUID' . $i++,
+    'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
+    'published'=>date ("Y-m-d H:i:s"),
+    'content'=>"
+    <p>When you're reading feeds, you want to read related stuff together. Rather than reading either ALL of your feeds as one river or just a single feed, you want to read a bundle of similar sites.</p>
+    <p>You can do that with #tags in Orbital. Your sample feeds are already organized in some sample tags right now.</p>
+    <p>At the top of the feed list, click on # or ≣ to toggle between viewing your feeds by #tag or in a ≣list. Try it now.</p>
+    <p>When you save a new feed you can give it tags to organize it with others... Just type your tags seperated by commas:  'gadgets,boredom,timewasting'</p>
+    ",//TODO
+    'author' => 'Matt Katz'
+  ));
+  //Insert a sample entry
+  OrbitalEntries::save(array(
+    'feed_id'=> $orbitalfeed->feed_id,
     'title'=>"That's it for now!",
     'guid'=>'FAKEGUID' . $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
@@ -316,27 +331,30 @@ function orbital_install_data(){
     //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://boingboing.net',
     'is_private'=>0,
-    'tags'=>'default,awesome',
+    'tags'=>'awesome',
     //'owner' => $current_user->ID,
     'feed_name' => 'Boing Boing'));
   OrbitalFeeds::save(
   array(
     'feed_url'=>'http://feeds.feedburner.com/ButDoesItFloat?format=xml',
-    //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://butdoesitfloat.com',
     'is_private'=>0,
-    'tags'=>'art,default',
-    //'owner' => $current_user->ID,
+    'tags'=>'art',
     'feed_name' => 'But does it float?'));
   OrbitalFeeds::save(
   array(
     'feed_url'=>'http://visitsteve.com/feed',
-    //'feed_url'=>'http://localhost/boingboing/iBag',
     'site_url'=> 'http://visitsteve.com/',
     'is_private'=>0,
-    'tags'=>'art,default,people',
-    //'owner' => $current_user->ID,
+    'tags'=>'art,people',
     'feed_name' => 'Steve Lambert, art etc.'));
+  OrbitalFeeds::save(
+  array(
+    'feed_url'=>'http://www.techdirt.com/techdirt_rss.xml',
+    'site_url'=> 'http://www.techdirt.com/',
+    'is_private'=>0,
+    'tags'=>'news,economics',
+    'feed_name' => 'Techdirt.'));
 }
 /*
 function orbital_uninstall_db()
