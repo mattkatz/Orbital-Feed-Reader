@@ -87,7 +87,6 @@ function orbital_install_db()
     feed_name text NOT NULL,
     icon_url varchar(250) ,
     site_url varchar(250) ,
-    unread_count integer NOT NULL,
     private bool NOT NULL DEFAULT false,
     UNIQUE KEY id (id)
   ) $charset_collate;";
