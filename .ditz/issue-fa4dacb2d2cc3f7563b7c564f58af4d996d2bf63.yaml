@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Removing one tag from a feed removes it from every feed.
+desc: it should be isolated to that feed
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-03 23:24:14.481127 Z
+references: []
+
+id: fa4dacb2d2cc3f7563b7c564f58af4d996d2bf63
+log_events: 
+- - 2014-01-03 23:24:15.692176 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
