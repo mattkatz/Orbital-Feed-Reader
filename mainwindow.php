@@ -129,7 +129,14 @@
           <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
         </label>
         <label>Tags:
+          <div class="tagchecklist">
+            <span class="atag" ng-repeat="tag in feedCandidate.tags | split"><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
+          </div>
           <input id='taglabels' type='text' ng-model="feedCandidate.tags" placeholder="top,art,awesomeness" />
+          <input id='tagentry' type='text' placeholder="top,art,awesomeness" list="_taglist" />
+          <datalist id="_taglist">
+            <option value=""></option>
+          </datalist>
         </label>
         <label>
           <input type='checkbox' ng-model="feedCandidate.private" title="" />

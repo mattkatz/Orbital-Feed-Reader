@@ -51,7 +51,14 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], f
     };
     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
   }];
-});
+}).filter('split', function() {
+    return function(input, seperator) {
+      var out = [];
+      if(!input){return out;}
+      if(!seperator){ seperator=',';}
+      return String.split(input,seperator);
+    }
+  });
 
 mainModule.factory('feedService',   function($http){
   /*

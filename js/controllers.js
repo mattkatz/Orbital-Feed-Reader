@@ -490,6 +490,13 @@ function SubsCtrl($scope,$http,$log,feedService){
       }
     });
   }
+  /*
+   * Remove a tag from a feedCandidate
+   */
+  $scope.removeTag = function(tag){
+    console.log(tag);
+
+  }
 
   /*
    * save changes or additions in a feed back to storage
