@@ -52,11 +52,11 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], f
     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
   }];
 }).filter('split', function() {
-    return function(input, seperator) {
+    return function(input, sep) {
       var out = [];
       if(!input){return out;}
-      if(!seperator){ seperator=',';}
-      return String.split(input,seperator);
+      if(!sep){ sep=',';}
+      return _.compact(String.split(input,sep));
     }
   });
 

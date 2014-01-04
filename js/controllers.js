@@ -418,7 +418,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
  * Give it a candidate and we'll hide the rest and let you edit this
  * 
  */
-function SubsCtrl($scope,$http,$log,feedService){
+function SubsCtrl($scope,$http,$log,feedService ){
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
   $scope.possibleFeeds = null;
@@ -494,8 +494,8 @@ function SubsCtrl($scope,$http,$log,feedService){
    * Remove a tag from a feedCandidate
    */
   $scope.removeTag = function(tag){
-    console.log(tag);
-
+    tags = String.split($scope.feedCandidate.tags,',' );
+    $scope.feedCandidate.tags = _.reject(tags,function(item){return item==tag});
   }
 
   /*
