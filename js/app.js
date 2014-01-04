@@ -74,6 +74,8 @@ mainModule.factory('feedService',   function($http){
   var _feeds = [];
   // feeds organized by tags
   var _tags = {};
+  // a list of all tags for this user
+  var _allTags = [];
   //is this service doing work?
   var _isLoading = false;
   var _sortOrder = "-1";
@@ -102,6 +104,9 @@ mainModule.factory('feedService',   function($http){
       if(_tags.length == 0 && ! _isLoading ){ _refresh();}
       return _tags; 
     },
+    allTags: function(){
+      return _allTags;
+    },
 
 
     // get the list of feeds from backend, inject a "fresh" feed.
@@ -113,10 +118,10 @@ mainModule.factory('feedService',   function($http){
         _feeds= data;
 
         //Now lets get a list of all the unique tags in those feeds
-        var taga = _.unique(_.pluck(_feeds, 'tags').join().split(","));
+        _allTags= _.unique(_.pluck(_feeds, 'tags').join().split(","));
 
         //For each tag, lets build up a list of the feeds that have that tag
-        _.each(taga, function(tag){
+        _.each(_allTags, function(tag){
           _tags[tag] = _.filter(_feeds,function(feed){
                           return _.contains(feed.tags.split(","),tag);
                         });

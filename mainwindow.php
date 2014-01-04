@@ -135,7 +135,7 @@
           <input id='taglabels' type='text' ng-model="feedCandidate.tags" placeholder="top,art,awesomeness" />
           <input id='tagentry' type='text' placeholder="top,art,awesomeness" list="_taglist" />
           <datalist id="_taglist">
-            <option value=""></option>
+            <option ng-repeat="tag in availableTags" >{{tag}}</option>
           </datalist>
         </label>
         <label>

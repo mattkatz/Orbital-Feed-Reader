@@ -497,7 +497,10 @@ function SubsCtrl($scope,$http,$log,feedService ){
     tags = String.split($scope.feedCandidate.tags,',' );
     $scope.feedCandidate.tags = _.reject(tags,function(item){return item==tag});
   }
-
+  $scope.availableTags = [];
+  $scope.$watch(feedService.allTags,function(newValue){
+    $scope.availableTags = newValue});
+  
   /*
    * save changes or additions in a feed back to storage
    */
