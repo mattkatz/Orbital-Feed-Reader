@@ -231,6 +231,7 @@
 
 }
 
+
 .horizontal-form label input{
   font-weight:normal;
 }
@@ -248,9 +249,17 @@
    padding: 5px;
    width: 80%;
 }
-.horizontal-form input[type='checkbox'] {
+.horizontal-form input[type='checkbox']{
    display: inline-block;
    width:auto;
+}
+.horizontal-form input[type='button'] {
+   display: inline;
+   width:auto;
+}
+
+#tagentry{
+  display:inline;
 }
 .heading {
   font-size: large;

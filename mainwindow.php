@@ -132,7 +132,9 @@
           <div class="tagchecklist">
             <span class="atag" ng-repeat="tag in feedCandidate.tags | split"><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
           </div>
-          <input id='tagentry' type='text' placeholder="top,art,awesomeness" />
+          <div>
+            <input id='tagentry' type='text' placeholder="top,art,awesomeness" ng-model="newTags" /><input type='button' class="button tagadd" value="Add" ng-click="addTags()">
+          </div>
         </label>
         <label>
           <input type='checkbox' ng-model="feedCandidate.private" title="" />
