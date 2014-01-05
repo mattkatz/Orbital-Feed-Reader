@@ -217,12 +217,12 @@ class OrbitalFeeds {
 
   /* OrbitalFeeds::getTags
    *
-   * Method to list all feeds by tag
+   * Method to list all feeds by tag or search by fragment
    * 
    * We list each tag that the user has and then union
    * all of the feeds which aren't linked by a tag
    */
-  static function getTags(){
+  static function getTags($tag_fragment){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
@@ -235,9 +235,10 @@ class OrbitalFeeds {
       INNER JOIN $user_feed_tags uft ON uft.tag_id = tag.id
       INNER JOIN $user_feeds uf ON uf.id = tag.id
       WHERE uf.owner = $current_user->ID
+      AND tag.name LIKE (%s)
       GROUP BY tag.name
         ";
-    $myrows = $wpdb->get_col($sql, 0 );
+    $myrows = $wpdb->get_col($wpdb->prepare($sql,'%'.like_escape($tag_fragment ).'%'), 0 );
     return $myrows;
     
   }
@@ -838,7 +839,10 @@ function orbital_list_feeds(){
 add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
 
 function orbital_list_tags(){
-  echo json_encode(OrbitalFeeds::getTags());
+  $tag_fragment = filter_input(INPUT_GET, 'q', FILTER_SANITIZE_STRING);
+  $rows = OrbitalFeeds::getTags($tag_fragment);
+  echo join($rows,"\n");
+  //echo json_encode();
   exit;
 }
 add_action('wp_ajax_orbital_get_tags','orbital_list_tags');

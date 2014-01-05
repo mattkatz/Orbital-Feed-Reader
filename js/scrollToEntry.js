@@ -18,6 +18,7 @@ function scrollToEntry(currentItem, bottom){
 }
 //Set everything up after page load
 jQuery(document).ready(function($){
+  jQuery('#tagentry').suggest(opts.ajaxurl + '?action=orbital_get_tags',{ delay: 500, minchars: 2, multiple: true, multipleSep: ', ' });
   function setContentHeight(id,height){
     $(id).css({'height':(($(window).height())-height)+'px'});
   }

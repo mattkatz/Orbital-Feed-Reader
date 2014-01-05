@@ -149,6 +149,7 @@ function orbital_enqueue_scripts()
   wp_enqueue_script('angular_app_script');
   wp_enqueue_script('angular_controllers_script');
   wp_enqueue_script('scrollToEntry');
+  wp_enqueue_script('suggest');
 
   wp_localize_script( 'angular_controllers_script', 'opts', array( 
     'ajaxurl' => admin_url( 'admin-ajax.php' ) ,
