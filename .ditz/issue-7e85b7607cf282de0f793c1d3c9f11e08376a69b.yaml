@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix parseint on chrome
+desc: |-
+  for some reason chrome thinks Number doesn't have a parseint.
+  screws up tag count on chrome
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-01-06 13:27:58.781455 Z
+references: []
+
+id: 7e85b7607cf282de0f793c1d3c9f11e08376a69b
+log_events: 
+- - 2014-01-06 13:27:59.640800 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-01-06 13:33:25.162513 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
