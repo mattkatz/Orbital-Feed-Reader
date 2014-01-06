@@ -133,7 +133,7 @@
             <span class="atag" ng-repeat="tag in feedCandidate.tags | split"><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
           </div>
           <div>
-            <input id='tagentry' type='text' placeholder="top,art,awesomeness" ng-model="newTags" /><input type='button' class="button tagadd" value="Add" ng-click="addTags()">
+            <input id='tagentry' type='text' placeholder="top,art,awesomeness" ng-model="feedCandidate.tags" /><input type='button' class="button tagadd" value="Add" ng-click="addTags()">
           </div>
         </label>
         <label>

@@ -424,6 +424,7 @@ function SubsCtrl($scope,$http,$log,feedService ){
   $scope.possibleFeeds = null;
   $scope.urlCandidate = '';
   $scope.feedCandidate = null;
+  $scope.newTags = '';
   //$scope.opmlFile=null;
   //$scope.fileSize = null;
   $scope.toggle = function(){
@@ -438,6 +439,7 @@ function SubsCtrl($scope,$http,$log,feedService ){
     $scope.feedsCount = '';
     $scope.doneFeeds = '';
     $scope.isLoading = false;
+    $scope.newTags = '';
     //TODO clear any OPML elements
   }
 
@@ -497,9 +499,21 @@ function SubsCtrl($scope,$http,$log,feedService ){
     tags = String.split($scope.feedCandidate.tags,',' );
     $scope.feedCandidate.tags = _.reject(tags,function(item){return item==tag});
   }
+  /*
+   * Add tags from the new tags into our feeds real tag list
+   * do some minimal validation and then copy in the string.
+   */
+  $scope.addTags = function(){
+    $log.info($scope.newTags);
+    
+  }
   $scope.availableTags = [];
   $scope.$watch(feedService.allTags,function(newValue){
     $scope.availableTags = newValue});
+  /*
+   * We are using wp's tags scripts, but we need them to be done in an angularJS context:
+   */
+  jQuery('#tagentry').suggest(opts.ajaxurl + '?action=orbital_get_tags',{ delay: 500, minchars: 2, multiple: true, multipleSep: ', ', onSelect:function(){$scope.$apply()} });
   
   /*
    * save changes or additions in a feed back to storage
