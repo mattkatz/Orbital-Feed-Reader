@@ -217,91 +217,28 @@ class OrbitalFeeds {
 
   /* OrbitalFeeds::getTags
    *
-   * Method to list all feeds by tag
+   * Method to list all feeds by tag or search by fragment
    * 
    * We list each tag that the user has and then union
    * all of the feeds which aren't linked by a tag
    */
-  static function getTags(){
+  static function getTags($tag_fragment){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
-    $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
-    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
     $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $sql = "
-select 
-  COALESCE(tags.name,'Untagged') as tag, 
-  COALESCE(tags.id, null) as tag_id,
-  u_feeds.id as feed_id,
-  COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
-  feeds.feed_url, 
-  COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
-  COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
-  feeds.last_updated,
-  feeds.last_error,
-  u_feeds.private,
-  sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
-from $user_feed_tags as uft
-  inner join $tags as tags
-    on tags.id = uft.tag_id 
-  inner join $user_feeds  as u_feeds
-    on uft.user_feed_id = u_feeds.id
-  inner join  $feeds  as feeds
-    on u_feeds.feed_id = feeds.id 
-  left outer join $user_entries as ue
-    on ue.feed_id=feeds.id
-where 
-  u_feeds.owner = $current_user->ID
-group by 
-  u_feeds.id,
-  feeds.feed_url,
-  u_feeds.feed_name,
-  u_feeds.icon_url,
-  u_feeds.site_url,
-  feeds.last_updated,
-  feeds.last_error,
-  u_feeds.private,
-  tags.name
-
-  UNION
-select 
-  'Untagged' as tag, 
-  null as tag_id,
-  u_feeds.id as feed_id,
-  COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
-  feeds.feed_url, 
-  COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
-  COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
-  feeds.last_updated,
-  feeds.last_error,
-  u_feeds.private,
-  sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
-
-from $user_feeds as u_feeds
-left outer join $user_feed_tags as uft
-  on uft.user_feed_id = u_feeds.id
-inner join $feeds as feeds
-  on u_feeds.feed_id = feeds.id 
-left outer join $user_entries as ue
-  on ue.feed_id=feeds.id
-where 
-        u_feeds.owner = $current_user->ID
-        and isnull(uft.user_feed_id)
-group by 
-        u_feeds.id,
-        feeds.feed_url,
-        u_feeds.feed_name,
-        u_feeds.icon_url,
-        u_feeds.site_url,
-        feeds.last_updated,
-        feeds.last_error,
-        u_feeds.private
-
+      SELECT tag.name 
+      FROM $tags tag
+      INNER JOIN $user_feed_tags uft ON uft.tag_id = tag.id
+      INNER JOIN $user_feeds uf ON uf.id = tag.id
+      WHERE uf.owner = $current_user->ID
+      AND tag.name LIKE (%s)
+      GROUP BY tag.name
         ";
-    $myrows = $wpdb->get_results($sql );
+    $myrows = $wpdb->get_col($wpdb->prepare($sql,'%'.like_escape($tag_fragment ).'%'), 0 );
     return $myrows;
     
   }
@@ -901,11 +838,14 @@ function orbital_list_feeds(){
 }
 add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
 
-function orbital_list_feeds_by_tag(){
-  echo json_encode(OrbitalFeeds::getTags());
+function orbital_list_tags(){
+  $tag_fragment = filter_input(INPUT_GET, 'q', FILTER_SANITIZE_STRING);
+  $rows = OrbitalFeeds::getTags($tag_fragment);
+  echo join($rows,"\n");
+  //echo json_encode();
   exit;
 }
-add_action('wp_ajax_orbital_get_feed_tags','orbital_list_feeds_by_tag');
+add_action('wp_ajax_orbital_get_tags','orbital_list_tags');
 
 //remove feed 
 function orbital_unsubscribe_feed(){

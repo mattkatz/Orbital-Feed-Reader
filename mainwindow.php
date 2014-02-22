@@ -129,7 +129,13 @@
           <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
         </label>
         <label>Tags:
-          <input id='taglabels' type='text' ng-model="feedCandidate.tags" placeholder="top,art,awesomeness" />
+          <div class="tagchecklist">
+            <span class="atag" ng-repeat="tag in feedCandidate.tags | split:', ' "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
+          </div>
+          <div>
+            <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>
+            <input type='button' class="button tagadd" value="Add" ng-click="addTags()"/>
+          </div>
         </label>
         <label>
           <input type='checkbox' ng-model="feedCandidate.private" title="" />
