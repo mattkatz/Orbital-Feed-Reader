@@ -1,4 +1,4 @@
-var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], function($httpProvider)
+var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','autocomplete-directive'], function($httpProvider)
 {
   // Use x-www-form-urlencoded Content-Type
   // Angular's POST isn't natively undestood by PHP

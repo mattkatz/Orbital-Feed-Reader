@@ -513,7 +513,7 @@ function SubsCtrl($scope,$http,$log,feedService ){
   /*
    * We are using wp's tags scripts, but we need them to be done in an angularJS context:
    */
-  jQuery('#tagentry').suggest(opts.ajaxurl + '?action=orbital_get_tags',{ delay: 500, minchars: 2, multiple: true, multipleSep: ', ', onSelect:function(){$scope.$apply()} });
+ // jQuery('#tagentry').suggest(opts.ajaxurl + '?action=orbital_get_tags',{ delay: 500, minchars: 2, multiple: true, multipleSep: ', ', onSelect:function(){$scope.$apply()} });
   
   /*
    * save changes or additions in a feed back to storage

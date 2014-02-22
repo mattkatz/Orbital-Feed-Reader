@@ -112,6 +112,7 @@ function orbital_admin_init(){
   wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
   wp_register_script( 'angular_sanitize', plugins_url('/js/angular-sanitize.js', __FILE__) ,array('angular_script',));
   wp_register_script( 'ng_infinite_scroll',plugins_url('/js/ng-infinite-scroll.min.js', __FILE__) ,array('angular_script',));
+  wp_register_script( 'autocomplete_directive',plugins_url('/js/autocomplete-directive.js', __FILE__) ,array('angular_script',));
 
   wp_register_script( 'angular_app_script', plugins_url('/js/app.js', __FILE__) ,array('jquery','angular_script'));
   wp_register_script( 'angular_controllers_script', plugins_url('/js/controllers.js', __FILE__) ,array('jquery','underscore','angular_app_script','angular_script','ng_infinite_scroll',));
@@ -149,7 +150,8 @@ function orbital_enqueue_scripts()
   wp_enqueue_script('angular_app_script');
   wp_enqueue_script('angular_controllers_script');
   wp_enqueue_script('scrollToEntry');
-  wp_enqueue_script('suggest');
+  wp_enqueue_script('autocomplete_directive');
+  //wp_enqueue_script('suggest');
 
   wp_localize_script( 'angular_controllers_script', 'opts', array( 
     'ajaxurl' => admin_url( 'admin-ajax.php' ) ,

@@ -1,18 +1,4 @@
-  
-#orbital-feedlist{
-  overflow-y:auto;
-
-  border-left: 1px solid #dddddd;
-  padding-left: 10px;
-  padding-right: 0px;
-  background-color: #ECECEC;
-  border-color: #CCCCCC;
-  position: absolute;
-  right: 0;
-  /*min-width:100px;
-  max-width:20%;*/
-  width:20%
-}
+/* entries*/
 .no-feed-displayed{
   font-weight: lighter;
   font-size: large;
@@ -90,8 +76,23 @@
   border-bottom: 1px dotted;
 }
 
-/* The Feed Head
+/* The Feed List
  */
+
+#orbital-feedlist{
+  overflow-y:auto;
+
+  border-left: 1px solid #dddddd;
+  padding-left: 10px;
+  padding-right: 0px;
+  background-color: #ECECEC;
+  border-color: #CCCCCC;
+  position: absolute;
+  right: 0;
+  /*min-width:100px;
+  max-width:20%;*/
+  width:20%
+}
 #orbital-feedlist {
   height:100%;
 }
@@ -186,6 +187,7 @@
   overflow-y:auto;
   top: 20px;
 }
+/* Command Bar */
 #commandbar {
   background: #dddddd;
   display: inline-block; 
@@ -209,7 +211,6 @@
   right: 10px;
   top: 10px;
 }
-
 #commandbar li:hover,
 .feed:hover,
 .tag div:hover,
@@ -231,6 +232,7 @@
 
 }
 
+/*Subcriptions */
 
 .horizontal-form label input{
   font-weight:normal;
@@ -256,6 +258,23 @@
 .horizontal-form input[type='button'] {
    display: inline;
    width:auto;
+}
+.tagselected {
+  background:#F0F0B8;
+}
+.autocomplete > .suggestions {
+  position: relative;
+  bottom: 2px;
+  left: 2px;
+  background: white;
+  border: 1px solid #808080;
+  list-style: none outside none;
+  margin: 0;
+  padding: 2px;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  z-index:1000;
 }
 
 #tagentry{
