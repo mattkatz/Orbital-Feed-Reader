@@ -58,6 +58,7 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','au
       if(!sep){ sep=',';}
       return _.chain(input.split(sep))
               .map(function(item){return item.trim()})
+              .unique()
               .compact()
               .value();
 
