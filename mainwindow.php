@@ -130,7 +130,7 @@
         </label>
         <label>Tags:
           <div class="tagchecklist">
-            <span class="atag" ng-repeat="tag in feedCandidate.tags | split:', ' "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
+            <span class="atag" ng-repeat="tag in feedCandidate.tags | split "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
           </div>
           <div>
             <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>

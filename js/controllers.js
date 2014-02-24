@@ -496,8 +496,8 @@ function SubsCtrl($scope,$http,$log,feedService ){
    * Remove a tag from a feedCandidate
    */
   $scope.removeTag = function(tag){
-    tags = String.split($scope.feedCandidate.tags,',' );
-    $scope.feedCandidate.tags = _.reject(tags,function(item){return item==tag});
+    currenttags = String.split($scope.feedCandidate.tags,',' );
+    $scope.feedCandidate.tags = _.reject(currenttags,function(item){return item==tag}).join(',');
   }
   /*
    * Add tags from the new tags into our feeds real tag list
