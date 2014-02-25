@@ -565,7 +565,7 @@ function SubsCtrl($scope,$http,$log,feedService ){
 
     var file = document.getElementById('import-opml').files[0];
     $scope.opmlFile = file;
-    console.log(document.getElementById('import-opml').files);
+    //console.log(document.getElementById('import-opml').files);
     return file;
   }
 
