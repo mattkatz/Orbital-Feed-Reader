@@ -24,15 +24,27 @@ angular.module('autocomplete-directive',[])
         //var q = scope.inputValue.trim();
         var q = scope.ngModel.trim();
         if(scope.multiple){
-          var multipleSepPos = q.lastIndexOf(scope.multipleSeparator);
-          if(multipleSepPos != -1){
-            q = scope.ngModel.substr(multipleSepPos + scope.multipleSeparator.length).trim();
-          }
+          sep = scope.multipleSeparator;
+          //Is there anything after our sep
+          //If there isn't, we should check a trimmed version
+          //set q to be the first thing that isn't falsy. 
+          q = scope.getQueryEnd(q,sep)|| scope.getQueryEnd(q,sep.trim())|| q;
         }
         if(q.length >= scope.minLength){
           scope.suggestions = scope.getSuggestions(q,scope.suggestionSource);
         }
       };
+      //returns last thing after a sep
+      scope.getQueryEnd = function(q,sep){
+        sepPos = q.lastIndexOf(sep);
+        if(-1 == sepPos)return false;//exit quickly
+        return q.substr(sepPos + sep.length).trim();
+      }
+      scope.getQueryBegin = function(q, sep){
+        sepPos = q.lastIndexOf(sep);
+        if(-1 == sepPos)return false;//exit quickly
+        return q.substr(0,sepPos + sep.length).trim();
+      }
       scope.currentResult = null;
       scope.suggestions = [];
       scope.$watch("value", function(newValue,oldValue){
@@ -49,11 +61,9 @@ angular.module('autocomplete-directive',[])
         scope.currentResult = scope.getCurrentResult();
         if(scope.currentResult){
           if(scope.multiple){
-            if(scope.ngModel.indexOf(scope.multipleSeparator) != -1){
-              currentVal = scope.ngModel.substr(0,(scope.ngModel.lastIndexOf(scope.multipleSeparator) + scope.multipleSeparator.length));
-            }else{
-              currentVal = "";
-            }
+            text = scope.ngModel.trim();
+            sep = scope.multipleSeparator;
+            currentVal = scope.getQueryBegin(text,sep) || scope.getQueryBegin(text, sep.trim())||"";
             scope.ngModel = currentVal + scope.currentResult + scope.multipleSeparator;
             //TODO focus the input box
           } else {
@@ -122,17 +132,6 @@ angular.module('autocomplete-directive',[])
             break;
         }
       };
-      if (!Array.prototype.forEach) {
-          Array.prototype.forEach = function (fn, scope) {
-              'use strict';
-              var i, len;
-              for (i = 0, len = this.length; i < len; ++i) {
-                  if (i in this) {
-                      fn.call(scope, this[i], i, this);
-                  }
-              }
-          };
-      }
       scope.getSuggestions = function(filterVal, candidates){
         winners = [];
         candidates.forEach(function(candidate){
