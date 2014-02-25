@@ -51,7 +51,7 @@
       <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
       <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="saveTagView(true)">#</a>
       <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="saveTagView(false)">≣</a>
-      <div ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
+      <div class="clickable" ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
         You are in edit mode, click here to exit.
       </div>
     </div>
