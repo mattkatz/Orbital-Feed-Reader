@@ -497,14 +497,11 @@ function SubsCtrl($scope,$http,$log,feedService ){
    * Remove a tag from a feedCandidate
    */
   $scope.removeTag = function(tag){
-    console.log("removing " +tag);
     currenttags = _.chain(String.split($scope.feedCandidate.tags,',' ))
                    .map(function(item){return item.trim();})
                    .unique()
                    .compact()
                    .value();
-    console.log("from :");
-    console.log(currenttags);
     $scope.feedCandidate.tags = _.reject(currenttags,function(item){return item==tag}).join(',');
   }
   /*
