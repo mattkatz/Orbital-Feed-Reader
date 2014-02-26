@@ -171,10 +171,11 @@ class OrbitalFeeds {
     //_log($tag_ids);
     //do nothing if we don't have any ids to process
     if($tag_ids){
-      $wpdb->query("
+      $wpdb->query($wpdb->prepare("
         DELETE 
         FROM $user_feed_tags
-        WHERE tag_id IN ( $tag_ids )");
+        WHERE tag_id IN ( $tag_ids )
+        AND user_feed_id = %d ",$feed['feed_id']));
     }
   }
 
