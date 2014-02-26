@@ -134,7 +134,6 @@
           </div>
           <div>
             <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>
-            <input type='button' class="button tagadd" value="Add" ng-click="addTags()"/>
           </div>
         </label>
         <label>

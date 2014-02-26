@@ -504,14 +504,6 @@ function SubsCtrl($scope,$http,$log,feedService ){
                    .value();
     $scope.feedCandidate.tags = _.reject(currenttags,function(item){return item==tag}).join(',');
   }
-  /*
-   * Add tags from the new tags into our feeds real tag list
-   * do some minimal validation and then copy in the string.
-   */
-  $scope.addTags = function(){
-    $log.info($scope.newTags);
-    
-  }
   $scope.availableTags = [];
   $scope.$watch(feedService.allTags,function(newValue){
     $scope.availableTags = newValue});
