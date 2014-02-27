@@ -296,7 +296,7 @@ function orbital_install_data(){
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
-    <p>So the real benefit of the Orbital Feed Reader is that it should encourage you to write more! All this stuff in your feed reader is really just inspiration juice. So here's how we do that. Highlight the first sentence on this post and click the PressThis! link below. You'll see attribution and citation in a ready to edit Blog Post!</p>
+    <p>So the real benefit of the Orbital Feed Reader is that it should encourage you to write more! All this stuff in your feed reader is really just inspiration juice. So here's how we do that. Highlight the first sentence on this post and click the BlogThis! link below. You'll see attribution and citation in a ready to edit Blog Post!</p>
     ",
     'author' => 'Matt Katz'
   ));
@@ -323,7 +323,7 @@ function orbital_install_data(){
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/getting-started.html',//TODO 
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"
-    <p>Try adding some of your favorite sites to get started. When you find something you like, click PressThis!</p>
+    <p>Try adding some of your favorite sites to get started. When you find something you like, click BlogThis!</p>
     ",
     'author' => 'Matt Katz'
   ));
