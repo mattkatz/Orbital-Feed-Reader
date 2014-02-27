@@ -3,7 +3,7 @@ title: Make sure opml categories get imported as tags
 desc: Create a tag for each ompl category we find, then add the feed to it.
 type: :feature
 component: Orbital
-release: 0.1.6
+release: 0.1.7
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -20,3 +20,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.6 from unassigned
   - has to do with tagging, it should be in the tags release
+- - 2014-02-27 00:30:58.358304 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.7 from 0.1.6
+  - lets postpone this

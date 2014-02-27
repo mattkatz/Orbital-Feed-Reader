@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-16 00:52:47.949906 Z
 references: []
 
@@ -19,4 +19,8 @@ log_events:
 - - 2013-12-11 12:09:55.546389 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.6 from unassigned
+  - ""
+- - 2014-02-27 00:31:44.521776 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""
