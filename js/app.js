@@ -159,7 +159,7 @@ mainModule.factory('feedService',   function($http){
 
       $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
-        _sortOrder = data['sort_order'];
+        _sortOrder = data['sort_order'] || _sortOrder;
         _showByTags = data['show_by_tags'];
       });
     },
