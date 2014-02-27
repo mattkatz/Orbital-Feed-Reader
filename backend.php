@@ -744,7 +744,7 @@ class OrbitalEntries{
     $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
     $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $user_settings = (array) get_user_option( 'orbital_settings' );
-    $sort_order = $user_settings['sort_order'];
+    $sort_order = $user_settings['sort_order'] || -1;
     $sort = "ORDER BY entries.published ";
     if("-1" == $sort_order ){
       $sort = $sort . "DESC";

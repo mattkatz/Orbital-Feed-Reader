@@ -84,7 +84,7 @@ mainModule.factory('feedService',   function($http){
   var _allTags = [];
   //is this service doing work?
   var _isLoading = false;
-  var _sortOrder = "1";
+  var _sortOrder = "-1";
   var _showByTags = false;
   var _sortOptions = [
     { sortOrder: "-1",
