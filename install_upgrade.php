@@ -311,7 +311,7 @@ function orbital_install_data(){
     <p>When you're reading feeds, you want to read related stuff together. Rather than reading either ALL of your feeds as one river or just a single feed, you want to read a bundle of similar sites.</p>
     <p>You can do that with #tags in Orbital. Your sample feeds are already organized in some sample tags right now.</p>
     <p>At the top of the feed list, click on # or ≣ to toggle between viewing your feeds by #tag or in a ≣list. Try it now.</p>
-    <p>When you save a new feed you can give it tags to organize it with others... Just type your tags seperated by commas:  'gadgets,boredom,timewasting'</p>
+    <p>When you save a new feed you can give it tags to organize it with others... Just type your tags separated by commas:  'gadgets,boredom,timewasting'</p>
     ",
     'author' => 'Matt Katz'
   ));
