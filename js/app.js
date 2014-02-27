@@ -84,7 +84,7 @@ mainModule.factory('feedService',   function($http){
   var _allTags = [];
   //is this service doing work?
   var _isLoading = false;
-  var _sortOrder = "-1";
+  var _sortOrder = "1";
   var _showByTags = false;
   var _sortOptions = [
     { sortOrder: "-1",
@@ -222,8 +222,8 @@ mainModule.factory('feedService',   function($http){
       $http.post(opts.ajaxurl, data)
       .success(function(response){
         //Store the settings 
-        _showByTags = response['show_by_tags'];
-        _sortOrder = response['sort_order'];
+        _showByTags = response['show_by_tags'] || _showByTags;
+        _sortOrder = response['sort_order']|| _sortOrder;
         if(callback){
           callback();
         }
