@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Upgrading causes orphaned feeds
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-02-27 04:18:05.961350 Z
+references: []
+
+id: 672a1a0a38fe4008cbe32d0c0648974e08d3c6ee
+log_events: 
+- - 2014-02-27 04:18:06.798112 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
