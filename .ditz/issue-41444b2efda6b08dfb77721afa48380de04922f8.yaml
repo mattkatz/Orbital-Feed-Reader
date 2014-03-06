@@ -1,5 +1,5 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Tag/Categorize feeds
+title: add tag autocompletion for feed entry/edit
 desc: ""
 type: :feature
 component: Orbital
@@ -7,20 +7,16 @@ release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2011-12-16 00:52:47.949906 Z
+creation_time: 2013-12-05 02:41:23.903330 Z
 references: []
 
-id: 547083e0c48b511b0ea11b2736cc477a897a44c3
+id: 41444b2efda6b08dfb77721afa48380de04922f8
 log_events: 
-- - 2011-12-16 00:52:47.950363 Z
+- - 2013-12-05 02:41:25.018111 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2013-12-11 12:09:55.546389 Z
-  - Matt Katz <ditz@morelightmorelight.com>
-  - assigned to release 0.1.6 from unassigned
-  - ""
-- - 2014-02-27 00:31:44.521776 Z
+- - 2014-02-25 19:10:16.698431 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""

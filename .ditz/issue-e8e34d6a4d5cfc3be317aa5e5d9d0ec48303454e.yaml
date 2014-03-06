@@ -7,8 +7,8 @@ type: :bugfix
 component: Orbital
 release: 
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2012-05-09 17:15:45.343506 Z
 references: []
 
@@ -18,3 +18,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2014-01-02 05:41:24.929936 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - wordpress doesn't support anything but mysql at the moment.

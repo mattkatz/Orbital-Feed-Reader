@@ -1,26 +1,26 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Tag/Categorize feeds
-desc: ""
-type: :feature
+title: Removing one tag from a feed removes it from every feed.
+desc: it should be isolated to that feed
+type: :bugfix
 component: Orbital
 release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2011-12-16 00:52:47.949906 Z
+creation_time: 2014-01-03 23:24:14.481127 Z
 references: []
 
-id: 547083e0c48b511b0ea11b2736cc477a897a44c3
+id: fa4dacb2d2cc3f7563b7c564f58af4d996d2bf63
 log_events: 
-- - 2011-12-16 00:52:47.950363 Z
+- - 2014-01-03 23:24:15.692176 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2013-12-11 12:09:55.546389 Z
+- - 2014-02-25 22:29:25.610823 Z
   - Matt Katz <ditz@morelightmorelight.com>
-  - assigned to release 0.1.6 from unassigned
+  - changed status from unstarted to in_progress
   - ""
-- - 2014-02-27 00:31:44.521776 Z
+- - 2014-02-26 13:05:55.765299 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""

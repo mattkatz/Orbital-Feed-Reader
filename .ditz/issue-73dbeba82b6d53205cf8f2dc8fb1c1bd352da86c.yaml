@@ -1,26 +1,22 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Tag/Categorize feeds
-desc: ""
-type: :feature
+title: Show Read items doesn't untoggle
+desc: toggle on works, but toggle again doesn't reset
+type: :bugfix
 component: Orbital
 release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2011-12-16 00:52:47.949906 Z
+creation_time: 2013-12-01 21:05:20.137315 Z
 references: []
 
-id: 547083e0c48b511b0ea11b2736cc477a897a44c3
+id: 73dbeba82b6d53205cf8f2dc8fb1c1bd352da86c
 log_events: 
-- - 2011-12-16 00:52:47.950363 Z
+- - 2013-12-01 21:05:34.681496 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2013-12-11 12:09:55.546389 Z
-  - Matt Katz <ditz@morelightmorelight.com>
-  - assigned to release 0.1.6 from unassigned
-  - ""
-- - 2014-02-27 00:31:44.521776 Z
+- - 2014-01-02 19:02:48.588506 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""

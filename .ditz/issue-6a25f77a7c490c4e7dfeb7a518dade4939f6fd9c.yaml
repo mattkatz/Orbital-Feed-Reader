@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Multi-user support
+desc: |-
+  Add entry shouldn't involve the user_entries 
+  entries get should get based on user_feeds, not user_entries.
+type: :feature
+component: Orbital
+release: 0.1.7
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 05:39:11.767543 Z
+references: []
+
+id: 6a25f77a7c490c4e7dfeb7a518dade4939f6fd9c
+log_events: 
+- - 2014-01-02 05:39:13.078779 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-01-02 05:39:53.985266 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.7 from 0.2 Wordpress integration
+  - ""

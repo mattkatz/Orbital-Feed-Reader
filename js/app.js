@@ -1,4 +1,4 @@
-var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], function($httpProvider)
+var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','autocomplete-directive'], function($httpProvider)
 {
   // Use x-www-form-urlencoded Content-Type
   // Angular's POST isn't natively undestood by PHP
@@ -51,7 +51,20 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll'], f
     };
     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
   }];
-});
+}).filter('split', function() {
+    return function(input, sep) {
+      var out = [];
+      if(!input){return out;}
+      if(!sep){ sep=',';}
+      return _.chain(input.split(sep))
+              .map(function(item){return item.trim()})
+              .unique()
+              .compact()
+              .value();
+
+      //return _.compact(String.split(input,sep));
+    }
+  });
 
 mainModule.factory('feedService',   function($http){
   /*
@@ -65,9 +78,14 @@ mainModule.factory('feedService',   function($http){
   var _selectedFeed = null;
   // the list of feeds;
   var _feeds = [];
+  // feeds organized by tags
+  var _tags = {};
+  // a list of all tags for this user
+  var _allTags = [];
   //is this service doing work?
   var _isLoading = false;
   var _sortOrder = "-1";
+  var _showByTags = false;
   var _sortOptions = [
     { sortOrder: "-1",
       sortName: "Newest First",
@@ -77,44 +95,72 @@ mainModule.factory('feedService',   function($http){
     },
   ];
 
-  return {
+  var feedservice =  {
     feeds : function(){
+      if(  _feeds.length == 0 && ! _isLoading){
+        feedservice.refresh();
+      }
       return _feeds;
     },
     isLoading : function(){
       return _isLoading;
     },
 
+    tags: function(){
+      if(_tags.length == 0 && ! _isLoading ){ _refresh();}
+      return _tags; 
+    },
+    allTags: function(){
+      return _allTags;
+    },
+
+
     // get the list of feeds from backend, inject a "fresh" feed.
-    refresh : function(callback){
-      console.log('refresh');
+    refresh : function refresh(callback){
       _isLoading = true;
-      /*
-        var fresh = {
-          feed_id:null, //TODO start using neg integers for special feed ids
-          feed_name:'All Feeds',
-          unread_count:'',//TODO put in actual unread count;
-        }
-      _feeds.unshift(fresh);
-      */
       $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
+        //Here is our simple feed list
         _feeds= data;
+
+        //Now lets get a list of all the unique tags in those feeds
+        //_allTags= _.unique(_.pluck(_feeds, 'tags').join().split(","));
+        console.log('1');
+        _allTags = _.pluck(_feeds,'tags').join().split(",");
+        _allTags = _.chain(_allTags)
+                    .unique()
+                    .compact()
+                    .value();
+
+        console.log('2');
+        //For each tag, lets build up a list of the feeds that have that tag
+        _.each(_allTags, function(tag){
+          _tags[tag] = _.filter(_feeds,function(feed){
+                          return _.contains(feed.tags.split(","),tag);
+                        });
+        })
+        console.log('3');
+        //Stick in our special All Feeds 
+        //We have to do this AFTER the tag building 
+        //because this has no tags and throws an exception
         var fresh = {
-          feed_id:null, //TODO start using neg integers for special feed ids
+          feed_id:-1, //TODO start using neg integers for special feed ids
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
         }
         _feeds.unshift(fresh);
+
         _isLoading = false;
+        //Should we do some extra work?
         if(callback){
           callback(_feeds);
         }
       });
+
       $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
-        console.log(data);
-        _sortOrder = data['sort_order'];
+        _sortOrder = data['sort_order'] || _sortOrder;
+        _showByTags = data['show_by_tags'];
       });
     },
     select : function(feed, showRead){
@@ -134,11 +180,12 @@ mainModule.factory('feedService',   function($http){
         feed_name: feed.feed_name,
         site_url: feed.site_url,
         is_private: feed.private,
+        tags: feed.tags,
       };
       $http.post(opts.ajaxurl,data)
       .success(function(response){
         if(successCallback){ successCallback(response, data);}
-        
+        feedservice.refresh();
       });
 
     },
@@ -154,6 +201,7 @@ mainModule.factory('feedService',   function($http){
       }
     },
     selectedFeed: function(){
+      if(! _selectedFeed) {_selectedFeed = _feeds[0];}
       return _selectedFeed;
     },
     sortOrder: function(){
@@ -162,32 +210,35 @@ mainModule.factory('feedService',   function($http){
     sortOptions: function(){
       return _sortOptions;
     },
-    saveSort: function(sortOrder, callback){
+    showByTags: function(){
+      return _showByTags;
+    },
+    saveSetting: function(setting, callback){
       var data = {
         action: 'orbital_set_user_settings',
-        orbital_settings: {
-          sort_order: sortOrder,
-        },
+        orbital_settings: setting ,
       };
       //console.log('And app thinks data is : ' + _sortOrder );
       $http.post(opts.ajaxurl, data)
       .success(function(response){
-        //TODO Store the settings somewhere?
-        console.log(response);
+        //Store the settings 
+        _showByTags = response['show_by_tags'] || _showByTags;
+        _sortOrder = response['sort_order']|| _sortOrder;
         if(callback){
           callback();
         }
       });
-
     },
-
-    changeSortOrder: function( sortOrder){
-
-      console.log(sortOrder);
-      //todo post the sort order to the settings.
-      
+    saveSort: function(sortOrder, callback){
+      feedservice.saveSetting({ sort_order: sortOrder },callback);
+    },
+    saveTagView: function(showTags, callback){
+      console.log('save tag view app ' + showTags);
+      feedservice.saveSetting({show_by_tags:showTags},callback);
+      //_showByTags = showTags;
     },
   };
+  return feedservice;
 
   
 });

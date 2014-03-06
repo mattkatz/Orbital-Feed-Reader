@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix read/unread toggling
+desc: |-
+  clicking should toggle.
+  but j and k should only mark read, not unread
+type: :bugfix
+component: Orbital
+release: 
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2014-01-02 05:44:33.028106 Z
+references: []
+
+id: 77bea76f7b8e70dcb5085eebd5dacadc9edd92c0
+log_events: 
+- - 2014-01-02 05:44:34.230483 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

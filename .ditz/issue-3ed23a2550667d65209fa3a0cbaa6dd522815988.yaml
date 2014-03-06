@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Up shouldn't unmark read
+desc: When you browse up, read things should stay read.
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: .
+status: :closed
+disposition: :fixed
+creation_time: 2014-03-04 13:14:01.058639 Z
+references: []
+
+id: 3ed23a2550667d65209fa3a0cbaa6dd522815988
+log_events: 
+- - 2014-03-04 13:14:02.433648 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-03-06 02:04:08.912706 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2014-03-06 02:04:53.143710 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

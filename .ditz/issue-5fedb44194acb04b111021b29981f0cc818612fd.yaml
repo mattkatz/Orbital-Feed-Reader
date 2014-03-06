@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Tagging when adding a feed fails.
+desc: doesn't show up in the list.
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2013-12-16 04:02:31.551050 Z
+references: []
+
+id: 5fedb44194acb04b111021b29981f0cc818612fd
+log_events: 
+- - 2013-12-16 04:02:32.793155 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-01-02 05:18:02.317495 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - we weren't passing the feed_id that we just generated.

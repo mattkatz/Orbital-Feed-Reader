@@ -3,6 +3,9 @@
 *.swm
 *.swn
 *.swp
+*.lnk
+*.real
+node_modules/**/*
 .ditz-config
 .DS_Store
 

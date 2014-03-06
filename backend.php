@@ -1,4 +1,8 @@
 <?php
+if ( !function_exists( 'add_action' ) ) {
+  echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
+  exit;
+}
 if(!function_exists('_log')){
   function _log( $message ) {
     if( WP_DEBUG === true ){
@@ -39,7 +43,7 @@ class OrbitalFeeds {
     global $current_user;
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
-    $resp = "";
+    $resp = new stdClass;
     $feed_id = '';
     if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
     /*
@@ -62,7 +66,7 @@ class OrbitalFeeds {
               SET feed_name = %s
               , site_url = %s
               , private = %d
-              WHERE feed_id = %d
+              WHERE id = %d
               AND owner = %d";
       $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
       $resp->feed_updated = $wpdb->query($sql);
@@ -77,6 +81,7 @@ class OrbitalFeeds {
             WHERE feed_url = %s';
       $sql = $wpdb->prepare($sql, $feed['feed_url']);
       $feed_id = $wpdb->get_var($sql);
+      //$feed->feed_id = $wpdb->get_var($sql);
       if (! $feed_id){//we will insert the feed id and then link
         //insert the feed and get the feed_id.
         $sql = 'INSERT INTO ' . $feeds.'
@@ -95,29 +100,153 @@ class OrbitalFeeds {
       }
       //Now let's link in the feed to user_feeds
       $sql = 'INSERT INTO ' .$user_feeds.'
-        (feed_id, feed_name, site_url,owner, private,unread_count)
+        (feed_id, feed_name, site_url,owner, private)
          VALUES
-         (%d,%s,%s,%d,%d,0)';
+         (%d,%s,%s,%d,%d)';
       $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
       $resp->user_feed_inserted = $wpdb->query($sql);
       if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
+        return resp;
+      }
+      else{
+        // we really want to show the USER_FEEDS.id, not the FEEDS.ID
+        $feed['feed_id'] = $wpdb->insert_id;
       }
     }
+
+    //Tag update here
+    //We should always expect a feed_id at this point.
+    OrbitalFeeds::saveFeedTags($feed);
 
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $current_user->ID;
-    $resp->feed_id = "".$feed_id;
+    $resp->feed_id = $feed['feed_id'];
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
     $resp->feed_name = $feed['feed_name'];
     $resp->is_private = $feed['is_private'];
-    $resp->unread_count ="0";
+    $resp->unread_count ="0";//TODO: A LIE. But it gets corrected quickly
     return $resp;
   }
+  /* OrbitalFeeds::saveFeedTags($feed);
+   *
+   * Method to save the tags for a feed
+   *
+   * We split the tags out into individual tags
+   * for each we find the tag.id and save a link.
+   * If there is no link, we save a new tag
+   *
+   * Finally we do some cleanup - check orphan tags
+   * and kill the orphans
+   */
+  static function saveFeedTags($feed){
+    global $wpdb;
+    global $tbl_prefix;
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
 
-  /* Method to list all feeds
+    $feedtags = preg_split("/[\s,]+/", $feed["tags"]);
+    foreach($feedtags as $tag){
+      OrbitalFeeds::saveFeedTag($feed["feed_id"],$tag);
+    }
+    //TODO - this looks like a security risk, should go through $wpdb->prepare
+    $tagsarray = '"' . implode('","', $feedtags) . '"';
+
+    $sql = $wpdb->prepare("
+      SELECT uft.tag_id,tags.name
+      FROM $user_feed_tags uft
+      INNER JOIN $tags tags
+        ON tags.id = uft.tag_id
+        AND uft.user_feed_id = %d
+      WHERE COALESCE(tags.name,'Untagged') NOT IN ($tagsarray )",$feed['feed_id']);
+    //_log($sql);
+
+    $tag_ids = $wpdb->get_col($sql, 0);
+
+    //_log($tag_ids);
+    //_log($wpdb->get_col($sql,1));
+    $tag_ids = implode(',',$tag_ids);
+    //_log($tag_ids);
+    //do nothing if we don't have any ids to process
+    if($tag_ids){
+      $wpdb->query($wpdb->prepare("
+        DELETE 
+        FROM $user_feed_tags
+        WHERE tag_id IN ( $tag_ids )
+        AND user_feed_id = %d ",$feed['feed_id']));
+    }
+  }
+
+  static function saveFeedTag($feed_id, $tag){
+    global $wpdb;
+    global $tbl_prefix;
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
+
+    //let's find the tag_id for this tag
+    $sql = " SELECT id
+      FROM $tags
+      WHERE name = %s";
+    $tag_id = $wpdb->get_var($wpdb->prepare($sql, $tag));
+    if($tag_id){
+      // save a link to this tag_id
+      OrbitalFeeds::linkTag($feed_id, $tag_id);
+    }else{
+      //TODO: save the tag to tags, then save a link 
+      $wpdb->insert( $tags, array('name'=>$tag));
+      OrbitalFeeds::linkTag($feed_id, $wpdb->insert_id);
+    }
+  }
+  static function linkTag ($feed_id, $tag_id){
+    global $wpdb;
+    global $tbl_prefix;
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $rows_affected = $wpdb->replace(
+      $user_feed_tags,
+      array(
+        'tag_id' =>$tag_id,
+        'user_feed_id' =>$feed_id
+      ),
+      array(
+        '%d',
+        '%d',
+      )
+    );
+  }
+
+
+  /* OrbitalFeeds::getTags
+   *
+   * Method to list all feeds by tag or search by fragment
+   * 
+   * We list each tag that the user has and then union
+   * all of the feeds which aren't linked by a tag
+   */
+  static function getTags($tag_fragment){
+    global $wpdb;
+    global $tbl_prefix;
+    global $current_user;
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
+    $sql = "
+      SELECT tag.name 
+      FROM $tags tag
+      INNER JOIN $user_feed_tags uft ON uft.tag_id = tag.id
+      INNER JOIN $user_feeds uf ON uf.id = tag.id
+      WHERE uf.owner = $current_user->ID
+      AND tag.name LIKE (%s)
+      GROUP BY tag.name
+        ";
+    $myrows = $wpdb->get_col($wpdb->prepare($sql,'%'.like_escape($tag_fragment ).'%'), 0 );
+    return $myrows;
+    
+  }
+
+  /* OrbitalFeeds::get
+   *
+   * Method to list all feeds
    *   - Just return all feeds from user_feeds
    */
   static function get(){
@@ -127,34 +256,39 @@ class OrbitalFeeds {
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds ";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
+    $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
-        select 
-        feeds.id as feed_id,
-        COALESCE(u_feeds.feed_name,feeds.feed_name ) as feed_name,
-        feeds.feed_url, 
-        COALESCE(u_feeds.icon_url, feeds.icon_url ) as icon_url,
-        COALESCE(u_feeds.site_url, feeds.site_url ) as site_url,
-        feeds.last_updated,
-        feeds.last_error,
-        u_feeds.private,
-        sum(if(coalesce(ue.isRead,1)=0,1,0)) AS unread_count
-        from ".$user_feeds." as u_feeds
-        inner join ".$feeds." as feeds
-        on u_feeds.feed_id = feeds.id
-        left outer join ".$user_entries." as ue
-        on ue.feed_id=feeds.id
-
-        and u_feeds.owner = ". $current_user->ID."
-        group by feeds.id,
-        feeds.feed_url,
-        feeds.feed_name,
-        feeds.icon_url,
-        feeds.site_url,
-        feeds.last_updated,
-        feeds.last_error,
-        u_feeds.private
-        
-
+        SELECT 
+          u_feeds.id AS feed_id,
+          COALESCE(u_feeds.feed_name,feeds.feed_name ) AS feed_name,
+          feeds.feed_url, 
+          COALESCE(u_feeds.icon_url, feeds.icon_url ) AS icon_url,
+          COALESCE(u_feeds.site_url, feeds.site_url ) AS site_url,
+          feeds.last_updated,
+          feeds.last_error,
+          u_feeds.private,
+          SUM(IF(COALESCE(ue.isRead,1)=0,1,0)) AS unread_count,
+          GROUP_CONCAT(DISTINCT COALESCE(tags.name,'Untagged')) as tags
+        FROM $user_feeds AS u_feeds
+        INNER JOIN $feeds AS feeds
+          ON u_feeds.feed_id = feeds.id
+          AND u_feeds.owner =  $current_user->ID.
+        LEFT OUTER JOIN $user_entries AS ue
+          ON ue.feed_id=feeds.id
+        LEFT OUTER JOIN $user_feed_tags uft
+          ON uft.user_feed_id = u_feeds.id
+        LEFT OUTER JOIN $tags tags
+          ON uft.tag_id = tags.id
+        GROUP BY 
+          feed_id,
+          feed_url,
+          feed_name,
+          icon_url,
+          site_url,
+          last_updated,
+          last_error,
+          private
         ";
         //sum( if ue.isRead then 0 else 1 end) as unread_count,
     // AND feeds.owner = " . $current_user->ID."
@@ -199,12 +333,21 @@ class OrbitalFeeds {
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
 
     $resp->user = $current_user->ID;
+    //$orig_feed_id
     //User feeds
+    //Let's get the underling feed_id now
+    $sql = "
+      SELECT feed_id
+      FROM $user_feeds
+      WHERE owner = $current_user->ID
+        AND id = %d";
+    $orig_feed_id = $wpdb->get_var($wpdb->prepare($sql,$feed_id));
+
     $sql = "
       DELETE 
       FROM $user_feeds 
       WHERE owner = $current_user->ID 
-      AND feed_id = %d";
+      AND id = %d";
     $sql = $wpdb->prepare($sql,$feed_id);
     if(false === $wpdb->query($sql)){
       $resp->uf_error = $wpdb->print_error();
@@ -227,14 +370,14 @@ class OrbitalFeeds {
       SELECT COUNT(*)
       FROM $user_feeds
       WHERE feed_id = %d";
-    $subscribers = $wpdb->get_var($wpdb->prepare($sql,$feed_id));
+    $subscribers = $wpdb->get_var($wpdb->prepare($sql,$orig_feed_id));
 
     if(0<= $subscribers){
       $sql = "
         DELETE
         FROM $entries
         WHERE feed_id = %d";
-      $sql = $wpdb->prepare($sql,$feed_id);
+      $sql = $wpdb->prepare($sql,$orig_feed_id);
       if(false === $wpdb->query($sql)){
         $resp->entries_error = $wpdb->print_error();
       }
@@ -245,7 +388,7 @@ class OrbitalFeeds {
         DELETE 
         FROM $feeds
         WHERE id = %d;";
-      $sql = $wpdb->prepare($sql,$feed_id);
+      $sql = $wpdb->prepare($sql,$orig_feed_id);
       if(false === $wpdb->query($sql)){
         $resp->feeds_error = $wpdb->print_error();
       }
@@ -305,7 +448,36 @@ class OrbitalFeeds {
     return $feedrow;
   }
 
+  static function get_orig_feed_id($user_feed_id){
+    global $wpdb;
+    global $tbl_prefix;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    $u_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
+    $feed_id = null;
+    $feed_id = $wpdb->get_var($wpdb->prepare("
+      SELECT feed_id
+      FROM $u_feeds
+      WHERE id = %d",$user_feed_id));
+    return $feed_id;
 
+  }
+
+  // OrbitalFeeds::refresh_user_feed
+  /* Function: refresh_user_feed
+   *
+   * takes a user feed id, figures out the underlying feed
+   * then calls to refresh the main feed
+   * 
+   * returns: a count of updates and inserts made
+   */
+  static function refresh_user_feed($user_feed_id){
+    //If we are looking up by user_feed, we need the original feed id
+    $feed_id = OrbitalFeeds::get_orig_feed_id($user_feed_id);
+    return OrbitalFeeds::refresh($feed_id);
+  }
+
+
+  // OrbitalFeeds::refresh 
   /* Function: Refresh
    *
    * Refresh a feed from it's underlying source.  
@@ -316,12 +488,10 @@ class OrbitalFeeds {
   static function refresh($feed_id){
     //TODO update the feeds last updated time
     include_once(ABSPATH . WPINC . '/class-feed.php');
-    //_log($feedrow);
-    //echo $feedrow->feed_url;
     $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
-    //If you're cache isn't writable, this is a big deal
+    //If your cache isn't writable, this is a big deal
     //Better to just disable it for now
     $feed->enable_cache(false);
     $feed->set_feed_url($feedrow->feed_url);
@@ -345,14 +515,15 @@ class OrbitalFeeds {
       if(null != $author){
         $name =$author->get_name(); 
       }
+      //_log('saving an item');
+      //_log($item); 
       OrbitalEntries::save(array(
         'feed_id'=>$feed_id,
         'title'=>$item->get_title(),
         'guid'=>$item->get_id(),
         'link'=>$item->get_permalink(),
-        'updated'=>$item->get_updated_date("Y-m-d H:i:s"),
+        'published'=>$item->get_date("Y-m-d H:i:s"), // this is really updated or entered
         'content'=>$item->get_content(),
-        'entered' =>$item->get_date("Y-m-d H:i:s"),
         'author' => $name
       ));
     }
@@ -384,7 +555,7 @@ class OrbitalFeeds {
  *
  * */
 class OrbitalEntries{
-/*
+/* OrbitalEntries::save
  * Insert an entry for a feed
  *    - TODO check to see if entry exists, using entry hash?
  *    - insert entry, then link for each user subscribed to the feed.
@@ -392,8 +563,8 @@ class OrbitalEntries{
  *    - TODO compare the content_hash on old and new before resetting isread
  */
   static function save($entry){
-    //_log('in save');
-    //_log($entry);
+    _log('in save');
+    _log($entry);
 
     if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
       //this is an update
@@ -521,16 +692,15 @@ class OrbitalEntries{
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
     
-    $resp;
+    $resp=new stdClass;
 
     $wpdb->insert($entries, array(
       'feed_id'=>$entry['feed_id'],
       'title'=>$entry['title'],
       'guid'=>$entry['guid'],
-      'link'=>$entry['link'],//TODO 
-      'updated'=>date ("Y-m-d H:i:s"),
-      'content'=>$entry['content'],//TODO
-      'entered' =>date ("Y-m-d H:i:s"),
+      'link'=>$entry['link'],
+      'published'=>$entry['published'],
+      'content'=>$entry['content'],
       'author' => $entry['author']
     ));
     $entry_id = $wpdb->insert_id;
@@ -539,10 +709,10 @@ class OrbitalEntries{
     $sql = "INSERT INTO ".$user_entries."
             (entry_id, feed_id, orig_feed_id, owner_uid, marked, isRead)
             SELECT
-            %d,%d,%d,owner,0,0
+            %d,id,feed_id,owner,0,0
             FROM ".$user_feeds." 
             WHERE feed_id = %d" ;
-    $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id'],$entry['feed_id'],$entry['feed_id']);
+    $sql = $wpdb->prepare($sql,$entry_id, $entry['feed_id']);
     $resp->entry_inserted = $wpdb->query($sql);
     if(false=== $resp->entry_inserted){
       $resp->entries_error = $wpdb->print_error();
@@ -562,6 +732,7 @@ class OrbitalEntries{
 
   /* Get entries for a feed
    *    - for a user, filter by a condition - unread = true..
+   *    OrbitalEntries::get
    */
   static function get($filters){
     global $wpdb;
@@ -570,9 +741,11 @@ class OrbitalEntries{
     $current_user = wp_get_current_user();
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
+    $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $user_settings = (array) get_user_option( 'orbital_settings' );
-    $sort_order = $user_settings['sort_order'];
-    $sort = "ORDER BY entries.updated ";
+    $sort_order = $user_settings['sort_order'] || -1;
+    $sort = "ORDER BY entries.published ";
     if("-1" == $sort_order ){
       $sort = $sort . "DESC";
     }
@@ -583,41 +756,61 @@ class OrbitalEntries{
     //could be a sql injection vulnerability.
     //_log($filters);
     //TODO allow like queries
-    $filter_whitelist = array('entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
+    $filter_whitelist = array('tag'=>'name','entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
+
+    /*
+    _log('constructing get filters');
+    _log('filters are');
+    _log($filters);
+     */
+
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
-        $filter = $filter . 
-          $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
+
+        //_log("filterName: $filter_name, value: $value");
+        if(null == $value || 'null' == $value){
+          $filter= $filter. " AND $filter_whitelist[$filter_name] IS NULL ";
+        }
+        else{
+          $filter = $filter . 
+            $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
+        }
+        //_log("Filter: $filter");
+
       }
     }
 
     //TODO change get feed entries to support non logged in use
-    $sql = "select entries.id as entry_id,
-        entries.title as title,
-        entries.guid as guid,
-        entries.link as link,
-        entries.content as content,
-        entries.author as author,
-        ue.isRead as isRead,
-        ue.marked as marked,
-        ue.id as id,
-        ue.feed_id as feed_id,
-        DATE_FORMAT(entries.entered , '%Y-%m-%dT%TZ') as entered,
-        DATE_FORMAT(entries.updated, '%Y-%m-%dT%TZ') as updated
+    $sql = "select entries.id AS entry_id,
+        entries.title AS title,
+        entries.guid AS guid,
+        entries.link AS link,
+        entries.content AS content,
+        entries.author AS author,
+        ue.isRead AS isRead,
+        ue.marked AS marked,
+        ue.id AS id,
+        ue.feed_id AS feed_id,
+        DATE_FORMAT(entries.published, '%Y-%m-%dT%TZ') AS published
 
-        from  $entries  as entries
-        inner join  $user_entries  as ue
-        on ue.entry_id=entries.id
-        where ue.owner_uid = ". $current_user->ID."
+        FROM  $entries  AS entries
+        INNER JOIN  $user_entries  AS ue
+          ON ue.entry_id=entries.id
+        LEFT OUTER JOIN $user_feed_tags AS user_feed_tags
+          ON user_feed_tags.user_feed_id = ue.feed_id
+        LEFT OUTER JOIN $tags AS tags
+          ON tags.id = user_feed_tags.tag_id
+        WHERE ue.owner_uid = ". $current_user->ID."
         ". $filter . " 
+        GROUP BY 
+          title, guid, link, content, author, isRead, marked, id, feed_id, published
         ". $sort . "
-        limit 30
+        LIMIT 30
     ;";
-    //_log($sql);
+    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
-
   }
 }
 
@@ -645,7 +838,15 @@ function orbital_list_feeds(){
   echo json_encode($myrows);
 }
 add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
-add_action('wp_ajax_nopriv_orbital_get_feeds','orbital_list_feeds_die');
+
+function orbital_list_tags(){
+  $tag_fragment = filter_input(INPUT_GET, 'q', FILTER_SANITIZE_STRING);
+  $rows = OrbitalFeeds::getTags($tag_fragment);
+  echo join($rows,"\n");
+  //echo json_encode();
+  exit;
+}
+add_action('wp_ajax_orbital_get_tags','orbital_list_tags');
 
 //remove feed 
 function orbital_unsubscribe_feed(){
@@ -781,9 +982,10 @@ function orbital_save_feed(){
   $feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
   //$is_private = $_POST['is_private']=="true"?1:0;
   $is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
+  $tags = filter_input(INPUT_POST, 'tags', FILTER_SANITIZE_STRING);
 
   $table_name = $wpdb->prefix.$tbl_prefix. "feeds ";
-  $resp = OrbitalFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private));
+  $resp = OrbitalFeeds::save(array('feed_id'=>$feed_id,'feed_url'=>$feed_url,'site_url'=>$site_url,'feed_name'=>$feed_name,'is_private'=>$is_private,'tags'=>$tags));
   echo json_encode($resp);
   exit;
 }
@@ -791,9 +993,13 @@ add_action('wp_ajax_orbital_save_feed','orbital_save_feed');
 
 //get feed entries
 function orbital_get_feed_entries(){
+  $filters = array();
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
-  $filters = array();
+  $tag = filter_input(INPUT_GET, 'tag',FILTER_SANITIZE_STRING);
+  if($tag !=""){
+    $filters['tag'] = $tag;
+  }
   if($feed_id == ""){
     //TODO "" should mean return latest entries
    }else{
@@ -827,7 +1033,6 @@ function orbital_update_feeds(){
   foreach( $feeds as $feed){
     _log($feed);
     OrbitalFeeds::refresh($feed->id);
-    //orbital_update_feed($feed->id);
   }
 }
 add_action('wp_ajax_orbital_update_feeds','orbital_update_feeds');
@@ -848,8 +1053,8 @@ function orbital_update_feed($feed_id="",$feed_url=""){
       exit;
     }
   }
-  //echo $feed_id;
-  $resp = OrbitalFeeds::refresh($feed_id);
+  //if this is coming from a user call with a user_feeds.id
+  $resp = OrbitalFeeds::refresh_user_feed($feed_id);
 
   echo json_encode($resp);
   exit;
@@ -920,12 +1125,14 @@ function orbital_set_user_settings(){
   $settings = (array) get_user_option( 'orbital_settings' );
   //merge arrays
   $new_settings = $user_orbital_settings + $settings;
+  /*
   _log("posted settings");
   _log($user_orbital_settings);
   _log("db settings");
   _log($settings);
   _log("merged settings");
   _log($new_settings);
+   */
   
   if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
     // Send back what we now know

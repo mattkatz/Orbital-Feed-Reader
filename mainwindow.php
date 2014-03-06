@@ -22,15 +22,15 @@
               <div class="author" ng-show="entry.author">
                 {{entry.author}}
               </div>
-              <div class="date">
-                {{entry.entered | date:medium }}
+              <div class="date" title="{{entry.published | date:mediumTime }}">
+                {{entry.published | date:medium }}
               </div>
               <div class="indicator" ng-show="entry.isLoading">
                 <img src="<?php
                   echo plugins_url("img/ajax-loader.gif", __FILE__);
                 ?>">
               </div>
-              <div class="indicator" ng-show="entry.isRead">
+              <div class="indicator clickable" title="type 'u' or click here to mark unread" ng-click="setReadStatus(entry,0)" ng-show="entry.isRead">
                 Read
               </div>
               <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
@@ -43,22 +43,37 @@
     </div>
   </div>
   <div id="orbital-feedlist" ng-controller="FeedListCtrl" >
-      <div id='feed-head'>
-        <h2>The Feeds</h2> 
-        <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
-        <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
-        <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
-        <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
-        <div ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
-          You are in edit mode, click here to exit.
-        </div>
+    <div id='feed-head'>
+      <h2>The Feeds</h2> 
+      <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
+      <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
+      <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
+      <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
+      <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="saveTagView(true)">#</a>
+      <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="saveTagView(false)">≣</a>
+      <div class="clickable" ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
+        You are in edit mode, click here to exit.
       </div>
-    <ul id='feeds' >
-      <li class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)" ng-class="{'is-selected': feed.isSelected}" ng-repeat="feed in feeds">
-        {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
-        <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
+    </div>
+    <script type="text/ng-template"  id='feedline.html'>
+      <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)"  >
+            {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
+            <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
+      </div>
+    </script>
+    <ul id='feeds' ng-hide="showByTags" >
+      <li ng-repeat="feed in feeds" ng-include="'feedline.html'" > </li>
+    </ul>
+    <ul id='tags' ng-show="showByTags">
+      <li class="tag" ng-repeat="(tag, feeds) in tags" >
+        <div id="{{tag}}" ng-click="select(tag)" ng-class="{'is-selected':tag.isSelected}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
+        <ul>
+          <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
+        </ul>
       </li>
     </ul>
+
+
   </div>
   <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
     <div class='indicator' ng-show="isLoading" >
@@ -113,13 +128,22 @@
         <label>Site Url
           <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
         </label>
+        <label>Tags:
+          <div class="tagchecklist">
+            <span class="atag" ng-repeat="tag in feedCandidate.tags | split "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
+          </div>
+          <div>
+            <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>
+          </div>
+        </label>
         <label>
           <input type='checkbox' ng-model="feedCandidate.private" title="" />
           This Feed is Private! Do not show it to other people.
         </label>
         <label ng-show="feedCandidate.feed_id">
-            Get rid of this feed! Seriously! 
-            <a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a>
+          <div>Get rid of this feed! Seriously!
+            <a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a> 
+          </div>
         </label>
         <br/>
         <div class="clickable button" ng-click="saveFeed(feedCandidate)" }}>
