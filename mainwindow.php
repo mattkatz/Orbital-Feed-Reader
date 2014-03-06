@@ -30,7 +30,7 @@
                   echo plugins_url("img/ajax-loader.gif", __FILE__);
                 ?>">
               </div>
-              <div class="indicator" ng-show="entry.isRead">
+              <div class="indicator clickable" title="type 'u' or click here to mark unread" ng-click="setReadStatus(entry,0)" ng-show="entry.isRead">
                 Read
               </div>
               <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>

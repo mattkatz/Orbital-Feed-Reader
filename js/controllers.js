@@ -414,7 +414,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
     var entry = $scope.selectedEntry;
     if(null == entry)
       return;
-    $scope.selectEntry(entry);
+    $scope.setReadStatus(entry,"0");
   });
 }
 
