@@ -310,21 +310,16 @@ function EntriesCtrl($scope, $http, $log,feedService){
   }
 
   /*
-   * Someone has clicked an entry.
-   * Toggle read on the server, then alert the UI
+   * toggle the entry's read status
    */
-
-  $scope.selectEntry = function selectEntry(entry) {
-    $log.log('Selected entry ' + entry.entry_id);
-    var newReadStatus = entry.isRead == 0?1:0;
+  $scope.setReadStatus = function( entry, status){
+    entry.isLoading = true;
+    var newReadStatus = status || (entry.isRead == 0?1:0);
     var data = {
       action: 'orbital_mark_item_read',
       read_status: newReadStatus ,
       entry_id: entry.entry_id,
     };
-    //Set this as the selected entry
-    $scope.selectedEntry = entry;
-    entry.isLoading = true;
     //Mark the entry read on the server
     $http.post(opts.ajaxurl,data)
     .success(function(data){
@@ -334,6 +329,20 @@ function EntriesCtrl($scope, $http, $log,feedService){
       //tell the feed list that the entry was toggled read.
       $scope.$emit('entryChange', {entry:entry});
     });
+  }
+
+  /*
+   * Someone has clicked an entry.
+   * Toggle read on the server, then alert the UI
+   */
+
+  $scope.selectEntry = function selectEntry(entry) {
+    $log.log('Selected entry ' + entry.entry_id);
+    //Set this as the selected entry
+    $scope.selectedEntry = entry;
+    if( "0" == entry.isRead ){
+      $scope.setReadStatus(entry);
+    }
   }
   $scope.getFeedName = function (entry){
     return feedService.getFeedName(entry.feed_id);
