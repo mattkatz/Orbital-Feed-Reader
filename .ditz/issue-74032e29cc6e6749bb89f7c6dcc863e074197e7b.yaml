@@ -1,0 +1,21 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Deleting a duplicated feed in list doesn't remove from tags
+desc: |-
+  I had two but does it floats. in list view I choose one and hit delete. Both disappear. Then I switch to tag view. One of them is still there. 
+  The refresh of the feedlist shouldn't produce this phantom but does it float.
+  Clicking on the feed doesn't pull any entries
+type: :bugfix
+component: Orbital
+release: 
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-03-11 12:47:53.951103 Z
+references: []
+
+id: 74032e29cc6e6749bb89f7c6dcc863e074197e7b
+log_events: 
+- - 2014-03-11 12:47:55.043016 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
