@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: problem with inifinite scroll
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.1.6
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-03-21 21:18:19.339580 Z
+references: []
+
+id: 70297b1587b8df106811118292933346b405f5eb
+log_events: 
+- - 2014-03-21 21:18:34.069189 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - I should have unit tests catching this stuff...
+- - 2014-03-21 21:18:55.930155 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

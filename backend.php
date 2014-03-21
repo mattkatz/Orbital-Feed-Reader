@@ -772,12 +772,15 @@ class OrbitalEntries{
         if(null == $value || 'null' == $value){
           $filter= $filter. " AND $filter_whitelist[$filter_name] IS NULL ";
         }
+        else if ( -1 == $value){
+          //I'm interpreting -1 as a "skip this" value mainly for the "all feeds"
+          continue;
+        }
         else{
           $filter = $filter . 
             $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
         }
         //_log("Filter: $filter");
-
       }
     }
 
@@ -1012,6 +1015,7 @@ function orbital_get_feed_entries(){
     //only show unread entries
     $filters['isRead']=$show_read;
   }
+  //_log('filters');
 
   $myrows = OrbitalEntries::get($filters);
   echo json_encode($myrows);

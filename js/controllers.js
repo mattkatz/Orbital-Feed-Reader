@@ -212,8 +212,25 @@ function EntriesCtrl($scope, $http, $log,feedService){
    * select a feed to display entries from
    */
   $scope.displayFeed = function(feed,showRead){
+    var qualifier = $scope.getEntriesQualifier(feed);
+    //$log.log('showRead='+showRead);
+    if(!showRead){
+      showRead=0;
+    }
+    //$log.log('qualifier='+qualifier);
+    //$log.log('showRead='+showRead);
+    $scope.isLoading = true;
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead)
+    .success(function(data){
+      $scope.isLoading = false;
+      //$log.info(data);
+      $scope.entries = data;
+      $scope.selectedEntry = null;
+      scrollToEntry(null);
+    });
+  };
+  $scope.getEntriesQualifier = function(feed){
     $log.log(feed);
-    $log.log('showRead='+showRead);
     var qualifier = '';
     //If we aren't passed a feed filter, don't create one
     if(null == feed ){
@@ -238,20 +255,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
         qualifier = '&tag='+feed;
       }
     }
-    if(!showRead){
-      showRead=0;
-    }
-    $log.log('qualifier='+qualifier);
-    $log.log('showRead='+showRead);
-    $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead)
-    .success(function(data){
-      $scope.isLoading = false;
-      //$log.info(data);
-      $scope.entries = data;
-      $scope.selectedEntry = null;
-      scrollToEntry(null);
-    });
+    return qualifier;
   };
 
   $scope.selectFeed = function(entry){
@@ -259,9 +263,17 @@ function EntriesCtrl($scope, $http, $log,feedService){
   }
 
   $scope.addMoreEntries = function(){
-    if(! feedService.selectedFeed()){ return; }
+    var feed = feedService.selectedFeed();
+    if(! feed){ return; }
+    var qualifier = $scope.getEntriesQualifier(feed);
+    //$log.log('showRead='+showRead);
+    var showRead = $scope.isRead;
+    if(!showRead){
+      showRead=0;
+    }
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feedService.selectedFeed().feed_id+'&show_read='+$scope.isRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead)
+    //$http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feedService.selectedFeed().feed_id+'&show_read='+$scope.isRead)
     .success(function  (response) {
       $scope.isLoading = false;
       $log.info('going to the server mines for more delicious content');
