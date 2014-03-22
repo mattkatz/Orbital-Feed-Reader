@@ -39,7 +39,7 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
-= 0.1.6 - Tagging 
+= 0.1.6 - Tagging =
 * Tag/Categorize feeds
 * bugfix: Shouldn't insert duplicate user entries
 * bugfix: Up shouldn't unmark read
