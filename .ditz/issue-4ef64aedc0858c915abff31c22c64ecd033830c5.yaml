@@ -7,8 +7,8 @@ type: :task
 component: Orbital
 release: 0.1.6
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :paused
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2014-01-02 03:03:38.451052 Z
 references: []
 
@@ -25,4 +25,8 @@ log_events:
 - - 2014-03-06 02:03:57.397718 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from in_progress to paused
+  - ""
+- - 2014-03-22 21:33:03.591975 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""

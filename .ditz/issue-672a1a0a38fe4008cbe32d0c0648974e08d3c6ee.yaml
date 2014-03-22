@@ -3,7 +3,7 @@ title: Upgrading causes orphaned feeds
 desc: ""
 type: :bugfix
 component: Orbital
-release: 0.1.6
+release: 0.1.7
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -15,4 +15,8 @@ log_events:
 - - 2014-02-27 04:18:06.798112 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2014-03-22 21:33:36.985458 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.7 from 0.1.6
   - ""
