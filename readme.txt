@@ -39,6 +39,17 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
+= 0.1.6 - Tagging 
+* Tag/Categorize feeds
+* bugfix: Shouldn't insert duplicate user entries
+* bugfix: Up shouldn't unmark read
+* bugfix: problem with inifinite scroll
+* bugfix: Show Read items doesn't untoggle
+* bugfix: fix parseint on chrome
+* bugfix: fix save to only use user_feed_id
+* bugfix: Publish Date still not being properly stored
+* bugfix: unsubscribe button isn't on newline
+
 = 0.1.5 - Sort Order -  = 
 * bugfix: The subscription window says RSS url, not URL or RSS URL
 * bugfix: Make the feed edit add refresh bigger! People must click!
