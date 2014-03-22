@@ -70,13 +70,17 @@ releases:
     - Releasing mighty sort order and logging changes to the world.
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.6
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2014-03-22 21:36:06.682087 Z
   log_events: 
   - - 2013-10-16 22:36:28.669259 Z
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - Moving forward with better logging etc.
+  - - 2014-03-22 21:36:06.682099 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.7
   status: :unreleased
