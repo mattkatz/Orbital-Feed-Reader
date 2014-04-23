@@ -3,7 +3,7 @@ Contributors: mttktz
 Donate link: https://www.gittip.com/mattkatz/
 Tags: feed reader, google reader, rss, atom, 
 Requires at least: 3.0.1
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,9 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.1.6.1 - Tagfix = 
+* bugfix: bad unread count on some feeds
+* bugfix: unread count on feeds was multiplied by tag count for all feeds
 
 = 0.1.6 - Tagging =
 * Tag/Categorize feeds
