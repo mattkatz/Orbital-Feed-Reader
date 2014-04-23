@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: feed unread count is multiplied by tag count
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.1.7
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-04-23 09:11:13.981729 Z
+references: []
+
+id: b33797aa08f1d7096d71c5d8b00eeb9c11cc8840
+log_events: 
+- - 2014-04-23 09:11:16.302319 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
