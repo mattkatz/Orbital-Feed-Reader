@@ -259,6 +259,18 @@ class OrbitalFeeds {
     $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
     $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
+    SELECT 
+    f.feed_id,
+    f.feed_name,
+    f.feed_url,
+    f.icon_url,
+    f.site_url,
+    f.last_updated,
+    f.last_error,
+    f.private,
+    f.unread_count,
+    GROUP_CONCAT(DISTINCT COALESCE(tags.name,'Untagged')) as tags
+    FROM (
         SELECT 
           u_feeds.id AS feed_id,
           COALESCE(u_feeds.feed_name,feeds.feed_name ) AS feed_name,
@@ -268,18 +280,13 @@ class OrbitalFeeds {
           feeds.last_updated,
           feeds.last_error,
           u_feeds.private,
-          SUM(IF(COALESCE(ue.isRead,1)=0,1,0)) AS unread_count,
-          GROUP_CONCAT(DISTINCT COALESCE(tags.name,'Untagged')) as tags
+          SUM(IF(COALESCE(ue.isRead,1)=0,1,0)) AS unread_count
         FROM $user_feeds AS u_feeds
         INNER JOIN $feeds AS feeds
           ON u_feeds.feed_id = feeds.id
-          AND u_feeds.owner =  $current_user->ID.
+          AND u_feeds.owner =  $current_user->ID
         LEFT OUTER JOIN $user_entries AS ue
-          ON ue.feed_id=feeds.id
-        LEFT OUTER JOIN $user_feed_tags uft
-          ON uft.user_feed_id = u_feeds.id
-        LEFT OUTER JOIN $tags tags
-          ON uft.tag_id = tags.id
+          ON ue.feed_id=u_feeds.id
         GROUP BY 
           feed_id,
           feed_url,
@@ -288,10 +295,25 @@ class OrbitalFeeds {
           site_url,
           last_updated,
           last_error,
-          private
+          private) f
+    LEFT OUTER JOIN $user_feed_tags uft
+      ON uft.user_feed_id = f.feed_id
+    LEFT OUTER JOIN $tags tags
+      ON uft.tag_id = tags.id
+    GROUP BY 
+      f.feed_id,
+      f.feed_name,
+      f.feed_url,
+      f.icon_url,
+      f.site_url,
+      f.last_updated,
+      f.last_error,
+      f.private,
+      f.unread_count
+
         ";
-        //sum( if ue.isRead then 0 else 1 end) as unread_count,
-    // AND feeds.owner = " . $current_user->ID."
+    _log($sql);
+
     $myrows = $wpdb->get_results($sql );
     return $myrows;
   }
