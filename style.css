@@ -48,6 +48,9 @@
 .entry .author:before{
   content:"by ";
 }
+.entry > .feed:before{
+  content:"from ";
+}
 
 .indicator{
   position:absolute;
