@@ -249,7 +249,7 @@ class OrbitalFeeds {
    * Method to list all feeds
    *   - Just return all feeds from user_feeds
    */
-  static function get(){
+  static function get($user_id){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
@@ -257,6 +257,10 @@ class OrbitalFeeds {
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
+    if(! $user_id)
+    { 
+      $user_id = $current_user-ID;
+    }
     $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
     SELECT 
@@ -284,7 +288,7 @@ class OrbitalFeeds {
         FROM $user_feeds AS u_feeds
         INNER JOIN $feeds AS feeds
           ON u_feeds.feed_id = feeds.id
-          AND u_feeds.owner =  $current_user->ID
+          AND u_feeds.owner =  $user_id
         LEFT OUTER JOIN $user_entries AS ue
           ON ue.feed_id=u_feeds.id
         GROUP BY 
@@ -312,7 +316,7 @@ class OrbitalFeeds {
       f.unread_count
 
         ";
-    _log($sql);
+    //_log($sql);
 
     $myrows = $wpdb->get_results($sql );
     return $myrows;
