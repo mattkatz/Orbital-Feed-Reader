@@ -596,10 +596,6 @@ class OrbitalEntries{
         _log('check guid says entry id is');
         _log($entry_id);
       }
-      else{
-        _log("Orbital shouldn't see an entry without a guid from simplepie");
-        _log($entry);
-      }
 
       if(null === $entry_id){
         _log('sending to insert');
