@@ -49,7 +49,7 @@ class OrbitalFeeds {
     if(isset($feed['owner']) && (current_user_can('install_plugin') || current_user_can('create_users'))){
       //We are saving this feed for a SPECIFIC user!
       //We must check to see if this is someone who has admin access to install plugins and such - in that case we should allow the user to save feeds for other users.
-      $user_id = $feed_owner;
+      $user_id = $feed['owner'];
     }
     if(isset( $feed['feed_id'])){
       //we are updating.  just do an update on user_feeds
