@@ -56,7 +56,7 @@ function orbital_sample_data_check(){
     update_option('orbital_sample_data_loaded', $orbital_samples_version);
   }
   else{
-    _log('Sample Date already in there, never mind');
+    _log('Sample Data already in there, never mind');
 
   }
 }
