@@ -45,7 +45,13 @@ class OrbitalFeeds {
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $resp = new stdClass;
     $feed_id = '';
-    if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
+    $user_id = $current_user->ID;
+    if(isset($feed['owner']) && (current_user_can('install_plugin') || current_user_can('create_users'))){
+      //We are saving this feed for a SPECIFIC user!
+      //We must check to see if this is someone who has admin access to install plugins and such - in that case we should allow the user to save feeds for other users.
+      $user_id = $feed_owner;
+    }
+    if(isset( $feed['feed_id'])){
       //we are updating.  just do an update on user_feeds
       $sql = "UPDATE $user_feeds
               SET feed_name = %s
@@ -53,7 +59,7 @@ class OrbitalFeeds {
               , private = %d
               WHERE id = %d
               AND owner = %d";
-      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
+      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $user_id);
       $resp->feed_updated = $wpdb->query($sql);
       if(false=== $resp->feed_updated ) {
         $resp->update_error = $wpdb->print_error();
@@ -88,7 +94,7 @@ class OrbitalFeeds {
         (feed_id, feed_name, site_url,owner, private)
          VALUES
          (%d,%s,%s,%d,%d)';
-      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
+      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$user_id,$feed['is_private']);
       $resp->user_feed_inserted = $wpdb->query($sql);
       if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
@@ -106,7 +112,7 @@ class OrbitalFeeds {
 
     //TODO this should be eliminated
     //$resp->sql = $sql;
-    $resp->user = $current_user->ID;
+    $resp->user = $user_id;
     $resp->feed_id = $feed['feed_id'];
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
