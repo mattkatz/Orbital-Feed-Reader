@@ -583,7 +583,7 @@ class OrbitalEntries{
     _log('in save');
     _log($entry);
 
-    if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
+    if(isset($entry['entry_id'])){
       //this is an update
       _log('sending to update');
       $resp = OrbitalEntries::update($entry);
@@ -591,7 +591,7 @@ class OrbitalEntries{
     else{
       $entry_id = null;
       //see if the entry exists using entry hash or guid?
-      if(array_key_exists('guid', $entry) && $entry['guid']){
+      if( isset($entry['guid'])){
         $entry_id = OrbitalEntries::check_guid($entry['guid']);
         _log('check guid says entry id is');
         _log($entry_id);
