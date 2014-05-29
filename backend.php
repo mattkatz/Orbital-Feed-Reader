@@ -593,8 +593,6 @@ class OrbitalEntries{
       //see if the entry exists using entry hash or guid?
       if( isset($entry['guid'])){
         $entry_id = OrbitalEntries::check_guid($entry['guid']);
-        _log('check guid says entry id is');
-        _log($entry_id);
       }
 
       if(null === $entry_id){
