@@ -46,21 +46,6 @@ class OrbitalFeeds {
     $resp = new stdClass;
     $feed_id = '';
     if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
-    /*
-     //TODO NO IDEA WHY THIS DOESN'T WORK!
-    $ret = $wpdb->update(
-      $table_name,//the table
-      array(
-        'feed_url' => $feed_url,
-        'feed_name' => $feed_name,
-        'site_url' => $site_url,
-        'private' => $is_private,
-      ),//columns to update
-      array(//where filters
-        'id' =>$feed_id, //current feed
-        'owner'=>$current_user->ID //logged in user
-      )
-    );*/
       //we are updating.  just do an update on user_feeds
       $sql = "UPDATE $user_feeds
               SET feed_name = %s
@@ -259,7 +244,7 @@ class OrbitalFeeds {
     $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
     if(! $user_id)
     { 
-      $user_id = $current_user-ID;
+      $user_id =  get_current_user_id(); 
     }
     $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
@@ -316,7 +301,7 @@ class OrbitalFeeds {
       f.unread_count
 
         ";
-    //_log($sql);
+    _log($sql);
 
     $myrows = $wpdb->get_results($sql );
     return $myrows;
