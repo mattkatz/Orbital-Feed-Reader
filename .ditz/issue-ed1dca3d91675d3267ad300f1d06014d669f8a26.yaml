@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: MU - support adding a new user
+desc: catch that register_user hook and give that user our default feeds and for those feeds make sure any posts are UNREAD.
+type: :feature
+component: Orbital
+release: 0.1.7
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-05-29 00:19:32.518565 Z
+references: []
+
+id: ed1dca3d91675d3267ad300f1d06014d669f8a26
+log_events: 
+- - 2014-05-29 00:19:34.033398 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

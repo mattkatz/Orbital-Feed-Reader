@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: MU - a fresh install should install feeds for each user
+desc: |-
+  each user that has the appropriate privileges that is.
+  I think the minimum privs we should support is ability to write posts
+type: :feature
+component: Orbital
+release: 0.1.7
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-05-29 00:22:17.209947 Z
+references: []
+
+id: 5acd789bec6d0814fd293852129c1714eeaaf723
+log_events: 
+- - 2014-05-29 00:22:18.196998 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-05-29 02:37:24.593907 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

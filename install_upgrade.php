@@ -155,34 +155,101 @@ function orbital_install_db()
   _log("Added $table_name");
   update_option($orbital_db_version_opt_string,$orbital_db_version);
 }
-//TODO load in everything with admin as owner, 
 # load all the first installation data in.
+# for each user
+# When we first install the plugin:
+#  - each user that can write a post should get a set of sample feeds
 function orbital_install_data(){
   get_currentuserinfo();
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
   //$user_id = $current_user->ID;
-  //install some sample feeds
-  $feed = OrbitalFeeds::save(
-  array(
-  'feed_url'=>'http://www.morelightmorelight.com/feed/',
-  //'feed_url'=>'http://localhost/morelightmorelight/feed',
-  'site_url'=> 'http://www.morelightmorelight.com',
-  'is_private'=>0,
-  'tags'=>'orbital,mutants',
-  //'owner' => $current_user->ID,
-  'feed_name' =>'More Light! More Light!'));
-  
-  $orbitalfeed = OrbitalFeeds::save(
-  array(
-    'feed_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/ditz/html/feed.xml',
-    //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
-    'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
+  $users = get_users();
+  foreach( $users as $user){
+    if(! user_can($user->ID,'edit_posts')){
+      // if this user can't author posts, then we don't want to offer them a feed reader
+      continue;
+    }
+    //_log($user->ID);
+    //install some sample feeds
+    OrbitalFeeds::save(
+    array(
+    'feed_url'=>'http://www.morelightmorelight.com/feed/',
+    //'feed_url'=>'http://localhost/morelightmorelight/feed',
+    'site_url'=> 'http://www.morelightmorelight.com',
     'is_private'=>0,
-    'tags'=>'orbital,software',
-    //'owner' => $current_user->ID,
-    'feed_name' => 'Orbital Changes'));
+    'tags'=>'orbital,mutants',
+    'owner'=>$user->ID,
+    'feed_name' =>'More Light! More Light!'));
+    
+    $orbitalfeed = OrbitalFeeds::save(
+    array(
+      'feed_url' => 'http://mattkatz.github.io/Orbital-Feed-Reader/ditz/html/feed.xml',
+      //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
+      'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
+      'is_private'=>0,
+      'tags'=>'orbital,software',
+      'owner'=>$user->ID,
+      'feed_name' => 'Orbital Changes'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://boingboing.net/feed/',
+      //'feed_url'=>'http://localhost/boingboing/iBag',
+      'site_url'=> 'http://boingboing.net',
+      'is_private'=>0,
+      'tags'=>'mutants',
+      'owner'=>$user->ID,
+      'feed_name' => 'Boing Boing'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://feeds.feedburner.com/ButDoesItFloat?format=xml',
+      'site_url'=> 'http://butdoesitfloat.com',
+      'is_private'=>0,
+      'tags'=>'art',
+      'owner'=>$user->ID,
+      'feed_name' => 'But does it float?'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://visitsteve.com/feed',
+      'site_url'=> 'http://visitsteve.com/',
+      'is_private'=>0,
+      'tags'=>'art,mutants',
+      'owner'=>$user->ID,
+      'feed_name' => 'Steve Lambert, art etc.'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://www.techdirt.com/techdirt_rss.xml',
+      'site_url'=> 'http://www.techdirt.com/',
+      'is_private'=>0,
+      'tags'=>'news,economics,copyfight',
+      'owner'=>$user->ID,
+      'feed_name' => 'Techdirt.'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://www.lessig.org/blog/index.rdf',
+      'site_url'=> 'http://www.lessig.org/',
+      'is_private'=>0,
+      'tags'=>'copyfight',
+      'owner'=>$user->ID,
+      'feed_name' => 'Lessig Blog'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://bldgblog.blogspot.com/atom.xml',
+      'site_url'=> 'http://bldgblog.blogspot.com/',
+      'is_private'=>0,
+      'tags'=>'mutants',
+      'owner'=>$user->ID,
+      'feed_name' => 'BLDGBLOG'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://feeds.feedburner.com/wiredbeyond',
+      'site_url'=> 'http://www.wired.com/beyond_the_beyond',
+      'is_private'=>0,
+      'tags'=>'mutants',
+      'owner'=>$user->ID,
+      'feed_name' => 'Bruce Sterling'));
+  }
 
   //Insert a sample entry
   OrbitalEntries::save(array(
@@ -328,57 +395,6 @@ function orbital_install_data(){
     'author' => 'Matt Katz'
   ));
 
-  $bb = OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://boingboing.net/feed/',
-    //'feed_url'=>'http://localhost/boingboing/iBag',
-    'site_url'=> 'http://boingboing.net',
-    'is_private'=>0,
-    'tags'=>'mutants',
-    //'owner' => $current_user->ID,
-    'feed_name' => 'Boing Boing'));
-  OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://feeds.feedburner.com/ButDoesItFloat?format=xml',
-    'site_url'=> 'http://butdoesitfloat.com',
-    'is_private'=>0,
-    'tags'=>'art',
-    'feed_name' => 'But does it float?'));
-  OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://visitsteve.com/feed',
-    'site_url'=> 'http://visitsteve.com/',
-    'is_private'=>0,
-    'tags'=>'art,mutants',
-    'feed_name' => 'Steve Lambert, art etc.'));
-  OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://www.techdirt.com/techdirt_rss.xml',
-    'site_url'=> 'http://www.techdirt.com/',
-    'is_private'=>0,
-    'tags'=>'news,economics,copyfight',
-    'feed_name' => 'Techdirt.'));
-  OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://www.lessig.org/blog/index.rdf',
-    'site_url'=> 'http://www.lessig.org/',
-    'is_private'=>0,
-    'tags'=>'copyfight',
-    'feed_name' => 'Lessig Blog'));
-  OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://bldgblog.blogspot.com/atom.xml',
-    'site_url'=> 'http://bldgblog.blogspot.com/',
-    'is_private'=>0,
-    'tags'=>'mutants',
-    'feed_name' => 'BLDGBLOG'));
-  OrbitalFeeds::save(
-  array(
-    'feed_url'=>'http://feeds.feedburner.com/wiredbeyond',
-    'site_url'=> 'http://www.wired.com/beyond_the_beyond',
-    'is_private'=>0,
-    'tags'=>'mutants',
-    'feed_name' => 'Bruce Sterling'));
 }
 /*
 function orbital_uninstall_db()

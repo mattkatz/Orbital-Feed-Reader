@@ -45,22 +45,13 @@ class OrbitalFeeds {
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $resp = new stdClass;
     $feed_id = '';
-    if(array_key_exists('feed_id', $feed) && $feed['feed_id']){
-    /*
-     //TODO NO IDEA WHY THIS DOESN'T WORK!
-    $ret = $wpdb->update(
-      $table_name,//the table
-      array(
-        'feed_url' => $feed_url,
-        'feed_name' => $feed_name,
-        'site_url' => $site_url,
-        'private' => $is_private,
-      ),//columns to update
-      array(//where filters
-        'id' =>$feed_id, //current feed
-        'owner'=>$current_user->ID //logged in user
-      )
-    );*/
+    $user_id = $current_user->ID;
+    if(isset($feed['owner']) && (current_user_can('install_plugin') || current_user_can('create_users'))){
+      //We are saving this feed for a SPECIFIC user!
+      //We must check to see if this is someone who has admin access to install plugins and such - in that case we should allow the user to save feeds for other users.
+      $user_id = $feed['owner'];
+    }
+    if(isset( $feed['feed_id'])){
       //we are updating.  just do an update on user_feeds
       $sql = "UPDATE $user_feeds
               SET feed_name = %s
@@ -68,7 +59,7 @@ class OrbitalFeeds {
               , private = %d
               WHERE id = %d
               AND owner = %d";
-      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $current_user->ID);
+      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $user_id);
       $resp->feed_updated = $wpdb->query($sql);
       if(false=== $resp->feed_updated ) {
         $resp->update_error = $wpdb->print_error();
@@ -103,7 +94,7 @@ class OrbitalFeeds {
         (feed_id, feed_name, site_url,owner, private)
          VALUES
          (%d,%s,%s,%d,%d)';
-      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$current_user->ID,$feed['is_private']);
+      $sql = $wpdb->prepare($sql, $feed_id,  $feed['feed_name'],$feed['site_url'],$user_id,$feed['is_private']);
       $resp->user_feed_inserted = $wpdb->query($sql);
       if(false=== $resp->user_feed_inserted){
         $resp->user_feeds_error = $wpdb->print_error();
@@ -121,7 +112,7 @@ class OrbitalFeeds {
 
     //TODO this should be eliminated
     //$resp->sql = $sql;
-    $resp->user = $current_user->ID;
+    $resp->user = $user_id;
     $resp->feed_id = $feed['feed_id'];
     $resp->feed_url = $feed['feed_url'];
     $resp->site_url = $feed['site_url'];
@@ -249,7 +240,7 @@ class OrbitalFeeds {
    * Method to list all feeds
    *   - Just return all feeds from user_feeds
    */
-  static function get(){
+  static function get($user_id){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
@@ -257,6 +248,10 @@ class OrbitalFeeds {
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
+    if(! $user_id)
+    { 
+      $user_id =  get_current_user_id(); 
+    }
     $tags = $wpdb->prefix.$tbl_prefix. "tags ";
     $sql = "
     SELECT 
@@ -284,7 +279,7 @@ class OrbitalFeeds {
         FROM $user_feeds AS u_feeds
         INNER JOIN $feeds AS feeds
           ON u_feeds.feed_id = feeds.id
-          AND u_feeds.owner =  $current_user->ID
+          AND u_feeds.owner =  $user_id
         LEFT OUTER JOIN $user_entries AS ue
           ON ue.feed_id=u_feeds.id
         GROUP BY 
@@ -588,7 +583,7 @@ class OrbitalEntries{
     _log('in save');
     _log($entry);
 
-    if(array_key_exists('entry_id',$entry )&& $entry['entry_id'] ){
+    if(isset($entry['entry_id'])){
       //this is an update
       _log('sending to update');
       $resp = OrbitalEntries::update($entry);
@@ -596,14 +591,8 @@ class OrbitalEntries{
     else{
       $entry_id = null;
       //see if the entry exists using entry hash or guid?
-      if(array_key_exists('guid', $entry) && $entry['guid']){
+      if( isset($entry['guid'])){
         $entry_id = OrbitalEntries::check_guid($entry['guid']);
-        _log('check guid says entry id is');
-        _log($entry_id);
-      }
-      else{
-        _log("Orbital shouldn't see an entry without a guid from simplepie");
-        _log($entry);
       }
 
       if(null === $entry_id){
