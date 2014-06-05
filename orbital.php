@@ -60,7 +60,15 @@ function orbital_sample_data_check(){
 
   }
 }
-
+/* we should catch when new users get added
+ * so we can give them subscriptions to our sample feeds
+ */
+add_action('user_register', 'install_sample_orbital_user_feeds');
+/*this function is in install_upgrade.php*/
+function install_sample_orbital_user_feeds($user_id){
+    require_once 'install_upgrade.php';
+    orbital_add_sample_feeds_to_user($user_id);
+}
 add_action('admin_menu', 'orbital_plugin_menu');
 function orbital_plugin_menu(){
   //TODO should this be global? Probably not. 

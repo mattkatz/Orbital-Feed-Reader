@@ -155,6 +155,7 @@ function orbital_install_db()
   _log("Added $table_name");
   update_option($orbital_db_version_opt_string,$orbital_db_version);
 }
+
 # load all the first installation data in.
 # for each user
 # When we first install the plugin:
@@ -167,101 +168,23 @@ function orbital_install_data(){
   //$user_id = $current_user->ID;
   $users = get_users();
   foreach( $users as $user){
-    if(! user_can($user->ID,'edit_posts')){
-      // if this user can't author posts, then we don't want to offer them a feed reader
-      continue;
-    }
-    //_log($user->ID);
-    //install some sample feeds
-    OrbitalFeeds::save(
-    array(
-    'feed_url'=>'http://www.morelightmorelight.com/feed/',
-    //'feed_url'=>'http://localhost/morelightmorelight/feed',
-    'site_url'=> 'http://www.morelightmorelight.com',
-    'is_private'=>0,
-    'tags'=>'orbital,mutants',
-    'owner'=>$user->ID,
-    'feed_name' =>'More Light! More Light!'));
-    
-    $orbitalfeed = OrbitalFeeds::save(
-    array(
-      'feed_url' => 'http://mattkatz.github.io/Orbital-Feed-Reader/ditz/html/feed.xml',
-      //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
-      'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
-      'is_private'=>0,
-      'tags'=>'orbital,software',
-      'owner'=>$user->ID,
-      'feed_name' => 'Orbital Changes'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://boingboing.net/feed/',
-      //'feed_url'=>'http://localhost/boingboing/iBag',
-      'site_url'=> 'http://boingboing.net',
-      'is_private'=>0,
-      'tags'=>'mutants',
-      'owner'=>$user->ID,
-      'feed_name' => 'Boing Boing'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://feeds.feedburner.com/ButDoesItFloat?format=xml',
-      'site_url'=> 'http://butdoesitfloat.com',
-      'is_private'=>0,
-      'tags'=>'art',
-      'owner'=>$user->ID,
-      'feed_name' => 'But does it float?'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://visitsteve.com/feed',
-      'site_url'=> 'http://visitsteve.com/',
-      'is_private'=>0,
-      'tags'=>'art,mutants',
-      'owner'=>$user->ID,
-      'feed_name' => 'Steve Lambert, art etc.'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://www.techdirt.com/techdirt_rss.xml',
-      'site_url'=> 'http://www.techdirt.com/',
-      'is_private'=>0,
-      'tags'=>'news,economics,copyfight',
-      'owner'=>$user->ID,
-      'feed_name' => 'Techdirt.'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://www.lessig.org/blog/index.rdf',
-      'site_url'=> 'http://www.lessig.org/',
-      'is_private'=>0,
-      'tags'=>'copyfight',
-      'owner'=>$user->ID,
-      'feed_name' => 'Lessig Blog'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://bldgblog.blogspot.com/atom.xml',
-      'site_url'=> 'http://bldgblog.blogspot.com/',
-      'is_private'=>0,
-      'tags'=>'mutants',
-      'owner'=>$user->ID,
-      'feed_name' => 'BLDGBLOG'));
-    OrbitalFeeds::save(
-    array(
-      'feed_url'=>'http://feeds.feedburner.com/wiredbeyond',
-      'site_url'=> 'http://www.wired.com/beyond_the_beyond',
-      'is_private'=>0,
-      'tags'=>'mutants',
-      'owner'=>$user->ID,
-      'feed_name' => 'Bruce Sterling'));
+    orbital_add_sample_feeds_to_user($user->ID);
   }
 
+
+}
+function orbital_install_instructional_entries($orbitalfeed){
+  $i = 0;
   //Insert a sample entry
   OrbitalEntries::save(array(
     'feed_id'=> $orbitalfeed->feed_id,
     'title'=>'Welcome to Orbital!',
-    'guid'=>'FAKEGUID',
+    'guid'=>'FAKEGUID'. $i++,
     'link'=>'http://mattkatz.github.com/Orbital-Feed-Reader/welcome.html',//TODO 
     'published'=>date ("Y-m-d H:i:s"),
     'content'=>"Here is where I'll put in some helpful stuff to look at",//TODO
     'author' => 'Matt Katz'
   ));
-  $i = 0;
   //Insert a sample entry
   OrbitalEntries::save(array(
     'feed_id'=> $orbitalfeed->feed_id,
@@ -395,6 +318,100 @@ function orbital_install_data(){
     'author' => 'Matt Katz'
   ));
 
+}
+function orbital_add_sample_feeds_to_user($user_id){
+    if(! user_can($user_id,'edit_posts')){
+      // if this user can't author posts, then we don't want to offer them a feed reader
+      continue;
+    }
+    //_log($user->ID);
+    //install some sample feeds
+    _log("installing sample feeds for $user_id");
+    $orbitalfeed = OrbitalFeeds::save(
+    array(
+      'feed_url' => 'http://mattkatz.github.io/Orbital-Feed-Reader/ditz/html/feed.xml',
+      //'feed_url' => 'http://localhost/orbital/ditz/html/feed.xml',
+      'site_url' => 'http://mattkatz.github.com/Orbital-Feed-Reader/', 
+      'is_private'=>0,
+      'tags'=>'orbital,software',
+      'owner'=>$user_id,
+      'feed_name' => 'Orbital Changes'));
+
+    OrbitalFeeds::save(
+    array(
+    'feed_url'=>'http://www.morelightmorelight.com/feed/',
+    //'feed_url'=>'http://localhost/morelightmorelight/feed',
+    'site_url'=> 'http://www.morelightmorelight.com',
+    'is_private'=>0,
+    'tags'=>'orbital,mutants',
+    'owner'=>$user_id,
+    'feed_name' =>'More Light! More Light!'));
+    
+
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://boingboing.net/feed/',
+      //'feed_url'=>'http://localhost/boingboing/iBag',
+      'site_url'=> 'http://boingboing.net',
+      'is_private'=>0,
+      'tags'=>'mutants',
+      'owner'=>$user_id,
+      'feed_name' => 'Boing Boing'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://feeds.feedburner.com/ButDoesItFloat?format=xml',
+      'site_url'=> 'http://butdoesitfloat.com',
+      'is_private'=>0,
+      'tags'=>'art',
+      'owner'=>$user_id,
+      'feed_name' => 'But does it float?'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://visitsteve.com/feed',
+      'site_url'=> 'http://visitsteve.com/',
+      'is_private'=>0,
+      'tags'=>'art,mutants',
+      'owner'=>$user_id,
+      'feed_name' => 'Steve Lambert, art etc.'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://www.techdirt.com/techdirt_rss.xml',
+      'site_url'=> 'http://www.techdirt.com/',
+      'is_private'=>0,
+      'tags'=>'news,economics,copyfight',
+      'owner'=>$user_id,
+      'feed_name' => 'Techdirt.'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://www.lessig.org/blog/index.rdf',
+      'site_url'=> 'http://www.lessig.org/',
+      'is_private'=>0,
+      'tags'=>'copyfight',
+      'owner'=>$user_id,
+      'feed_name' => 'Lessig Blog'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://bldgblog.blogspot.com/atom.xml',
+      'site_url'=> 'http://bldgblog.blogspot.com/',
+      'is_private'=>0,
+      'tags'=>'mutants',
+      'owner'=>$user_id,
+      'feed_name' => 'BLDGBLOG'));
+    OrbitalFeeds::save(
+    array(
+      'feed_url'=>'http://feeds.feedburner.com/wiredbeyond',
+      'site_url'=> 'http://www.wired.com/beyond_the_beyond',
+      'is_private'=>0,
+      'tags'=>'mutants',
+      'owner'=>$user_id,
+      'feed_name' => 'Bruce Sterling'));
+    if( $orbitalfeed->feed_inserted){
+      orbital_install_instructional_entries($orbitalfeed);
+    }
+    else{
+      //we need to make sure we associate old entries with this user 
+      OrbitalFeeds::link_old_entries($user_id);
+    }
 }
 /*
 function orbital_uninstall_db()

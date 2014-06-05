@@ -30,6 +30,7 @@ if(!function_exists('_log')){
 class OrbitalFeeds {
 
   /* Method to save a feed
+   * OrbitalFeeds::save
    *   - check to see if there is a feed_id.
    *     - Yes means we are updating
    *       - Just update user_feeds
@@ -110,6 +111,12 @@ class OrbitalFeeds {
     //We should always expect a feed_id at this point.
     OrbitalFeeds::saveFeedTags($feed);
 
+    /* we should associate the entries from the entries table
+     * with this user_feeds row throug the user_entries table
+     */
+
+
+
     //TODO this should be eliminated
     //$resp->sql = $sql;
     $resp->user = $user_id;
@@ -121,6 +128,52 @@ class OrbitalFeeds {
     $resp->unread_count ="0";//TODO: A LIE. But it gets corrected quickly
     return $resp;
   }
+  /* OrbitalFeeds::link_old_entries
+   * 
+   * Method to grab entries that aren't 
+   * associated with a particular user_feed
+   * and correct that
+   */
+  static function link_old_entries($user_id)
+  {
+    global $wpdb;
+    global $tbl_prefix;
+    $entries = $wpdb->prefix.$tbl_prefix. "entries ";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
+    $resp = new stdClass;
+    $sql = "
+      INSERT INTO $user_entries 
+        (entry_id
+        ,feed_id
+        ,orig_feed_id
+        ,owner_uid
+        ,marked
+        ,isRead
+        )
+      SELECT 
+       e.id AS entry_id
+      ,uf.id AS feed_id
+      ,uf.feed_id AS orig_feed_id
+      ,uf.owner AS owner_uid
+      ,0 AS marked
+      ,0 AS isRead
+      FROM $user_feeds uf
+      INNER JOIN $entries  e
+        ON e.feed_id = uf.feed_id
+      LEFT OUTER JOIN $user_entries ue
+       ON ue.feed_id = uf.id
+      WHERE uf.owner = %d 
+      AND ue.id IS NULL
+    ";
+    $sql = $wpdb->prepare($sql,$user_id );
+    $resp->entry_inserted = $wpdb->query($sql);
+    if(false=== $resp->entry_inserted){
+      $resp->entries_error = $wpdb->print_error();
+    }
+    return $resp;
+  }
+  
   /* OrbitalFeeds::saveFeedTags($feed);
    *
    * Method to save the tags for a feed
@@ -691,6 +744,7 @@ class OrbitalEntries{
 
   }
 
+  //OrbitalEntries::insert
   //assumes you have already checked that the entry isn't in there.
   //probably best if you just use save, it does the checking
   static function insert($entry){
@@ -740,6 +794,16 @@ class OrbitalEntries{
     return $resp;
 
   }
+  /*
+   * OrbitalEntries::link_to_users
+   * Take an entry and associate it to any users not currently associated with it.
+   * with an entry in user_entries
+   */
+  static function link_to_users($entry_id){
+    //TODO: SHOULD I EVEN DO THIS?
+
+  }
+
 
   /* Get entries for a feed
    *    - for a user, filter by a condition - unread = true..
