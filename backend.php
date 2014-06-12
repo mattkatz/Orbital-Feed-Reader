@@ -405,7 +405,7 @@ class OrbitalFeeds {
     $resp->user = $current_user->ID;
     //$orig_feed_id
     //User feeds
-    //Let's get the underling feed_id now
+    //Let's get the underlying feed_id now
     $sql = "
       SELECT feed_id
       FROM $user_feeds
@@ -802,6 +802,49 @@ class OrbitalEntries{
   static function link_to_users($entry_id){
     //TODO: SHOULD I EVEN DO THIS?
 
+  }
+  /*
+   * OrbitalEntries::unlink
+   * Remove any links from entries to a particular user
+   */
+  static function unlink($user_id=null, $feed_id=null){
+    global $wpdb;
+    global $tbl_prefix;
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+    $wheres = array();
+    if( isset($user_id)){
+      $wheres['owner_uid'] = $user_id;
+    }
+    if( isset($feed_id )){
+      $wheres['feed_id'] = $feed_id;
+    }
+    if(count($wheres) <1){
+      //we don't want to remove ALL entries
+      return 0;
+    }
+    retcount = $wpdb->delete($user_entries, $wheres, '%d');
+    OrbitalEntries::clean_entries();
+    return retcount;
+  }
+  /* OrbitalEntries::clean_entries
+   * Clean up unviewable entries
+   * If an entry doesn't have any user_entry records associated, no one can see it.
+   * Kill it
+   */
+  static function clean_entries(){
+    global $wpdb;
+    global $tbl_prefix;
+    $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
+    $entries = $wpdb->prefix.$tbl_prefix. "entries";
+    $sql = "
+      DELETE $entries
+      FROM $entries e
+      LEFT OUTER JOIN $user_entries ue
+        ON e.feed_id = ue.orig_feed_id
+      WHERE ue.feed_id IS NULL
+      ";
+    $wpdb->query($sql);
   }
 
 

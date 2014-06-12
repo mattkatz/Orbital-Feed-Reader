@@ -69,6 +69,15 @@ function install_sample_orbital_user_feeds($user_id){
     require_once 'install_upgrade.php';
     orbital_add_sample_feeds_to_user($user_id);
 }
+add_action('deleted_user', 'orbital_clean_deleted_user_entries');
+function orbital_clean_deleted_user_entries ($user_id){
+  //TODO: delete entries from user_entries
+  OrbitalEntries::unlink($user_id, null);
+  //TODO: Delete feeds from user_feeds
+  //TODO: If no users are subscribed to a feed, remove the feed.
+  //I think that's part of the unsubscribe function
+
+}
 add_action('admin_menu', 'orbital_plugin_menu');
 function orbital_plugin_menu(){
   //TODO should this be global? Probably not. 
