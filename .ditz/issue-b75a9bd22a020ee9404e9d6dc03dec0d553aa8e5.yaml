@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.1.7
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2014-05-29 00:24:07.370476 Z
 references: []
 
@@ -20,3 +20,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from unstarted to in_progress
   - ""
+- - 2014-06-12 01:54:34.333639 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - deleting a user should now work

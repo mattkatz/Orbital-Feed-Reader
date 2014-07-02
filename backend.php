@@ -391,82 +391,59 @@ class OrbitalFeeds {
    *   - Should delete the feed from feeds if there are no more user_feeds entries
    *   - then delete all entries for the feed.
    */
-  static function remove($feed_id){
+  static function remove($user_id = null, $feed_id=null){
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
-    $current_user = wp_get_current_user();
-    
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
 
-    $resp->user = $current_user->ID;
-    //$orig_feed_id
+    if(! isset($user_id)){
+      $current_user = wp_get_current_user();
+      $user_id = $current_user->ID;
+    }
+    $resp->user = $user_id;
+
+    $where = array('owner'=>$user_id);
+    if(isset($feed_id)){
+      $where['id'] = $feed_id;
+    }
+
     //User feeds
-    //Let's get the underlying feed_id now
-    $sql = "
-      SELECT feed_id
-      FROM $user_feeds
-      WHERE owner = $current_user->ID
-        AND id = %d";
-    $orig_feed_id = $wpdb->get_var($wpdb->prepare($sql,$feed_id));
-
-    $sql = "
-      DELETE 
-      FROM $user_feeds 
-      WHERE owner = $current_user->ID 
-      AND id = %d";
-    $sql = $wpdb->prepare($sql,$feed_id);
-    if(false === $wpdb->query($sql)){
+    if(false === $wpdb->delete($user_feeds, $where,'%d')){
       $resp->uf_error = $wpdb->print_error();
+      _log($resp->uf_error);
     }
-    //delete all user_entries for current user
-    //TODO we should probably only link user_entries to user_feeds
-    $sql = "
-      DELETE 
-      FROM $user_entries 
-      WHERE owner_uid = $current_user->ID 
-      AND feed_id = %d";
-    $sql = $wpdb->prepare($sql,$feed_id);
-    if(false ===  $wpdb->query($sql)){
-      $resp->ue_error = $wpdb->print_error();
-    }
+    //clean up any feeds that don't have subscriptions from users
+    OrbitalFeeds::clean_feeds();
 
-    //was that the last person subscribed to the feed?
-    //if so, we should remove the feed and all entries
-    $sql = "
-      SELECT COUNT(*)
-      FROM $user_feeds
-      WHERE feed_id = %d";
-    $subscribers = $wpdb->get_var($wpdb->prepare($sql,$orig_feed_id));
-
-    if(0<= $subscribers){
-      $sql = "
-        DELETE
-        FROM $entries
-        WHERE feed_id = %d";
-      $sql = $wpdb->prepare($sql,$orig_feed_id);
-      if(false === $wpdb->query($sql)){
-        $resp->entries_error = $wpdb->print_error();
-      }
-
-      //TODO we are getting a weird blank error on delete for this
-      //Is that valid for postgres?  How can we just eliminate that error?
-      $sql = "
-        DELETE 
-        FROM $feeds
-        WHERE id = %d;";
-      $sql = $wpdb->prepare($sql,$orig_feed_id);
-      if(false === $wpdb->query($sql)){
-        $resp->feeds_error = $wpdb->print_error();
-      }
-    }
-
-    //$resp->result = $res;
+    //delete all user_entries for user
+    OrbitalEntries::unlink($user_id,$feed_id);
     $resp->feed_id = $feed_id;
     return $resp;
+  }
+
+
+  /* OrbitalFeeds::clean_feeds
+   * Remove any feeds that no one is currently subscribed to 
+   */
+  static function clean_feeds(){
+    global $wpdb;
+    global $tbl_prefix;
+    $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
+    $sql = "
+      DELETE f
+      FROM $feeds f
+      LEFT OUTER JOIN $user_feeds uf
+        ON uf.feed_id = f.id
+      WHERE uf.id IS NULL
+      ";
+    if(false === $wpdb->query($sql)){
+      _log($wpdb->print_error());
+    }
   }
 
   /*
@@ -823,9 +800,9 @@ class OrbitalEntries{
       //we don't want to remove ALL entries
       return 0;
     }
-    retcount = $wpdb->delete($user_entries, $wheres, '%d');
+    $retcount = $wpdb->delete($user_entries, $wheres, '%d');
     OrbitalEntries::clean_entries();
-    return retcount;
+    return $retcount;
   }
   /* OrbitalEntries::clean_entries
    * Clean up unviewable entries
@@ -838,7 +815,7 @@ class OrbitalEntries{
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries";
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $sql = "
-      DELETE $entries
+      DELETE e
       FROM $entries e
       LEFT OUTER JOIN $user_entries ue
         ON e.feed_id = ue.orig_feed_id
@@ -975,7 +952,7 @@ function orbital_unsubscribe_feed(){
   
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
 
-  $resp = OrbitalFeeds::remove($feed_id);
+  $resp = OrbitalFeeds::remove(null,$feed_id);
   echo json_encode($resp);
   exit;
 }

@@ -69,14 +69,10 @@ function install_sample_orbital_user_feeds($user_id){
     require_once 'install_upgrade.php';
     orbital_add_sample_feeds_to_user($user_id);
 }
-add_action('deleted_user', 'orbital_clean_deleted_user_entries');
-function orbital_clean_deleted_user_entries ($user_id){
-  //TODO: delete entries from user_entries
-  OrbitalEntries::unlink($user_id, null);
-  //TODO: Delete feeds from user_feeds
-  //TODO: If no users are subscribed to a feed, remove the feed.
-  //I think that's part of the unsubscribe function
-
+add_action('deleted_user', 'orbital_clean_deleted_user_feeds');
+function orbital_clean_deleted_user_feeds ($user_id){
+  //Tell the feeds class to remove all subscriptions for this user
+  OrbitalFeeds::remove($user_id, null);
 }
 add_action('admin_menu', 'orbital_plugin_menu');
 function orbital_plugin_menu(){
