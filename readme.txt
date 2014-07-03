@@ -38,6 +38,13 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.1.7 - Multi-User = 
+* bugfix: feed unread count is multiplied by tag count
+* Multi-user support
+* MU - a fresh install should install feeds for each user
+* MU - handle deleting a user
+* MU - support adding a new user
+
 = 0.1.6.1 - Tagfix = 
 * bugfix: bad unread count on some feeds
 * bugfix: unread count on feeds was multiplied by tag count for all feeds
