@@ -3,7 +3,7 @@ title: add unread count to All feed
 desc: I think this should be doable by creating a get property that does the computation
 type: :feature
 component: Orbital
-release: 0.1.7
+release: 0.1.8
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -19,4 +19,8 @@ log_events:
 - - 2014-02-27 00:31:21.493684 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.7 from 0.1.6
+  - ""
+- - 2014-07-03 00:31:54.238445 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.8 from 0.1.7
   - ""

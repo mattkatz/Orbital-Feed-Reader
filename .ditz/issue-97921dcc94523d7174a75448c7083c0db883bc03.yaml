@@ -3,7 +3,7 @@ title: Public OPML export for not logged in users
 desc: display only feeds not marked as private.
 type: :feature
 component: Orbital
-release: 0.1.7
+release: 0.1.8
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -19,4 +19,8 @@ log_events:
 - - 2014-01-02 05:40:44.805701 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.7 from unassigned
+  - ""
+- - 2014-07-03 00:30:14.399790 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.8 from 0.1.7
   - ""

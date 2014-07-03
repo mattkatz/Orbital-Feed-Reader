@@ -7,8 +7,8 @@ type: :feature
 component: Orbital
 release: 0.1.7
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2014-01-02 05:39:11.767543 Z
 references: []
 
@@ -22,3 +22,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.7 from 0.2 Wordpress integration
   - ""
+- - 2014-07-03 00:25:19.072119 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - donesies!

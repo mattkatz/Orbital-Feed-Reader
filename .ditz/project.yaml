@@ -90,3 +90,12 @@ releases:
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - Multi-user
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.1.8
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2014-07-03 00:28:52.539730 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - Lets make smaller releases
