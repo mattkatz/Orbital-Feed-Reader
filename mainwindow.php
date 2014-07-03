@@ -18,13 +18,7 @@
         </div>
         <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
           <li id="{{entry.feed_id}}_{{entry.id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.id == selectedEntry.id}" >
-              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
-              <div class="author" ng-show="entry.author">
-                {{entry.author}}
-              </div>
-              <div class="date" title="{{entry.published | date:mediumTime }}">
-                {{entry.published | date:medium }}
-              </div>
+            <div class='indicators'>
               <div class="indicator" ng-show="entry.isLoading">
                 <img src="<?php
                   echo plugins_url("img/ajax-loader.gif", __FILE__);
@@ -32,6 +26,14 @@
               </div>
               <div class="indicator clickable" title="type 'u' or click here to mark unread" ng-click="setReadStatus(entry,0)" ng-show="entry.isRead">
                 Read
+              </div>
+            </div>
+              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
+              <div class="author" ng-show="entry.author">
+                {{entry.author}}
+              </div>
+              <div class="date" title="{{entry.published | date:mediumTime }}">
+                {{entry.published | date:medium }}
               </div>
               <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               <div class='entry-tools'>
