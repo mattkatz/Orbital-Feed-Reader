@@ -29,14 +29,6 @@
               </div>
             </div>
               <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
-              <span class="feed" ><a href='#' ng-click="selectFeed(entry)" ng-bind-html="getFeedName(entry)" ></a></span>
-              <span class="author" ng-show="entry.author">
-                {{entry.author}}
-              </span>
-              <span class="date" title="{{entry.published | date:mediumTime }}">
-                {{entry.published | date:medium }}
-              </span>
-              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
               <div class="author" ng-show="entry.author">
                 {{entry.author}}
               </div>
