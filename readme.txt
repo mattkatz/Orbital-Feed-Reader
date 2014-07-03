@@ -38,8 +38,10 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+
 = 0.1.7.2 - missing feedlist =
 * bugfix: Strict php systems were blowing up feadlist get. Made the call more failsafe.
+
 = 0.1.7.1 - headline fix = 
 * bugfix: doubled headlines!
 
