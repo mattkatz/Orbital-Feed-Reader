@@ -44,6 +44,7 @@
 
 <p>Instead, I'd like to <a href="http://wordpress.org/plugins/orbital-feed-reader/" alt="the orbital feed reader plugin codex page" >bring a feed reader into Wordpress that lets you blog from your blogroll</a>.
 </p>
+<p><a href="#testimonials">I'm not the only person who thinks so!</a></p>
 <h2 id='features' >Features</h2>
 
 <ul>
@@ -65,7 +66,7 @@
   </video>
 </p>
 <p>
-  Adding a tags to a feed so you can organize them should be easy as pie!
+  Adding a tag to a feed so you can organize them should be easy as pie!
   <video poster="img/orbital_add_new_feed_with_tags.png" autoplay loop controls>
     <source src="img/orbital_add_new_feed_with_tags.mp4"></source>
     <source src="img/orbital_add_new_feed_with_tags.webm"></source>
@@ -107,6 +108,12 @@ That's a lot of work to do.  I'm going to take a stab at it, but I'd love your h
 </ol>
 <p>If you want the very latest code, ssh into your plugins directory and clone the project with <a href="http://git-scm.com">Git</a> by running: </p><pre>$ git clone git://github.com/mattkatz/Orbital-Feed-Reader</pre> 
 
+<section>  
+<h2 id='testimonials'>Praise</h2>
+<blockquote>Thanks for a great rss reader within wordpress. I read about 100 feeds every day, with about 1000 entries on average. Then for a dozen or so, I often write related blog posts.
+
+Your reader makes this much easier. Great work !</blockquote><cite><a href="http://blog.insightknowledge.com/">Stefan at InsightKnowledge</a></cite>
+</section>
 
 <h2 id="how_to_contribute">How To Contribute</h2>
 <p>Contributing is easy!</p>
@@ -126,7 +133,7 @@ That's a lot of work to do.  I'm going to take a stab at it, but I'd love your h
 <p>
   Let's keep it decentralized!  I'm using Ditz to track bugs.  You can always use the github issue tracker, but check out what  <a href="./ditz/html/" >ditz gives you.</a>
   <div>
-    <iframe class="ditz-window" src="./ditz/html/index.html" />
+    <iframe class="ditz-window" src="./ditz/html/index.html" ></iframe>
   </div>
 </p>
     
@@ -137,11 +144,40 @@ That's a lot of work to do.  I'm going to take a stab at it, but I'd love your h
     <p> MattKatz on identi.ca or the tweeter or at morelightmorelight.com<br/>      </p>
   
 
-
   </div>
 <div class="footer">
   get the source code on GitHub : <a href="https://github.com/mattkatz/Orbital-Feed-Reader">mattkatz/Orbital-Feed-Reader</a>
 </div>
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://mttktz.com/piwik/" : "http://mttktz.com/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://mttktz.com/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+<!-- Start Open Web Analytics Tracker -->
+<script type="text/javascript">
+//<![CDATA[
+var owa_baseUrl = 'http://mttktz.com/owa/';
+var owa_cmds = owa_cmds || [];
+owa_cmds.push(['setSiteId', '8616782db55ab038e7ccd85b2d00d0f3']);
+owa_cmds.push(['trackPageView']);
+owa_cmds.push(['trackClicks']);
+owa_cmds.push(['trackDomStream']);
 
+(function() {
+	var _owa = document.createElement('script'); _owa.type = 'text/javascript'; _owa.async = true;
+	owa_baseUrl = ('https:' == document.location.protocol ? window.owa_baseSecUrl || owa_baseUrl.replace(/http:/, 'https:') : owa_baseUrl );
+	_owa.src = owa_baseUrl + 'modules/base/js/owa.tracker-combined-min.js';
+	var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
+}());
+//]]>
+</script>
+<!-- End Open Web Analytics Code -->
 </body>
 </html>
