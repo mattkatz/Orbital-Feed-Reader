@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: FeedList populated with PHP Strict
+desc: some systems warn if you don't pass in all params.
+type: :bugfix
+component: Orbital
+release: 0.1.7
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-07-03 19:38:44.489302 Z
+references: []
+
+id: 34d821b9b5fa338cd2ec71f31edc86207ad2683e
+log_events: 
+- - 2014-07-03 19:38:45.829215 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-07-03 19:39:04.992534 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

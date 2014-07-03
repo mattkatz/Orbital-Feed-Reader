@@ -931,7 +931,7 @@ function orbital_list_feeds_die(){
 
 function orbital_list_feeds(){
   //nonce_dance();
-  $myrows = OrbitalFeeds::get();
+  $myrows = OrbitalFeeds::get(null);
 
   echo json_encode($myrows);
 }
