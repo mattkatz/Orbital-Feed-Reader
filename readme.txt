@@ -38,6 +38,9 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.1.7.1 - headline fix = 
+* bugfix: doubled headlines!
+
 = 0.1.7 - Multi-User = 
 * bugfix: feed unread count is multiplied by tag count
 * Multi-user support

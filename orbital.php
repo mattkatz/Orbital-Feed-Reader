@@ -3,7 +3,7 @@
 * Plugin Name: Orbital Feed Reader
 * Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
-* Version: 0.1.7
+* Version: 0.1.7.1
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
