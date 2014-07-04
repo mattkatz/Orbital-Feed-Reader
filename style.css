@@ -18,18 +18,14 @@
 
 .entries .is-current{
   font-style:normal;
-  box-shadow: 2px 2px 4px #666;
+  box-shadow: 0 8px 17px rgba(0, 0, 0, 0.4);
   color: #333;
 }
 .entries img {
   max-width: 100%;
 }
-.is-current > h2{
-  text-shadow: 0 1px 2px #333;
-}
 
 .entry{
-  border-top: 2px ridge;
   display:inline-block;
   padding-bottom: 20px;
   margin-bottom: 10px;
@@ -40,6 +36,7 @@
   width: -moz-available;
   width: -webkit-fill-available;
   width: available;
+  box-shadow: 0 8px 17px rgba(20,20,20,.2);
 }
 
 .entry h2{
@@ -93,7 +90,6 @@
 #orbital-feedlist{
   overflow-y:auto;
 
-  border-left: 1px solid #dddddd;
   padding-left: 10px;
   padding-right: 0px;
   /*background-color: #ECECEC;
