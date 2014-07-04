@@ -6,19 +6,18 @@
 }
 .entries {
   /*background-color: #ECECEC;*/
-  background-color: #fff;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 10%); /* W3C */
+  padding:5px;
   color: #666;
 }
 
 .entries .is-read{
-  background-color: #fdfdfd;
   /*font-style:italic;*/
   color: #999;
 }
 
 .entries .is-current{
   font-style:normal;
-  background-color: #ffffff;
   box-shadow: 2px 2px 4px #666;
   color: #333;
 }
@@ -92,8 +91,8 @@
   border-left: 1px solid #dddddd;
   padding-left: 10px;
   padding-right: 0px;
-  background-color: #ECECEC;
-  border-color: #CCCCCC;
+  /*background-color: #ECECEC;
+  border-color: #CCCCCC;*/
   position: absolute;
   right: 0;
   /*min-width:100px;
