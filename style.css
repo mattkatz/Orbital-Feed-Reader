@@ -6,7 +6,7 @@
 }
 .entries {
   /*background-color: #ECECEC;*/
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 10%); /* W3C */
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,.8) 2%, rgba(255,255,255,.9) 98%, rgba(255,255,255,0) 100%); /* W3C */
   padding:5px;
   color: #666;
 }
@@ -31,10 +31,15 @@
 .entry{
   border-top: 2px ridge;
   display:inline-block;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+  padding-left: 2%;
+  padding-right: 2%;
   /*padding-left: 5px;*/
-  width:100%;
   position:relative;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: available;
 }
 
 .entry h2{
