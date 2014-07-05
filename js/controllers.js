@@ -58,6 +58,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh(callback);
   };
 
+
   $scope.tagUnreadCount = function(tagname){
       feeds = $scope.tags[tagname];
       //console.log('tagUnreadCount (' + tagname+')');
@@ -228,6 +229,11 @@ function EntriesCtrl($scope, $http, $log,feedService){
       $scope.selectedEntry = null;
       scrollToEntry(null);
     });
+  };
+  $scope.changeSortOrder = function(){
+    //console.log("pre saving " + $scope.sortOrder);
+    feedService.saveSort($scope.sortOrder,function(){$scope.$emit('feedSelect', {feed: feedService.selectedFeed()})});
+    //console.log("post saving " + $scope.sortOrder);
   };
   $scope.getEntriesQualifier = function(feed){
     $log.log(feed);
@@ -705,11 +711,6 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
-  $scope.changeSortOrder = function(){
-    //console.log("pre saving " + $scope.sortOrder);
-    feedService.saveSort($scope.sortOrder,function(){$scope.$emit('feedSelect', {feed: feedService.selectedFeed()})});
-    //console.log("post saving " + $scope.sortOrder);
-  };
   $scope.commands = [
     { title: "Mark All As Read",
       name: 'markRead',
@@ -722,4 +723,12 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     },
   ];
 
+}
+
+function changeSortOrder(){
+  console.log('changing sort order');
+  scope = angular.element('#commandbar').scope();
+  scope.$apply(function(){
+    scope.changeSortOrder();
+  });
 }

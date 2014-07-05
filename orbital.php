@@ -217,6 +217,7 @@ function orbital_add_toolbar_items(){
       'id' => 'orbital4',
       'title' => 'Newest First',
       'href' => '#',
+      'meta' => array('onclick' => 'changeSortOrder();',),
     ));
   }
 }
