@@ -79,6 +79,7 @@ function orbital_plugin_menu(){
   //TODO should this be global? Probably not. 
   global $orbital_slug;
   global $orbital_settings_slug;
+  global $orbital_main;
 
   require_once 'backend.php';
   $unread_count = OrbitalFeeds::get_unread_count();
@@ -87,15 +88,15 @@ function orbital_plugin_menu(){
   $menu_title = $page_title;
   $capability = 'edit_posts';
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/satellite.svg',__FILE__));
+  $orbital_main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/satellite.svg',__FILE__));
   //Settings page
   $settings = add_submenu_page( $orbital_slug, 'Settings', 'Settings', $capability, $orbital_settings_slug, 'orbital_settings');
   //add hook for feed management page
   //TODO remove this. We don't need submenu pages now.
   //$feed_mgmt = add_submenu_page('orbital.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
   /* Using registered $page handle to hook script load */
-  add_action('admin_print_styles-' . $main, 'orbital_enqueue_scripts');
-  add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
+  add_action('admin_print_styles-' . $orbital_main, 'orbital_enqueue_scripts');
+  add_action('admin_print_styles-' . $orbital_main, 'orbital_main_scripts');
   //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
   //_log(_get_cron_array());
   //_log(date("Y-m-d H:i:s",wp_next_scheduled('orbital_update_event')));
@@ -191,6 +192,35 @@ function generate_main_page()
 {
   require_once('mainwindow.php');
 }
+add_action('wp_before_admin_bar_render', 'orbital_add_toolbar_items', 100);
+function orbital_add_toolbar_items(){
+  global $wp_admin_bar;
+  global $orbital_main;
+  //only add our controls if this is our screen
+  if($orbital_main == get_current_screen()->id){
+    $wp_admin_bar->add_menu(array(
+      'id' => 'orbital1',
+      'title' => 'Mark All as Read',
+      'href' => '#',
+    ));
+    $wp_admin_bar->add_menu(array(
+      'id' => 'orbital2',
+      'title' => 'Update Feed',
+      'href' => '#',
+    ));
+    $wp_admin_bar->add_menu(array(
+      'id' => 'orbital3',
+      'title' => 'Toggle Read Items',
+      'href' => '#',
+    ));
+    $wp_admin_bar->add_menu(array(
+      'id' => 'orbital4',
+      'title' => 'Newest First',
+      'href' => '#',
+    ));
+  }
+}
+
 /* This is the settings page. */
 function orbital_settings()
 {
