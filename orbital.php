@@ -214,6 +214,7 @@ function orbital_add_toolbar_items(){
       'id' => 'orbital3',
       'title' => 'Toggle Read Items',
       'href' => '#',
+      'meta' => array('onclick' => 'showRead();',),
     ));
 
     $wp_admin_bar->add_node(array(

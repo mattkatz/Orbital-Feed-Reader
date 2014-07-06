@@ -147,6 +147,11 @@ function FeedListCtrl($scope, $http, $log, feedService){
       }
     });
   }
+  $scope.showReadItems = function(){
+    //refresh this feed, but display read items
+    $scope.showRead = 1 - $scope.showRead;
+    $scope.select(feedService.selectedFeed(),$scope.showRead);
+  }
 
   /*
    * Events
@@ -186,13 +191,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
   $scope.$on('commandBarEvented', function  (event, args) {
     feed = args.feed;
     switch(args.name){
-      case "showRead":
-        //refresh this feed, but display read items
-        $log.info('in showRead');
-        //feedService.setShowRead(1 -feedService.getShowRead() );
-        $scope.showRead = 1 - $scope.showRead;
-        $scope.select(feed,$scope.showRead);
-        break;
       default:
         $log.log('requested commandBar action ' + args.name + ' - not implemented yet');
         break;
@@ -717,9 +715,6 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
   $scope.commands = [
-    { title: "Toggle Read Items",
-      name: 'showRead',
-    },
   ];
 
 }
@@ -735,6 +730,12 @@ function markFeedRead(feed){
   scope = angular.element('#orbital-feedlist').scope();
   scope.$apply(function(){
     scope.markRead( feed);
+  });
+}
+function showRead(feed){
+  scope=angular.element('#orbital-feedlist').scope();
+  scope.$apply(function(){
+    scope.showReadItems( feed);
   });
 }
 function updateFeed(feed){
