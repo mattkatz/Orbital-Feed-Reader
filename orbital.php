@@ -205,9 +205,10 @@ function orbital_add_toolbar_items(){
       'meta' => array('onclick' => 'markFeedRead();',),
     ));
     $wp_admin_bar->add_menu(array(
-      'id' => 'orbital2',
+      'id' => 'orbital_update_feed',
       'title' => 'Update Feed',
       'href' => '#',
+      'meta' => array('onclick' => 'updateFeed();',),
     ));
     $wp_admin_bar->add_menu(array(
       'id' => 'orbital3',

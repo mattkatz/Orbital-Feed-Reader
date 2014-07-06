@@ -128,6 +128,9 @@ function FeedListCtrl($scope, $http, $log, feedService){
    * TODO move this into the feedService
    */
   $scope.update = function(feed){
+    if(null == feed){
+      feed = feedService.selectedFeed();
+    }
     //update feed 
     var data= {
       action: 'orbital_update_feed',
@@ -183,10 +186,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
   $scope.$on('commandBarEvented', function  (event, args) {
     feed = args.feed;
     switch(args.name){
-      case "updateFeed":
-        //update feed 
-        $scope.update(feed);
-        break;
       case "showRead":
         //refresh this feed, but display read items
         $log.info('in showRead');
@@ -718,9 +717,6 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
   $scope.commands = [
-    { title: "Update Feed",
-      name: 'updateFeed',
-    },
     { title: "Toggle Read Items",
       name: 'showRead',
     },
@@ -729,7 +725,6 @@ function CommandBarCtrl($scope,$http,$log,feedService){
 }
 
 function changeSortOrder( newSort){
-  console.log('changing sort order');
   scope = angular.element('#orbital-main-content').scope();
   scope.$apply(function(){
     scope.changeSortOrder( newSort);
@@ -740,5 +735,11 @@ function markFeedRead(feed){
   scope = angular.element('#orbital-feedlist').scope();
   scope.$apply(function(){
     scope.markRead( feed);
+  });
+}
+function updateFeed(feed){
+  scope = angular.element('#orbital-feedlist').scope();
+  scope.$apply(function(){
+    scope.update( feed);
   });
 }
