@@ -199,9 +199,10 @@ function orbital_add_toolbar_items(){
   //only add our controls if this is our screen
   if($orbital_main == get_current_screen()->id){
     $wp_admin_bar->add_menu(array(
-      'id' => 'orbital1',
+      'id' => 'orbital_mark_as_read',
       'title' => 'Mark All as Read',
       'href' => '#',
+      'meta' => array('onclick' => 'markFeedRead();',),
     ));
     $wp_admin_bar->add_menu(array(
       'id' => 'orbital2',
@@ -213,12 +214,28 @@ function orbital_add_toolbar_items(){
       'title' => 'Toggle Read Items',
       'href' => '#',
     ));
-    $wp_admin_bar->add_menu(array(
-      'id' => 'orbital4',
-      'title' => 'Newest First',
+
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital_sort',
+      'title' => 'Sort',
       'href' => '#',
       'meta' => array('onclick' => 'changeSortOrder();',),
     ));
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital_newest_first',
+      'title' => 'Newest First',
+      'href' => '#',
+      'parent' => 'orbital_sort',
+      'meta' => array('onclick' => 'changeSortOrder(-1);',),
+    ));
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital_oldest_first',
+      'title' => 'Oldest First',
+      'href' => '#',
+      'parent' => 'orbital_sort',
+      'meta' => array('onclick' => 'changeSortOrder(1);',),
+    ));
+    
   }
 }
 

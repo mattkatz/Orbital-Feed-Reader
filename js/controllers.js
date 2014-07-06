@@ -58,7 +58,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh(callback);
   };
 
-
   $scope.tagUnreadCount = function(tagname){
       feeds = $scope.tags[tagname];
       //console.log('tagUnreadCount (' + tagname+')');
@@ -86,7 +85,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
     // If we reach the end of the list
     // Start looking at the beginning till we find an unread feed
     feeds = $scope.feeds;
-    index = feeds.indexOf($scope.selectedFeed);
+    index = feeds.indexOf(feedService.selectedFeed());
     $log.info('index is ' + index);
     //we are starting at the index item
     //and circling the array
@@ -97,7 +96,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
       }
     }
     //NOTHING! let's just return where we started
-    return $scope.selectedFeed;
+    return feedService.selectedFeed();
   };
 
   /*
@@ -105,6 +104,23 @@ function FeedListCtrl($scope, $http, $log, feedService){
    */
   $scope.setEditable = function(){
     $scope.editable = ! $scope.editable;
+  }
+  $scope.markRead = function(feed){
+    console.log(feedService.selectedFeed());
+    if( null == feed){
+      feed = feedService.selectedFeed();
+    }
+    //mark feed read
+    var data = {
+      action: 'orbital_mark_items_read',
+      feed_id:feed.feed_id,
+    };
+    $http.post(opts.ajaxurl, data)
+    .success(function(response){
+      $scope.refresh();
+      $scope.select($scope.nextUnreadFeed());
+    });
+
   }
 
   /*
@@ -162,22 +178,11 @@ function FeedListCtrl($scope, $http, $log, feedService){
     $log.log('updateFeed event');
     $scope.update(args.feed);
   });
+  
   /* One of the command bar actions fired */
   $scope.$on('commandBarEvented', function  (event, args) {
     feed = args.feed;
     switch(args.name){
-      case "markRead":
-        //mark feed read
-        var data = {
-          action: 'orbital_mark_items_read',
-          feed_id:feed.feed_id,
-        };
-        $http.post(opts.ajaxurl, data)
-        .success(function(response){
-          $scope.refresh();
-          $scope.select($scope.nextUnreadFeed());
-        });
-        break;
       case "updateFeed":
         //update feed 
         $scope.update(feed);
@@ -221,7 +226,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
     //$log.log('qualifier='+qualifier);
     //$log.log('showRead='+showRead);
     $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead)
+    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead +'&sort=' + feedService.sortOrder())
     .success(function(data){
       $scope.isLoading = false;
       //$log.info(data);
@@ -230,13 +235,14 @@ function EntriesCtrl($scope, $http, $log,feedService){
       scrollToEntry(null);
     });
   };
-  $scope.changeSortOrder = function(){
+  $scope.changeSortOrder = function(newSort){
+    newSort = newSort || feedService.sortOrder() * -1;
     //console.log("pre saving " + $scope.sortOrder);
-    feedService.saveSort($scope.sortOrder,function(){$scope.$emit('feedSelect', {feed: feedService.selectedFeed()})});
+    feedService.saveSort(newSort,function(){$scope.$emit('feedSelect', {feed: feedService.selectedFeed()})});
     //console.log("post saving " + $scope.sortOrder);
   };
   $scope.getEntriesQualifier = function(feed){
-    $log.log(feed);
+    //$log.log(feed);
     var qualifier = '';
     //If we aren't passed a feed filter, don't create one
     if(null == feed ){
@@ -712,9 +718,6 @@ function CommandBarCtrl($scope,$http,$log,feedService){
     $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
   };
   $scope.commands = [
-    { title: "Mark All As Read",
-      name: 'markRead',
-    },
     { title: "Update Feed",
       name: 'updateFeed',
     },
@@ -725,10 +728,17 @@ function CommandBarCtrl($scope,$http,$log,feedService){
 
 }
 
-function changeSortOrder(){
+function changeSortOrder( newSort){
   console.log('changing sort order');
-  scope = angular.element('#commandbar').scope();
+  scope = angular.element('#orbital-main-content').scope();
   scope.$apply(function(){
-    scope.changeSortOrder();
+    scope.changeSortOrder( newSort);
+  });
+}
+
+function markFeedRead(feed){
+  scope = angular.element('#orbital-feedlist').scope();
+  scope.$apply(function(){
+    scope.markRead( feed);
   });
 }
