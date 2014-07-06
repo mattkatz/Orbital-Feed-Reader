@@ -839,7 +839,10 @@ class OrbitalEntries{
     $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
     $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $user_settings = (array) get_user_option( 'orbital_settings' );
-    $sort_order = $user_settings['sort_order'] || -1;
+    $sort_order = -1;
+    if(isset($user_settings['sort_order'])){
+      $sort_order = $user_settings['sort_order'];
+    }
     $sort = "ORDER BY entries.published ";
     if("-1" == $sort_order ){
       $sort = $sort . "DESC";
@@ -1095,6 +1098,7 @@ function orbital_get_feed_entries(){
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
   $tag = filter_input(INPUT_GET, 'tag',FILTER_SANITIZE_STRING);
+  $sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_NUMBER_INT);
   if($tag !=""){
     $filters['tag'] = $tag;
   }
@@ -1220,8 +1224,11 @@ function orbital_set_user_settings(){
   global $current_user;
   //TODO this is the better way, but I can't get it to work.
   //$user_orbital_settings = filter_input(INPUT_POST, 'orbital_settings', FILTER_SANITIZE_STRING);
+  //TODO we should handle if there isn't a setting passed...
   $user_orbital_settings = $_POST['orbital_settings'];
   $settings = (array) get_user_option( 'orbital_settings' );
+  //_log('debug: '. $settings);
+  // _log('debug: '. $user_orbital_settings);
   //merge arrays
   $new_settings = $user_orbital_settings + $settings;
   /*
@@ -1236,6 +1243,9 @@ function orbital_set_user_settings(){
   if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
     // Send back what we now know
     echo json_encode($new_settings);
+    _log("saved settings");
+    _log((array) get_user_option( 'orbital_settings' ));
+
   }
   else {
     echo false;
