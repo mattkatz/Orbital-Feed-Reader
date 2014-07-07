@@ -701,23 +701,6 @@ function SubsCtrl($scope,$http,$log,feedService ){
   });
 }
 
-function CommandBarCtrl($scope,$http,$log,feedService){
-  $scope.$watch(feedService.selectedFeed, function (){
-    $scope.currentFeed = feedService.selectedFeed();
-    console.log($scope.currentFeed + ' selected');
-  });
-  $scope.$watch(feedService.sortOrder, function(){
-    $scope.sortOrder = feedService.sortOrder();
-    $scope.sortOptions = feedService.sortOptions();
-  });
-  $scope.commandBarAction = function(action){
-    //$log.info(action.title + (action.name ? ' fired' : ' - not implemented yet'));
-    $scope.$emit('commandBarEvent',{name: action.name,feed: $scope.currentFeed});
-  };
-  $scope.commands = [
-  ];
-
-}
 
 function changeSortOrder( newSort){
   scope = angular.element('#orbital-main-content').scope();

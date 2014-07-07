@@ -1,14 +1,4 @@
 <div id='orbital-container' ng-app="mainModule" >
-  <div id="commandbar" class="quicklinks" ng-controller="CommandBarCtrl">
-    <ul>
-      <li class="command" ng-repeat="command in commands" ><a href="#" ng-click="commandBarAction(command)" >{{command.title}}</a></li>
-      <li class="command">
-        <select ng-model="sortOrder" ng-options="item.sortOrder as item.sortName for item in sortOptions" ng-change="changeSortOrder()"> </select>
-      </li>
-
-    </ul>
-    {{currentFeed.feed_name}}
-  </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id="orbital-content" >
         <div class="indicator" ng-show="isLoading">
