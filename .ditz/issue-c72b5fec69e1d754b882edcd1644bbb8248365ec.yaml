@@ -1,5 +1,5 @@
 --- !ditz.rubyforge.org,2008-03-06/issue 
-title: Move the action bar into the wp admin_bar
+title: Flatten and improve the style
 desc: ""
 type: :feature
 component: Orbital
@@ -7,16 +7,16 @@ release: 0.1.8
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :closed
 disposition: :fixed
-creation_time: 2014-07-05 21:43:10.180664 Z
+creation_time: 2014-07-07 10:53:53.229468 Z
 references: []
 
-id: 760780949a17d7e0ea5b0b6cc01461000d730859
+id: c72b5fec69e1d754b882edcd1644bbb8248365ec
 log_events: 
-- - 2014-07-05 21:43:11.079912 Z
+- - 2014-07-07 10:53:54.094102 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
-- - 2014-07-07 10:53:23.169649 Z
+- - 2014-07-07 10:54:06.600111 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""
