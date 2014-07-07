@@ -56,8 +56,8 @@
       <li ng-repeat="feed in feeds" ng-include="'feedline.html'" > </li>
     </ul>
     <ul id='tags' ng-show="showByTags">
-      <li class="tag" ng-repeat="(tag, feeds) in tags" >
-        <div id="{{tag}}" ng-click="select(tag)" ng-class="{'is-selected':tag.isSelected}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
+      <li ng-repeat="(tag, feeds) in tags" >
+        <div id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag.isSelected}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
         <ul>
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
         </ul>
