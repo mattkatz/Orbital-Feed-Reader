@@ -7,7 +7,7 @@
 .entries {
   /*background-color: #ECECEC;*/
   background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,.8) 2%, rgba(255,255,255,.9) 98%, rgba(255,255,255,0) 100%); /* W3C */
-  padding:5px;
+  /*padding:5px;*/
   color: #666;
 }
 
@@ -20,6 +20,9 @@
   font-style:normal;
   box-shadow: 0 8px 17px rgba(0, 0, 0, 0.4);
   color: #333;
+}
+#orbital-entries{
+  margin:0px;
 }
 .entries img {
   max-width: 100%;
@@ -190,7 +193,6 @@
   width:80%;
  /* background:#dedede;*/
   overflow-y:auto;
-  top: 20px;
 }
 /* Command Bar */
 #commandbar {
