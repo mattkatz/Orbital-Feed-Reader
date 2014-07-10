@@ -47,7 +47,7 @@
       </div>
     </div>
     <script type="text/ng-template"  id='feedline.html'>
-      <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed.isSelected}" ng-click="select(feed)"  >
+      <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
             {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
             <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </div>
@@ -57,7 +57,7 @@
     </ul>
     <ul id='tags' ng-show="showByTags">
       <li ng-repeat="(tag, feeds) in tags" >
-        <div id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag.isSelected}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
+        <div id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
         <ul>
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
         </ul>

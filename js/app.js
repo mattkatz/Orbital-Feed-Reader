@@ -124,23 +124,18 @@ mainModule.factory('feedService',   function($http){
         _feeds= data;
 
         //Now lets get a list of all the unique tags in those feeds
-        //_allTags= _.unique(_.pluck(_feeds, 'tags').join().split(","));
-        console.log('1');
         _allTags = _.pluck(_feeds,'tags').join().split(",");
         _allTags = _.chain(_allTags)
                     .unique()
                     .compact()
                     .value();
 
-        console.log('2');
         //For each tag, lets build up a list of the feeds that have that tag
         _.each(_allTags, function(tag){
           _tags[tag] = _.filter(_feeds,function(feed){
                           return _.contains(feed.tags.split(","),tag);
                         });
         })
-        console.log('3');
-        //Stick in our special All Feeds 
         //We have to do this AFTER the tag building 
         //because this has no tags and throws an exception
         var fresh = {
@@ -164,13 +159,7 @@ mainModule.factory('feedService',   function($http){
       });
     },
     select : function(feed, showRead){
-      //Mark this feed as selected
-      _feeds.forEach(function(value,index){
-        value.isSelected = value.feed_id == feed.feed_id
-      });
-      //let's cache this for later
       _selectedFeed = feed;
-
     },
     saveFeed: function(feed, successCallback){
       var data = {

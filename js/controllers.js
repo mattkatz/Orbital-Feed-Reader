@@ -10,6 +10,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
   $scope.tags = feedService.tags();
   $scope.isLoading = feedService.isLoading();
   $scope.showRead = 0;
+  $scope.selectedFeed = null;
   $scope.$watch(feedService.feeds,function(newValue){
     //console.log('listener');
     //$scope.feeds = feedService.feeds();
@@ -25,6 +26,9 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
   $scope.$watch(feedService.showByTags,function(newValue,oldValue){
     $scope.showByTags = newValue;
+  });
+  $scope.$watch(feedService.selectedFeed,function(newValue,oldValue){
+    $scope.selectedFeed = newValue;
   });
   $scope.saveTagView = function(showTags){
     feedService.saveTagView(showTags,null);
@@ -201,13 +205,13 @@ function FeedListCtrl($scope, $http, $log, feedService){
 function EntriesCtrl($scope, $http, $log,feedService){
   $scope.selectedEntry = null;
   $scope.isRead = false;
-  $scope.currentFeed = null;
+//  $scope.currentFeed = null;
   $log.log("in EntriesCtrl");
   $scope.$watch(feedService.selectedFeed, function (){
-    //$scope.currentFeed = feedService.selectedFeed();
     if(feedService.selectedFeed()){
-      $log.log('feedservice.selectedFeed = ' +feedService.selectedFeed());
+      //$log.log('feedservice.selectedFeed = ' +feedService.selectedFeed());
       $scope.displayFeed(feedService.selectedFeed());
+ //     $scope.currentFeed = feedService.selectedFeed();
     }
   });
   
