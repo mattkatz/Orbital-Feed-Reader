@@ -1,4 +1,37 @@
 <div id='orbital-container' ng-app="mainModule" >
+  <div id="orbital-feedlist" ng-controller="FeedListCtrl" >
+    <div id='feed-head'>
+      <h2>The Feeds</h2> 
+      <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
+      <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
+      <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
+      <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
+      <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="saveTagView(true)">#</a>
+      <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="saveTagView(false)">≣</a>
+      <div class="clickable" ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
+        You are in edit mode, click here to exit.
+      </div>
+    </div>
+    <script type="text/ng-template"  id='feedline.html'>
+      <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
+            {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
+            <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
+      </div>
+    </script>
+    <ul id='feeds' ng-hide="showByTags" >
+      <li ng-repeat="feed in feeds" ng-include="'feedline.html'" > </li>
+    </ul>
+    <ul id='tags' ng-show="showByTags">
+      <li ng-repeat="(tag, feeds) in tags" >
+        <div id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
+        <ul>
+          <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
+        </ul>
+      </li>
+    </ul>
+
+
+  </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id="orbital-content" >
         <div class="indicator" ng-show="isLoading">
@@ -32,39 +65,6 @@
           </li>
         </ul>
     </div>
-  </div>
-  <div id="orbital-feedlist" ng-controller="FeedListCtrl" >
-    <div id='feed-head'>
-      <h2>The Feeds</h2> 
-      <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
-      <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
-      <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
-      <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
-      <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="saveTagView(true)">#</a>
-      <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="saveTagView(false)">≣</a>
-      <div class="clickable" ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
-        You are in edit mode, click here to exit.
-      </div>
-    </div>
-    <script type="text/ng-template"  id='feedline.html'>
-      <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
-            {{feed.feed_name}} <span class="feedcounter">{{feed.unread_count}}</span>
-            <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
-      </div>
-    </script>
-    <ul id='feeds' ng-hide="showByTags" >
-      <li ng-repeat="feed in feeds" ng-include="'feedline.html'" > </li>
-    </ul>
-    <ul id='tags' ng-show="showByTags">
-      <li ng-repeat="(tag, feeds) in tags" >
-        <div id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
-        <ul>
-          <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
-        </ul>
-      </li>
-    </ul>
-
-
   </div>
   <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
     <div class='indicator' ng-show="isLoading" >

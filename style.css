@@ -1,4 +1,7 @@
 /* entries*/
+#orbital-main-content{
+  float:left;
+}
 .no-feed-displayed{
   font-weight: lighter;
   font-size: large;
@@ -92,15 +95,11 @@
 
 #orbital-feedlist{
   overflow-y:auto;
-
   padding-left: 10px;
   padding-right: 0px;
-  position: absolute;
-  right: 0;
   width:20%
-}
-#orbital-feedlist {
   height:100%;
+  float:left;
 }
 #feed-head > h2{
   display:inline;
