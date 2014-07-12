@@ -42,6 +42,9 @@
         <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
           <li id="{{entry.feed_id}}_{{entry.id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.id == selectedEntry.id}" >
             <div class='indicators'>
+              <div class="indicator">
+                {{getFeedName(entry)}}
+              </div>
               <div class="indicator" ng-show="entry.isLoading">
                 <img src="<?php
                   echo plugins_url("img/ajax-loader.gif", __FILE__);

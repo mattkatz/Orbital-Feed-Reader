@@ -67,6 +67,8 @@
   position:relative;
   right: 20px;
   float:right;
+  padding-left:1rem;
+  color: rgba(0,0,0,0.54);
 }
 
 /* i'd like to just make this all CSS
