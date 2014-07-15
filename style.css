@@ -99,7 +99,8 @@
   overflow-y:auto;
   padding-left: 0px;
   padding-right: 0px;
-  width:20%
+  width:20%;
+  min-width: 8rem;
   height:100%;
   float:left;
 }
@@ -192,6 +193,8 @@
 #orbital-content{
   position:absolute;
   width:80%;
+  max-width:60rem;
+  min-width:30rem;
  /* background:#dedede;*/
   overflow-y:auto;
 }
