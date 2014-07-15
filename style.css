@@ -97,7 +97,7 @@
 
 #orbital-feedlist{
   overflow-y:auto;
-  padding-left: 10px;
+  padding-left: 0px;
   padding-right: 0px;
   width:20%
   height:100%;
