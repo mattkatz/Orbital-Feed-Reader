@@ -104,6 +104,9 @@
   height:100%;
   float:left;
 }
+#orbital-feedlist-actions{
+  display:inline-block;
+}
 #feed-head > h2{
   display:inline;
 }
@@ -155,8 +158,9 @@
 }
 
 .is-editable{
-  background-color: white;
-  box-shadow: 0 0 4px #353535;
+  //background-color: white;
+  //box-shadow: 0 0 4px #353535;
+  color:rgba(0,0,150,0.56);
 }
 
 #y-indicator{

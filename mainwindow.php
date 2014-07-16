@@ -2,12 +2,14 @@
   <div id="orbital-feedlist" ng-controller="FeedListCtrl" >
     <div id='feed-head'>
       <h2>The Feeds</h2> 
-      <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
-      <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
-      <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
-      <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
-      <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="saveTagView(true)">#</a>
-      <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="saveTagView(false)">≣</a>
+      <div id="orbital-feedlist-actions">
+        <a class="action" title="Add a new feed" ng-click="requestNewFeed()">+</a>
+        <a class="action" title="Refresh the feed list" ng-click="refresh()">⟳</a>
+        <a class="action" ng-show="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">∅</a>
+        <a class="action" ng-hide="editable" ng-class="{'is-editable': editable}" title="Edit these feeds" ng-click="setEditable()">✎</a>
+        <a class="action" ng-hide="showByTags" title="Show feeds organized by tag" ng-click="saveTagView(true)">#</a>
+        <a class="action" ng-show="showByTags" title="Show feeds as a list" ng-click="saveTagView(false)">≣</a>
+      </div>
       <div class="clickable" ng-class="{'is-editable': editable}" ng-show="editable" ng-click="setEditable()">
         You are in edit mode, click here to exit.
       </div>
