@@ -106,6 +106,7 @@
 }
 #orbital-feedlist-actions{
   display:inline-block;
+  padding-top:1em;
 }
 #feed-head > h2{
   display:inline;
