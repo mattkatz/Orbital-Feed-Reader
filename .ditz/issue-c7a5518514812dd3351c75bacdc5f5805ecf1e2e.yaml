@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Improve Styling
+desc: |-
+  going to try follow some of the "Material Design" guidelines from google.
+  they seem very similar to the WP style...
+type: :feature
+component: Orbital
+release: 0.1.8
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-07-16 01:50:18.270096 Z
+references: []
+
+id: c7a5518514812dd3351c75bacdc5f5805ecf1e2e
+log_events: 
+- - 2014-07-16 01:50:19.855788 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-07-16 01:52:25.055892 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

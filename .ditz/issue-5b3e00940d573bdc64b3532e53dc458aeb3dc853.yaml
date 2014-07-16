@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Move feed list to the left
+desc: work out how to properly visually cascade.
+type: :feature
+component: Orbital
+release: 0.1.8
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-07-16 01:50:56.121229 Z
+references: []
+
+id: 5b3e00940d573bdc64b3532e53dc458aeb3dc853
+log_events: 
+- - 2014-07-16 01:50:57.241749 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-07-16 01:52:52.371535 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - damnit lance was right. It does look much better over there.
