@@ -201,7 +201,7 @@ function orbital_add_toolbar_items(){
       'title' => '<span class="ab-icon"></span><span class="ab-label">Update Feed</span>',
       'href' => '#',
       'meta' => array('onclick' => 'updateFeed();',
-                      'title' => 'Update Feed',
+                      'title' => 'Update Current Feed',
                       'class' => 'orbital-entries-command',),
     ));
     $wp_admin_bar->add_node(array(
@@ -209,7 +209,7 @@ function orbital_add_toolbar_items(){
       'title' => '<span class="ab-icon"></span><span class="ab-label">Toggle Read Items</span>',
       'href' => '#',
       'meta' => array('onclick' => 'showRead();',
-                      'title' => 'Toggle Read Items',
+                      'title' => 'Toggle Showing Read Items',
                       'class' => 'orbital-entries-command',),
     ));
 
@@ -218,7 +218,7 @@ function orbital_add_toolbar_items(){
       'title' => '<span class="ab-icon"></span><span class="ab-label">Sort</span>',
       'href' => '#',
       'meta' => array('onclick' => 'changeSortOrder();',
-                      'title' => 'Sort',
+                      'title' => 'Toggle Entries Sort Order',
                       'class' => 'orbital-entries-command',),
     ));
     $wp_admin_bar->add_node(array(
@@ -227,7 +227,7 @@ function orbital_add_toolbar_items(){
       'href' => '#',
       'parent' => 'orbital_sort',
       'meta' => array('onclick' => 'changeSortOrder(-1);',
-                      'title' => 'Newest First',),
+                      'title' => 'Sort Entries Newest First',),
     ));
     $wp_admin_bar->add_node(array(
       'id' => 'orbital-oldest-first',
@@ -235,7 +235,7 @@ function orbital_add_toolbar_items(){
       'href' => '#',
       'parent' => 'orbital_sort',
       'meta' => array('onclick' => 'changeSortOrder(1);',
-                      'title' => 'Oldest First',),
+                      'title' => 'Sort Entries Oldest First',),
     ));
     
   }
