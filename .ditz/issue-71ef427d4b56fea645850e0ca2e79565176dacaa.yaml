@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make sure admin bar items collapse properly
+desc: lower than 782px we need to switch to still show some items
+type: :feature
+component: Orbital
+release: 0.1.8
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-07-16 11:49:21.931479 Z
+references: []
+
+id: 71ef427d4b56fea645850e0ca2e79565176dacaa
+log_events: 
+- - 2014-07-16 11:49:22.836371 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

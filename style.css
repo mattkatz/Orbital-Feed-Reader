@@ -327,3 +327,26 @@
   padding-bottom:0px;
 }
 
+/*small breakpoint queries*/
+@media (max-width: 782px){
+  .orbital-entries-command a span{
+    text-align: center;
+  }
+
+  #wp-admin-bar-orbital-mark-as-read .ab-icon:before{
+    content: "\f147";
+  }
+  #wp-admin-bar-orbital-update-feed .ab-icon:before{
+    content: "\f342";
+  }
+  #wp-admin-bar-orbital-sort .ab-icon:before{
+    content: "\f156";
+  }
+  #wp-admin-bar-orbital-show-read-items .ab-icon:before{
+    content: "\f331";
+    line-height: 48px;
+  }
+  .orbital-entries-command{
+    display:block !important;
+  }
+}
