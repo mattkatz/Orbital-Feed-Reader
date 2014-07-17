@@ -32,21 +32,20 @@ function orbital_update_db_check(){
   global $orbital_db_version;
   global $orbital_db_version_opt_string;
   if(get_site_option($orbital_db_version_opt_string) != $orbital_db_version){
-    _log(get_site_option($orbital_db_version_opt_string) );
     //upgrayedd the db
-    _log("orbital: Installing or Upgrayedding Database");
+    //_log("orbital: Installing or Upgrayedding Database");
     //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
     orbital_install_db();
   }
-  _log('finished DB update check');
+  //_log('finished DB update check');
 }
 add_action('plugins_loaded', 'orbital_sample_data_check');
 function orbital_sample_data_check(){
   global $orbital_samples_version ;
-  _log('check for sampledata');
+  //_log('check for sampledata');
   $samples_loaded = get_site_option('orbital_sample_data_loaded');
-  _log("Are the samples loaded: $samples_loaded ");
+  //_log("Are the samples loaded: $samples_loaded ");
   if( $samples_loaded !== $orbital_samples_version)
   {
     _log("orbital: Installing Sample Data");
@@ -56,7 +55,7 @@ function orbital_sample_data_check(){
     update_option('orbital_sample_data_loaded', $orbital_samples_version);
   }
   else{
-    _log('Sample Data already in there, never mind');
+    //_log('Sample Data already in there, never mind');
 
   }
 }
@@ -285,16 +284,11 @@ function orbital_set_up_cron(){
 
 function orbital_update_job(){
   //call feeds update.
-  _log('orbital_update_job called');
   orbital_update_feeds();
   //TODO somehow signal a pop to the front end that the job, it is done.
 }
 
 function orbital_activate(){
-  //_log('orbital activate begin');
-  //orbital_update_db_check();
-  //_log('orbital sample begin');
-  //orbital_sample_data_check();
   orbital_set_up_cron();
   _log('orbital activate end');
 }

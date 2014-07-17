@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Clean up logging
+desc: ""
+type: :task
+component: Orbital
+release: 0.1.8
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-07-17 23:19:58.145517 Z
+references: []
+
+id: 7b3aee214d8116acba235fd6bebbe58ad9eea1b0
+log_events: 
+- - 2014-07-17 23:19:59.359211 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-07-17 23:20:22.655813 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2014-07-17 23:31:00.016182 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - removed most things except for the data check and the error logging
