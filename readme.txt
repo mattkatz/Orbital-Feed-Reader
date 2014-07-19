@@ -39,6 +39,15 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
+= 0.1.8 - Makeover =
+* Flatten and improve the style
+* Move feed list to the left
+* Move the action bar into the wp admin_bar
+* Make sure admin bar items collapse properly
+* Actually looks half decent
+* Usable on android browsers ( might be iphone too)
+* Clean up logging
+
 = 0.1.7.2 - missing feedlist =
 * bugfix: Strict php systems were blowing up feadlist get. Made the call more failsafe.
 
