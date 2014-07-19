@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Move the action bar into the wp admin_bar
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.8
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-07-05 21:43:10.180664 Z
+references: []
+
+id: 760780949a17d7e0ea5b0b6cc01461000d730859
+log_events: 
+- - 2014-07-05 21:43:11.079912 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-07-07 10:53:23.169649 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

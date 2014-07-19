@@ -205,14 +205,10 @@ class OrbitalFeeds {
         ON tags.id = uft.tag_id
         AND uft.user_feed_id = %d
       WHERE COALESCE(tags.name,'Untagged') NOT IN ($tagsarray )",$feed['feed_id']);
-    //_log($sql);
 
     $tag_ids = $wpdb->get_col($sql, 0);
 
-    //_log($tag_ids);
-    //_log($wpdb->get_col($sql,1));
     $tag_ids = implode(',',$tag_ids);
-    //_log($tag_ids);
     //do nothing if we don't have any ids to process
     if($tag_ids){
       $wpdb->query($wpdb->prepare("
@@ -360,7 +356,6 @@ class OrbitalFeeds {
       f.unread_count
 
         ";
-    _log($sql);
 
     $myrows = $wpdb->get_results($sql );
     return $myrows;
@@ -458,10 +453,7 @@ class OrbitalFeeds {
     //lets go back 1 hour
     // this won't work on php 5.2
     //$then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
-    //_log('subtracting an hour');
-    //_log($now);
     $now->modify('-1 hours');
-    //_log($now);
     $then = $now->format('Y-m-d H:i:sP');
 
     $sql = "
@@ -470,7 +462,6 @@ class OrbitalFeeds {
       WHERE feeds.last_updated < %s
       ";
     $sql = $wpdb->prepare($sql,$then);
-    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
 
@@ -490,7 +481,6 @@ class OrbitalFeeds {
       from $feeds
       where id=".$feed_id."
       ;";
-    //_log($sql);
     $feedrow = $wpdb->get_row($sql);
     return $feedrow;
   }
@@ -562,8 +552,6 @@ class OrbitalFeeds {
       if(null != $author){
         $name =$author->get_name(); 
       }
-      //_log('saving an item');
-      //_log($item); 
       OrbitalEntries::save(array(
         'feed_id'=>$feed_id,
         'title'=>$item->get_title(),
@@ -610,12 +598,8 @@ class OrbitalEntries{
  *    - TODO compare the content_hash on old and new before resetting isread
  */
   static function save($entry){
-    _log('in save');
-    _log($entry);
-
     if(isset($entry['entry_id'])){
       //this is an update
-      _log('sending to update');
       $resp = OrbitalEntries::update($entry);
     }
     else{
@@ -626,14 +610,12 @@ class OrbitalEntries{
       }
 
       if(null === $entry_id){
-        _log('sending to insert');
         //insert the entry, get the ID for the feed
         $resp = OrbitalEntries::insert($entry);
       }
       else {
         //this is an update - let's do it.
         $entry['entry_id'] = $entry_id;
-        _log("found an $entry_id  and sending to update");
         $resp = OrbitalEntries::update($entry);
       }
     }
@@ -689,8 +671,6 @@ class OrbitalEntries{
     $filter_fields = array(
         'owner_uid'=>$current_user->ID //logged in user
     );
-    //_log('entry is ');
-    //_log($entry);
     foreach ($entry as $key => $value){
       if(array_key_exists($key,$update_whitelist)){
         $update_fields[$update_whitelist[$key]] = $value;
@@ -839,7 +819,10 @@ class OrbitalEntries{
     $user_feed_tags =$wpdb->prefix.$tbl_prefix. "user_feed_tags"; 
     $tags =$wpdb->prefix.$tbl_prefix. "tags"; 
     $user_settings = (array) get_user_option( 'orbital_settings' );
-    $sort_order = $user_settings['sort_order'] || -1;
+    $sort_order = -1;
+    if(isset($user_settings['sort_order'])){
+      $sort_order = $user_settings['sort_order'];
+    }
     $sort = "ORDER BY entries.published ";
     if("-1" == $sort_order ){
       $sort = $sort . "DESC";
@@ -849,21 +832,13 @@ class OrbitalEntries{
     }
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
-    //_log($filters);
     //TODO allow like queries
     $filter_whitelist = array('tag'=>'name','entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
     $filter = "";
 
-    /*
-    _log('constructing get filters');
-    _log('filters are');
-    _log($filters);
-     */
-
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
 
-        //_log("filterName: $filter_name, value: $value");
         if(null == $value || 'null' == $value){
           $filter= $filter. " AND $filter_whitelist[$filter_name] IS NULL ";
         }
@@ -875,7 +850,6 @@ class OrbitalEntries{
           $filter = $filter . 
             $wpdb->prepare( " AND $filter_whitelist[$filter_name]  = %s ", $value);
         }
-        //_log("Filter: $filter");
       }
     }
 
@@ -906,7 +880,6 @@ class OrbitalEntries{
         ". $sort . "
         LIMIT 30
     ;";
-    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
   }
@@ -1095,6 +1068,7 @@ function orbital_get_feed_entries(){
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
   $tag = filter_input(INPUT_GET, 'tag',FILTER_SANITIZE_STRING);
+  $sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_NUMBER_INT);
   if($tag !=""){
     $filters['tag'] = $tag;
   }
@@ -1110,7 +1084,6 @@ function orbital_get_feed_entries(){
     //only show unread entries
     $filters['isRead']=$show_read;
   }
-  //_log('filters');
 
   $myrows = OrbitalEntries::get($filters);
   echo json_encode($myrows);
@@ -1122,15 +1095,12 @@ add_action('wp_ajax_nopriv_orbital_get_entries','orbital_get_feed_entries');
 //update multiple feeds
 function orbital_update_feeds(){
   //get the list of feeds to update that haven't been updated recently
-  _log('wp_cron update fired!');
   $feeds = OrbitalFeeds::get_stale_feeds();
-  _log($feeds);
   
   //TODO Limit it to a reasonable number of feeds in a batch
   //TODO Maybe we should schedule wp_cron jobs for each update?
   //for each feed call update_feed
   foreach( $feeds as $feed){
-    _log($feed);
     OrbitalFeeds::refresh($feed->id);
   }
 }
@@ -1220,18 +1190,11 @@ function orbital_set_user_settings(){
   global $current_user;
   //TODO this is the better way, but I can't get it to work.
   //$user_orbital_settings = filter_input(INPUT_POST, 'orbital_settings', FILTER_SANITIZE_STRING);
+  //TODO we should handle if there isn't a setting passed...
   $user_orbital_settings = $_POST['orbital_settings'];
   $settings = (array) get_user_option( 'orbital_settings' );
   //merge arrays
   $new_settings = $user_orbital_settings + $settings;
-  /*
-  _log("posted settings");
-  _log($user_orbital_settings);
-  _log("db settings");
-  _log($settings);
-  _log("merged settings");
-  _log($new_settings);
-   */
   
   if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
     // Send back what we now know

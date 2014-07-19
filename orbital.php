@@ -3,7 +3,7 @@
 * Plugin Name: Orbital Feed Reader
 * Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
-* Version: 0.1.7.2
+* Version: 0.1.8
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
@@ -32,21 +32,20 @@ function orbital_update_db_check(){
   global $orbital_db_version;
   global $orbital_db_version_opt_string;
   if(get_site_option($orbital_db_version_opt_string) != $orbital_db_version){
-    _log(get_site_option($orbital_db_version_opt_string) );
     //upgrayedd the db
-    _log("orbital: Installing or Upgrayedding Database");
+    //_log("orbital: Installing or Upgrayedding Database");
     //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
     orbital_install_db();
   }
-  _log('finished DB update check');
+  //_log('finished DB update check');
 }
 add_action('plugins_loaded', 'orbital_sample_data_check');
 function orbital_sample_data_check(){
   global $orbital_samples_version ;
-  _log('check for sampledata');
+  //_log('check for sampledata');
   $samples_loaded = get_site_option('orbital_sample_data_loaded');
-  _log("Are the samples loaded: $samples_loaded ");
+  //_log("Are the samples loaded: $samples_loaded ");
   if( $samples_loaded !== $orbital_samples_version)
   {
     _log("orbital: Installing Sample Data");
@@ -56,7 +55,7 @@ function orbital_sample_data_check(){
     update_option('orbital_sample_data_loaded', $orbital_samples_version);
   }
   else{
-    _log('Sample Data already in there, never mind');
+    //_log('Sample Data already in there, never mind');
 
   }
 }
@@ -79,6 +78,7 @@ function orbital_plugin_menu(){
   //TODO should this be global? Probably not. 
   global $orbital_slug;
   global $orbital_settings_slug;
+  global $orbital_main;
 
   require_once 'backend.php';
   $unread_count = OrbitalFeeds::get_unread_count();
@@ -87,21 +87,12 @@ function orbital_plugin_menu(){
   $menu_title = $page_title;
   $capability = 'edit_posts';
   //We add the hook for our menu item on the main menu
-  $main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/satellite.svg',__FILE__));
+  $orbital_main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/satellite.svg',__FILE__));
   //Settings page
   $settings = add_submenu_page( $orbital_slug, 'Settings', 'Settings', $capability, $orbital_settings_slug, 'orbital_settings');
-  //add hook for feed management page
-  //TODO remove this. We don't need submenu pages now.
-  //$feed_mgmt = add_submenu_page('orbital.php', 'Manage Feeds', 'Feeds', 'edit_posts','subscriptions_management','feed_management');
   /* Using registered $page handle to hook script load */
-  add_action('admin_print_styles-' . $main, 'orbital_enqueue_scripts');
-  add_action('admin_print_styles-' . $main, 'orbital_main_scripts');
-  //add_action('admin_print_styles-' . $feed_mgmt, 'orbital_enqueue_scripts');
-  //_log(_get_cron_array());
-  //_log(date("Y-m-d H:i:s",wp_next_scheduled('orbital_update_event')));
-
-
-
+  add_action( 'admin_enqueue_scripts', 'orbital_enqueue_scripts' );
+  //add_action('admin_print_styles-' . $orbital_main, 'orbital_enqueue_scripts');
 }
 /* to style our SVG icon we need to enqueue one style to fix width */
 add_action('admin_head', 'orbital_icon_style');
@@ -116,26 +107,10 @@ function orbital_icon_style(){
 
 }
 
+
 add_action( 'admin_init', 'orbital_admin_init' );
-/* Reqister our scripts so they can be enqueued
- */
+
 function orbital_admin_init(){
-  //Register the js that we need
-  wp_register_script( 'handlebars_script', plugins_url('/js/handlebars-1.0.rc.1.js', __FILE__) ,array('jquery'));
-  wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
-  wp_register_script( 'angular_sanitize', plugins_url('/js/angular-sanitize.js', __FILE__) ,array('angular_script',));
-  wp_register_script( 'ng_infinite_scroll',plugins_url('/js/ng-infinite-scroll.min.js', __FILE__) ,array('angular_script',));
-  wp_register_script( 'autocomplete_directive',plugins_url('/js/autocomplete-directive.js', __FILE__) ,array('angular_script',));
-
-  wp_register_script( 'angular_app_script', plugins_url('/js/app.js', __FILE__) ,array('jquery','angular_script'));
-  wp_register_script( 'angular_controllers_script', plugins_url('/js/controllers.js', __FILE__) ,array('jquery','underscore','angular_app_script','angular_script','ng_infinite_scroll',));
-
-  wp_register_script('scrollToEntry',  plugins_url('/js/scrollToEntry.js', __FILE__),array('jquery'));
-  //keyboard shortcut handling
-  wp_register_script( 'keymaster_script', plugins_url('/js/keymaster.min.js', __FILE__),array('jquery'));
-  //wp_register_script( 'jquery_waypoints', plugins_url('/js/waypoints.js', __FILE__),array('jquery'));
-  /* Register our stylesheet. */
-  wp_register_style( 'orbitalcss', plugins_url('style.css', __FILE__) );
 
   /* Register some settings for the settings menu */
   register_setting( 'orbital-settings-group', 'orbital-settings' );
@@ -156,6 +131,29 @@ function field_one_callback() {
 // these are common to all of our pages
 function orbital_enqueue_scripts()
 {
+  global $orbital_main;
+  //Is this our main page or not?
+  if($orbital_main != get_current_screen()->id){return;}
+
+  //Register the js that we need
+  wp_register_script( 'handlebars_script', plugins_url('/js/handlebars-1.0.rc.1.js', __FILE__) ,array('jquery'));
+  wp_register_script( 'angular_script', plugins_url('/js/angular.js', __FILE__) ,array('jquery',));
+  wp_register_script( 'angular_sanitize', plugins_url('/js/angular-sanitize.js', __FILE__) ,array('angular_script',));
+  wp_register_script( 'ng_infinite_scroll',plugins_url('/js/ng-infinite-scroll.min.js', __FILE__) ,array('angular_script',));
+  wp_register_script( 'autocomplete_directive',plugins_url('/js/autocomplete-directive.js', __FILE__) ,array('angular_script',));
+
+  wp_register_script( 'angular_app_script', plugins_url('/js/app.js', __FILE__) ,array('jquery','angular_script'));
+  wp_register_script( 'angular_controllers_script', plugins_url('/js/controllers.js', __FILE__) ,array('jquery','underscore','angular_app_script','angular_script','ng_infinite_scroll',));
+
+  wp_register_script('scrollToEntry',  plugins_url('/js/scrollToEntry.js', __FILE__),array('jquery'));
+  //keyboard shortcut handling
+  wp_register_script( 'keymaster_script', plugins_url('/js/keymaster.min.js', __FILE__),array('jquery'));
+  //wp_register_script( 'jquery_waypoints', plugins_url('/js/waypoints.js', __FILE__),array('jquery'));
+  /* Register our stylesheet. */
+  wp_register_style( 'orbitalcss', plugins_url('style.css', __FILE__),array('admin-bar','wp-admin'));
+  //here we set up our keyboard shortcuts
+  wp_enqueue_script('keymaster_script');
+
   wp_enqueue_script( 'json2' );
   wp_enqueue_script('ng-infinite-scroll');
   wp_enqueue_script('angular_script');
@@ -178,19 +176,70 @@ function orbital_enqueue_scripts()
   wp_enqueue_style('orbitalcss');
 }
 
-//these are just for the main page
-function orbital_main_scripts()
-{
-  //here we set up our keyboard shortcuts
-  wp_enqueue_script('keymaster_script');
-  //here we set up hook like the shortcuts
-}
-
 /* This is the main orbital page with all the feed reading goodness */
 function generate_main_page()
 {
   require_once('mainwindow.php');
 }
+add_action('wp_before_admin_bar_render', 'orbital_add_toolbar_items', 100);
+function orbital_add_toolbar_items(){
+  global $wp_admin_bar;
+  global $orbital_main;
+  //only add our controls if this is our screen
+  if($orbital_main == get_current_screen()->id){
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital-mark-as-read',
+      'title' => '<span class="ab-icon"></span><span class="ab-label">Mark All as Read</span>',
+      'href' => '#',
+      'meta' => array('onclick' => 'markFeedRead();',
+                      'title' => 'Mark All as Read',
+                      'class' => 'orbital-entries-command',),
+    ));
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital-update-feed',
+      'title' => '<span class="ab-icon"></span><span class="ab-label">Update Feed</span>',
+      'href' => '#',
+      'meta' => array('onclick' => 'updateFeed();',
+                      'title' => 'Update Current Feed',
+                      'class' => 'orbital-entries-command',),
+    ));
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital-show-read-items',
+      'title' => '<span class="ab-icon"></span><span class="ab-label">Toggle Read Items</span>',
+      'href' => '#',
+      'meta' => array('onclick' => 'showRead();',
+                      'title' => 'Toggle Showing Read Items',
+                      'class' => 'orbital-entries-command',),
+    ));
+
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital-sort',
+      'title' => '<span class="ab-icon"></span><span class="ab-label">Sort</span>',
+      'href' => '#',
+      'meta' => array('onclick' => 'changeSortOrder();',
+                      'title' => 'Toggle Entries Sort Order',
+                      'class' => 'orbital-entries-command',),
+    ));
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital-newest-first',
+      'title' => 'Newest First',
+      'href' => '#',
+      'parent' => 'orbital_sort',
+      'meta' => array('onclick' => 'changeSortOrder(-1);',
+                      'title' => 'Sort Entries Newest First',),
+    ));
+    $wp_admin_bar->add_node(array(
+      'id' => 'orbital-oldest-first',
+      'title' => 'Oldest First',
+      'href' => '#',
+      'parent' => 'orbital_sort',
+      'meta' => array('onclick' => 'changeSortOrder(1);',
+                      'title' => 'Sort Entries Oldest First',),
+    ));
+    
+  }
+}
+
 /* This is the settings page. */
 function orbital_settings()
 {
@@ -235,16 +284,11 @@ function orbital_set_up_cron(){
 
 function orbital_update_job(){
   //call feeds update.
-  _log('orbital_update_job called');
   orbital_update_feeds();
   //TODO somehow signal a pop to the front end that the job, it is done.
 }
 
 function orbital_activate(){
-  //_log('orbital activate begin');
-  //orbital_update_db_check();
-  //_log('orbital sample begin');
-  //orbital_sample_data_check();
   orbital_set_up_cron();
   _log('orbital activate end');
 }

@@ -324,7 +324,6 @@ function orbital_add_sample_feeds_to_user($user_id){
       // if this user can't author posts, then we don't want to offer them a feed reader
       continue;
     }
-    //_log($user->ID);
     //install some sample feeds
     _log("installing sample feeds for $user_id");
     $orbitalfeed = OrbitalFeeds::save(

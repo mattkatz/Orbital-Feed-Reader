@@ -1,4 +1,7 @@
 /* entries*/
+#orbital-main-content{
+  float:left;
+}
 .no-feed-displayed{
   font-weight: lighter;
   font-size: large;
@@ -6,36 +9,40 @@
 }
 .entries {
   /*background-color: #ECECEC;*/
-  background-color: #fff;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,.8) 2%, rgba(255,255,255,.9) 98%, rgba(255,255,255,0) 100%); /* W3C */
+  /*padding:5px;*/
   color: #666;
 }
 
 .entries .is-read{
-  background-color: #fdfdfd;
   /*font-style:italic;*/
   color: #999;
 }
 
 .entries .is-current{
   font-style:normal;
-  background-color: #ffffff;
-  box-shadow: 2px 2px 4px #666;
+  box-shadow: 0 8px 17px rgba(0, 0, 0, 0.4);
   color: #333;
+}
+#orbital-entries{
+  margin:0px;
 }
 .entries img {
   max-width: 100%;
 }
-.is-current > h2{
-  text-shadow: 0 1px 2px #333;
-}
 
 .entry{
-  border-top: 2px ridge;
   display:inline-block;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+  padding-left: 2%;
+  padding-right: 2%;
   /*padding-left: 5px;*/
-  width:100%;
   position:relative;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: available;
+  box-shadow: 0 8px 17px rgba(20,20,20,.2);
 }
 
 .entry h2{
@@ -60,6 +67,8 @@
   position:relative;
   right: 20px;
   float:right;
+  padding-left:1rem;
+  color: rgba(0,0,0,0.54);
 }
 
 /* i'd like to just make this all CSS
@@ -88,20 +97,16 @@
 
 #orbital-feedlist{
   overflow-y:auto;
-
-  border-left: 1px solid #dddddd;
-  padding-left: 10px;
+  padding-left: 0px;
   padding-right: 0px;
-  background-color: #ECECEC;
-  border-color: #CCCCCC;
-  position: absolute;
-  right: 0;
-  /*min-width:100px;
-  max-width:20%;*/
-  width:20%
-}
-#orbital-feedlist {
+  width:20%;
+  min-width: 8rem;
   height:100%;
+  float:left;
+}
+#orbital-feedlist-actions{
+  display:inline-block;
+  padding-top:1em;
 }
 #feed-head > h2{
   display:inline;
@@ -124,11 +129,13 @@
 
 #orbital-feedlist ul li 
 {
-  border-bottom: 1px solid #DFDFDF;
-  border-top: 1px solid #F9F9F9;
   margin-bottom: 0px; /*override something in main wp styles.*/
 }
-.tag ul>li {
+.feed, .tag {
+  min-height: 1.5rem;
+
+}
+#tags ul>li {
   padding-left: 1em;
 }
 .feedcounter{
@@ -146,14 +153,15 @@
   text-shadow: 1px 1px 2px #666;
   box-shadow: 1px 1px 3px #666666 inset;
   background-color: #777777;
-  background-image: -moz-linear-gradient(center bottom , #6D6D6D, #808080);
+  background-image: linear-gradient(center bottom , #6D6D6D, #808080);
   color: #FFFFFF;
   text-shadow: 0 -1px 0 #333333;
 }
 
 .is-editable{
-  background-color: white;
-  box-shadow: 0 0 4px #353535;
+  //background-color: white;
+  //box-shadow: 0 0 4px #353535;
+  color:rgba(0,0,150,0.56);
 }
 
 #y-indicator{
@@ -190,9 +198,10 @@
 #orbital-content{
   position:absolute;
   width:80%;
+  max-width:60rem;
+  min-width:30rem;
  /* background:#dedede;*/
   overflow-y:auto;
-  top: 20px;
 }
 /* Command Bar */
 #commandbar {
@@ -218,9 +227,8 @@
   right: 10px;
   top: 10px;
 }
-#commandbar li:hover,
 .feed:hover,
-.tag div:hover,
+.tag:hover,
 .ember-button:hover
 {
   cursor: pointer;
@@ -319,3 +327,26 @@
   padding-bottom:0px;
 }
 
+/*small breakpoint queries*/
+@media (max-width: 782px){
+  .orbital-entries-command a span{
+    text-align: center;
+  }
+
+  #wp-admin-bar-orbital-mark-as-read .ab-icon:before{
+    content: "\f147";
+  }
+  #wp-admin-bar-orbital-update-feed .ab-icon:before{
+    content: "\f342";
+  }
+  #wp-admin-bar-orbital-sort .ab-icon:before{
+    content: "\f156";
+  }
+  #wp-admin-bar-orbital-show-read-items .ab-icon:before{
+    content: "\f331";
+    line-height: 48px;
+  }
+  .orbital-entries-command{
+    display:block !important;
+  }
+}
