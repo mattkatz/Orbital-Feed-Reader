@@ -3,7 +3,7 @@ title: Check export for private feeds!
 desc: We should be able to call wprssFeeds::get on any userid and get the public feeds.  For the current user we should also show public feeds.
 type: :feature
 component: Orbital
-release: 0.1.8
+release: 0.1.9
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -23,4 +23,8 @@ log_events:
 - - 2014-07-03 00:29:52.584478 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.8 from 0.1.7
+  - ""
+- - 2014-07-19 02:36:01.312994 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.9 from 0.1.8
   - ""

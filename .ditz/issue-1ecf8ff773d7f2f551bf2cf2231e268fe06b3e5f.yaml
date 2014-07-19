@@ -5,7 +5,7 @@ desc: |-
   they shouldn't show up in your blogroll
 type: :feature
 component: Orbital
-release: 0.1.8
+release: 0.1.9
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -25,4 +25,8 @@ log_events:
 - - 2014-07-03 00:29:37.060341 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.8 from 0.1.7
+  - ""
+- - 2014-07-19 02:35:43.241817 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.9 from 0.1.8
   - ""
