@@ -46,9 +46,9 @@ function FeedListCtrl($scope, $http, $log, feedService){
     }
     else{
       $scope.$emit('feedSelect', {feed: feed,showRead:showRead});
+      feedService.select(feed,showRead);
       //Mark feed as loading
     }
-    feedService.select(feed,showRead);
   };
   $scope.requestNewFeed = function () {
     $log.info('new feed requested');
