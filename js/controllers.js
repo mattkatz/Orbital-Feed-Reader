@@ -68,15 +68,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
       return _.reduce(feeds,function(count, feed){
         return count + parseInt(feed.unread_count);},0);
     };
-  //call the refresh to load it all up.
-  //TODO change this to load the initial feeds variable
-    /*
-  feedService.refresh(function(feeds){
-    if(feeds.length > 0){
-      feedService.select(feedService.selectedFeed());
-    }
-  });
-  */
 
   /*
    * Get the next unread feed
