@@ -233,34 +233,6 @@ function EntriesCtrl($scope, $http, $log,feedService){
     feedService.saveSort(newSort,function(){$scope.$emit('feedSelect', {feed: feedService.selectedFeed()})});
     //console.log("post saving " + $scope.sortOrder);
   };
-  $scope.getEntriesQualifier = function(feed){
-    //$log.log(feed);
-    var qualifier = '';
-    //If we aren't passed a feed filter, don't create one
-    if(null == feed ){
-      //qualifier =  'feed_id='+null;
-    }
-    else if(feed.feed_id && feed.feed_id >-1){
-      qualifier = '&feed_id='+feed.feed_id;
-      //if it has a feed_id, we can assume it is a feed
-    }
-    else if (feed.feed_id <0){
-      //handles special feeds
-      //
-      // -1 = ALL FEEDS
-
-    }
-    else {
-      //we should assume it is a tag
-      if('Untagged' == feed){
-        qualifier = '&tag='+null;
-      }
-      else{
-        qualifier = '&tag='+feed;
-      }
-    }
-    return qualifier;
-  };
 
   $scope.selectFeed = function(entry){
     feedService.select(feedService.getFeed(entry.feed_id));
@@ -370,7 +342,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
    */
   $scope.$on('feedSelected',function(event,args){
     //$log.log('feedSelected in Entries!');
-    $scope.displayFeed(args['feed'], args['showRead']);
+    //$scope.displayFeed(args['feed'], args['showRead']);
   });
   $scope.nextEntry = function(currentEntry){
     $log.info('next entry finds the entry after the current entry, selects it');
