@@ -205,36 +205,27 @@ function FeedListCtrl($scope, $http, $log, feedService){
 function EntriesCtrl($scope, $http, $log,feedService){
   $scope.selectedEntry = null;
   $scope.isRead = false;
+  $scope.entries = [];
+  $scope.$watch(feedService.entries, function(){
+    $scope.entries = feedService.entries();
+  });
 //  $scope.currentFeed = null;
   $log.log("in EntriesCtrl");
   $scope.$watch(feedService.selectedFeed, function (){
     if(feedService.selectedFeed()){
-      //$log.log('feedservice.selectedFeed = ' +feedService.selectedFeed());
       $scope.displayFeed(feedService.selectedFeed());
- //     $scope.currentFeed = feedService.selectedFeed();
     }
   });
+  $scope.$watch(feedService.isEntriesLoading, function(){
+    $scope.isLoading = feedService.isEntriesLoading();
+  });
+
   
   /*
    * select a feed to display entries from
    */
   $scope.displayFeed = function(feed,showRead){
-    var qualifier = $scope.getEntriesQualifier(feed);
-    //$log.log('showRead='+showRead);
-    if(!showRead){
-      showRead=0;
-    }
-    //$log.log('qualifier='+qualifier);
-    //$log.log('showRead='+showRead);
-    $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead +'&sort=' + feedService.sortOrder())
-    .success(function(data){
-      $scope.isLoading = false;
-      //$log.info(data);
-      $scope.entries = data;
-      $scope.selectedEntry = null;
-      scrollToEntry(null);
-    });
+    feedService.getFeedEntries(feed,showRead);
   };
   $scope.changeSortOrder = function(newSort){
     newSort = newSort || feedService.sortOrder() * -1;

@@ -66,7 +66,7 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','au
     }
   });
 
-mainModule.factory('feedService',   function($http){
+mainModule.factory('feedService',   function($http,$log){
   /*
    * The Feed Service should be the interface to feeds. 
    *
@@ -74,16 +74,17 @@ mainModule.factory('feedService',   function($http){
    * and ways to refresh the list, select the next feed, mark a feed read
    * or get the entries from a feed.
    */
-  // the currently selected feed
-  var _selectedFeed = null;
   // the list of feeds;
   var _feeds = [];
+  // the currently selected feed
+  var _selectedFeed = null;
   // feeds organized by tags
   var _tags = {};
   // a list of all tags for this user
   var _allTags = [];
   //is this service doing work?
   var _isLoading = false;
+  var _isEntriesLoading = false;
   var _sortOrder = "-1";
   var _showByTags = false;
   var _sortOptions = [
@@ -94,6 +95,37 @@ mainModule.factory('feedService',   function($http){
       sortName: "Oldest First",
     },
   ];
+  //the current entries we've got stored for this feed
+  var _entries = [];
+  //if we have a current entry it will be here
+  var _selectedEntry = null;
+  getEntriesQualifier = function(feed){
+    var qualifier = '';
+    //If we aren't passed a feed filter, don't create one
+    if(null == feed ){
+      //qualifier =  'feed_id='+null;
+    }
+    else if(feed.feed_id && feed.feed_id >-1){
+      qualifier = '&feed_id='+feed.feed_id;
+      //if it has a feed_id, we can assume it is a feed
+    }
+    else if (feed.feed_id <0){
+      //handles special feeds
+      //
+      // -1 = ALL FEEDS
+
+    }
+    else {
+      //we should assume it is a tag
+      if('Untagged' == feed){
+        qualifier = '&tag='+null;
+      }
+      else{
+        qualifier = '&tag='+feed;
+      }
+    }
+    return qualifier;
+  };
 
   var feedservice =  {
     feeds : function(){
@@ -105,7 +137,9 @@ mainModule.factory('feedService',   function($http){
     isLoading : function(){
       return _isLoading;
     },
-
+    isEntriesLoading : function(){
+      return _isEntriesLoading;
+    },
     tags: function(){
       if(_tags.length == 0 && ! _isLoading ){ _refresh();}
       return _tags; 
@@ -113,6 +147,30 @@ mainModule.factory('feedService',   function($http){
     allTags: function(){
       return _allTags;
     },
+    entries: function(){
+      return _entries;
+    },
+
+    getFeedEntries: function(feed,showRead){
+      var qualifier = getEntriesQualifier(feed);
+      //$log.log('showRead='+showRead);
+      if(!showRead){
+        showRead=0;
+      }
+      _isEntriesLoading = true;
+      $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead +'&sort=' +_sortOrder)
+      .success(function(data){
+        _isEntriesLoading = false;
+        $log.info(data);
+        _entries = data;
+        _selectedEntry = null;
+        scrollToEntry(null);
+      });
+
+    },
+
+
+
 
 
     // get the list of feeds from backend, inject a "fresh" feed.
