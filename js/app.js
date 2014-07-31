@@ -86,6 +86,7 @@ mainModule.factory('feedService',   function($http,$log){
   var _isLoading = false;
   var _isEntriesLoading = false;
   var _sortOrder = "-1";
+  var _showRead = 0;
   var _showByTags = false;
   var _sortOptions = [
     { sortOrder: "-1",
@@ -150,15 +151,20 @@ mainModule.factory('feedService',   function($http,$log){
     entries: function(){
       return _entries;
     },
+    showRead: function(){
+      return _showRead;
+    },
 
     getFeedEntries: function(feed,showRead){
       var qualifier = getEntriesQualifier(feed);
-      //$log.log('showRead='+showRead);
+      
+      $log.log('in getFeedEntries');
       if(!showRead){
         showRead=0;
       }
+      _showRead=showRead;
       _isEntriesLoading = true;
-      $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead +'&sort=' +_sortOrder)
+      $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
       .success(function(data){
         _isEntriesLoading = false;
         $log.info(data);
@@ -218,6 +224,11 @@ mainModule.factory('feedService',   function($http,$log){
     },
     select : function(feed, showRead){
       _selectedFeed = feed;
+      if(undefined != showRead){
+        _showRead = showRead;
+      }
+
+      //this.getFeedEntries(feed,_showRead);
     },
     saveFeed: function(feed, successCallback){
       var data = {
@@ -278,6 +289,7 @@ mainModule.factory('feedService',   function($http,$log){
     },
     saveSort: function(sortOrder, callback){
       feedservice.saveSetting({ sort_order: sortOrder },callback);
+      feedservice.select(_selectedFeed )
     },
     saveTagView: function(showTags, callback){
       console.log('save tag view app ' + showTags);
