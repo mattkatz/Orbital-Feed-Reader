@@ -1,10 +1,6 @@
 /* Controllers */
-
 function FeedListCtrl($scope, $http, $log, feedService){
-  $log.log('in feedscontrol');
   $scope.showByTags = feedService.showByTags()
-  //$scope.tags = _.groupBy($scope.taglist, "tag"); 
-  //$log.log($scope.tags);
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
   $scope.tags = feedService.tags();
@@ -62,11 +58,22 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh(callback);
   };
 
+  $scope.feedUnreadCount = function(feed){
+    if(feed.feed_id == -1){ //All Feed
+      var allNum = _.reduce($scope.feeds, function(memo, countFeed){
+        if(countFeed.feed_id <0){return memo;}
+        num = parseInt(countFeed.unread_count,10);
+        return memo + num; }, 0);
+      $log.info(allNum);
+      return allNum;
+    }
+    return feed.unread_count;
+  }
+
   $scope.tagUnreadCount = function(tagname){
       feeds = $scope.tags[tagname];
-      //console.log('tagUnreadCount (' + tagname+')');
       return _.reduce(feeds,function(count, feed){
-        return count + parseInt(feed.unread_count);},0);
+        return count + parseInt(feed.unread_count,10);},0);
     };
 
   /*
@@ -175,7 +182,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
    */
   $scope.$on('refreshFeeds', function(event,args){
     feedService.refresh();
-    //$scope.refresh();
   });
   $scope.$on('updateFeed', function(event,args){
     $log.log('updateFeed event');
