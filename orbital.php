@@ -295,12 +295,14 @@ function orbital_activate(){
 
 add_filter('query_vars','plugin_add_trigger');
 function plugin_add_trigger($vars) {
-  $vars[] = 'export_opml';
+  array_push($vars, 'export_opml');
+  _log('adding vars');
   return $vars;
 }
 
 add_action('template_redirect', 'plugin_trigger_check');
 function plugin_trigger_check() {
+  _log('in plugin trigger check');
   if(0 == wp_get_current_user()->ID){
     //not logged in - return;
     return;

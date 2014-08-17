@@ -7,8 +7,8 @@ type: :feature
 component: Orbital
 release: 0.1.9
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-16 00:51:23.040206 Z
 references: []
 
@@ -30,3 +30,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.9 from 0.1.8
   - ""
+- - 2014-08-16 18:02:09.626695 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - we can mark feeds as private.

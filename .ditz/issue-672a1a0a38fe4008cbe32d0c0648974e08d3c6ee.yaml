@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.1.9
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2014-02-27 04:18:05.961350 Z
 references: []
 
@@ -28,3 +28,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.9 from 0.1.8
   - ""
+- - 2014-08-16 17:49:22.144696 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - I can't care enough right now. And I think it's working. I don't know.
