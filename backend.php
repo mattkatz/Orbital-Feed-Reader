@@ -525,6 +525,7 @@ class OrbitalFeeds {
   static function refresh($feed_id){
     //TODO update the feeds last updated time
     include_once(ABSPATH . WPINC . '/class-feed.php');
+    $resp = array();
     $feedrow = OrbitalFeeds::get_feed($feed_id);
 
     $feed = new SimplePie();
@@ -660,6 +661,7 @@ class OrbitalEntries{
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
     $entries = $wpdb->prefix.$tbl_prefix. "entries";
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
+    $resp = array();
 
     //try to update if the entry id exists, otherwise, insert
     //we should iterate over the keys and put them in the update
