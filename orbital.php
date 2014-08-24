@@ -124,7 +124,10 @@ function section_one_callback() {
 }
 function field_one_callback() {
     $settings = (array) get_option( 'orbital-settings' );
-    $quote_text = esc_attr($settings['quote-text']);
+    $quote_text = false;
+    if(array_key_exists('quote-text',$settings)){
+      $quote_text = esc_attr($settings['quote-text']);
+    }
     echo "<input type='checkbox' name='orbital-settings[quote-text]' value=1 ". checked( 1, $quote_text, false ) . " />";
 }
 
