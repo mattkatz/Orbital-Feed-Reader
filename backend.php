@@ -682,8 +682,8 @@ class OrbitalEntries{
       }
     }
     if(count($update_fields) <=0){
-      $resp->updated = 0;
-      $resp->message = "Nothing to update";
+      $resp['updated'] = 0;
+      $resp['message'] = "Nothing to update";
     }else{
 
       $ret = $wpdb->update(
@@ -691,13 +691,13 @@ class OrbitalEntries{
         $update_fields,//columns to update
         $filter_fields //where filters
       );
-      $resp->updated = $ret;
+      $resp['updated'] = $ret;
     }
     if(array_key_exists('entry_id',$entry )){
-      $resp->entry_id = $entry['entry_id'];
+      $resp['entry_id'] = $entry['entry_id'];
     }
     if(array_key_exists('feed_id',$entry)){
-      $resp->feed_id = $entry['feed_id'];
+      $resp['feed_id'] = $entry['feed_id'];
     }
     return $resp;
 
