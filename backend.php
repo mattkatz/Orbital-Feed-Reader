@@ -576,8 +576,8 @@ class OrbitalFeeds {
         array('id'=>$feed_id)//where filters
       );
     //echo $feedrow->feed_url;
-    $resp->feed_id = $feed_id;
-    $resp->updated = count($items);
+    $resp['feed_id'] = $feed_id;
+    $resp['updated'] = count($items);
     return $resp;
   }
 }
