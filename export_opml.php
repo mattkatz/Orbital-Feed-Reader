@@ -32,7 +32,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?".">";
       if($feed->private == true && ! $show_privates){continue;}
       
     ?>
-      <outline text="<?php echo $feed->feed_name?>" title="<?php echo $feed->feed_name?>" type="rss" xmlUrl="<?php echo $feed->feed_url?>" htmlUrl="<?php echo $feed->site_url?>"/>
+    <outline text="<?php echo $feed->feed_name?>" title="<?php echo $feed->feed_name?>" type="rss" xmlUrl="<?php echo $feed->feed_url?>" htmlUrl="<?php echo $feed->site_url?>" category="<?php echo $feed->tags ?>"/>
     <?php
     }
     ?>
