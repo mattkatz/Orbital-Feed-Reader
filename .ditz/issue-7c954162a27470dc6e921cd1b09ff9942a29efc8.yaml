@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: "show opml link to the user. "
+desc: Currently they have no way of knowing how to export their opml file
+type: :feature
+component: Orbital
+release: 0.1.9
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-08-25 00:12:50.889589 Z
+references: []
+
+id: 7c954162a27470dc6e921cd1b09ff9942a29efc8
+log_events: 
+- - 2014-08-25 00:12:52.743434 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

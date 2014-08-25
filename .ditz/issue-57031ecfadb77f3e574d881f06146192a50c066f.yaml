@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: export tags in opml
+desc: |-
+  looks like you can use a category attribute on an item.
+  should match up nicely to our tags.
+type: :feature
+component: Orbital
+release: 0.1.9
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-08-25 00:08:29.965874 Z
+references: []
+
+id: 57031ecfadb77f3e574d881f06146192a50c066f
+log_events: 
+- - 2014-08-25 00:08:31.156746 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

@@ -18,12 +18,19 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?".">";
   <body>
     <?php
     require_once 'backend.php';
-    //TODO this should take in a param.
+    //this takes in a param.
     // the param should be a userid.
-    // if the userid == current user, we export everything but private
+    $uid = intval(get_query_var('export_opml'));
+    $show_privates = false;
+    // if the userid == current user, we export everything including private
+    if($uid  == wp_get_current_user()->ID){
+      $show_privates = true; //naughty
+    }
     // otherwise, just export the public stuff.
-    $feeds = OrbitalFeeds::get();
+    $feeds = OrbitalFeeds::get($uid);
     foreach($feeds as $feed){
+      if($feed->private == true && ! $show_privates){continue;}
+      
     ?>
       <outline text="<?php echo $feed->feed_name?>" title="<?php echo $feed->feed_name?>" type="rss" xmlUrl="<?php echo $feed->feed_url?>" htmlUrl="<?php echo $feed->site_url?>"/>
     <?php

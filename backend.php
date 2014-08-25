@@ -60,7 +60,7 @@ class OrbitalFeeds {
               , private = %d
               WHERE id = %d
               AND owner = %d";
-      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private'],$feed['feed_id'], $user_id);
+      $sql = $wpdb->prepare($sql,$feed['feed_name'],$feed['site_url'],$feed['is_private']?1:0,$feed['feed_id'], $user_id);
       $resp->feed_updated = $wpdb->query($sql);
       if(false=== $resp->feed_updated ) {
         $resp->update_error = $wpdb->print_error();
@@ -297,7 +297,7 @@ class OrbitalFeeds {
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds ";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
     $user_feed_tags = $wpdb->prefix.$tbl_prefix. "user_feed_tags ";
-    if(! $user_id)
+    if(! isset($user_id))
     { 
       $user_id =  get_current_user_id(); 
     }
@@ -1053,7 +1053,6 @@ function orbital_save_feed(){
   $feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
   $site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
   $feed_name = filter_input(INPUT_POST, 'feed_name',FILTER_SANITIZE_STRING);
-  //$is_private = $_POST['is_private']=="true"?1:0;
   $is_private = filter_input(INPUT_POST, 'is_private',FILTER_SANITIZE_STRING);
   $tags = filter_input(INPUT_POST, 'tags', FILTER_SANITIZE_STRING);
 

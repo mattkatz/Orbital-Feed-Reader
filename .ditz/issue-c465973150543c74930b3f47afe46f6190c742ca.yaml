@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Private status for feeds not showing in feed editor
+desc: |-
+  I should fix this.
+  might also be nice if the feedlist indicated which feeds are not private. Slight css change?
+type: :bugfix
+component: Orbital
+release: 0.1.9
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-08-25 00:10:47.893328 Z
+references: []
+
+id: c465973150543c74930b3f47afe46f6190c742ca
+log_events: 
+- - 2014-08-25 00:10:48.717324 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

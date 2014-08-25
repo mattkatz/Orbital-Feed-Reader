@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.1.9
 reporter: matt <matt@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2012-09-22 22:29:12.229116 Z
 references: []
 
@@ -28,3 +28,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.9 from 0.1.8
   - ""
+- - 2014-08-25 00:12:06.790316 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - fixed when I did the fix for privacy
