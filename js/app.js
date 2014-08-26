@@ -167,7 +167,6 @@ mainModule.factory('feedService',   function($http,$log){
       $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
       .success(function(data){
         _isEntriesLoading = false;
-        $log.info(data);
         _entries = data;
         _selectedEntry = null;
         scrollToEntry(null);

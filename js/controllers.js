@@ -64,7 +64,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
         if(countFeed.feed_id <0){return memo;}
         num = parseInt(countFeed.unread_count,10);
         return memo + num; }, 0);
-      $log.info(allNum);
       return allNum;
     }
     return feed.unread_count;
@@ -88,11 +87,9 @@ function FeedListCtrl($scope, $http, $log, feedService){
     // Start looking at the beginning till we find an unread feed
     feeds = $scope.feeds;
     index = feeds.indexOf(feedService.selectedFeed());
-    $log.info('index is ' + index);
     //we are starting at the index item
     //and circling the array
     for(i=(index+1)%feeds.length;i!=index;i= (i+1)%feeds.length){
-      $log.info('i is ' + i);
       if(feeds[i].unread_count >0){
         return feeds[i];
       }
@@ -140,7 +137,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
     };
     $http.post(opts.ajaxurl, data)
     .success(function(response){
-      $log.info('selecting '+feed.feed_id);
       //refresh the feedlist
       $scope.refresh();
       //refresh the feed if it is still selected
@@ -166,7 +162,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
     //find the feed entry that has this entry's feed_id
     entry = args.entry;
     feed_id = entry.feed_id;
-    $log.info($scope.feeds);
     //Look down the list of feeds for the one this entry belongs to
     for( i = 0; i < $scope.feeds.length; i++){
       feed = $scope.feeds[i];
@@ -184,19 +179,9 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh();
   });
   $scope.$on('updateFeed', function(event,args){
-    $log.log('updateFeed event');
     $scope.update(args.feed);
   });
   
-  /* One of the command bar actions fired */
-  $scope.$on('commandBarEvented', function  (event, args) {
-    feed = args.feed;
-    switch(args.name){
-      default:
-        $log.log('requested commandBar action ' + args.name + ' - not implemented yet');
-        break;
-    }
-  });
 }
 
 function EntriesCtrl($scope, $http, $log,feedService){
@@ -206,8 +191,6 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.$watch(feedService.entries, function(){
     $scope.entries = feedService.entries();
   });
-//  $scope.currentFeed = null;
-  $log.log("in EntriesCtrl");
   $scope.$watch(feedService.selectedFeed, function (){
     if(feedService.selectedFeed()){
       $scope.displayFeed(feedService.selectedFeed());
