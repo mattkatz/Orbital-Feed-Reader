@@ -7,8 +7,8 @@ type: :bugfix
 component: Orbital
 release: 0.1.9
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2014-08-25 00:10:47.893328 Z
 references: []
 
@@ -18,3 +18,13 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2014-08-25 12:50:50.843560 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2014-08-26 12:35:47.497665 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - |-
+    translated between "1" and true.
+    was this really the right way to fix it?

@@ -133,7 +133,7 @@
           </div>
         </label>
         <label>
-          <input type='checkbox' ng-model="feedCandidate.private" title="" />
+          <input type='checkbox' ng-model="feedCandidate.is_private" ng-checked="feedCandidate.is_private" title="" />
           This Feed is Private! Do not show it to other people.
         </label>
         <label ng-show="feedCandidate.feed_id">
