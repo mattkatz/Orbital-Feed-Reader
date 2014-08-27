@@ -534,7 +534,6 @@ function SubsCtrl($scope,$http,$log,feedService ){
 
     var file = document.getElementById('import-opml').files[0];
     $scope.opmlFile = file;
-    //console.log(document.getElementById('import-opml').files);
     return file;
   }
 
@@ -550,9 +549,63 @@ function SubsCtrl($scope,$http,$log,feedService ){
     else{
       $scope.fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
     }
-    console.log('file selected');
-    //TODO this isn't very angular
-    //jQuery('#uploadButton').removeProp('disabled');
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Great success! All the File APIs are supported.
+      var f = $scope.getFile();
+      var reader = new FileReader();
+      //reader.onprogress = updateProgress;
+      reader.onload = (function (theFile){
+        return function (e){
+          //parse the opml and upload it
+          //console.log(e.target.result);
+          $scope.isLoading = true;
+          try{
+            $scope.parseOPML(e.target.result);
+          }
+          catch(ex){
+            alert('Sorry, we had trouble reading this file through.');
+            console.log(ex);
+          }
+          finally{
+            $scope.isLoading = false;
+          }
+
+        };
+      })(f);
+      reader.readAsText(f);
+      //console.log('great success!');
+    } else {
+      //TODO better error telling you specific versions of FF, Chrome, IE to use
+      alert('Unfortunately, this browser is a bit busted.  File reading will not work, and I have not written a different way to upload opml.  Try using the latest firefox or chrome');
+    }
+  }
+
+  /*
+   * This function takes in an OPML document and returns an array of feeds
+   * or it throws an informative error
+   */
+  $scope.parseOPML = function(opml) {
+    $scope.feedCandidates = [];
+    var opml = jQuery(opml);
+    //var opml =  jQuery.parseXML(e.target.result);
+    var outlines = jQuery(opml).find('outline[xmlUrl]');
+    $scope.feedsCount = outlines.length;
+    $scope.doneFeeds = 0;
+    
+    outlines.each(function(index){
+      var el = jQuery(this);
+      //console.log(el);
+      var feed = {};
+      feed.feed_id = null;
+      //TODO later we should let people choose before we upload.
+      feed.is_private = false;
+      feed.feed_name = el.attr('text'); 
+      feed.feed_url = el.attr('xmlUrl');
+      feed.site_url = el.attr('htmlUrl');
+      $scope.doneFeeds = $scope.feedCandidates.push(feed);
+    });
+    return feeds;
   }
 
   /*
@@ -563,61 +616,15 @@ function SubsCtrl($scope,$http,$log,feedService ){
    */
   $scope.uploadOPML = function(){
     $log.info('uploading OPML');
-    // Check for the various File API support.
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-    // Great success! All the File APIs are supported.
-      var f = $scope.getFile();
-      var reader = new FileReader();
-      //reader.onprogress = updateProgress;
-      reader.onload = (function (theFile){
-        return function (e){
-          //parse the opml and upload it
-          console.log(e.target.result);
-          $scope.isLoading = true;
-          try{
-            var opml = jQuery(e.target.result);
-            //var opml =  jQuery.parseXML(e.target.result);
-            var outlines = jQuery(opml).find('outline[xmlUrl]');
-            $scope.feedsCount = outlines.length;
-            $scope.doneFeeds = 0;
-            
-            outlines.each(function(index){
-              var el = jQuery(this);
-              console.log(el);
-              var feed = {};
-              feed.feed_id = null;
-              //TODO later we should let people choose before we upload.
-              feed.is_private = false;
-              feed.feed_name = el.attr('text'); 
-              feed.feed_url = el.attr('xmlUrl');
-              feed.site_url = el.attr('htmlUrl');
-              //orbital.feedsController.saveFeed(feed);
-
-              $scope.saveFeed(feed,true);
-              $scope.doneFeeds++;
-            });
-            $scope.feedsChanged();
-            $scope.isLoading = false;
-          }
-          catch(ex){
-            alert('Sorry, we had trouble reading this file through.');
-            $scope.isLoading = false;
-            console.log(ex);
-          }
-          //TODO do we clear
-          $scope.toggle();;
-
-        };
-      })(f);
-      reader.readAsText(f);
-
-      console.log('great success!');
-      return false;
-    } else {
-      //TODO better error telling you specific versions of FF, Chrome, IE to use
-      alert('Unfortunately, this browser is a bit busted.  File reading will not work, and I have not written a different way to upload opml.  Try using the latest firefox or chrome');
-    }
-
+    $scope.isLoading=true;
+    _.each($scope.feedCandidates, function(feed, index, list){
+      $scope.saveFeed(feed,true);
+    });
+    $scope.isLoading=false;
+    $scope.feedsChanged();
+    //TODO do we clear
+    $scope.toggle();;
+    return false;
   }
 
   /* events */
