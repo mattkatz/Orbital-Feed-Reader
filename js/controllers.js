@@ -402,8 +402,8 @@ function SubsCtrl($scope,$http,$log,feedService ){
   $scope.urlCandidate = '';
   $scope.feedCandidate = null;
   $scope.newTags = '';
-  //$scope.opmlFile=null;
-  //$scope.fileSize = null;
+  $scope.opmlFile=null;
+  $scope.fileSize = null;
   $scope.toggle = function(){
     $scope.reveal = !$scope.reveal;
     $scope.clear();
@@ -550,10 +550,9 @@ function SubsCtrl($scope,$http,$log,feedService ){
     else{
       $scope.fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
     }
+    console.log('file selected');
     //TODO this isn't very angular
-    //jQuery('#fileName').html('Name: '+ file.name);
-    //jQuery('#fileSize').html('Size: '+ $scope.fileSize);
-    jQuery('#uploadButton').removeProp('disabled');
+    //jQuery('#uploadButton').removeProp('disabled');
   }
 
   /*

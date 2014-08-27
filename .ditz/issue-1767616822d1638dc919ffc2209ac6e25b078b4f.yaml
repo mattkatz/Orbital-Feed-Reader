@@ -5,7 +5,7 @@ type: :feature
 component: Orbital
 release: 0.1.9
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2013-08-22 00:19:28.261781 Z
 references: []
@@ -31,4 +31,8 @@ log_events:
 - - 2014-07-19 02:37:02.301331 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.1.9 from 0.1.8
+  - ""
+- - 2014-08-26 23:16:02.988845 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
   - ""
