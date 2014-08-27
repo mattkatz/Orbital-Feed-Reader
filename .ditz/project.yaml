@@ -96,13 +96,17 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.8
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2014-07-30 11:48:19.223283 Z
   log_events: 
   - - 2014-07-03 00:28:52.539730 Z
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - Lets make smaller releases
+  - - 2014-07-30 11:48:19.223298 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.9
   status: :unreleased
