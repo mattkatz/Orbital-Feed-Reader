@@ -307,8 +307,10 @@ function plugin_add_trigger($vars) {
 
 add_action('template_redirect', 'plugin_trigger_check');
 function plugin_trigger_check() {
-    require_once 'export_opml.php';
-    exit;
+    if(get_query_var('export_opml')){
+      require_once 'export_opml.php';
+      exit;
+    }
 }
 
 //Add settings page
