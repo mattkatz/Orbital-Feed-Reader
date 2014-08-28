@@ -39,7 +39,10 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
-= 0.1.8 - Makeover =
+= 0.1.8.1 - remove error message =
+* bugfix: called a WP function too early for some cases
+
+= 0.1.8 - Beauty Treatment =
 * Flatten and improve the style
 * Move feed list to the left
 * Move the action bar into the wp admin_bar
