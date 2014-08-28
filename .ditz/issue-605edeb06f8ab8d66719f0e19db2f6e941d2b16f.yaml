@@ -1,0 +1,28 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Fix get_current_screen error
+desc: |-
+  I'm calling get_current_screen() before it gets truly defined in before_admin_render
+  > The solution is to include it, call it, check for null, THEN check for ID equality
+type: :bugfix
+component: Orbital
+release: 0.1.8.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-08-28 00:13:29.628356 Z
+references: []
+
+id: 605edeb06f8ab8d66719f0e19db2f6e941d2b16f
+log_events: 
+- - 2014-08-28 00:13:30.772088 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-08-28 00:13:51.091129 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2014-08-28 00:14:01.322280 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
