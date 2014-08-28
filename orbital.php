@@ -185,59 +185,62 @@ add_action('wp_before_admin_bar_render', 'orbital_add_toolbar_items', 100);
 function orbital_add_toolbar_items(){
   global $wp_admin_bar;
   global $orbital_main;
-  //only add our controls if this is our screen
-  if($orbital_main == get_current_screen()->id){
-    $wp_admin_bar->add_node(array(
-      'id' => 'orbital-mark-as-read',
-      'title' => '<span class="ab-icon"></span><span class="ab-label">Mark All as Read</span>',
-      'href' => '#',
-      'meta' => array('onclick' => 'markFeedRead();',
-                      'title' => 'Mark All as Read',
-                      'class' => 'orbital-entries-command',),
-    ));
-    $wp_admin_bar->add_node(array(
-      'id' => 'orbital-update-feed',
-      'title' => '<span class="ab-icon"></span><span class="ab-label">Update Feed</span>',
-      'href' => '#',
-      'meta' => array('onclick' => 'updateFeed();',
-                      'title' => 'Update Current Feed',
-                      'class' => 'orbital-entries-command',),
-    ));
-    $wp_admin_bar->add_node(array(
-      'id' => 'orbital-show-read-items',
-      'title' => '<span class="ab-icon"></span><span class="ab-label">Toggle Read Items</span>',
-      'href' => '#',
-      'meta' => array('onclick' => 'showRead();',
-                      'title' => 'Toggle Showing Read Items',
-                      'class' => 'orbital-entries-command',),
-    ));
 
-    $wp_admin_bar->add_node(array(
-      'id' => 'orbital-sort',
-      'title' => '<span class="ab-icon"></span><span class="ab-label">Sort</span>',
-      'href' => '#',
-      'meta' => array('onclick' => 'changeSortOrder();',
-                      'title' => 'Toggle Entries Sort Order',
-                      'class' => 'orbital-entries-command',),
-    ));
-    $wp_admin_bar->add_node(array(
-      'id' => 'orbital-newest-first',
-      'title' => 'Newest First',
-      'href' => '#',
-      'parent' => 'orbital_sort',
-      'meta' => array('onclick' => 'changeSortOrder(-1);',
-                      'title' => 'Sort Entries Newest First',),
-    ));
-    $wp_admin_bar->add_node(array(
-      'id' => 'orbital-oldest-first',
-      'title' => 'Oldest First',
-      'href' => '#',
-      'parent' => 'orbital_sort',
-      'meta' => array('onclick' => 'changeSortOrder(1);',
-                      'title' => 'Sort Entries Oldest First',),
-    ));
-    
-  }
+
+
+  require_once(ABSPATH . 'wp-admin/includes/screen.php');
+  //only add our controls if this is our screen
+  $cur_scr = get_current_screen();
+  if(null == $cur_scr || $orbital_main != $cur_scr->id){return;}
+  $wp_admin_bar->add_node(array(
+    'id' => 'orbital-mark-as-read',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">Mark All as Read</span>',
+    'href' => '#',
+    'meta' => array('onclick' => 'markFeedRead();',
+                    'title' => 'Mark All as Read',
+                    'class' => 'orbital-entries-command',),
+  ));
+  $wp_admin_bar->add_node(array(
+    'id' => 'orbital-update-feed',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">Update Feed</span>',
+    'href' => '#',
+    'meta' => array('onclick' => 'updateFeed();',
+                    'title' => 'Update Current Feed',
+                    'class' => 'orbital-entries-command',),
+  ));
+  $wp_admin_bar->add_node(array(
+    'id' => 'orbital-show-read-items',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">Toggle Read Items</span>',
+    'href' => '#',
+    'meta' => array('onclick' => 'showRead();',
+                    'title' => 'Toggle Showing Read Items',
+                    'class' => 'orbital-entries-command',),
+  ));
+
+  $wp_admin_bar->add_node(array(
+    'id' => 'orbital-sort',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">Sort</span>',
+    'href' => '#',
+    'meta' => array('onclick' => 'changeSortOrder();',
+                    'title' => 'Toggle Entries Sort Order',
+                    'class' => 'orbital-entries-command',),
+  ));
+  $wp_admin_bar->add_node(array(
+    'id' => 'orbital-newest-first',
+    'title' => 'Newest First',
+    'href' => '#',
+    'parent' => 'orbital_sort',
+    'meta' => array('onclick' => 'changeSortOrder(-1);',
+                    'title' => 'Sort Entries Newest First',),
+  ));
+  $wp_admin_bar->add_node(array(
+    'id' => 'orbital-oldest-first',
+    'title' => 'Oldest First',
+    'href' => '#',
+    'parent' => 'orbital_sort',
+    'meta' => array('onclick' => 'changeSortOrder(1);',
+                    'title' => 'Sort Entries Oldest First',),
+  ));
 }
 
 /* This is the settings page. */
