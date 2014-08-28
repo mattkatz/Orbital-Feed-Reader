@@ -38,7 +38,8 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
-= 0.1.8.1 - remove error message=
+
+= 0.1.8.1 - remove error message =
 * bugfix: called a WP function too early for some cases
 
 = 0.1.8 - Beauty Treatment =
