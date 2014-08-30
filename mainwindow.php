@@ -91,14 +91,15 @@
           <label>
             <img id='opml-icon' class='opml icon' src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">
             Select an OPML file to import
-            <input type="file" name="import-opml" value="" id="import-opml" placeholder="Select an OPML file"
-               onchange="angular.element(this).scope().$apply(angular.element(this).scope().fileSelected())"/>
+            <input type="file" name="import-opml" value="" id="import-opml" 
+              placeholder="Select an OPML file"
+              onchange="angular.element(this).scope().fileSelected()" />
           </label>
           <div ng-show="fileSize">Click upload to upload feeds from this file of {{fileSize}}</div>
           <div ng-hide="fileSize">Please select an OPML file to import</div>
           
-          <div ng-show="feedsCount" id="feedsCount">{{feedsCount}}</div>
-          <div ng-show="feedsCount" id="progress">{{100 * doneFeeds/feedsCount}}%</div>
+          <div ng-show="opmlFile" id="feedsCount">Count: {{feedsCount}}</div>
+          <div ng-show="opmlFile" id="progress">{{100 * doneFeeds/feedsCount}}%</div>
           <button type='submit' id="uploadButton"  ng-disabled="! opmlFile" ng-click='uploadOPML()' >
             Upload
           </button>
