@@ -35,6 +35,100 @@
 
   </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
+    <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
+      <script type="text/ng-template"  id='feedDetail.html'>
+        <div class="feedDetail">
+          <h2>Feed Details for: <input id="feedCandidateName" ng-model="feedCandidate.feed_name" type='text' placeholder="Example Feed Name" /></h2>
+          <label>Feed Url
+            <input id='feedCandidateUrl' type='url' ng-model="feedCandidate.feed_url"  placeholder="http://www.example.com/rss.xml"/>
+          </label>
+          <label>Site Url
+            <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
+          </label>
+          <label>Tags:
+            <div class="tagchecklist">
+              <span class="atag" ng-repeat="tag in feedCandidate.tags | split "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
+            </div>
+            <div>
+              <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>
+            </div>
+          </label>
+          <label>
+            <input type='checkbox' ng-model="feedCandidate.is_private" ng-checked="feedCandidate.is_private" title="" />
+            This Feed is Private! Do not show it to other people.
+          </label>
+        </div>
+      </script>
+      <div class='indicator' ng-show="isLoading" >
+        <img src="<?php echo plugins_url("img/ajax-loader.gif", __FILE__); ?>">
+      </div>
+      <div ng-hide="feedCandidate">
+        <a class="dismiss clickable" ng-click="toggle()">X</a>
+        <div class="feedByUrl">
+          <label for='subscriptionUrl'>
+            <img id="feed-icon" class="feed icon" src="<?php echo plugins_url("img/feed-icon.svg", __FILE__); ?>">
+            Put a website or a feed URL here:
+          </label>
+          <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
+          <a class='button' ng-click='checkUrl()'>Check a URL</a>
+        </div>
+        <div class="feedByOpml">
+        
+
+          <form id='opml-form' ng-hide="possibleFeeds.length > 0" class='opml' novalidate>
+            <div class="horizontal-form">
+              <label>
+                <img id='opml-icon' class='opml icon' src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">
+                Select an OPML file to import
+                <input type="file" name="import-opml" value="" id="import-opml" 
+                  placeholder="Select an OPML file"
+                  onchange="angular.element(this).scope().fileSelected()" />
+              </label>
+              <div ng-show="fileSize">Click upload to upload feeds from this file of {{fileSize}}</div>
+              <div ng-hide="fileSize">Please select an OPML file to import</div>
+              
+              <div ng-show="opmlFile" id="feedsCount">Count: {{feedsCount}}</div>
+              <div ng-show="opmlFile" id="progress">{{100 * doneFeeds/feedsCount}}%</div>
+              <button type='submit' id="uploadButton"  ng-disabled="! opmlFile" ng-click='uploadOPML()' >
+                Upload
+              </button>
+            </div>
+            <div ng-show="feedCandidates" class="opml-candidates horizontal-form">
+              <ul>
+                <li ng-repeat="feedCandidate in feedCandidates" ng-include="'feedDetail.html'"></li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="horizontal-form" >
+        <div class="possibleFeeds" ng-show="possibleFeeds.length > 0" >
+          <div>
+            We found {{possibleFeeds.length}} feeds:
+          </div>
+          <ul>
+            <li ng-repeat="feed in possibleFeeds" >
+              <a ng-click="checkUrl(feed.url)" ><span class="feed name" ng-show="feed.name">{{feed.name}} - </span>{{feed.url}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="feedDetails" ng-show="feedCandidate">
+          <div ng-include="'feedDetail.html'"></div>
+          <label ng-show="feedCandidate.feed_id">
+            <div>Get rid of this feed! Seriously!
+              <a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a> 
+            </div>
+          </label>
+          <br/>
+          <div class="clickable button" ng-click="saveFeed(feedCandidate)" }}>
+            Save {{feedCandidate.feed_name}}
+          </div>
+          <div class="clickable button" ng-click="toggle()">
+            Cancel
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="orbital-content" >
         <div class="indicator" ng-show="isLoading">
           <img src="<?php
@@ -69,89 +163,6 @@
               </div>
           </li>
         </ul>
-    </div>
-  </div>
-  <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
-    <div class='indicator' ng-show="isLoading" >
-      <img src="<?php echo plugins_url("img/ajax-loader.gif", __FILE__); ?>">
-    </div>
-    <div ng-hide="feedCandidate">
-      <label for='subscriptionUrl'>
-        <img id="feed-icon" class="feed icon" src="<?php echo plugins_url("img/feed-icon.svg", __FILE__); ?>">
-        Put a website or a feed URL here:
-      </label>
-      <input type='url' id='subscriptionUrl' placeholder="http://www.morelightmorelight.com" ng-model="urlCandidate"/>
-      <a class='button' ng-click='checkUrl()'>Check a URL</a>
-      <a class="dismiss clickable" ng-click="toggle()">X</a>
-      <form id='opml-form' ng-hide="possibleFeeds.length > 0" class='opml' novalidate>
-        <p> -- OR -- </p>
-        Have an OPML file? Upload it by dragging it here.
-        <div class="horizontal-form">
-          <!--<form id="upload_form" enctype="multipart/form-data" method="post" onsubmit='uploadOpml()'>-->
-          <label>
-            <img id='opml-icon' class='opml icon' src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">
-            Select an OPML file to import
-            <input type="file" name="import-opml" value="" id="import-opml" 
-              placeholder="Select an OPML file"
-              onchange="angular.element(this).scope().fileSelected()" />
-          </label>
-          <div ng-show="fileSize">Click upload to upload feeds from this file of {{fileSize}}</div>
-          <div ng-hide="fileSize">Please select an OPML file to import</div>
-          
-          <div ng-show="opmlFile" id="feedsCount">Count: {{feedsCount}}</div>
-          <div ng-show="opmlFile" id="progress">{{100 * doneFeeds/feedsCount}}%</div>
-          <button type='submit' id="uploadButton"  ng-disabled="! opmlFile" ng-click='uploadOPML()' >
-            Upload
-          </button>
-          <!--</form>-->
-        </div>
-      </form>
-    
-    </div>
-    <div class="horizontal-form" >
-      <div class="possibleFeeds" ng-show="possibleFeeds.length > 0" >
-        <div>
-          We found {{possibleFeeds.length}} feeds:
-        </div>
-        <ul>
-          <li ng-repeat="feed in possibleFeeds" >
-            <a ng-click="checkUrl(feed.url)" ><span class="feed name" ng-show="feed.name">{{feed.name}} - </span>{{feed.url}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="feedDetails" ng-show="feedCandidate">
-        <h2>Feed Details for: <input id="feedCandidateName" ng-model="feedCandidate.feed_name" type='text' placeholder="Example Feed Name" /></h2>
-        <label>Feed Url
-          <input id='feedCandidateUrl' type='url' ng-model="feedCandidate.feed_url"  placeholder="http://www.example.com/rss.xml"/>
-        </label>
-        <label>Site Url
-          <input id='feedCandidateSite' type='url' ng-model="feedCandidate.site_url" placeholder="http://www.example.com"/>
-        </label>
-        <label>Tags:
-          <div class="tagchecklist">
-            <span class="atag" ng-repeat="tag in feedCandidate.tags | split "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
-          </div>
-          <div>
-            <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>
-          </div>
-        </label>
-        <label>
-          <input type='checkbox' ng-model="feedCandidate.is_private" ng-checked="feedCandidate.is_private" title="" />
-          This Feed is Private! Do not show it to other people.
-        </label>
-        <label ng-show="feedCandidate.feed_id">
-          <div>Get rid of this feed! Seriously!
-            <a ng-click='unsubscribe(feedCandidate)' class='button'>Unsubscribe</a> 
-          </div>
-        </label>
-        <br/>
-        <div class="clickable button" ng-click="saveFeed(feedCandidate)" }}>
-          Save {{feedCandidate.feed_name}}
-        </div>
-        <div class="clickable button" ng-click="toggle()">
-          Cancel
-        </div>
-      </div>
     </div>
   </div>
 </div>
