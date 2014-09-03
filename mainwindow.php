@@ -73,10 +73,8 @@
           <a class='button' ng-click='checkUrl()'>Check a URL</a>
         </div>
         <div class="feedByOpml">
-        
-
           <form id='opml-form' ng-hide="possibleFeeds.length > 0" class='opml' novalidate>
-            <div class="horizontal-form">
+            <div class="upload-form horizontal-form">
               <label>
                 <img id='opml-icon' class='opml icon' src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">
                 Select an OPML file to import
@@ -84,14 +82,16 @@
                   placeholder="Select an OPML file"
                   onchange="angular.element(this).scope().fileSelected()" />
               </label>
-              <div ng-show="fileSize">Click upload to upload feeds from this file of {{fileSize}}</div>
-              <div ng-hide="fileSize">Please select an OPML file to import</div>
+              <div ng-show="fileSize" class="feedsInfo">
+                <p>We found {{feedsCount}} feed<span ng-show="feedsCount >1">s</span> in this file of {{fileSize}}.</p> 
+                <p>You can edit those feeds before saving them to your feedlist. When you are ready click to
+                  <button type='submit' ng-show="fileSize" id="uploadButton" 
+                    ng-disabled="! opmlFile" ng-click='uploadOPML()' >
+                    Save these feeds to my feedlist
+                  </button>
+                </p>
+              </div>
               
-              <div ng-show="opmlFile" id="feedsCount">Count: {{feedsCount}}</div>
-              <div ng-show="opmlFile" id="progress">{{100 * doneFeeds/feedsCount}}%</div>
-              <button type='submit' id="uploadButton"  ng-disabled="! opmlFile" ng-click='uploadOPML()' >
-                Upload
-              </button>
             </div>
             <div ng-show="feedCandidates" class="opml-candidates horizontal-form">
               <ul>

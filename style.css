@@ -297,6 +297,9 @@
   display:flex;
   max-height:80%;
 }
+.upload-form {
+  max-width:20rem;
+}
 
 .opml-candidates {
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 2%, rgba(255, 255, 255, 0.7) 98%, rgba(255, 255, 255, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
