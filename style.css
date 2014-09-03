@@ -306,11 +306,9 @@
   display: inline-block;
   overflow-y:scroll;
   padding: 5px;
-  //border-left: 1px dotted;
   max-height:20rem;
 }
 .opml-candidates li{
-  //border-bottom: 1px dotted;
    box-shadow: 1px 2px 5px;
    margin: 10px;
    padding: 5px;
@@ -318,6 +316,16 @@
 
 #tagentry{
   display:inline;
+}
+/*
+ * these next two override regular wordpress styles
+ * because they stay in one place when you scroll
+ */
+.tagchecklist span {
+  padding-left: 1rem;
+}
+.tagchecklist span a {
+  position: relative;
 }
 .heading {
   font-size: large;
