@@ -619,7 +619,22 @@ function SubsCtrl($scope,$http,$log,feedService ){
        * a text node. The title or text attribute should be the category then.
        * Right now we don't support that.
        */
-      feed.tags = node.getAttribute('category');
+      feed.tags ="";
+      if(node.hasAttribute('category')){
+        feed.tags += node.getAttribute('category');
+      }
+      pnode = node.parentNode;
+      if(pnode.tagName != "body"){
+        //AHA! you are nested, aren't you?
+        //Give up your secrets you potential folder/tag
+        if(pnode.hasAttribute('text')){
+          feed.tags += pnode.getAttribute('text');
+        }
+        else if(pnode.hasAttribute('title')){
+          feed.tags += pnode.getAttribute('title');
+        }
+
+      }
       $scope.doneFeeds = $scope.feedCandidates.push(feed);
     }
   }
