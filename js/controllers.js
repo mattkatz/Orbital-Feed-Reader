@@ -402,8 +402,13 @@ function SubsCtrl($scope,$http,$log,feedService ){
   $scope.urlCandidate = '';
   $scope.feedCandidate = null;
   $scope.newTags = '';
-  //$scope.opmlFile=null;
-  //$scope.fileSize = null;
+  $scope.opmlFile=null;
+  $scope.files = null;
+  $scope.fileSize = null;
+  $scope.close = function(){
+    $scope.reveal = false;
+    $scope.clear();
+  }
   $scope.toggle = function(){
     $scope.reveal = !$scope.reveal;
     $scope.clear();
@@ -526,7 +531,7 @@ function SubsCtrl($scope,$http,$log,feedService ){
       $scope.isLoading = false;
       $scope.feedsChanged();
       //close the dialogue
-      $scope.toggle();
+      $scope.close();
       $scope.feedsChanged();
     });
   }
@@ -534,7 +539,6 @@ function SubsCtrl($scope,$http,$log,feedService ){
 
     var file = document.getElementById('import-opml').files[0];
     $scope.opmlFile = file;
-    //console.log(document.getElementById('import-opml').files);
     return file;
   }
 
@@ -542,83 +546,117 @@ function SubsCtrl($scope,$http,$log,feedService ){
    * When an opml file is selected, read the size and name out
    */
   $scope.fileSelected = function(){
-    var file = $scope.getFile();
-    $scope.fileSize = 0;
-    if(file.size > 1024 * 1024){
-      $scope.fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
-    }
-    else{
-      $scope.fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
-    }
-    //TODO this isn't very angular
-    //jQuery('#fileName').html('Name: '+ file.name);
-    //jQuery('#fileSize').html('Size: '+ $scope.fileSize);
-    jQuery('#uploadButton').removeProp('disabled');
-  }
-
-  /*
-   * When an OPML file is uploaded, we should read that file
-   * Extract each feed out of the file
-   * save that feed back up to the server.
-   * TODO It would be even better to hand this off to a web worker if supported
-   */
-  $scope.uploadOPML = function(){
-    $log.info('uploading OPML');
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
-    // Great success! All the File APIs are supported.
-      var f = $scope.getFile();
+      // Great success! All the File APIs are supported.
+      var file = $scope.getFile();
+      $scope.fileSize = 0;
+      if(file.size > 1024 * 1024){
+        $scope.fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+      }
+      else{
+        $scope.fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+      }
       var reader = new FileReader();
       //reader.onprogress = updateProgress;
       reader.onload = (function (theFile){
         return function (e){
           //parse the opml and upload it
-          console.log(e.target.result);
-          $scope.isLoading = true;
-          try{
-            var opml = jQuery(e.target.result);
-            //var opml =  jQuery.parseXML(e.target.result);
-            var outlines = jQuery(opml).find('outline[xmlUrl]');
-            $scope.feedsCount = outlines.length;
-            $scope.doneFeeds = 0;
-            
-            outlines.each(function(index){
-              var el = jQuery(this);
-              console.log(el);
-              var feed = {};
-              feed.feed_id = null;
-              //TODO later we should let people choose before we upload.
-              feed.is_private = false;
-              feed.feed_name = el.attr('text'); 
-              feed.feed_url = el.attr('xmlUrl');
-              feed.site_url = el.attr('htmlUrl');
-              //orbital.feedsController.saveFeed(feed);
-
-              $scope.saveFeed(feed,true);
-              $scope.doneFeeds++;
-            });
-            $scope.feedsChanged();
+          //console.log(e.target.result);
+          $scope.$apply(function(){
+            $scope.isLoading = true;
+            $scope.parseOPML(e.target.result);
             $scope.isLoading = false;
-          }
-          catch(ex){
-            alert('Sorry, we had trouble reading this file through.');
-            $scope.isLoading = false;
-            console.log(ex);
-          }
-          //TODO do we clear
-          $scope.toggle();;
+          });
 
         };
-      })(f);
-      reader.readAsText(f);
-
-      console.log('great success!');
-      return false;
+      })(file);
+      reader.readAsText(file);
     } else {
       //TODO better error telling you specific versions of FF, Chrome, IE to use
       alert('Unfortunately, this browser is a bit busted.  File reading will not work, and I have not written a different way to upload opml.  Try using the latest firefox or chrome');
     }
+  }
 
+  /*
+   * We createa  parseXML function dependend on the browser
+   */
+  $scope.parseXML = function(xmlStr){ }
+  if (typeof window.DOMParser != "undefined") {
+    $scope.parseXML = function(xmlStr) {
+      return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+    };
+  } else if (typeof window.ActiveXObject != "undefined" &&
+            new window.ActiveXObject("Microsoft.XMLDOM")) {
+    $scope.parseXML = function(xmlStr) {
+      var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+      xmlDoc.async = "false";
+      xmlDoc.loadXML(xmlStr);
+      return xmlDoc;
+    };
+  }
+
+  /*
+   * This function takes in an OPML document and pushes feeds into the feedCandidates array
+   * or it throws an informative error
+   */
+  $scope.parseOPML = function(opml) {
+    $scope.feedCandidates = [];
+    var doc = $scope.parseXML(opml);
+    var outlines = doc.querySelectorAll('outline[xmlUrl]');
+    $scope.feedsCount = outlines.length;
+    $scope.doneFeeds = 0;
+    for(index=0;index<outlines.length;index++){
+      var node = outlines.item(index);
+      var feed = {};
+      feed.feed_id = null;
+      feed.is_private = false;
+      feed.feed_name = node.getAttribute('text');
+      feed.feed_url = node.getAttribute('xmlUrl');
+      feed.site_url = node.getAttribute('htmlUrl');
+      /*
+       * TODO: a category can also be provided by nesting feed nodes within
+       * a text node. The title or text attribute should be the category then.
+       * Right now we don't support that.
+       */
+      feed.tags ="";
+      if(node.hasAttribute('category')){
+        feed.tags += node.getAttribute('category');
+      }
+      pnode = node.parentNode;
+      if(pnode.tagName != "body"){
+        //AHA! you are nested, aren't you?
+        //Give up your secrets you potential folder/tag
+        if(pnode.hasAttribute('text')){
+          feed.tags += pnode.getAttribute('text');
+        }
+        else if(pnode.hasAttribute('title')){
+          feed.tags += pnode.getAttribute('title');
+        }
+
+      }
+      $scope.doneFeeds = $scope.feedCandidates.push(feed);
+    }
+  }
+
+  /*
+   * Feeds have previously been parsed out of the opml file
+   * This function saves those feed candidates to the server.
+   * save that feed back up to the server.
+   * TODO It would be even better to hand this off to a web worker if supported
+   */
+  $scope.uploadOPML = function(){
+    $log.info('uploading OPML');
+    $scope.isLoading=true;
+    _.each($scope.feedCandidates, function(feed, index, list){
+      $scope.doneFeeds=0;
+      $scope.saveFeed(feed,true);
+      $scope.doneFeeds++;
+    });
+    $scope.isLoading=false;
+    $scope.feedsChanged();
+    $scope.close();;
+    return false;
   }
 
   /* events */

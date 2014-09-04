@@ -186,15 +186,13 @@
  /* background-image: -moz-linear-gradient(center bottom, rgba(60, 60, 60, 0.7) , rgba(40, 40, 40, 0.6) 50px);*/
   position: fixed;
   top: 50px;
-  left: 200px;
+  left: 30%;
   border-radius: 20px;
   box-shadow: 2px 2px 8px #fff inset, 2px 2px 8px #000;
+  z-index:200;
 }
 .invisible{
   display: none;
-}
-#opml-form{
-  border-top: 1px dotted #000;
 }
 #orbital-content{
   position:absolute;
@@ -203,6 +201,7 @@
   min-width:30rem;
  /* background:#dedede;*/
   overflow-y:auto;
+  z-index:50;
 }
 /* Command Bar */
 #commandbar {
@@ -248,7 +247,7 @@
 
 }
 
-/*Subcriptions */
+/*Subscriptions */
 
 .horizontal-form label input{
   font-weight:normal;
@@ -292,9 +291,41 @@
   width: fit-content;
   z-index:1000;
 }
+#opml-form{
+  border-top: 1px dotted #000;
+  display:ms-flexbox;
+  display:flex;
+  max-height:80%;
+}
+.upload-form {
+  max-width:20rem;
+}
+
+.opml-candidates {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 2%, rgba(255, 255, 255, 0.7) 98%, rgba(255, 255, 255, 0) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  display: inline-block;
+  overflow-y:scroll;
+  padding: 5px;
+  max-height:20rem;
+}
+.opml-candidates li{
+   box-shadow: 1px 2px 5px;
+   margin: 10px;
+   padding: 5px;
+}
 
 #tagentry{
   display:inline;
+}
+/*
+ * these next two override regular wordpress styles
+ * because they stay in one place when you scroll
+ */
+.tagchecklist span {
+  padding-left: 1rem;
+}
+.tagchecklist span a {
+  position: relative;
 }
 .heading {
   font-size: large;

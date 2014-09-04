@@ -5,10 +5,10 @@ desc: |-
   but j and k should only mark read, not unread
 type: :bugfix
 component: Orbital
-release: 
+release: 0.1.9
 reporter: .
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2014-01-02 05:44:33.028106 Z
 references: []
 
@@ -18,3 +18,11 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - created
   - ""
+- - 2014-08-26 12:50:37.452035 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.1.9 from unassigned
+  - ""
+- - 2014-08-26 12:50:59.813896 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
+  - looks pretty good to me!
