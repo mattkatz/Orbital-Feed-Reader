@@ -605,19 +605,22 @@ function SubsCtrl($scope,$http,$log,feedService ){
     var doc = $scope.parseXML(opml);
     var outlines = doc.querySelectorAll('outline[xmlUrl]');
     $scope.feedsCount = outlines.length;
-    console.log('feedsCount ' + $scope.feedsCount);
     $scope.doneFeeds = 0;
     for(index=0;index<outlines.length;index++){
       var node = outlines.item(index);
       var feed = {};
       feed.feed_id = null;
-      //TODO later we should let people choose before we upload.
       feed.is_private = false;
       feed.feed_name = node.getAttribute('text');
       feed.feed_url = node.getAttribute('xmlUrl');
       feed.site_url = node.getAttribute('htmlUrl');
+      /*
+       * TODO: a category can also be provided by nesting feed nodes within
+       * a text node. The title or text attribute should be the category then.
+       * Right now we don't support that.
+       */
+      feed.tags = node.getAttribute('category');
       $scope.doneFeeds = $scope.feedCandidates.push(feed);
-      console.log('doneFeeds ' + $scope.doneFeeds);
     }
   }
 
