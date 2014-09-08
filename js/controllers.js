@@ -638,6 +638,12 @@ function SubsCtrl($scope,$http,$log,feedService ){
       $scope.doneFeeds = $scope.feedCandidates.push(feed);
     }
   }
+  /*
+   * Remove a candidate from the list of feedCandidates
+   */
+  $scope.removeCandidate = function(feed){
+    $scope.feedCandidates = _.without($scope.feedCandidates, feed);
+  }
 
   /*
    * Feeds have previously been parsed out of the opml file

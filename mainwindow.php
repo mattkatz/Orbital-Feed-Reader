@@ -95,7 +95,10 @@
             </div>
             <div ng-show="feedCandidates" class="opml-candidates horizontal-form">
               <ul>
-                <li ng-repeat="feedCandidate in feedCandidates" ng-include="'feedDetail.html'"></li>
+                <li ng-repeat="feedCandidate in feedCandidates" >
+                  <div ng-include="'feedDetail.html'"></div>
+                  <a href="#" ng-click="removeCandidate(feedCandidate)">Remove this feed</a>
+                </li>
               </ul>
             </div>
           </form>
