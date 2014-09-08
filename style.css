@@ -109,7 +109,7 @@
   display:inline-block;
   padding-top:1em;
 }
-#feed-head > h2{
+#feed-head > h2 {
   display:inline;
 }
 
@@ -128,8 +128,7 @@
   margin:0px;
 }
 
-#orbital-feedlist ul li 
-{
+#orbital-feedlist ul li {
   margin-bottom: 0px; /*override something in main wp styles.*/
 }
 .feed, .tag {
@@ -139,7 +138,10 @@
 #tags ul>li {
   padding-left: 1em;
 }
-.feedcounter{
+a.orbital-treeindicator {
+  text-decoration:none;
+}
+.feedcounter {
   font-size: xx-small;
   vertical-align: top;
 }
@@ -264,7 +266,7 @@
 .horizontal-form input {
    display: block;
    padding: 5px;
-   width: 80%;
+   width: 90%;
 }
 .horizontal-form input[type='checkbox']{
    display: inline-block;

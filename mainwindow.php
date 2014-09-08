@@ -25,14 +25,14 @@
     </ul>
     <ul id='tags' ng-show="showByTags">
       <li ng-repeat="(tag, feeds) in tags" >
-        <div id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </div>
-        <ul>
+        <a href="#" class="orbital-treeindicator" ng-hide="show" ng-click="show = !show">▹</a>
+        <a href="#" class="orbital-treeindicator" ng-show="show" ng-click="show = !show">▿</a>
+        <span id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </span>
+        <ul ng-show="show">
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
         </ul>
       </li>
     </ul>
-
-
   </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
