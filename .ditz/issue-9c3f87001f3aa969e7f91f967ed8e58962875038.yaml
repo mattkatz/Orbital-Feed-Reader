@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Make the feedlist collapsible with tags
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.9
+reporter: .
+status: :closed
+disposition: :fixed
+creation_time: 2014-09-08 22:37:29.232863 Z
+references: []
+
+id: 9c3f87001f3aa969e7f91f967ed8e58962875038
+log_events: 
+- - 2014-09-08 22:37:30.844369 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-09-08 22:37:46.332208 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
