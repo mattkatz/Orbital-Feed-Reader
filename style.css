@@ -10,6 +10,9 @@ a {
   color: #000;
   text-shadow: 0px 2px 5px rgb(0,0,150);
 }
+video{
+  width:100%;
+}
 a:hover{
   color: #fdfdff;
   text-decoration: underline;
@@ -64,6 +67,10 @@ hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
   top:0px;
   z-index:-1;
   background: rgba(255,255,255,0.5);
+}
+
+li.new:after{
+  content:"☆ - NEW!";
 }
 .stretch{
   width:100%;
