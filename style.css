@@ -139,7 +139,19 @@
   padding-left: 1em;
 }
 a.orbital-treeindicator {
-  text-decoration:none;
+  text-decoration: none;
+  display:inline-block;
+  width:1em;
+  transition-duration:.5s;
+  transition-timing-function:ease-in-out;
+}
+a.orbital-treeindicator:hover {
+  text-shadow: 0 0 4px #bada55;
+  font-weight:bold;
+  transform:rotate(45deg);
+}
+a.orbital-treeindicator.open {
+  transform:rotate(90deg);
 }
 .feedcounter {
   font-size: xx-small;

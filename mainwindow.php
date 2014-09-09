@@ -25,8 +25,7 @@
     </ul>
     <ul id='tags' ng-show="showByTags">
       <li ng-repeat="(tag, feeds) in tags" >
-        <a href="#" class="orbital-treeindicator" ng-hide="show" ng-click="show = !show">▹</a>
-        <a href="#" class="orbital-treeindicator" ng-show="show" ng-click="show = !show">▿</a>
+        <a href="#" class="orbital-treeindicator" ng-class="{'open':show}" ng-click="show = !show">▹</a>
         <span id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </span>
         <ul ng-show="show">
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
