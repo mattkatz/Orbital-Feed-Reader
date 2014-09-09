@@ -153,7 +153,7 @@
                 Read
               </div>
             </div>
-              <a href="{{entry.link}}"><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
+              <a href="{{entry.link}}" target='_blank'><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
               <div class="author" ng-show="entry.author">
                 {{entry.author}}
               </div>
