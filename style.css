@@ -141,17 +141,19 @@
 a.orbital-treeindicator {
   text-decoration: none;
   display:inline-block;
+  color: #aaa;
   width:1em;
-  transition-duration:.5s;
+  transition-duration:.25s;
   transition-timing-function:ease-in-out;
-}
-a.orbital-treeindicator:hover {
-  text-shadow: 0 0 4px #bada55;
-  font-weight:bold;
-  transform:rotate(45deg);
+  transition-property: all;
 }
 a.orbital-treeindicator.open {
+  color: #444;
   transform:rotate(90deg);
+}
+a.orbital-treeindicator:hover {
+  color: #333;
+  transform:rotate(45deg);
 }
 .feedcounter {
   font-size: xx-small;
