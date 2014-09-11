@@ -105,7 +105,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
     $scope.editable = ! $scope.editable;
   }
   $scope.markRead = function(feed){
-    console.log(feedService.selectedFeed());
+    //console.log(feedService.selectedFeed());
     if( null == feed){
       feed = feedService.selectedFeed();
     }
@@ -247,7 +247,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
     url = e(entry.link);
     title = e(entry.title);
     content = e(s);
-    console.log(opts.settings['quote-text']);
+    //console.log(opts.settings['quote-text']);
     if(opts.settings[ 'quote-text' ] && ! content ){
       var div = document.createElement("div");
       div.innerHTML = entry.content;
@@ -264,7 +264,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
     //Use the entry details to construct a pressthis URL
     //Reveal a pressthis iframe window.
 
-    console.log(entry);
+    //console.log(entry);
   }
 
   /*
@@ -315,7 +315,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
     //$scope.displayFeed(args['feed'], args['showRead']);
   });
   $scope.nextEntry = function(currentEntry){
-    $log.info('next entry finds the entry after the current entry, selects it');
+    //$log.info('next entry finds the entry after the current entry, selects it');
     var index =0;//by default we select the first entry
     if( $scope.entries.length == 0){
       return;//can't select anything
@@ -331,7 +331,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
     scrollToEntry(next);
   };
   $scope.previousEntry = function (currentEntry) {
-    $log.info('prev entry finds the entry before the current entry, selects it');
+    //$log.info('prev entry finds the entry before the current entry, selects it');
     var index = $scope.entries.length;//by default we select the last entry
     if( $scope.entries.length == 0){
       return;//can't select anything
@@ -430,7 +430,7 @@ function SubsCtrl($scope,$http,$log,feedService ){
     .success(function(response){
       $scope.isLoading=false;
       if("feed" == response.url_type){
-        console.log('found a feed!');
+        //console.log('found a feed!');
         //if it returns a feed detail, display that.
         $scope.feedCandidate = { 
           feed_url: response.orig_url, 
@@ -443,17 +443,17 @@ function SubsCtrl($scope,$http,$log,feedService ){
         $scope.possibleFeeds=null;
       }
       else{
-        console.log('sticking in feed names');
+        //console.log('sticking in feed names');
         _.each(response.feeds,function(feed){
-          console.log('looking for a title for '+ feed);
-          console.log(feed);
+          //console.log('looking for a title for '+ feed);
+          //console.log(feed);
           if(feed.body){
             //TODO this all seeems a bit fragile. Could be done better
             var xml = jQuery.parseXML(feed.body);
             xml = jQuery(xml);
             var title = xml.find('channel > title');
             feed.name = title.text();
-            console.log(feed.name);
+            //console.log(feed.name);
           }
         });
         //if it returns possibleFeeds, display them.

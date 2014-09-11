@@ -302,9 +302,7 @@ mainModule.factory('feedService',   function($http,$log){
       feedservice.select(_selectedFeed )
     },
     saveTagView: function(showTags, callback){
-      console.log('save tag view app ' + showTags);
       feedservice.saveSetting({show_by_tags:showTags},callback);
-      //_showByTags = showTags;
     },
   };
   return feedservice;
@@ -318,25 +316,20 @@ mainModule.run(function($rootScope){
    * use distinct event names to prevent browser explosion
    */
   $rootScope.$on('feedSelect',function(event, args){
-    //console.log('caught feedSelect!');
     $rootScope.$broadcast('feedSelected',args);
   });
   $rootScope.$on('feedEdit',function(event, args){
-    //console.log('caught feedEdit!');
     //Ugh, this should have a better name
     $rootScope.$broadcast('feedEditRequest',args);
   });
   //catch and broadcast entry changes
   $rootScope.$on('entryChange', function(event, args){
-    //console.log('caught entryChange!');
     $rootScope.$broadcast('entryChanged', args);
   });
   $rootScope.$on('newFeedRequested', function(event,args){
-    //console.log('caught newFeedRequested');
     $rootScope.$broadcast('subscriptionsWindow',args);
   });
   $rootScope.$on('feedSaved', function(event,args){
-    //console.log('the feeds are changing');
     $rootScope.$broadcast('updateFeed',args);
   });
   $rootScope.$on('commandBarEvent',function(event,args){
