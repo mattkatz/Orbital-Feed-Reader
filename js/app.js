@@ -154,6 +154,12 @@ mainModule.factory('feedService',   function($http,$log){
     showRead: function(){
       return _showRead;
     },
+    selectedEntry: function(){
+      return _selectedEntry;
+    }, 
+    selectEntry: function(entry){
+      _selectedEntry = entry;
+    },
 
     getFeedEntries: function(feed,showRead){
       var qualifier = getEntriesQualifier(feed);
@@ -167,9 +173,8 @@ mainModule.factory('feedService',   function($http,$log){
       $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
       .success(function(data){
         _isEntriesLoading = false;
-        _entries = data;
-        _selectedEntry = null;
-        scrollToEntry(null);
+        _entries = _.union(_entries, data);
+        scrollToEntry(_selectedEntry);
       });
 
     },
@@ -225,6 +230,8 @@ mainModule.factory('feedService',   function($http,$log){
     },
     select : function(feed, showRead){
       _selectedFeed = feed;
+      _entries = [];
+      _selectedEntry = null;
       if(undefined != showRead){
         _showRead = showRead;
       }

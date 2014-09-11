@@ -199,6 +199,9 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.$watch(feedService.isEntriesLoading, function(){
     $scope.isLoading = feedService.isEntriesLoading();
   });
+  $scope.$watch(feedService.selectedEntry, function(){
+    $scope.selectedEntry=feedService.selectedEntry();
+  });
 
   
   /*
@@ -221,26 +224,13 @@ function EntriesCtrl($scope, $http, $log,feedService){
   $scope.addMoreEntries = function(){
     var feed = feedService.selectedFeed();
     if(! feed){ return; }
-    var qualifier = $scope.getEntriesQualifier(feed);
+    
     //$log.log('showRead='+showRead);
     var showRead = $scope.isRead;
     if(!showRead){
       showRead=0;
     }
-    $scope.isLoading = true;
-    $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+showRead)
-    //$http.get(opts.ajaxurl+'?action=orbital_get_entries&feed_id='+feedService.selectedFeed().feed_id+'&show_read='+$scope.isRead)
-    .success(function  (response) {
-      $scope.isLoading = false;
-      $log.info('going to the server mines for more delicious content');
-      response.forEach( function(value, index, array){
-        //check to see if the value is in entries.
-        if(! _.some($scope.entries, function(item){ return item.id == value.id})){
-          //If not in entries then append it
-          $scope.entries.push(value);
-        };
-      });
-    });
+    feedService.getFeedEntries(feed,showRead);
   }
 
   $scope.pressThis = function(entry,pressThisUrl) {
@@ -304,10 +294,10 @@ function EntriesCtrl($scope, $http, $log,feedService){
    * Toggle read on the server, then alert the UI
    */
 
-  $scope.selectEntry = function selectEntry(entry) {
-    $log.log('Selected entry ' + entry.entry_id);
+  $scope.selectEntry = function (entry) {
     //Set this as the selected entry
-    $scope.selectedEntry = entry;
+    feedService.selectEntry(entry);
+    //$scope.selectedEntry = entry;
     if( "0" == entry.isRead ){
       $scope.setReadStatus(entry);
     }
