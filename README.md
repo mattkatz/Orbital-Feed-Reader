@@ -16,8 +16,6 @@ Goals
 * Create a blogroll dynamically from your feeds.
 * Let you share your OPML dynamically.
 * Integrate into Firefox as a feed handler.
-* Let you mark feeds as Private
-* Tag/Categorize feeds
 
 
 Goals that are DONE!
@@ -28,6 +26,8 @@ Goals that are DONE!
 * Support keyboard shortcuts
 * Infinite Scroll
 * Autofeed Discovery
+* Let you mark feeds as Private
+* Tag/Categorize feeds
 
 
 That's a lot of work to do.  I'm going to take a stab at it, but I'd love your help. Let's make wordpress even better.
