@@ -173,8 +173,10 @@ mainModule.factory('feedService',   function($http,$log){
       $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
       .success(function(data){
         _isEntriesLoading = false;
-        _entries = _.union(_entries, data);
-        scrollToEntry(_selectedEntry);
+        data = _.union(_entries,data);
+        data = _.unique(data,false, function(entry){return entry.entry_id;});
+        _entries = data
+        //scrollToEntry(_selectedEntry);
       });
 
     },
