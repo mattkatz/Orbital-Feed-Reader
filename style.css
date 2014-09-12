@@ -140,6 +140,7 @@
 }
 a.orbital-treeindicator {
   text-decoration: none;
+  outline: none;
   display:inline-block;
   color: #aaa;
   width:1em;
