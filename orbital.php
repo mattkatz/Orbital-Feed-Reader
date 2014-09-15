@@ -3,7 +3,7 @@
 * Plugin Name: Orbital Feed Reader
 * Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
-* Version: 0.1.8.1
+* Version: 0.1.9
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
 * License: GPL2
@@ -232,7 +232,7 @@ function orbital_add_toolbar_items(){
     'id' => 'orbital-newest-first',
     'title' => 'Newest First',
     'href' => '#',
-    'parent' => 'orbital_sort',
+    'parent' => 'orbital-sort',
     'meta' => array('onclick' => 'changeSortOrder(-1);',
                     'title' => 'Sort Entries Newest First',),
   ));
@@ -240,7 +240,7 @@ function orbital_add_toolbar_items(){
     'id' => 'orbital-oldest-first',
     'title' => 'Oldest First',
     'href' => '#',
-    'parent' => 'orbital_sort',
+    'parent' => 'orbital-sort',
     'meta' => array('onclick' => 'changeSortOrder(1);',
                     'title' => 'Sort Entries Oldest First',),
   ));
