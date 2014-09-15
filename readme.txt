@@ -2,7 +2,7 @@
 Contributors: mttktz
 Donate link: https://www.gittip.com/mattkatz/
 Tags: feed reader, google reader, rss, atom, 
-Requires at least: 3.0.1
+Requires at least: 3.9.1
 Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
@@ -38,6 +38,21 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+
+= 0.1.9 - Born Free =
+* Better import of large OPML files
+* Import feed tags in OPML files
+* Allow users to edit feeds from OPML before importing
+* Show opml export link to the user. 
+* Public OPML export for not logged in users
+* Export tags in opml
+* Mark feeds private
+* Check export for private feeds!
+* Make the feedlist collapsible with tags
+* Add unread count to All feed
+* bugfix: Upgrading causes orphaned feeds
+* bugfix: fix read/unread toggling
+* bugfix: Private status for feeds not showing in feed editor
 
 = 0.1.8.1 - remove error message =
 * bugfix: called a WP function too early for some cases
