@@ -237,8 +237,7 @@ mainModule.factory('feedService',   function($http,$log){
       if(undefined != showRead){
         _showRead = showRead;
       }
-
-      //this.getFeedEntries(feed,_showRead);
+      this.getFeedEntries(feed,_showRead);
     },
     saveFeed: function(feed, successCallback){
       var data = {
