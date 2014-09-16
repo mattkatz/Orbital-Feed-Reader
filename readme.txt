@@ -50,6 +50,7 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 * Check export for private feeds!
 * Make the feedlist collapsible with tags
 * Add unread count to All feed
+* Better note that we are at end of entries
 * bugfix: Upgrading causes orphaned feeds
 * bugfix: fix read/unread toggling
 * bugfix: Private status for feeds not showing in feed editor
