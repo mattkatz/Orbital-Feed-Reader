@@ -5,7 +5,20 @@
 .no-feed-displayed{
   font-weight: lighter;
   font-size: large;
-  padding:20px;
+  padding: 20px;
+  height: 20rem;
+}
+
+.hide{
+  color: rgba(255,255,255,0);
+}
+.show {
+  color: inherit;
+}
+.no-feed-displayed span {
+  transition-duration: .25s;
+  transition-timing-function: ease-in-out;
+  transition-property: all;
 }
 .entries {
   /*background-color: #ECECEC;*/

@@ -164,6 +164,11 @@
                 <a href="#" class="button" ng-click="pressThis(entry,'<?php echo admin_url('press-this.php') ?>')">Blog This!</a>
               </div>
           </li>
+          <li >
+            <div class="no-feed-displayed end-of-line">
+              That's all we've got so far! <span ng-class="{'hide': ! isLoading, 'show': isLoading}">We're going to the server mines for more delicious content!</span>
+            </div>
+          </li>
         </ul>
     </div>
   </div>

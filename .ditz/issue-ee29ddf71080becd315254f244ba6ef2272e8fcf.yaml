@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Better note that we are at end of entries
+desc: ""
+type: :feature
+component: Orbital
+release: 0.1.9
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-09-16 12:35:12.215970 Z
+references: []
+
+id: ee29ddf71080becd315254f244ba6ef2272e8fcf
+log_events: 
+- - 2014-09-16 12:35:13.892411 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-09-16 12:35:28.544311 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
