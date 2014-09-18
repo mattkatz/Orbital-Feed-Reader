@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: fix strange box-shadow on twiddlers
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.1.9
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-09-18 00:35:12.210185 Z
+references: []
+
+id: e2108a95c8a7fb4b0fbf8159cbdcb00907e88834
+log_events: 
+- - 2014-09-18 00:35:13.133804 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

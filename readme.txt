@@ -38,6 +38,8 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.1.9.1 - FOCUS = 
+* bugfix: 4.0 introduces a strange box-shadow on focused elements.
 
 = 0.1.9 - Born Free =
 * Better import of large OPML files
