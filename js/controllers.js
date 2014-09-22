@@ -183,7 +183,17 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
   
 }
+function CliCtrl($scope, feedService){
+  $scope.reveal = false;
+  $scope.toggleReveal = function(){
+    $scope.reveal=! $scope.reveal;
+  };
+  key('g',function(event,handler){
+    $scope.$apply($scope.toggleReveal());
+  });
 
+
+}
 function EntriesCtrl($scope, $http, $log,feedService){
   $scope.selectedEntry = null;
   $scope.isRead = false;

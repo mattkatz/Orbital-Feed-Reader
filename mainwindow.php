@@ -33,6 +33,9 @@
       </li>
     </ul>
   </div>
+  <div id='orbital-cli' class="modal-window" ng-show="reveal" ng-controller="CliCtrl">
+    <div>CONTROLLER</div>
+  </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
       <script type="text/ng-template"  id='feedDetail.html'>
