@@ -35,6 +35,10 @@
   </div>
   <div id='orbital-cli' class="modal-window" ng-show="reveal" ng-controller="CliCtrl">
     <div>CONTROLLER</div>
+    <input id='orbital-cli-input' ng-model='filterstring' type='text'></input>
+    <div id='orbital-cli-results' ng-show='fileterstring'>
+      RESULTS
+    </div>
   </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >

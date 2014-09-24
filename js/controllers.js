@@ -187,11 +187,14 @@ function CliCtrl($scope, feedService){
   $scope.reveal = false;
   $scope.toggleReveal = function(){
     $scope.reveal=! $scope.reveal;
+    if($scope.reveal){
+      //focus on the input
+      document.getElementById('orbital-cli-display').select();
+    }
   };
   key('g',function(event,handler){
-    $scope.$apply($scope.toggleReveal());
-  });
-
+    $scope.$apply(function(){$scope.toggleReveal()});
+    });
 
 }
 function EntriesCtrl($scope, $http, $log,feedService){
