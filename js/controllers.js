@@ -183,18 +183,32 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
   
 }
-function CliCtrl($scope, feedService){
+function CliCtrl($scope, $filter,feedService){
   $scope.reveal = false;
+  $scope.feeds = feedService.feeds();
+  //$scope.filteredFeeds = $filter('filter')(feedService.feeds(),$scope.filterstring);
+  $scope.tags = feedService.tags();
+  $scope.filterstring = null;
+  $scope.$watch(feedService.feeds,function(newValue){
+    //console.log('listener');
+    //$scope.feeds = feedService.feeds();
+    $scope.feeds = newValue;
+    //$scope.filteredFeeds = $filter('filter')(newValue,$scope.filterstring);
+  });
+  $scope.$watch(feedService.tags,function(newValue){
+    //console.log('listener');
+    $scope.tags = newValue;
+  });
   $scope.toggleReveal = function(){
     $scope.reveal=! $scope.reveal;
     if($scope.reveal){
       //focus on the input
-      document.getElementById('orbital-cli-display').select();
+      document.getElementById('orbital-cli-input').focus();
     }
   };
   key('g',function(event,handler){
     $scope.$apply(function(){$scope.toggleReveal()});
-    });
+  });
 
 }
 function EntriesCtrl($scope, $http, $log,feedService){

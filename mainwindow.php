@@ -36,7 +36,10 @@
   <div id='orbital-cli' class="modal-window" ng-show="reveal" ng-controller="CliCtrl">
     <div>CONTROLLER</div>
     <input id='orbital-cli-input' ng-model='filterstring' type='text'></input>
-    <div id='orbital-cli-results' ng-show='fileterstring'>
+    <div id='orbital-cli-results' ng-show='filterstring'>
+      <ul class='feeds'>
+        <li ng-repeat='feed in feeds | filter:filterstring' ng-include="'feedline.html'"></li>
+      </ul>
       RESULTS
     </div>
   </div>
