@@ -58,17 +58,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh(callback);
   };
 
-  $scope.feedUnreadCount = function(feed){
-    if(feed.feed_id == -1){ //All Feed
-      var allNum = _.reduce($scope.feeds, function(memo, countFeed){
-        if(countFeed.feed_id <0){return memo;}
-        num = parseInt(countFeed.unread_count,10);
-        return memo + num; }, 0);
-      return allNum;
-    }
-    return feed.unread_count;
-  }
-
   $scope.tagUnreadCount = function(tagname){
       feeds = $scope.tags[tagname];
       return _.reduce(feeds,function(count, feed){

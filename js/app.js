@@ -214,7 +214,12 @@ mainModule.factory('feedService',   function($http,$log){
       $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
         //Here is our simple feed list
-        data = _.map(data, function(feed){ feed.is_private = feed['private']=='1'; return feed; });
+        data = _.map(data, 
+                     function(feed){ 
+                       feed.is_private = feed['private']=='1'; 
+                       feed.unreadCount= function(){return feed.unread_count;};
+                       return feed; 
+                     });
         _feeds= data;
 
         //Now lets get a list of all the unique tags in those feeds
@@ -236,6 +241,13 @@ mainModule.factory('feedService',   function($http,$log){
           feed_id:-1, //TODO start using neg integers for special feed ids
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
+          unreadCount: function(){
+            var allNum = _.reduce(_feeds, function(memo, countFeed){
+              if(countFeed.feed_id <0){return memo;}
+              num = parseInt(countFeed.unread_count,10);
+              return memo + num; }, 0);
+            return allNum;
+          },
           is_private:'1',
         }
         _feeds.unshift(fresh);
