@@ -201,12 +201,15 @@ function CliCtrl($scope, $filter,feedService){
   });
   $scope.toggleReveal = function(){
     $scope.reveal=! $scope.reveal;
-    if($scope.reveal){
-      //focus on the input
-      document.getElementById('orbital-cli-input').focus();
+    $scope.filterString = null;
+  };
+  $scope.processKeys = function($event){
+    if($event.keyCode ==27){//if they hit esc, close the cli
+      $scope.toggleReveal();
     }
   };
-  key('g',function(event,handler){
+
+  key('g', function(event,handler){
     $scope.$apply(function(){$scope.toggleReveal()});
   });
 
