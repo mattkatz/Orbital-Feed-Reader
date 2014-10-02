@@ -58,12 +58,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh(callback);
   };
 
-  $scope.tagUnreadCount = function(tagname){
-      feeds = $scope.tags[tagname];
-      return _.reduce(feeds,function(count, feed){
-        return count + parseInt(feed.unread_count,10);},0);
-    };
-
   /*
    * Get the next unread feed
    *

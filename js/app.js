@@ -234,7 +234,13 @@ mainModule.factory('feedService',   function($http,$log){
           _tags[tag] = _.filter(_feeds,function(feed){
                           return _.contains(feed.tags.split(","),tag);
                         });
-        })
+          _tags[tag].unreadCount = function(){
+            return _.reduce(_tags[tag], 
+                          function(count, feed){
+                            return count + parseInt(feed.unread_count,10);
+                          },0);
+          };
+        });
         //We have to do this AFTER the tag building 
         //because this has no tags and throws an exception
         var fresh = {
