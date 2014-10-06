@@ -38,7 +38,7 @@
     <input id='orbital-cli-input' ng-model='filterstring' focus-me='reveal' ng-keyup='processKeys($event)' type='text'></input>
     <div id='orbital-cli-results' ng-show='filterstring'>
       <ul class='feeds'>
-        <li ng-repeat='feed in feeds | filter:{feed_name:filterstring}' ng-include="'feedline.html'"></li>
+        <li ng-repeat='feed in filteredFeeds() ' ng-include="'feedline.html'"></li>
       </ul>
     </div>
   </div>
