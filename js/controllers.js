@@ -166,29 +166,81 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
   
 }
-function CliCtrl($scope, $filter,feedService){
+function CliCtrl($scope, $filter,$timeout,feedService){
   $scope.reveal = false;
+  $scope.selectedFeed = null;
   $scope.feeds = feedService.feeds();
   //$scope.filteredFeeds = $filter('filter')(feedService.feeds(),$scope.filterstring);
+  $scope.filteredFeeds = function(){
+    return $filter('filter')(feedService.feeds(),{'feed_name':$scope.filterstring});
+  };
   $scope.tags = feedService.tags();
   $scope.filterstring = null;
-  $scope.$watch(feedService.feeds,function(newValue){
-    //console.log('listener');
-    //$scope.feeds = feedService.feeds();
-    $scope.feeds = newValue;
-    //$scope.filteredFeeds = $filter('filter')(newValue,$scope.filterstring);
-  });
   $scope.$watch(feedService.tags,function(newValue){
     //console.log('listener');
     $scope.tags = newValue;
   });
   $scope.toggleReveal = function(){
     $scope.reveal=! $scope.reveal;
-    $scope.filterString = null;
+    $scope.filterstring = null;
+    $scope.selectedFeed = null;
+  };
+  $scope.nextResult = function(){
+    feeds = $scope.filteredFeeds();
+    //if no feeds, there can be no selected result
+    if(feeds.length <= 0){
+      $scope.selectedFeed = null;
+      return;
+    }
+    index = feeds.indexOf($scope.selectedFeed);
+    if(index <0){ //selectedFeed is null or not in the list
+      $scope.selectedFeed = feeds[0];
+      return;
+    }
+    if (index < feeds.length -1){
+      $scope.selectedFeed = feeds[index+1];
+    }
+  };
+  $scope.selectCurrentFeed = function(){
+    feedService.select($scope.selectedFeed);
+    $scope.toggleReveal();
+  };
+  $scope.prevResult = function(){
+    
   };
   $scope.processKeys = function($event){
-    if($event.keyCode ==27){//if they hit esc, close the cli
-      $scope.toggleReveal();
+    var enter = 13, tab = 9, esc = 27, up = 38, down = 40, left = 37, right = 39;
+    //cancel other handlers if we've got it
+    //if up/down/escape and we have results
+    //or if enter/tab and we have results and one has been selected
+    if( ([enter,tab,esc,up,down].indexOf($event.keyCode) != -1) &&
+      (([enter,tab].indexOf($event.keyCode) ==-1)|| $scope.selectedFeed)){
+        if($event.stopImmediatePropagation) $event.stopImmediatePropagation();
+        if($event.preventDefault) $event.preventDefault();
+        if($event.stopPropagation) $event.stopPropagation();
+        if($event.cancelBubble) $event.cancelBubble = true;
+    }else{
+      //$scope.toggleReveal();
+      return;
+    }
+    switch($event.keyCode){
+      case up:
+        $scope.prevResult();
+        break;
+      case tab:
+      case down:
+        $scope.nextResult();
+        break;
+      case enter:
+        $event.stopImmediatePropagation();
+        $scope.selectCurrentFeed();
+        break;
+      case esc:
+        $event.stopImmediatePropagation();
+        //hide the results or empty them
+        $scope.toggleReveal();
+        $timeout( $event.target.blur);
+        break;
     }
   };
 
