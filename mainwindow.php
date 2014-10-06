@@ -16,7 +16,7 @@
     </div>
     <script type="text/ng-template"  id='feedline.html'>
       <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
-            {{feed.feed_name}} <span class="feedcounter" data-blart="{{feedUnreadCount(feed)}}">{{feed.unreadCount()}} </span>
+            <span ng-bind-html='feed.feed_name'></span> <span class="feedcounter" data-blart="{{feedUnreadCount(feed)}}">{{feed.unreadCount()}} </span>
             <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </div>
     </script>
