@@ -379,8 +379,8 @@ function EntriesCtrl($scope, $http, $log,feedService){
       $scope.setReadStatus(entry);
     }
   }
-  $scope.getFeedName = function (entry){
-    return feedService.getFeedName(entry.feed_id);
+  $scope.getFeedFromEntry = function (entry){
+    return feedService.getFeedFromEntry(entry);
   }
   $scope.displayFeed(null,$scope.isRead);
   //$scope.displayFeed();

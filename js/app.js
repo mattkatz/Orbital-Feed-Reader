@@ -83,7 +83,7 @@ mainModule.directive('focusMe', function($timeout, $parse) {
       // on blur event:
       element.bind('blur', function() {
          console.log('blur');
-         //scope.$apply(model.assign(scope, false));
+         scope.$apply(model.assign(scope, false));
       });
     }
   };
@@ -300,13 +300,17 @@ mainModule.factory('feedService',   function($http,$log){
     getFeed: function(feed_id){
       return _.find(_feeds, function(feed){return feed.feed_id == feed_id});
     },
-    getFeedName: function(feed_id){
-      var feed = _.find(_feeds, function(feed){return feed.feed_id == feed_id});
+    getFeedFromEntry: function(entry){
+      var feed_id = entry.feed_id;
+      var feed = _.find(_feeds, function(feed){
+        return feed.feed_id == feed_id}
+      );
       if (feed){
-        return feed.feed_name;
+        return feed;
       }else{
         return null;
       }
+
     },
     selectedFeed: function(){
       if(! _selectedFeed) {_selectedFeed = _feeds[0];}
