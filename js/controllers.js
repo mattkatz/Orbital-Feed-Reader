@@ -295,6 +295,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
   };
 
   $scope.selectFeed = function(entry){
+    console.log('selecting feed');
     feedService.select(feedService.getFeed(entry.feed_id));
   }
 
