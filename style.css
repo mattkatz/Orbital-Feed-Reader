@@ -206,6 +206,18 @@ a.orbital-treeindicator:hover {
   border-radius: 0 50px 50px 0;
 }
 
+/* CLI
+ */
+#orbital-cli-results ul.feeds{
+  -moz-column-width: 200px;
+  -moz-column-gap: 10px;
+  -webkit-column-width: 200px;
+  -webkit-column-gap: 10px;
+  column-width: 200px;
+  column-gap: 10px;
+  overflow-y:scroll;
+}
+
 
 
 .modal-window{
