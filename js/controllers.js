@@ -201,12 +201,24 @@ function CliCtrl($scope, $filter,$timeout,feedService){
       $scope.selectedFeed = feeds[index+1];
     }
   };
-  $scope.selectCurrentFeed = function(){
+  $scope.prevResult = function(){
+    feeds = $scope.filteredFeeds();
+    if(feeds.length<=0){
+      $scope.selectedFeed = null;
+      return;
+    }
+    index = feeds.indexOf($scope.selectedFeed);
+    if(index <0){ //selectedFeed is null or not in the list
+      $scope.selectedFeed = feeds[0];
+      return;
+    }
+    if (index > 0){
+      $scope.selectedFeed = feeds[index-1];
+    }
+  };
+  $scope.select = function(feed){
     feedService.select($scope.selectedFeed);
     $scope.toggleReveal();
-  };
-  $scope.prevResult = function(){
-    
   };
   $scope.processKeys = function($event){
     var enter = 13, tab = 9, esc = 27, up = 38, down = 40, left = 37, right = 39;
@@ -233,7 +245,7 @@ function CliCtrl($scope, $filter,$timeout,feedService){
         break;
       case enter:
         $event.stopImmediatePropagation();
-        $scope.selectCurrentFeed();
+        $scope.select($scope.selectedFeed);
         break;
       case esc:
         $event.stopImmediatePropagation();

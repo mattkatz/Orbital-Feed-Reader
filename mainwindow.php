@@ -16,7 +16,7 @@
     </div>
     <script type="text/ng-template"  id='feedline.html'>
       <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
-            <span ng-bind-html='feed.feed_name'></span> <span class="feedcounter" data-blart="{{feedUnreadCount(feed)}}">{{feed.unreadCount()}} </span>
+            <span ng-bind-html='feed.feed_name'></span> <span class="feedcounter" >{{feed.unreadCount()}} </span>
             <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </div>
     </script>
@@ -149,8 +149,7 @@
         <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
           <li id="{{entry.feed_id}}_{{entry.id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.id == selectedEntry.id}" >
             <div class='indicators'>
-              <div class="indicator">
-                {{getFeedName(entry)}}
+              <div class="indicator" ng-bind-html="getFeedName(entry)">
               </div>
               <div class="indicator" ng-show="entry.isLoading">
                 <img src="<?php
@@ -162,8 +161,7 @@
               </div>
             </div>
               <a href="{{entry.link}}" target='_blank'><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
-              <div class="author" ng-show="entry.author">
-                {{entry.author}}
+              <div class="author" ng-show="entry.author" ng-bind-html="entry.author">
               </div>
               <div class="date" title="{{entry.published | date:mediumTime }}">
                 {{entry.published | date:medium }}
