@@ -145,8 +145,8 @@
   margin-bottom: 0px; /*override something in main wp styles.*/
 }
 .feed, .tag {
+  display: inline;
   min-height: 1.5rem;
-
 }
 #tags ul>li {
   padding-left: 2em;
