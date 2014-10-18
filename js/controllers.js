@@ -220,7 +220,14 @@ function CliCtrl($scope, $filter,$timeout,feedService){
     feedService.select(feed);
     $scope.toggleReveal();
   };
+  $scope.setSelectedFeedIfNull = function(){
+    var filtFeeds = $scope.filteredFeeds();
+    if (! _.contains(filtFeeds,$scope.selectedFeed)){
+      $scope.selectedFeed = filtFeeds[0];
+    }
+  };
   $scope.processKeys = function($event){
+    $scope.setSelectedFeedIfNull();
     var enter = 13, tab = 9, esc = 27, up = 38, down = 40, left = 37, right = 39;
     //cancel other handlers if we've got it
     //if up/down/escape and we have results
@@ -246,12 +253,14 @@ function CliCtrl($scope, $filter,$timeout,feedService){
       case enter:
         $event.stopImmediatePropagation();
         $scope.select($scope.selectedFeed);
+        $event.target.blur();
         break;
       case esc:
         $event.stopImmediatePropagation();
         //hide the results or empty them
         $scope.toggleReveal();
-        $timeout( $event.target.blur);
+        //deselect the input element so we don't send more input there.
+        $event.target.blur();
         break;
     }
   };
