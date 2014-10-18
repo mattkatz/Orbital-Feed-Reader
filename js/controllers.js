@@ -217,7 +217,7 @@ function CliCtrl($scope, $filter,$timeout,feedService){
     }
   };
   $scope.select = function(feed){
-    feedService.select($scope.selectedFeed);
+    feedService.select(feed);
     $scope.toggleReveal();
   };
   $scope.processKeys = function($event){
