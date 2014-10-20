@@ -58,23 +58,6 @@ function FeedListCtrl($scope, $http, $log, feedService){
     feedService.refresh(callback);
   };
 
-  $scope.feedUnreadCount = function(feed){
-    if(feed.feed_id == -1){ //All Feed
-      var allNum = _.reduce($scope.feeds, function(memo, countFeed){
-        if(countFeed.feed_id <0){return memo;}
-        num = parseInt(countFeed.unread_count,10);
-        return memo + num; }, 0);
-      return allNum;
-    }
-    return feed.unread_count;
-  }
-
-  $scope.tagUnreadCount = function(tagname){
-      feeds = $scope.tags[tagname];
-      return _.reduce(feeds,function(count, feed){
-        return count + parseInt(feed.unread_count,10);},0);
-    };
-
   /*
    * Get the next unread feed
    *
@@ -183,7 +166,110 @@ function FeedListCtrl($scope, $http, $log, feedService){
   });
   
 }
+function CliCtrl($scope, $filter,$timeout,feedService){
+  $scope.reveal = false;
+  $scope.selectedFeed = null;
+  $scope.feeds = feedService.feeds();
+  //$scope.filteredFeeds = $filter('filter')(feedService.feeds(),$scope.filterstring);
+  $scope.filteredFeeds = function(){
+    return $filter('filter')(feedService.feeds(),{'feed_name':$scope.filterstring});
+  };
+  $scope.tags = feedService.tags();
+  $scope.filterstring = null;
+  $scope.$watch(feedService.tags,function(newValue){
+    //console.log('listener');
+    $scope.tags = newValue;
+  });
+  $scope.toggleReveal = function(){
+    $scope.reveal=! $scope.reveal;
+    $scope.filterstring = null;
+    $scope.selectedFeed = null;
+  };
+  $scope.nextResult = function(){
+    feeds = $scope.filteredFeeds();
+    //if no feeds, there can be no selected result
+    if(feeds.length <= 0){
+      $scope.selectedFeed = null;
+      return;
+    }
+    index = feeds.indexOf($scope.selectedFeed);
+    if(index <0){ //selectedFeed is null or not in the list
+      $scope.selectedFeed = feeds[0];
+      return;
+    }
+    if (index < feeds.length -1){
+      $scope.selectedFeed = feeds[index+1];
+    }
+  };
+  $scope.prevResult = function(){
+    feeds = $scope.filteredFeeds();
+    if(feeds.length<=0){
+      $scope.selectedFeed = null;
+      return;
+    }
+    index = feeds.indexOf($scope.selectedFeed);
+    if(index <0){ //selectedFeed is null or not in the list
+      $scope.selectedFeed = feeds[0];
+      return;
+    }
+    if (index > 0){
+      $scope.selectedFeed = feeds[index-1];
+    }
+  };
+  $scope.select = function(feed){
+    feedService.select(feed);
+    $scope.toggleReveal();
+  };
+  $scope.setSelectedFeedIfNull = function(){
+    var filtFeeds = $scope.filteredFeeds();
+    if (! _.contains(filtFeeds,$scope.selectedFeed)){
+      $scope.selectedFeed = filtFeeds[0];
+    }
+  };
+  $scope.processKeys = function($event){
+    $scope.setSelectedFeedIfNull();
+    var enter = 13, tab = 9, esc = 27, up = 38, down = 40, left = 37, right = 39;
+    //cancel other handlers if we've got it
+    //if up/down/escape and we have results
+    //or if enter/tab and we have results and one has been selected
+    if( ([enter,tab,esc,up,down].indexOf($event.keyCode) != -1) &&
+      (([enter,tab].indexOf($event.keyCode) ==-1)|| $scope.selectedFeed)){
+        if($event.stopImmediatePropagation) $event.stopImmediatePropagation();
+        if($event.preventDefault) $event.preventDefault();
+        if($event.stopPropagation) $event.stopPropagation();
+        if($event.cancelBubble) $event.cancelBubble = true;
+    }else{
+      //$scope.toggleReveal();
+      return;
+    }
+    switch($event.keyCode){
+      case up:
+        $scope.prevResult();
+        break;
+      case tab:
+      case down:
+        $scope.nextResult();
+        break;
+      case enter:
+        $event.stopImmediatePropagation();
+        $scope.select($scope.selectedFeed);
+        $event.target.blur();
+        break;
+      case esc:
+        $event.stopImmediatePropagation();
+        //hide the results or empty them
+        $scope.toggleReveal();
+        //deselect the input element so we don't send more input there.
+        $event.target.blur();
+        break;
+    }
+  };
 
+  key('g', function(event,handler){
+    $scope.$apply(function(){$scope.toggleReveal()});
+  });
+
+}
 function EntriesCtrl($scope, $http, $log,feedService){
   $scope.selectedEntry = null;
   $scope.isRead = false;
@@ -218,6 +304,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
   };
 
   $scope.selectFeed = function(entry){
+    console.log('selecting feed');
     feedService.select(feedService.getFeed(entry.feed_id));
   }
 
@@ -302,8 +389,8 @@ function EntriesCtrl($scope, $http, $log,feedService){
       $scope.setReadStatus(entry);
     }
   }
-  $scope.getFeedName = function (entry){
-    return feedService.getFeedName(entry.feed_id);
+  $scope.getFeedFromEntry = function (entry){
+    return feedService.getFeedFromEntry(entry);
   }
   $scope.displayFeed(null,$scope.isRead);
   //$scope.displayFeed();

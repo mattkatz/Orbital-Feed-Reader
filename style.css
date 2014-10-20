@@ -145,8 +145,8 @@
   margin-bottom: 0px; /*override something in main wp styles.*/
 }
 .feed, .tag {
+  display: inline;
   min-height: 1.5rem;
-
 }
 #tags ul>li {
   padding-left: 2em;
@@ -204,6 +204,25 @@ a.orbital-treeindicator:hover {
   left:-10px;
   top: 200px;
   border-radius: 0 50px 50px 0;
+}
+
+/* CLI
+ */
+#orbital-cli {
+  height: auto;
+}
+#orbital-cli-results{
+  max-height:30em;
+}
+#orbital-cli-results ul.feeds{
+  -moz-column-width: 200px;
+  -moz-column-gap: 10px;
+  -webkit-column-width: 200px;
+  -webkit-column-gap: 10px;
+  column-width: 200px;
+  column-gap: 10px;
+  max-height: inherit;
+  overflow-y:scroll;
 }
 
 

@@ -16,7 +16,7 @@
     </div>
     <script type="text/ng-template"  id='feedline.html'>
       <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
-            {{feed.feed_name}} <span class="feedcounter" data-blart="{{feedUnreadCount(feed)}}">{{feedUnreadCount(feed)}} </span>
+            <span ng-bind-html='feed.feed_name'></span> <span class="feedcounter" >{{feed.unreadCount()}} </span>
             <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </div>
     </script>
@@ -26,12 +26,21 @@
     <ul id='tags' ng-show="showByTags">
       <li ng-repeat="(tag, feeds) in tags" >
         <a href="#" class="orbital-treeindicator" ng-class="{'open':show}" ng-click="show = !show">▹</a>
-        <span id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{tagUnreadCount(tag)}}</span> </span>
+        <span id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{feeds.unreadCount()}}</span> </span>
         <ul ng-show="show">
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
         </ul>
       </li>
     </ul>
+  </div>
+  <div id='orbital-cli' class="modal-window" ng-show="reveal" ng-controller="CliCtrl">
+    <div>Start typing the name of a feed <span title='soon, soon..'><strike>or tag</strike></span>. ⬇ ⬆  select a feed from the list. Enter goes to whatever you've selected. Esc closes the window.</div>
+    <input id='orbital-cli-input' ng-model='filterstring' focus-me='reveal' ng-keyup='processKeys($event)' type='text'></input>
+    <div id='orbital-cli-results' ng-show='filterstring'>
+      <ul class='feeds'>
+        <li ng-repeat='feed in filteredFeeds() ' ng-include="'feedline.html'"></li>
+      </ul>
+    </div>
   </div>
   <div id="orbital-main-content" ng-controller="EntriesCtrl">
     <div id='subscription-window' ng-show="reveal" ng-controller="SubsCtrl" class="modal-window" >
@@ -140,8 +149,9 @@
         <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
           <li id="{{entry.feed_id}}_{{entry.id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.id == selectedEntry.id}" >
             <div class='indicators'>
-              <div class="indicator">
-                {{getFeedName(entry)}}
+              <div class="indicator" >
+                <span class='clickable' title='Click to just see posts from this feed' ng-click='selectFeed(entry)' ng-bind-html="getFeedFromEntry(entry).feed_name"></span>
+                <a class='clickable' title='Click here to edit the feed details' ng-click="editFeed(getFeedFromEntry(entry))">⚙</a>
               </div>
               <div class="indicator" ng-show="entry.isLoading">
                 <img src="<?php
@@ -153,8 +163,7 @@
               </div>
             </div>
               <a href="{{entry.link}}" target='_blank'><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
-              <div class="author" ng-show="entry.author">
-                {{entry.author}}
+              <div class="author" ng-show="entry.author" ng-bind-html="entry.author">
               </div>
               <div class="date" title="{{entry.published | date:mediumTime }}">
                 {{entry.published | date:medium }}

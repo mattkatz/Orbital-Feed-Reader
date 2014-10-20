@@ -65,6 +65,29 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','au
       //return _.compact(String.split(input,sep));
     }
   });
+//via https://stackoverflow.com/a/14837021/13774
+mainModule.directive('focusMe', function($timeout, $parse) {
+  return {
+    //scope: true,   // optionally create a child scope
+    link: function(scope, element, attrs) {
+      var model = $parse(attrs.focusMe);
+      scope.$watch(model, function(value) {
+        console.log('value=',value);
+        if(value === true) { 
+          $timeout(function() {
+            element[0].focus(); 
+          });
+        }
+      });
+      // to address @blesh's comment, set attribute value to 'false'
+      // on blur event:
+      element.bind('blur', function() {
+         console.log('blur');
+         scope.$apply(model.assign(scope, false));
+      });
+    }
+  };
+});
 
 mainModule.factory('feedService',   function($http,$log){
   /*
@@ -191,7 +214,12 @@ mainModule.factory('feedService',   function($http,$log){
       $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
         //Here is our simple feed list
-        data = _.map(data, function(feed){ feed.is_private = feed['private']=='1'; return feed; });
+        data = _.map(data, 
+                     function(feed){ 
+                       feed.is_private = feed['private']=='1'; 
+                       feed.unreadCount= function(){return feed.unread_count;};
+                       return feed; 
+                     });
         _feeds= data;
 
         //Now lets get a list of all the unique tags in those feeds
@@ -206,13 +234,26 @@ mainModule.factory('feedService',   function($http,$log){
           _tags[tag] = _.filter(_feeds,function(feed){
                           return _.contains(feed.tags.split(","),tag);
                         });
-        })
+          _tags[tag].unreadCount = function(){
+            return _.reduce(_tags[tag], 
+                          function(count, feed){
+                            return count + parseInt(feed.unread_count,10);
+                          },0);
+          };
+        });
         //We have to do this AFTER the tag building 
         //because this has no tags and throws an exception
         var fresh = {
           feed_id:-1, //TODO start using neg integers for special feed ids
           feed_name:'All Feeds',
           unread_count:'',//TODO put in actual unread count;
+          unreadCount: function(){
+            var allNum = _.reduce(_feeds, function(memo, countFeed){
+              if(countFeed.feed_id <0){return memo;}
+              num = parseInt(countFeed.unread_count,10);
+              return memo + num; }, 0);
+            return allNum;
+          },
           is_private:'1',
         }
         _feeds.unshift(fresh);
@@ -259,13 +300,17 @@ mainModule.factory('feedService',   function($http,$log){
     getFeed: function(feed_id){
       return _.find(_feeds, function(feed){return feed.feed_id == feed_id});
     },
-    getFeedName: function(feed_id){
-      var feed = _.find(_feeds, function(feed){return feed.feed_id == feed_id});
+    getFeedFromEntry: function(entry){
+      var feed_id = entry.feed_id;
+      var feed = _.find(_feeds, function(feed){
+        return feed.feed_id == feed_id}
+      );
       if (feed){
-        return feed.feed_name;
+        return feed;
       }else{
         return null;
       }
+
     },
     selectedFeed: function(){
       if(! _selectedFeed) {_selectedFeed = _feeds[0];}
