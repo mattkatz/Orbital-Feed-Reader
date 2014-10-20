@@ -34,7 +34,7 @@
     </ul>
   </div>
   <div id='orbital-cli' class="modal-window" ng-show="reveal" ng-controller="CliCtrl">
-    <div>Start typing the name of a feed <span title='soon, soon..'><strike>or tag</strike></span>. Arrow keys or tab select a feed from the list. Enter goes to whatever you've selected. Esc closes the window.</div>
+    <div>Start typing the name of a feed <span title='soon, soon..'><strike>or tag</strike></span>. ⬇ ⬆  select a feed from the list. Enter goes to whatever you've selected. Esc closes the window.</div>
     <input id='orbital-cli-input' ng-model='filterstring' focus-me='reveal' ng-keyup='processKeys($event)' type='text'></input>
     <div id='orbital-cli-results' ng-show='filterstring'>
       <ul class='feeds'>
