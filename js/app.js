@@ -83,7 +83,8 @@ mainModule.directive('focusMe', function($timeout, $parse) {
       // on blur event:
       element.bind('blur', function() {
          console.log('blur');
-         scope.$apply(model.assign(scope, false));
+         //model.assign(scope,false);
+         //scope.$apply(model.assign(scope, false));
       });
     }
   };
@@ -204,6 +205,42 @@ mainModule.factory('feedService',   function($http,$log){
 
     },
 
+    /*
+     * Marks all the entries in a feed as read 
+     */
+    markFeedRead: function(feed){
+      if( null == feed){
+        feed = _selectedFeed;
+      }
+      //mark feed read
+      var data = {
+        action: 'orbital_mark_items_read',
+        feed_id:feed.feed_id,
+      };
+      $http.post(opts.ajaxurl, data)
+      .success(function(response){
+        feedservice.refresh();
+        feedservice.select(feedservice.nextUnreadFeed());
+      });
+    },
+
+    nextUnreadFeed: function(){
+      // We should iterate through the feeds
+      // Find our selected feed
+      // Then keep iterating till we find an unread feed
+      // If we reach the end of the list
+      // Start looking at the beginning till we find an unread feed
+      index = _feeds.indexOf(_selectedFeed);
+      //we are starting at the index item
+      //and circling the array
+      for(i=(index+1)%_feeds.length;i!=index;i= (i+1)%_feeds.length){
+        if(_feeds[i].unread_count >0){
+          return _feeds[i];
+        }
+      }
+      //NOTHING! let's just return where we started
+      return _selectedFeed;
+    },
 
 
 

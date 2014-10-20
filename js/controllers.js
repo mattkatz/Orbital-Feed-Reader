@@ -1,5 +1,5 @@
 /* Controllers */
-function FeedListCtrl($scope, $http, $log, feedService){
+function FeedListCtrl($scope, $log, feedService){
   $scope.showByTags = feedService.showByTags()
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
@@ -63,22 +63,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
    *
    */
   $scope.nextUnreadFeed = function(){
-    // We should iterate through the feeds
-    // Find our selected feed
-    // Then keep iterating till we find an unread feed
-    // If we reach the end of the list
-    // Start looking at the beginning till we find an unread feed
-    feeds = $scope.feeds;
-    index = feeds.indexOf(feedService.selectedFeed());
-    //we are starting at the index item
-    //and circling the array
-    for(i=(index+1)%feeds.length;i!=index;i= (i+1)%feeds.length){
-      if(feeds[i].unread_count >0){
-        return feeds[i];
-      }
-    }
-    //NOTHING! let's just return where we started
-    return feedService.selectedFeed();
+    return feedService.nextUnreadFeed();
   };
 
   /*
@@ -88,21 +73,7 @@ function FeedListCtrl($scope, $http, $log, feedService){
     $scope.editable = ! $scope.editable;
   }
   $scope.markRead = function(feed){
-    //console.log(feedService.selectedFeed());
-    if( null == feed){
-      feed = feedService.selectedFeed();
-    }
-    //mark feed read
-    var data = {
-      action: 'orbital_mark_items_read',
-      feed_id:feed.feed_id,
-    };
-    $http.post(opts.ajaxurl, data)
-    .success(function(response){
-      $scope.refresh();
-      $scope.select($scope.nextUnreadFeed());
-    });
-
+    feedService.markFeedRead(feed);
   }
 
   /*
