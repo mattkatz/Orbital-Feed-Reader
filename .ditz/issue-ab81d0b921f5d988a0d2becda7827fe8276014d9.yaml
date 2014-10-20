@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: centralize all $http in service
+desc: ""
+type: :task
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-10-20 01:45:48.610686 Z
+references: []
+
+id: ab81d0b921f5d988a0d2becda7827fe8276014d9
+log_events: 
+- - 2014-10-20 01:45:49.626981 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
