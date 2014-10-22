@@ -81,23 +81,7 @@ function FeedListCtrl($scope, $log, feedService){
    * TODO move this into the feedService
    */
   $scope.update = function(feed){
-    if(null == feed){
-      feed = feedService.selectedFeed();
-    }
-    //update feed 
-    var data= {
-      action: 'orbital_update_feed',
-      feed_id: feed.feed_id,
-    };
-    $http.post(opts.ajaxurl, data)
-    .success(function(response){
-      //refresh the feedlist
-      $scope.refresh();
-      //refresh the feed if it is still selected
-      if(feed == $scope.selectedFeed){
-        $scope.select(feed, $scope.showRead);
-      }
-    });
+    feedService.update(feed);
   }
   $scope.showReadItems = function(){
     //refresh this feed, but display read items
