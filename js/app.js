@@ -206,6 +206,30 @@ mainModule.factory('feedService',   function($http,$log){
     },
 
     /*
+     * update this feed
+     */
+    update: function(feed){
+      if( null == feed){
+        feed = _selectedFeed;
+      }
+      //update feed 
+      var data= {
+        action: 'orbital_update_feed',
+        feed_id: feed.feed_id,
+      };
+      $http.post(opts.ajaxurl, data)
+      .success(function(response){
+        //refresh the feedlist
+        feedservice.refresh();
+        //refresh the feed if it is still selected
+        if(feed == $scope.selectedFeed){
+          feedservice.select(feed, feedservice.showRead);
+        }
+      });
+    },
+
+
+    /*
      * Marks all the entries in a feed as read 
      */
     markFeedRead: function(feed){
