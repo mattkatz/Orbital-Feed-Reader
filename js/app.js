@@ -409,7 +409,33 @@ mainModule.factory('feedService',   function($http,$log){
     saveTagView: function(showTags, callback){
       feedservice.saveSetting({show_by_tags:showTags},callback);
     },
+    setEntryReadStatus: function(entry,status){
+      entry.isLoading = true;
+      var newReadStatus = status || (entry.isRead == 0?1:0);
+      var data = {
+        action: 'orbital_mark_item_read',
+        read_status: newReadStatus ,
+        entry_id: entry.entry_id,
+      };
+      //Mark the entry read on the server
+      $http.post(opts.ajaxurl,data)
+      .success(function(data){
+        //mark the entry as read in the UI
+        entry.isRead= entry.isRead == 0 ? 1:0;
+        entry.isLoading = false;
+
+        //tell the feed list that the entry was toggled read.
+        feed = feedservice.getFeedFromEntry(entry);
+        //decrement the feed read counter by the isread status
+        feed.unread_count = Number(feed.unread_count ) + (entry.isRead ? -1:1);
+        
+        //$scope.$emit('entryChange', {entry:entry});
+      });
+
+    },
   };
+
+  
   return feedservice;
 
   
@@ -428,9 +454,9 @@ mainModule.run(function($rootScope){
     $rootScope.$broadcast('feedEditRequest',args);
   });
   //catch and broadcast entry changes
-  $rootScope.$on('entryChange', function(event, args){
+  /* DELME $rootScope.$on('entryChange', function(event, args){
     $rootScope.$broadcast('entryChanged', args);
-  });
+  });*/
   $rootScope.$on('newFeedRequested', function(event,args){
     $rootScope.$broadcast('subscriptionsWindow',args);
   });

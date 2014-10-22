@@ -94,23 +94,6 @@ function FeedListCtrl($scope, $log, feedService){
    */
 
   /*
-   * Has an entry changed? Update our feedlist
-   */
-  $scope.$on('entryChanged', function(event,args){
-    //find the feed entry that has this entry's feed_id
-    entry = args.entry;
-    feed_id = entry.feed_id;
-    //Look down the list of feeds for the one this entry belongs to
-    for( i = 0; i < $scope.feeds.length; i++){
-      feed = $scope.feeds[i];
-      if( feed.feed_id ==  entry.feed_id){
-        //decrement the read counter by the isread status
-        feed.unread_count = Number(feed.unread_count ) + (entry.isRead ? -1:1);
-      }
-    }
-  });
-
-  /*
    * We should just get the feeds from the DB.
    */
   $scope.$on('refreshFeeds', function(event,args){
@@ -225,7 +208,7 @@ function CliCtrl($scope, $filter,$timeout,feedService){
   });
 
 }
-function EntriesCtrl($scope, $http, $log,feedService){
+function EntriesCtrl($scope, $log,feedService){
   $scope.selectedEntry = null;
   $scope.isRead = false;
   $scope.entries = [];
@@ -313,22 +296,7 @@ function EntriesCtrl($scope, $http, $log,feedService){
    * toggle the entry's read status
    */
   $scope.setReadStatus = function( entry, status){
-    entry.isLoading = true;
-    var newReadStatus = status || (entry.isRead == 0?1:0);
-    var data = {
-      action: 'orbital_mark_item_read',
-      read_status: newReadStatus ,
-      entry_id: entry.entry_id,
-    };
-    //Mark the entry read on the server
-    $http.post(opts.ajaxurl,data)
-    .success(function(data){
-      //mark the entry as read in the UI
-      entry.isRead= entry.isRead == 0 ? 1:0;
-      entry.isLoading = false;
-      //tell the feed list that the entry was toggled read.
-      $scope.$emit('entryChange', {entry:entry});
-    });
+    feedService.setEntryReadStatus(entry,status);
   }
 
   /*
