@@ -429,16 +429,9 @@ function SubsCtrl($scope,$http,$log,feedService ){
     if(url){
       $scope.urlCandidate = url;
     }
-    //now we should check the candidate
-    var data = {
-      action: 'orbital_find_feed',
-      url: $scope.urlCandidate,
-    };
     $scope.isLoading=true;
-    //ask the backend to look at it
-    $http.post(opts.ajaxurl,data)
-    .success(function(response){
-      $scope.isLoading=false;
+    feedService.checkUrl($scope.urlCandidate,function(response){
+      $scope.isLoading = false;
       if("feed" == response.url_type){
         //console.log('found a feed!');
         //if it returns a feed detail, display that.
@@ -474,7 +467,6 @@ function SubsCtrl($scope,$http,$log,feedService ){
       }
     });
   }
-  
   /*
    * Remove a tag from a feedCandidate
    */

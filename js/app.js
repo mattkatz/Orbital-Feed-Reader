@@ -429,9 +429,25 @@ mainModule.factory('feedService',   function($http,$log){
         //decrement the feed read counter by the isread status
         feed.unread_count = Number(feed.unread_count ) + (entry.isRead ? -1:1);
         
-        //$scope.$emit('entryChange', {entry:entry});
       });
 
+    },
+
+    /*
+     * feed a url to the backend for checking
+     * We should see wither a feed response or a list of possible feeds at that url
+     */
+    checkUrl: function(urlIn,callback){
+      //now we should check the candidate
+      var data = {
+        action: 'orbital_find_feed',
+        url: urlIn,
+      };
+      //ask the backend to look at it
+      $http.post(opts.ajaxurl,data)
+      .success(function(response){
+        callback(response);
+      });
     },
   };
 
@@ -454,9 +470,6 @@ mainModule.run(function($rootScope){
     $rootScope.$broadcast('feedEditRequest',args);
   });
   //catch and broadcast entry changes
-  /* DELME $rootScope.$on('entryChange', function(event, args){
-    $rootScope.$broadcast('entryChanged', args);
-  });*/
   $rootScope.$on('newFeedRequested', function(event,args){
     $rootScope.$broadcast('subscriptionsWindow',args);
   });
