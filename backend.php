@@ -741,7 +741,6 @@ class OrbitalEntries{
     if(false=== $resp->entry_inserted){
       $resp->entries_error = $wpdb->print_error();
     }
-    
     //update the last updated time for the feed
     $resp->last_update = $wpdb->update(
       $feeds,//the table
@@ -799,9 +798,10 @@ class OrbitalEntries{
     $sql = "
       DELETE e
       FROM $entries e
-      LEFT OUTER JOIN $user_entries ue
-        ON e.feed_id = ue.orig_feed_id
-      WHERE ue.feed_id IS NULL
+      WHERE e.feed_id NOT IN (
+        SELECT ue.orig_feed_id
+        FROM $user_entries ue
+      )
       ";
     $wpdb->query($sql);
   }
