@@ -222,7 +222,7 @@ mainModule.factory('feedService',   function($http,$log){
         //refresh the feedlist
         feedservice.refresh();
         //refresh the feed if it is still selected
-        if(feed == $scope.selectedFeed){
+        if(feed == _selectedFeed){
           feedservice.select(feed, feedservice.showRead);
         }
       });
@@ -428,7 +428,6 @@ mainModule.factory('feedService',   function($http,$log){
         feed = feedservice.getFeedFromEntry(entry);
         //decrement the feed read counter by the isread status
         feed.unread_count = Number(feed.unread_count ) + (entry.isRead ? -1:1);
-        
       });
 
     },
@@ -448,6 +447,20 @@ mainModule.factory('feedService',   function($http,$log){
       .success(function(response){
         callback(response);
       });
+    },
+    /*
+     * unsubscribe from a feed
+     */
+    unsubscribe: function(feed, callback){
+      var data = {
+        action: 'orbital_unsubscribe_feed',
+        feed_id: feed.feed_id,
+      };
+      $http.post(opts.ajaxurl,data)
+      .success(function(response){
+        callback(response);
+      });
+
     },
   };
 

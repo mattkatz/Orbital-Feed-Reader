@@ -513,15 +513,9 @@ function SubsCtrl($scope,$http,$log,feedService ){
     //Maybe it could just be to call the save again
     $scope.isLoading = true;
     $log.info(feed);
-    var data = {
-      action: 'orbital_unsubscribe_feed',
-      feed_id: feed.feed_id,
-    };
-    $http.post(opts.ajaxurl,data)
-    .success(function(response){
+    feedService.unsubscribe(feed, function (response){
       //unmark the busy 
       $scope.isLoading = false;
-      $scope.feedsChanged();
       //close the dialogue
       $scope.close();
       $scope.feedsChanged();
