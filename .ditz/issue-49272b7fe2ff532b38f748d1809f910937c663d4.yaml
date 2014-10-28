@@ -5,7 +5,7 @@ type: :feature
 component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2011-12-29 16:25:02.978164 Z
 references: []
@@ -32,3 +32,7 @@ log_events:
   - |-
     it's alpha. this can wait till we get some testing.
     hope this doesn't bite me in the ass.
+- - 2014-10-28 11:58:28.662773 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
