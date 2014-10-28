@@ -194,7 +194,7 @@ mainModule.factory('feedService',   function($http,$log){
       }
       _showRead=showRead;
       _isEntriesLoading = true;
-      $http.get(opts.ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
+      $http.get(ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
       .success(function(data){
         _isEntriesLoading = false;
         data = _.union(_entries,data);
@@ -217,7 +217,7 @@ mainModule.factory('feedService',   function($http,$log){
         action: 'orbital_update_feed',
         feed_id: feed.feed_id,
       };
-      $http.post(opts.ajaxurl, data)
+      $http.post(ajaxurl, data)
       .success(function(response){
         //refresh the feedlist
         feedservice.refresh();
@@ -241,7 +241,7 @@ mainModule.factory('feedService',   function($http,$log){
         action: 'orbital_mark_items_read',
         feed_id:feed.feed_id,
       };
-      $http.post(opts.ajaxurl, data)
+      $http.post(ajaxurl, data)
       .success(function(response){
         feedservice.refresh();
         feedservice.select(feedservice.nextUnreadFeed());
@@ -272,7 +272,7 @@ mainModule.factory('feedService',   function($http,$log){
     // get the list of feeds from backend, inject a "fresh" feed.
     refresh : function refresh(callback){
       _isLoading = true;
-      $http.get(opts.ajaxurl + '?action=orbital_get_feeds')
+      $http.get(ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
         //Here is our simple feed list
         data = _.map(data, 
@@ -326,7 +326,7 @@ mainModule.factory('feedService',   function($http,$log){
         }
       });
 
-      $http.get(opts.ajaxurl + '?action=orbital_get_user_settings')
+      $http.get(ajaxurl + '?action=orbital_get_user_settings')
       .success(function(data){
         _sortOrder = data['sort_order'] || _sortOrder;
         _showByTags = data['show_by_tags'];
@@ -351,7 +351,7 @@ mainModule.factory('feedService',   function($http,$log){
         is_private: feed.is_private,
         tags: feed.tags,
       };
-      $http.post(opts.ajaxurl,data)
+      $http.post(ajaxurl,data)
       .success(function(response){
         if(successCallback){ successCallback(response, data);}
         feedservice.refresh();
@@ -392,7 +392,7 @@ mainModule.factory('feedService',   function($http,$log){
         orbital_settings: setting ,
       };
       //console.log('And app thinks data is : ' + _sortOrder );
-      $http.post(opts.ajaxurl, data)
+      $http.post(ajaxurl, data)
       .success(function(response){
         //Store the settings 
         _showByTags = response['show_by_tags'] || _showByTags;
@@ -418,7 +418,7 @@ mainModule.factory('feedService',   function($http,$log){
         entry_id: entry.entry_id,
       };
       //Mark the entry read on the server
-      $http.post(opts.ajaxurl,data)
+      $http.post(ajaxurl,data)
       .success(function(data){
         //mark the entry as read in the UI
         entry.isRead= entry.isRead == 0 ? 1:0;
@@ -443,7 +443,7 @@ mainModule.factory('feedService',   function($http,$log){
         url: urlIn,
       };
       //ask the backend to look at it
-      $http.post(opts.ajaxurl,data)
+      $http.post(ajaxurl,data)
       .success(function(response){
         callback(response);
       });
@@ -456,7 +456,7 @@ mainModule.factory('feedService',   function($http,$log){
         action: 'orbital_unsubscribe_feed',
         feed_id: feed.feed_id,
       };
-      $http.post(opts.ajaxurl,data)
+      $http.post(ajaxurl,data)
       .success(function(response){
         callback(response);
       });
