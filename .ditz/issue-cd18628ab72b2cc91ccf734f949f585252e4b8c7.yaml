@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Use the ajaxurl global variable so we don't have to localize the admin_aja
+desc: ""
+type: :task
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2014-10-28 12:07:20.327478 Z
+references: []
+
+id: cd18628ab72b2cc91ccf734f949f585252e4b8c7
+log_events: 
+- - 2014-10-28 12:07:22.944638 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
