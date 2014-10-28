@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :wontfix
 creation_time: 2012-07-28 22:53:28.514736 Z
 references: []
 
@@ -19,4 +19,8 @@ log_events:
 - - 2012-10-22 12:25:22.365012 Z
   - matt <matt@morelightmorelight.com>
   - assigned to release 0.2 Wordpress integration from 0.1 - Feeds, Subscribed
+  - ""
+- - 2014-10-27 22:05:39.833356 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition wontfix
   - ""
