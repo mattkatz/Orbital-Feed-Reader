@@ -21,13 +21,13 @@ require_once 'entries.php';
 function nonce_dance(){
   $nonce = filter_input(INPUT_GET, 'nonce_a_donce',FILTER_SANITIZE_STRING);
 
-  // check to see if the submitted nonce matches with 
+  // check to see if the submitted nonce matches with
   // the generated nonce we created earlier
   if ( ! wp_verify_nonce( $nonce, 'nonce_a_donce' ) ){
       die ( 'Busted!');
   }
 
-}  
+}
 
 //TODO return a nonce or something. Nonce dancing should work better
 function orbital_list_feeds_die(){
@@ -52,10 +52,9 @@ function orbital_list_tags(){
 }
 add_action('wp_ajax_orbital_get_tags','orbital_list_tags');
 
-//remove feed 
+//remove feed
 function orbital_unsubscribe_feed(){
   //nonce_dance();
-  
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
 
   $resp = OrbitalFeeds::remove(null,$feed_id);
@@ -75,7 +74,6 @@ function orbital_find_feed(){
   $request = new WP_Http;
   $result = $request->request( $orig_url);
   $contents= $result['body'];
-  
 
 
   //if( !class_exists( 'WP_Http' ) )
@@ -95,7 +93,6 @@ function orbital_find_feed(){
 
     $resp->feed_type = $feed->get_type() ;
     $resp->feed_none = SIMPLEPIE_TYPE_NONE;
-  
     if(($feed->get_type() & SIMPLEPIE_TYPE_NONE) == SIMPLEPIE_TYPE_NONE){
       $resp->feed_type = "NONE";
 
@@ -104,7 +101,6 @@ function orbital_find_feed(){
     if(($feed->get_type() && SIMPLEPIE_TYPE_ALL)>0  ){
       $rest->feed_type= "ALL";
     } */
-    
 
   //check to see if the url is an html file.
   if(stripos($contents, '<html>') === false && stripos($contents,'<html') === false){ //TODO Why check both? don't know, grabbed this from  ttrss, need to research
@@ -152,14 +148,14 @@ function orbital_find_feed(){
         $title = $entry->getAttribute('title');
         if ($title == '') {
           $title = $entry->getAttribute('type');
-        }    
+        }
         $feedUrl = $entry->getAttribute('href');
         //$feedUrl = rewrite_relative_url(
           //$baseUrl, $entry->getAttribute('href')
-        //);   
+        //);
         $feedUrls[$feedUrl] = $title;
-      }    
-    }    
+      }
+    }
     $resp->feeds = $feedUrls;
  */
     //TODO return!
@@ -178,8 +174,7 @@ function orbital_save_feed(){
   global $current_user;
   $current_user = wp_get_current_user();
   //nonce_dance();
-  
-  $prefix = $wpdb->prefix.$tbl_prefix; 
+  $prefix = $wpdb->prefix.$tbl_prefix;
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
   $site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
@@ -198,7 +193,7 @@ add_action('wp_ajax_orbital_save_feed','orbital_save_feed');
 function orbital_get_feed_entries(){
   $filters = array();
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT); 
+  $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT);
   $tag = filter_input(INPUT_GET, 'tag',FILTER_SANITIZE_STRING);
   $sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_NUMBER_INT);
   if($tag !=""){
@@ -228,7 +223,6 @@ add_action('wp_ajax_nopriv_orbital_get_entries','orbital_get_feed_entries');
 function orbital_update_feeds(){
   //get the list of feeds to update that haven't been updated recently
   $feeds = OrbitalFeeds::get_stale_feeds();
-  
   //TODO Limit it to a reasonable number of feeds in a batch
   //TODO Maybe we should schedule wp_cron jobs for each update?
   //for each feed call update_feed
@@ -268,9 +262,8 @@ function orbital_mark_items_read($feed_id){
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
-  //what do we update? 
+  //what do we update?
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  
   $prefix = $wpdb->prefix.$tbl_prefix;
   $ret = $wpdb->update(
     $prefix.'user_entries',//the table
@@ -285,7 +278,6 @@ function orbital_mark_items_read($feed_id){
   $returnval->feed_id = $feed_id;
   echo json_encode($returnval);
   exit;
-  
 }
 add_action('wp_ajax_orbital_mark_items_read','orbital_mark_items_read');
 
@@ -327,7 +319,6 @@ function orbital_set_user_settings(){
   $settings = (array) get_user_option( 'orbital_settings' );
   //merge arrays
   $new_settings = $user_orbital_settings + $settings;
-  
   if(update_user_option($current_user->ID, 'orbital_settings',  $new_settings)){
     // Send back what we now know
     echo json_encode($new_settings);
