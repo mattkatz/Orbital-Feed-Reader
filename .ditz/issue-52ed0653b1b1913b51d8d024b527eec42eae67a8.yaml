@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Extract Feeds and Entries to their own backend
+desc: ""
+type: :task
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-10-29 00:48:40.521163 Z
+references: []
+
+id: 52ed0653b1b1913b51d8d024b527eec42eae67a8
+log_events: 
+- - 2014-10-29 00:48:42.571567 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
