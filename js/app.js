@@ -194,7 +194,8 @@ mainModule.factory('feedService',   function($http,$log){
       }
       _showRead=showRead;
       _isEntriesLoading = true;
-      $http.get(ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder)
+      console.log(opts.orbital_actions_nonce);
+      $http.get(ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder + '&orbital_actions_nonce=' + opts.orbital_actions_nonce)
       .success(function(data){
         _isEntriesLoading = false;
         data = _.union(_entries,data);
@@ -265,9 +266,6 @@ mainModule.factory('feedService',   function($http,$log){
       //NOTHING! let's just return where we started
       return _selectedFeed;
     },
-
-
-
 
     // get the list of feeds from backend, inject a "fresh" feed.
     refresh : function refresh(callback){

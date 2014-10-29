@@ -164,7 +164,7 @@ function orbital_enqueue_scripts()
   wp_localize_script( 'angular_controllers_script', 'opts', array(
     // generate a nonce with a unique ID "myajax-post-comment-nonce"
     // so that you can check it later when an AJAX request is sent
-    'nonce_a_donce' => wp_create_nonce( 'nonce_a_donce' ),
+    'orbital_actions_nonce' => wp_create_nonce( 'orbital_actions' ),
     //our main settings
     'settings' => (array) get_option('orbital-setting'),
   ) );

@@ -19,14 +19,7 @@ require_once 'entries.php';
 
 
 function nonce_dance(){
-  $nonce = filter_input(INPUT_GET, 'nonce_a_donce',FILTER_SANITIZE_STRING);
-
-  // check to see if the submitted nonce matches with
-  // the generated nonce we created earlier
-  if ( ! wp_verify_nonce( $nonce, 'nonce_a_donce' ) ){
-      die ( 'Busted!');
-  }
-
+  check_ajax_referer('orbital_actions','orbital_actions_nonce');
 }
 
 //TODO return a nonce or something. Nonce dancing should work better
@@ -191,6 +184,7 @@ add_action('wp_ajax_orbital_save_feed','orbital_save_feed');
 
 //get feed entries
 function orbital_get_feed_entries(){
+  nonce_dance();
   $filters = array();
   $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT);
