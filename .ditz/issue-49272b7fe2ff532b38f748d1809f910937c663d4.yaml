@@ -5,8 +5,8 @@ type: :feature
 component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2011-12-29 16:25:02.978164 Z
 references: []
 
@@ -36,3 +36,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - changed status from unstarted to in_progress
   - ""
+- - 2014-10-30 01:29:53.916205 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - this could be done better, but I want to make sure I have something in there.

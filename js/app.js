@@ -195,7 +195,6 @@ mainModule.factory('feedService',   function($http,$log){
       }
       _showRead=showRead;
       _isEntriesLoading = true;
-      console.log(opts.orbital_actions_nonce);
       $http.get(ajaxurl+'?action=orbital_get_entries'+qualifier+'&show_read='+_showRead +'&sort=' +_sortOrder + '&orbital_actions_nonce=' + opts.orbital_actions_nonce)
       .success(function(data){
         _isEntriesLoading = false;
@@ -216,6 +215,7 @@ mainModule.factory('feedService',   function($http,$log){
       }
       //update feed
       var data= {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_update_feed',
         feed_id: feed.feed_id,
       };
@@ -240,6 +240,7 @@ mainModule.factory('feedService',   function($http,$log){
       }
       //mark feed read
       var data = {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_mark_items_read',
         feed_id:feed.feed_id,
       };
@@ -271,7 +272,7 @@ mainModule.factory('feedService',   function($http,$log){
     // get the list of feeds from backend, inject a "fresh" feed.
     refresh : function refresh(callback){
       _isLoading = true;
-      $http.get(ajaxurl + '?action=orbital_get_feeds')
+      $http.get(ajaxurl + '?action=orbital_get_feeds' + '&orbital_actions_nonce=' + opts.orbital_actions_nonce)
       .success( function( data ){
         //Here is our simple feed list
         data = _.map(data,
@@ -325,7 +326,7 @@ mainModule.factory('feedService',   function($http,$log){
         }
       });
 
-      $http.get(ajaxurl + '?action=orbital_get_user_settings')
+      $http.get(ajaxurl + '?action=orbital_get_user_settings' + '&orbital_actions_nonce=' + opts.orbital_actions_nonce)
       .success(function(data){
         _sortOrder = data['sort_order'] || _sortOrder;
         _showByTags = data['show_by_tags'];
@@ -342,6 +343,7 @@ mainModule.factory('feedService',   function($http,$log){
     },
     saveFeed: function(feed, successCallback){
       var data = {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_save_feed',
         feed_id: feed.feed_id,
         feed_url: feed.feed_url,
@@ -387,6 +389,7 @@ mainModule.factory('feedService',   function($http,$log){
     },
     saveSetting: function(setting, callback){
       var data = {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_set_user_settings',
         orbital_settings: setting ,
       };
@@ -412,6 +415,7 @@ mainModule.factory('feedService',   function($http,$log){
       entry.isLoading = true;
       var newReadStatus = status || (entry.isRead == 0?1:0);
       var data = {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_mark_item_read',
         read_status: newReadStatus ,
         entry_id: entry.entry_id,
@@ -438,6 +442,7 @@ mainModule.factory('feedService',   function($http,$log){
     checkUrl: function(urlIn,callback){
       //now we should check the candidate
       var data = {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_find_feed',
         url: urlIn,
       };
@@ -452,6 +457,7 @@ mainModule.factory('feedService',   function($http,$log){
      */
     unsubscribe: function(feed, callback){
       var data = {
+        orbital_actions_nonce: opts.orbital_actions_nonce,
         action: 'orbital_unsubscribe_feed',
         feed_id: feed.feed_id,
       };

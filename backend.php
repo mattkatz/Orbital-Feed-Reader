@@ -29,7 +29,7 @@ function orbital_list_feeds_die(){
 }
 
 function orbital_list_feeds(){
-  //nonce_dance();
+  nonce_dance();
   $myrows = OrbitalFeeds::get(null);
 
   echo json_encode($myrows);
@@ -37,6 +37,7 @@ function orbital_list_feeds(){
 add_action('wp_ajax_orbital_get_feeds','orbital_list_feeds_die');
 
 function orbital_list_tags(){
+  nonce_dance();
   $tag_fragment = filter_input(INPUT_GET, 'q', FILTER_SANITIZE_STRING);
   $rows = OrbitalFeeds::getTags($tag_fragment);
   echo join($rows,"\n");
@@ -47,7 +48,7 @@ add_action('wp_ajax_orbital_get_tags','orbital_list_tags');
 
 //remove feed
 function orbital_unsubscribe_feed(){
-  //nonce_dance();
+  nonce_dance();
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
 
   $resp = OrbitalFeeds::remove(null,$feed_id);
@@ -58,6 +59,7 @@ add_action('wp_ajax_orbital_unsubscribe_feed','orbital_unsubscribe_feed');
 
 //find the details of the feed.
 function orbital_find_feed(){
+  nonce_dance();
   $orig_url = filter_input(INPUT_POST, 'url',FILTER_SANITIZE_URL);
   $contents = "";
   $resp->orig_url = $orig_url;
@@ -162,12 +164,7 @@ add_action('wp_ajax_orbital_find_feed','orbital_find_feed');
 
 //edit feed
 function orbital_save_feed(){
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
-  $current_user = wp_get_current_user();
-  //nonce_dance();
-  $prefix = $wpdb->prefix.$tbl_prefix;
+  nonce_dance();
   $feed_id = filter_input(INPUT_POST, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
   $feed_url = filter_input(INPUT_POST, 'feed_url',FILTER_SANITIZE_STRING);
   $site_url = filter_input(INPUT_POST, 'site_url',FILTER_SANITIZE_STRING);
@@ -211,10 +208,10 @@ function orbital_get_feed_entries(){
   exit;
 }
 add_action('wp_ajax_orbital_get_entries','orbital_get_feed_entries');
-add_action('wp_ajax_nopriv_orbital_get_entries','orbital_get_feed_entries');
 
 //update multiple feeds
 function orbital_update_feeds(){
+  nonce_dance();
   //get the list of feeds to update that haven't been updated recently
   $feeds = OrbitalFeeds::get_stale_feeds();
   //TODO Limit it to a reasonable number of feeds in a batch
@@ -225,11 +222,11 @@ function orbital_update_feeds(){
   }
 }
 add_action('wp_ajax_orbital_update_feeds','orbital_update_feeds');
-add_action('wp_ajax_nopriv_orbital_update_feeds','orbital_get_update_feeds');
 
 
 //update single feed
 function orbital_update_feed($feed_id="",$feed_url=""){
+  nonce_dance();
   //TODO if we didn't get passed a feed, check to see if it is in the url
   if("" == $feed_id){
     $feed_id = filter_input(INPUT_POST, 'feed_id',FILTER_SANITIZE_NUMBER_INT);
@@ -244,15 +241,14 @@ function orbital_update_feed($feed_id="",$feed_url=""){
   }
   //if this is coming from a user call with a user_feeds.id
   $resp = OrbitalFeeds::refresh_user_feed($feed_id);
-
   echo json_encode($resp);
   exit;
 }
 add_action('wp_ajax_orbital_update_feed','orbital_update_feed');
-add_action('wp_ajax_nopriv_orbital_update_feed','orbital_get_update_feed');
 
 //Mark items as read
 function orbital_mark_items_read($feed_id){
+  nonce_dance();
   global $wpdb;
   global $tbl_prefix;
   global $current_user;
@@ -277,9 +273,7 @@ add_action('wp_ajax_orbital_mark_items_read','orbital_mark_items_read');
 
 //Mark item as read
 function orbital_mark_item_read(){
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
+  nonce_dance();
   $entry_id = filter_input(INPUT_POST, 'entry_id', FILTER_SANITIZE_NUMBER_INT);
   $read_status = filter_input(INPUT_POST, 'read_status', FILTER_SANITIZE_NUMBER_INT);
   $resp = OrbitalEntries::save(array(
@@ -294,7 +288,7 @@ add_action('wp_ajax_orbital_mark_item_read','orbital_mark_item_read');
 
 //Get the current settings for this user
 function orbital_get_user_settings(){
-
+  nonce_dance();
   $settings = (array) get_user_option( 'orbital_settings' );
   //TODO what if the settings haven't been set? we should default them.
   //$sort_order = esc_attr($settings['sort-order']);
@@ -305,6 +299,7 @@ add_action('wp_ajax_orbital_get_user_settings','orbital_get_user_settings');
 
 //set the current entry sort order for this user
 function orbital_set_user_settings(){
+  nonce_dance();
   global $current_user;
   //TODO this is the better way, but I can't get it to work.
   //$user_orbital_settings = filter_input(INPUT_POST, 'orbital_settings', FILTER_SANITIZE_STRING);
