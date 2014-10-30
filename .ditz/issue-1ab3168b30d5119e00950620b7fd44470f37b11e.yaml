@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Move Mark Feed Read to feeds class
+desc: how did I miss this so far?
+type: :task
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-10-30 00:59:52.132364 Z
+references: []
+
+id: 1ab3168b30d5119e00950620b7fd44470f37b11e
+log_events: 
+- - 2014-10-30 00:59:53.496830 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
