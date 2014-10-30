@@ -4,7 +4,6 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','au
   // Angular's POST isn't natively undestood by PHP
   // fix via: http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
- 
   // Override $http service's default transformRequest
   $httpProvider.defaults.transformRequest = [function(data)
   {
@@ -12,7 +11,7 @@ var mainModule= angular.module('mainModule', ['ngSanitize','infinite-scroll','au
      * The workhorse; converts an object to x-www-form-urlencoded serialization.
      * @param {Object} obj
      * @return {String}
-     */ 
+     */
     var param = function(obj)
     {
       var query = '';
@@ -73,9 +72,9 @@ mainModule.directive('focusMe', function($timeout, $parse) {
       var model = $parse(attrs.focusMe);
       scope.$watch(model, function(value) {
         console.log('value=',value);
-        if(value === true) { 
+        if(value === true) {
           $timeout(function() {
-            element[0].focus(); 
+            element[0].focus();
           });
         }
       });
@@ -90,11 +89,14 @@ mainModule.directive('focusMe', function($timeout, $parse) {
   };
 });
 
+mainModule.factory('nonceService', function($http, $log){
+
+});
 mainModule.factory('feedService',   function($http,$log){
   /*
-   * The Feed Service should be the interface to feeds. 
+   * The Feed Service should be the interface to feeds.
    *
-   * It maintains a list of feeds, a pointer to a current feed, 
+   * It maintains a list of feeds, a pointer to a current feed,
    * and ways to refresh the list, select the next feed, mark a feed read
    * or get the entries from a feed.
    */
@@ -167,7 +169,7 @@ mainModule.factory('feedService',   function($http,$log){
     },
     tags: function(){
       if(_tags.length == 0 && ! _isLoading ){ _refresh();}
-      return _tags; 
+      return _tags;
     },
     allTags: function(){
       return _allTags;
@@ -180,14 +182,13 @@ mainModule.factory('feedService',   function($http,$log){
     },
     selectedEntry: function(){
       return _selectedEntry;
-    }, 
+    },
     selectEntry: function(entry){
       _selectedEntry = entry;
     },
 
     getFeedEntries: function(feed,showRead){
       var qualifier = getEntriesQualifier(feed);
-      
       $log.log('in getFeedEntries');
       if(!showRead){
         showRead=0;
@@ -213,7 +214,7 @@ mainModule.factory('feedService',   function($http,$log){
       if( null == feed){
         feed = _selectedFeed;
       }
-      //update feed 
+      //update feed
       var data= {
         action: 'orbital_update_feed',
         feed_id: feed.feed_id,
@@ -231,7 +232,7 @@ mainModule.factory('feedService',   function($http,$log){
 
 
     /*
-     * Marks all the entries in a feed as read 
+     * Marks all the entries in a feed as read
      */
     markFeedRead: function(feed){
       if( null == feed){
@@ -273,11 +274,11 @@ mainModule.factory('feedService',   function($http,$log){
       $http.get(ajaxurl + '?action=orbital_get_feeds')
       .success( function( data ){
         //Here is our simple feed list
-        data = _.map(data, 
-                     function(feed){ 
-                       feed.is_private = feed['private']=='1'; 
+        data = _.map(data,
+                     function(feed){
+                       feed.is_private = feed['private']=='1';
                        feed.unreadCount= function(){return feed.unread_count;};
-                       return feed; 
+                       return feed;
                      });
         _feeds= data;
 
@@ -294,13 +295,13 @@ mainModule.factory('feedService',   function($http,$log){
                           return _.contains(feed.tags.split(","),tag);
                         });
           _tags[tag].unreadCount = function(){
-            return _.reduce(_tags[tag], 
+            return _.reduce(_tags[tag],
                           function(count, feed){
                             return count + parseInt(feed.unread_count,10);
                           },0);
           };
         });
-        //We have to do this AFTER the tag building 
+        //We have to do this AFTER the tag building
         //because this has no tags and throws an exception
         var fresh = {
           feed_id:-1, //TODO start using neg integers for special feed ids
@@ -392,7 +393,7 @@ mainModule.factory('feedService',   function($http,$log){
       //console.log('And app thinks data is : ' + _sortOrder );
       $http.post(ajaxurl, data)
       .success(function(response){
-        //Store the settings 
+        //Store the settings
         _showByTags = response['show_by_tags'] || _showByTags;
         _sortOrder = response['sort_order']|| _sortOrder;
         if(callback){
@@ -461,15 +462,11 @@ mainModule.factory('feedService',   function($http,$log){
 
     },
   };
-
-  
   return feedservice;
-
-  
 });
 
 mainModule.run(function($rootScope){
-  /* 
+  /*
    * receive the emitted messages and rebroadcast
    * use distinct event names to prevent browser explosion
    */
