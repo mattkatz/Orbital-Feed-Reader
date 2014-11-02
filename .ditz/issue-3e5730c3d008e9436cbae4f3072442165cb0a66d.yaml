@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: upgrade to angular 1.3.1
+desc: ""
+type: :task
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2014-11-02 16:08:18.642672 Z
+references: []
+
+id: 3e5730c3d008e9436cbae4f3072442165cb0a66d
+log_events: 
+- - 2014-11-02 16:08:19.401106 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2014-11-02 16:08:37.810865 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2014-11-02 16:08:52.689435 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
