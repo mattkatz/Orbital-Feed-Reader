@@ -26,6 +26,7 @@ if ( !function_exists( 'add_action' ) ) {
   exit;
 }
 require_once 'backend.php';
+require_once 'orbital-widget.php';
 
 add_action('plugins_loaded', 'orbital_update_db_check');
 function orbital_update_db_check(){
