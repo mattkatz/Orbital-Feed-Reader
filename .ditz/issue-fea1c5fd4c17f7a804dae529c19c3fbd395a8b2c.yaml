@@ -5,8 +5,8 @@ type: :bugfix
 component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2013-07-09 02:48:05.069193 Z
 references: []
 
@@ -22,3 +22,7 @@ log_events:
   - |-
     ditz assign {issue 348403b67db5206370f6478ed67e16caaa3ab9b1}
     doh.
+- - 2014-10-30 01:33:20.108809 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
