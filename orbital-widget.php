@@ -72,6 +72,7 @@ class orbital_blogroll_widget extends WP_Widget {
     $feeds = OrbitalFeeds::get($user);
     echo '<ul id="orbital-feeds" class="orbital feeds">';
     foreach($feeds as $feed){
+      if($feed->private){continue;}
       echo "<li class='orbital feed'>";
       echo "<a href='$feed->site_url'>$feed->feed_name</a>";
       echo "</li>";
