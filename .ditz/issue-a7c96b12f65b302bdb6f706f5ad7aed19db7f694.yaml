@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Mark all read causes angular watcher warning.
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2014-11-04 02:30:57.611788 Z
+references: []
+
+id: a7c96b12f65b302bdb6f706f5ad7aed19db7f694
+log_events: 
+- - 2014-11-04 02:30:58.505721 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
