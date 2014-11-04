@@ -14,8 +14,6 @@ class orbital_blogroll_widget extends WP_Widget {
     // Check values
     if( $instance) {
       $title = esc_attr($instance['title']);
-      $text = esc_attr($instance['text']);
-      $textarea = esc_textarea($instance['textarea']);
       $user = esc_attr($instance['user']);
     } else {
       $title = '';
@@ -40,19 +38,10 @@ class orbital_blogroll_widget extends WP_Widget {
         <?php
         }
         ?>
-        
       </select>
     </p>
 
-    <p>
-      <label for="<?php echo $this->get_field_id('text'); ?>"><?php _e('Text:', 'orbital_blogroll_widget'); ?></label>
-      <input class="widefat" id="<?php echo $this->get_field_id('text'); ?>" name="<?php echo $this->get_field_name('text'); ?>" type="text" value="<?php echo $text; ?>" />
-    </p>
 
-    <p>
-      <label for="<?php echo $this->get_field_id('textarea'); ?>"><?php _e('Textarea:', 'orbital_blogroll_widget'); ?></label>
-      <textarea class="widefat" id="<?php echo $this->get_field_id('textarea'); ?>" name="<?php echo $this->get_field_name('textarea'); ?>"><?php echo $textarea; ?></textarea>
-    </p>
     <?php
   }
   // update widget
@@ -60,8 +49,6 @@ class orbital_blogroll_widget extends WP_Widget {
     $instance = $old_instance;
     // Fields
     $instance['title'] = strip_tags($new_instance['title']);
-    $instance['text'] = strip_tags($new_instance['text']);
-    $instance['textarea'] = strip_tags($new_instance['textarea']);
     $instance['user'] = strip_tags($new_instance['user']);
     return $instance;
   }
@@ -72,8 +59,7 @@ class orbital_blogroll_widget extends WP_Widget {
 
     // these are the widget options
     $title = apply_filters('widget_title', $instance['title']);
-    $text = $instance['text'];
-    $textarea = $instance['textarea'];
+    $user = $instance['user'];
     echo $before_widget;
     // Display the widget
     echo '<div class="widget-text wp_widget_plugin_box">';
@@ -83,14 +69,15 @@ class orbital_blogroll_widget extends WP_Widget {
       echo $before_title . $title . $after_title;
     }
 
-    // Check if text is set
-    if( $text ) {
-      echo '<p class="wp_widget_plugin_text">'.$text.'</p>';
+    $feeds = OrbitalFeeds::get($user);
+    echo '<ul id="orbital-feeds" class="orbital feeds">';
+    foreach($feeds as $feed){
+      echo "<li class='orbital feed'>";
+      echo "<a href='$feed->site_url'>$feed->feed_name</a>";
+      echo "</li>";
     }
-    // Check if textarea is set
-    if( $textarea ) {
-     echo '<p class="wp_widget_plugin_textarea">'.$textarea.'</p>';
-    }
+    echo '</ul>';
+
     echo '</div>';
     echo $after_widget;
   }
