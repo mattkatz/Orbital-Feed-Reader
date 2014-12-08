@@ -67,6 +67,9 @@ class orbital_blogroll_widget extends WP_Widget {
     // Check if title is set
     if ( $title ) {
       echo $before_title . $title . $after_title;
+?>
+            <a href="<?php echo site_url("?export_opml=".$user) ?>" style='font-size:10px;'><img id="orbital-opml-icon" class="opml icon" width=16 height=16 src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">Download <span title='Outline Processor Markup Language or OPML is a standard for Feed Readers to exchange subscription lists'>OPML</span></a>
+<?php 
     }
 
     $feeds = OrbitalFeeds::get($user);
