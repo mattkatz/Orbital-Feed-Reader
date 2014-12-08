@@ -15,11 +15,11 @@ class orbital_blogroll_widget extends WP_Widget {
     if( $instance) {
       $title = esc_attr($instance['title']);
       $user = esc_attr($instance['user']);
+      $show_download = esc_attr($instance['show_download']);
     } else {
       $title = '';
-      $text = '';
-      $textarea = '';
       $user = '';
+      $show_download = true;
     }
     $all_users = get_users(array('role'=>'administrator'));
     ?>
@@ -40,6 +40,12 @@ class orbital_blogroll_widget extends WP_Widget {
         ?>
       </select>
     </p>
+    <p>
+      <label for="<?php echo $this->get_field_id('show_download'); ?>">
+        <?php _e('Show an OPML Download Link?', 'orbital_blogroll_widget'); ?>
+      </label>
+      <input class='widefat' id="<?php echo $this->get_field_id('show_download'); ?>" name="<?php echo $this->get_field_name('show_download'); ?>" type='checkbox' <?php if ($show_download ){echo "checked";} ?> />
+    </p>
 
 
     <?php
@@ -50,6 +56,7 @@ class orbital_blogroll_widget extends WP_Widget {
     // Fields
     $instance['title'] = strip_tags($new_instance['title']);
     $instance['user'] = strip_tags($new_instance['user']);
+    $instance['show_download'] = strip_tags($new_instance['show_download']);
     return $instance;
   }
   // display widget
@@ -60,6 +67,7 @@ class orbital_blogroll_widget extends WP_Widget {
     // these are the widget options
     $title = apply_filters('widget_title', $instance['title']);
     $user = $instance['user'];
+    $show_download = $instance['show_download'];
     echo $before_widget;
     // Display the widget
     echo '<div class="widget-text wp_widget_plugin_box">';
@@ -67,6 +75,8 @@ class orbital_blogroll_widget extends WP_Widget {
     // Check if title is set
     if ( $title ) {
       echo $before_title . $title . $after_title;
+    }
+    if( $show_download){
 ?>
             <a href="<?php echo site_url("?export_opml=".$user) ?>" style='font-size:10px;'><img id="orbital-opml-icon" class="opml icon" width=16 height=16 src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">Download <span title='Outline Processor Markup Language or OPML is a standard for Feed Readers to exchange subscription lists'>OPML</span></a>
 <?php 
