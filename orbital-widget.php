@@ -78,7 +78,7 @@ class orbital_blogroll_widget extends WP_Widget {
     }
     if( $show_download){
 ?>
-            <a href="<?php echo site_url("?export_opml=".$user) ?>" class='orbital-opml-download' style='font-size:10px;'><img id="orbital-opml-icon" class="orbital-opml-icon" width=16 height=16 src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>">Download <span title='Outline Processor Markup Language or OPML is a standard for Feed Readers to exchange subscription lists'>OPML</span></a>
+            <a href="<?php echo site_url("?export_opml=".$user) ?>" class='orbital-opml-download' style='font-size:10px;'><img id="orbital-opml-icon" class="orbital-opml-icon" width=10 height=10 src="<?php echo plugins_url("img/opml-icon.svg", __FILE__); ?>"/>Download <span title='Outline Processor Markup Language or OPML is a standard for Feed Readers to exchange subscription lists'>OPML</span></a>
 <?php 
     }
 
