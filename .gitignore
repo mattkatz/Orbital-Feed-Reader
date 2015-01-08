@@ -1,5 +1,5 @@
-*.vim
-*.swp
-.ditz-config
-**/.DS_Store
+.ditz/*
 .DS_Store
+*.swp
+Session.vim
+.ditz-config
