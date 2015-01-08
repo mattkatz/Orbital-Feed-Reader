@@ -13,13 +13,13 @@ This plugin is for folks who have their own install of wordpress and want to als
 Goals
 =====
 
-* Create a blogroll dynamically from your feeds.
-* Let you share your OPML dynamically.
 * Integrate into Firefox as a feed handler.
 
 
 Goals that are DONE!
 --------------------
+* Create a blogroll dynamically from your feeds.
+* Let you share your OPML dynamically.
 * Let you subscribe to blogs via RSS or Atom.
 * Import from OPML.
 * Export OPML.
