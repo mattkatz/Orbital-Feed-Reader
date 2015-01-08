@@ -5,8 +5,8 @@ type: :task
 component: Orbital
 release: 0.2 Wordpress integration
 reporter: Matt Katz <ditz@morelightmorelight.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2014-10-30 00:59:52.132364 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2014-10-30 00:59:53.496830 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2015-01-08 01:23:44.966111 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
   - ""
