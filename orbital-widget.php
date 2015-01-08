@@ -81,7 +81,6 @@ class orbital_blogroll_widget extends WP_Widget {
     echo $before_widget;
     // Display the widget
     echo '<div class="widget-text wp_widget_plugin_box orbital-widget">';
-
     // Check if title is set
     if ( $title ) {
       echo $before_title . $title . $after_title;
