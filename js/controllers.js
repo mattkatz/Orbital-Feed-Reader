@@ -1,5 +1,5 @@
 /* Controllers */
-mainModule.controller('FeedListCtrl', function ( $scope, $log, feedService){
+function FeedListCtrl($scope, $log, feedService){
   $scope.showByTags = feedService.showByTags()
   $scope.editable = false;
   $scope.feeds = feedService.feeds();
@@ -74,7 +74,7 @@ mainModule.controller('FeedListCtrl', function ( $scope, $log, feedService){
   }
   $scope.markRead = function(feed){
     feedService.markFeedRead(feed);
-  };
+  }
 
   /*
    * Update this feed
@@ -82,12 +82,12 @@ mainModule.controller('FeedListCtrl', function ( $scope, $log, feedService){
    */
   $scope.update = function(feed){
     feedService.update(feed);
-  };
+  }
   $scope.showReadItems = function(){
     //refresh this feed, but display read items
     $scope.showRead = 1 - $scope.showRead;
     $scope.select(feedService.selectedFeed(),$scope.showRead);
-  };
+  }
 
   /*
    * Events
@@ -102,8 +102,9 @@ mainModule.controller('FeedListCtrl', function ( $scope, $log, feedService){
   $scope.$on('updateFeed', function(event,args){
     $scope.update(args.feed);
   });
-});
-mainModule.controller('CliCtrl', function ($scope, $filter,$timeout,feedService){
+  
+}
+function CliCtrl($scope, $filter,$timeout,feedService){
   $scope.reveal = false;
   $scope.selectedFeed = null;
   $scope.feeds = feedService.feeds();
@@ -206,8 +207,8 @@ mainModule.controller('CliCtrl', function ($scope, $filter,$timeout,feedService)
     $scope.$apply(function(){$scope.toggleReveal()});
   });
 
-});
-mainModule.controller('EntriesCtrl', function ($scope, $log,feedService){
+}
+function EntriesCtrl($scope, $log,feedService){
   $scope.selectedEntry = null;
   $scope.isRead = false;
   $scope.entries = [];
@@ -383,7 +384,7 @@ mainModule.controller('EntriesCtrl', function ($scope, $log,feedService){
       return;
     $scope.setReadStatus(entry,"0");
   });
-});
+}
 
 /*
  * Subscription control
@@ -394,7 +395,7 @@ mainModule.controller('EntriesCtrl', function ($scope, $log,feedService){
  * Give it a candidate and we'll hide the rest and let you edit this
  * 
  */
-mainModule.controller('SubsCtrl', function ($scope,$http,$log,feedService ){
+function SubsCtrl($scope,$http,$log,feedService ){
   //The normal status of this window is to be hidden.
   $scope.reveal = false;
   $scope.possibleFeeds = null;
@@ -675,7 +676,7 @@ mainModule.controller('SubsCtrl', function ($scope,$http,$log,feedService ){
     $scope.reveal=true;
     $scope.feedCandidate = args.feed;
   });
-});
+}
 
 
 function changeSortOrder( newSort){
