@@ -16,10 +16,12 @@ class orbital_blogroll_widget extends WP_Widget {
       $title = esc_attr($instance['title']);
       $user = esc_attr($instance['user']);
       $show_download = esc_attr($instance['show_download']);
+      $show_plug = esc_attr($instance['show_plug']);
     } else {
       $title = '';
       $user = '';
       $show_download = true;
+      $show_plug = true;
     }
     $all_users = get_users(array('role'=>'administrator'));
     ?>
@@ -42,9 +44,15 @@ class orbital_blogroll_widget extends WP_Widget {
     </p>
     <p>
       <label for="<?php echo $this->get_field_id('show_download'); ?>">
-        <?php _e('Show an OPML Download Link?', 'orbital_blogroll_widget'); ?>
+        <span title='The link will read "Download Opml"'><?php _e('Show an OPML Download Link?', 'orbital_blogroll_widget'); ?></span>
       </label>
       <input class='widefat' id="<?php echo $this->get_field_id('show_download'); ?>" name="<?php echo $this->get_field_name('show_download'); ?>" type='checkbox' <?php if ($show_download ){echo "checked";} ?> />
+    </p>
+    <p>
+      <label for="<?php echo $this->get_field_id('show_plug'); ?>">
+        <span title='The link will read "Blogroll by Orbital Feed Reader" and link to https://mattkatz.github.io/Orbital-Feed-Reader/' ><?php _e('Show a link to Orbital Feed Reader at the bottom?', 'orbital_blogroll_widget'); ?></span>
+      </label>
+      <input class='widefat' id="<?php echo $this->get_field_id('show_plug'); ?>" name="<?php echo $this->get_field_name('show_plug'); ?>" type='checkbox' <?php if ($show_plug ){echo "checked";} ?> />
     </p>
 
 
@@ -57,6 +65,7 @@ class orbital_blogroll_widget extends WP_Widget {
     $instance['title'] = strip_tags($new_instance['title']);
     $instance['user'] = strip_tags($new_instance['user']);
     $instance['show_download'] = strip_tags($new_instance['show_download']);
+    $instance['show_plug'] = strip_tags($new_instance['show_plug']);
     return $instance;
   }
   // display widget
@@ -68,6 +77,7 @@ class orbital_blogroll_widget extends WP_Widget {
     $title = apply_filters('widget_title', $instance['title']);
     $user = $instance['user'];
     $show_download = $instance['show_download'];
+    $show_plug = $instance['show_plug'];
     echo $before_widget;
     // Display the widget
     echo '<div class="widget-text wp_widget_plugin_box orbital-widget">';
@@ -92,6 +102,11 @@ class orbital_blogroll_widget extends WP_Widget {
     }
     echo '</ul>';
 
+    if( $show_plug){
+?>
+            <a href="https://mattkatz.github.io/Orbital-Feed-Reader/" class='orbital-plug' style='font-size:10px;'>Blogroll by Orbital Feed Reader</a>
+<?php 
+    }
     echo '</div>';
     echo $after_widget;
   }
