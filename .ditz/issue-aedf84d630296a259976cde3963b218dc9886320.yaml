@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: publish.sh should work with not versioning html in main branches
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2015-01-08 01:18:45.751842 Z
+references: []
+
+id: aedf84d630296a259976cde3963b218dc9886320
+log_events: 
+- - 2015-01-08 01:18:46.648981 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
