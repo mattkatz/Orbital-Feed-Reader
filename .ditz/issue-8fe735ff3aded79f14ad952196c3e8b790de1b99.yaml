@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: downgrade from angular 1.3
+desc: I'd rather get the thing out than keep troubleshooting this upgrade right now.
+type: :bugfix
+component: Orbital
+release: 0.2 Wordpress integration
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2015-01-08 00:56:56.908372 Z
+references: []
+
+id: 8fe735ff3aded79f14ad952196c3e8b790de1b99
+log_events: 
+- - 2015-01-08 00:56:58.204837 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
