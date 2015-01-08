@@ -7,7 +7,7 @@ desc: |-
   from the initial load
 type: :feature
 component: Orbital
-release: 0.2 Wordpress integration
+release: 0.2.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -24,3 +24,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - assigned to release 0.2 Wordpress integration from 0.1 - Feeds, Subscribed
   - this is nice and needed before we have an android app.
+- - 2015-01-08 01:38:41.651704 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2.1 from 0.2 Wordpress integration
+  - ""

@@ -133,3 +133,12 @@ releases:
     - Matt Katz <ditz@morelightmorelight.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 0.2.1
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2015-01-08 01:37:39.990201 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - created
+    - ""

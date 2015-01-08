@@ -7,7 +7,7 @@ desc: |-
   maybe you should just mark all as read during the initial import.
 type: :feature
 component: Orbital
-release: 0.2 Wordpress integration
+release: 0.2.1
 reporter: Matt Katz <ditz@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -19,4 +19,8 @@ log_events:
 - - 2013-08-22 00:03:53.316088 Z
   - Matt Katz <ditz@morelightmorelight.com>
   - created
+  - ""
+- - 2015-01-08 01:39:35.250996 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2.1 from 0.2 Wordpress integration
   - ""

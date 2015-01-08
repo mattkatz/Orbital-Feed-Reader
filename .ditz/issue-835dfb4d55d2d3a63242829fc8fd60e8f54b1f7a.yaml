@@ -22,3 +22,7 @@ log_events:
   - Matt Katz <ditz@morelightmorelight.com>
   - closed with disposition fixed
   - ""
+- - 2015-01-08 01:40:02.433271 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - doesn't break the page anymore, so I must have fixed it.

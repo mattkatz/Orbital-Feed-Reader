@@ -6,7 +6,7 @@ desc: |-
   For each token of the post, you should be able to create an easy plugin/template to share something by including the bits in a URL.
 type: :feature
 component: Orbital
-release: 0.2 Wordpress integration
+release: 0.2.1
 reporter: matt <matt@morelightmorelight.com>
 status: :unstarted
 disposition: 
@@ -18,4 +18,8 @@ log_events:
 - - 2012-10-22 12:19:56.348662 Z
   - matt <matt@morelightmorelight.com>
   - created
+  - ""
+- - 2015-01-08 01:39:17.271725 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - assigned to release 0.2.1 from 0.2 Wordpress integration
   - ""
