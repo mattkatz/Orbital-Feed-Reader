@@ -8,4 +8,4 @@
 node_modules/**/*
 .ditz-config
 .DS_Store
-
+.ditz/html/*
