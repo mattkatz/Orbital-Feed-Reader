@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Create a translations file
+desc: I actually got a request from someone who wants to help translate!
+type: :feature
+component: Orbital
+release: 0.2.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :unstarted
+disposition: 
+creation_time: 2015-01-08 02:05:40.835847 Z
+references: []
+
+id: cbe384c702eddd9356f3fbdb2dccb86e7f772a10
+log_events: 
+- - 2015-01-08 02:05:41.658820 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
