@@ -15,8 +15,8 @@
       </div>
     </div>
     <script type="text/ng-template"  id='feedline.html'>
-      <div class="feed" id="feed-{{::feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
-            <span ng-bind-html='::feed.feed_name'></span> <span class="feedcounter" >{{feed.unreadCount()}} </span>
+      <div class="feed" id="feed-{{feed.feed_id}}" ng-class="{'is-editable': editable, 'is-selected': feed == selectedFeed}" ng-click="select(feed)"  >
+            <span ng-bind-html='feed.feed_name'></span> <span class="feedcounter" >{{feed.unreadCount()}} </span>
             <a ng-show="editable" ng-click="editFeed(feed)">⚙</a>
       </div>
     </script>
@@ -26,7 +26,7 @@
     <ul id='tags' ng-show="showByTags">
       <li ng-repeat="(tag, feeds) in tags" >
         <a href="#" class="orbital-treeindicator" ng-class="{'open':show}" ng-click="show = !show">▹</a>
-        <span id="{{::tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{::tag}} <span class="feedcounter">{{feeds.unreadCount()}}</span> </span>
+        <span id="{{tag}}" class="tag" ng-click="select(tag)" ng-class="{'is-selected':tag == selectedFeed}" >#{{tag}} <span class="feedcounter">{{feeds.unreadCount()}}</span> </span>
         <ul ng-show="show">
           <li ng-repeat="feed in feeds" ng-include="'feedline.html'"> </li>
         </ul>
@@ -55,7 +55,7 @@
           </label>
           <label>Tags:
             <div class="tagchecklist">
-              <span class="atag" ng-repeat="tag in feedCandidate.tags | split "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{::tag}}</span>
+              <span class="atag" ng-repeat="tag in feedCandidate.tags | split "><a ng-click="removeTag(tag)" class="ntdelbutton">X</a>{{tag}}</span>
             </div>
             <div>
               <mk-autocomplete id='tagentry' ng-model="feedCandidate.tags" data-suggestion-source="availableTags" data-select-class='tagselected' ></mk-autocomplete>
@@ -147,7 +147,7 @@
           ?>">
         </div>
         <ul id='orbital-entries' class="entries" infinite-scroll="addMoreEntries()" infinite-scroll-disabled='isLoading' infinite-scroll-parent='true' infinite-scroll-distance="2" >
-          <li id="{{::entry.feed_id}}_{{::entry.id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.id == selectedEntry.id}" >
+          <li id="{{entry.feed_id}}_{{entry.id}}" class="entry" ng-repeat="entry in entries" ng-class="{'is-read': entry.isRead == 1, 'is-current': entry.id == selectedEntry.id}" >
             <div class='indicators'>
               <div class="indicator" >
                 <span class='clickable' title='Click to just see posts from this feed' ng-click='selectFeed(entry)' ng-bind-html="getFeedFromEntry(entry).feed_name"></span>
@@ -162,13 +162,13 @@
                 Read
               </div>
             </div>
-              <a href="{{entry.link}}" target='_blank'><h2 class="entry-title" ng-bind-html="::entry.title"></h2></a>
-              <div class="author" ng-show="entry.author" ng-bind-html="::entry.author">
+              <a href="{{entry.link}}" target='_blank'><h2 class="entry-title" ng-bind-html="entry.title"></h2></a>
+              <div class="author" ng-show="entry.author" ng-bind-html="entry.author">
               </div>
-              <div class="date" title="{{::entry.published | date:mediumTime }}">
-                {{::entry.published | date:medium }}
+              <div class="date" title="{{entry.published | date:mediumTime }}">
+                {{entry.published | date:medium }}
               </div>
-              <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="::entry.content"></div>
+              <div ng-click="selectEntry(entry)" class="entry-content" ng-bind-html="entry.content"></div>
               <div class='entry-tools'>
                 <a href="#" class="button" ng-click="pressThis(entry,'<?php echo admin_url('press-this.php') ?>')">Blog This!</a>
               </div>
