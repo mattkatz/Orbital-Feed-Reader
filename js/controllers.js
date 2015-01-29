@@ -300,6 +300,13 @@ function EntriesCtrl($scope, $log,feedService){
   }
 
   /*
+   * call up the edit window for this feed
+   */
+  $scope.editFeed = function(feed){
+    $scope.$emit('feedEdit', {feed:feed});
+  }
+
+  /*
    * Someone has clicked an entry.
    * Toggle read on the server, then alert the UI
    */
@@ -668,13 +675,16 @@ function SubsCtrl($scope,$http,$log,feedService ){
     feedService.refresh();
   }
 
+  $scope.editFeed = function(feed){
+    $scope.reveal = true;
+    $scope.feedCandidate = feed;
+  }
+
   //We are going to edit a feed
   //it becomes the feedCandidate so we can edit it there.
   //TODO we should copy the feed, not use the one in the feedlist
   $scope.$on('feedEditRequest', function(event,args){
-    //$log.info('feedEdit');
-    $scope.reveal=true;
-    $scope.feedCandidate = args.feed;
+    $scope.editFeed(args.feed);
   });
 }
 
