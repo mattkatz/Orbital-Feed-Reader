@@ -3,7 +3,7 @@ Contributors: mttktz
 Donate link: https://www.gittip.com/mattkatz/
 Tags: feed reader, google reader, rss, atom, 
 Requires at least: 3.9.1
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,20 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+
+= 0.2 Wordpress integration =
+* Display Blogroll as a widget
+* centralize all $http in service
+* new keyboard shortcut feed switcher
+* Security: Add NONCE and Permission valdation to ajax calls
+* selectedFeedController should know read/unread pref
+* Move Mark Feed Read to feeds class
+* Extract Feeds and Entries to their own backend
+* Use the ajaxurl global variable so we don't have to localize the admin_ajax
+* bugfix: Add feed Title discovery to simplepie 
+* bugfix: Toggling settings returns false
+* bugfix: fix the display of dates
+
 = 0.1.9.1 - FOCUS = 
 * bugfix: 4.0 introduces a strange box-shadow on focused elements.
 
