@@ -14,6 +14,8 @@ global $orbital_settings_slug;
 $orbital_settings_slug = 'orbital_plugin_settings';
 global $orbital_db_version ;
 $orbital_db_version = '0.1.6';
+global $orbital_sample_data_opt_string;
+$orbital_sample_data_opt_string = 'orbital_sample_data_loaded';
 global $orbital_samples_version ;
 $orbital_samples_version = '0.1.6';
 global $orbital_db_version_opt_string;
@@ -45,7 +47,7 @@ add_action('plugins_loaded', 'orbital_sample_data_check');
 function orbital_sample_data_check(){
   global $orbital_samples_version ;
   //_log('check for sampledata');
-  $samples_loaded = get_site_option('orbital_sample_data_loaded');
+  $samples_loaded = get_site_option($orbital_sample_data_opt_string);
   //_log("Are the samples loaded: $samples_loaded ");
   if( $samples_loaded !== $orbital_samples_version)
   {
@@ -53,7 +55,7 @@ function orbital_sample_data_check(){
     require_once 'install_upgrade.php';
     orbital_install_data();
     //TODO: should this be inside the install data function?
-    update_option('orbital_sample_data_loaded', $orbital_samples_version);
+    update_option($orbital_sample_data_opt_string, $orbital_samples_version);
   }
   else{
     //_log('Sample Data already in there, never mind');
@@ -257,10 +259,12 @@ function orbital_uninstall_db()
 
   //We should remove the DB option for the db version
   delete_option($orbital_db_version_opt_string);
+  delete_option($orbital_settings_slug );
+  delete_option($orbital_sample_data_opt_string);
   //clean up all the tables
   global $wpdb;
   global $tbl_prefix;
-  $tables =array('feeds','user_feeds','entries','user_entries');
+  $tables =array('feeds','user_feeds','entries','user_entries','tags','user_feed_tags');
   foreach($tables as $table){
     $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix.$table.";";
     $wpdb->query($sql);

@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Uninstall doesn't clean up.
+desc: Because we don't clean up db after uninstall, we can get into dangerous situations with users.
+type: :bugfix
+component: Orbital
+release: 0.2.1
+reporter: .
+status: :unstarted
+disposition: 
+creation_time: 2015-02-19 01:14:30.934094 Z
+references: []
+
+id: a1a32230232ab7e2673fff207472a8518b2df1ce
+log_events: 
+- - 2015-02-19 01:14:36.369657 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""

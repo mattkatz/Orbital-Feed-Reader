@@ -412,16 +412,6 @@ function orbital_add_sample_feeds_to_user($user_id){
       OrbitalFeeds::link_old_entries($user_id);
     }
 }
-/*
-function orbital_uninstall_db()
-{
-  //We should remove the DB option for the db version
-  delete_option('orbital_db_version');
-  //TODO clean up all the tables
-  global $wpdb;
-  $sql = "DROP TABLE ". $wpdb->prefix.$tbl_prefix."feeds;";
-  $wpdb->query($sql);
 
-}*/
 
 ?>
