@@ -22,13 +22,17 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.2 Wordpress integration
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2015-02-19 01:31:01.004001 Z
   log_events: 
   - - 2012-01-05 22:16:55.910933 Z
     - Matt Katz <ditz@morelightmorelight.com>
     - created
     - ""
+  - - 2015-02-19 01:31:01.004011 Z
+    - Matt Katz <ditz@morelightmorelight.com>
+    - released
+    - this was actually released a while ago but I'm just getting around to it.
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 0.1.1
   status: :released
