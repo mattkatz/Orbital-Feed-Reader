@@ -322,7 +322,7 @@ function orbital_install_instructional_entries($orbitalfeed){
 function orbital_add_sample_feeds_to_user($user_id){
     if(! user_can($user_id,'edit_posts')){
       // if this user can't author posts, then we don't want to offer them a feed reader
-      continue;
+      return;
     }
     //install some sample feeds
     _log("installing sample feeds for $user_id");

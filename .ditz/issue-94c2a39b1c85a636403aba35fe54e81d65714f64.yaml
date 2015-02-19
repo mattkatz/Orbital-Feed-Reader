@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Installations with a non-edit user may crash
+desc: I accidentally left a continue in a statement that should be a return in a function I extracted from a loop.
+type: :bugfix
+component: Orbital
+release: 0.2.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2015-02-19 00:59:29.851782 Z
+references: []
+
+id: 94c2a39b1c85a636403aba35fe54e81d65714f64
+log_events: 
+- - 2015-02-19 00:59:31.411633 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2015-02-19 01:01:01.065944 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2015-02-19 01:01:16.206868 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""
