@@ -34,7 +34,7 @@
     </ul>
   </div>
   <div id='orbital-cli' class="modal-window" ng-show="reveal" ng-controller="CliCtrl">
-  <div><?php _e('Start typing the name of a feed. ⬇ ⬆  select a feed from the list. Enter goes to whatever you\'ve selected. Esc closes the window.','orbital-reader');</div>
+  <div><?php _e('Start typing the name of a feed. ⬇ ⬆  select a feed from the list. Enter goes to whatever you\'ve selected. Esc closes the window.','orbital-reader'); ?></div>
     <input id='orbital-cli-input' ng-model='filterstring' focus-me='reveal' ng-keyup='processKeys($event)' type='text'></input>
     <div id='orbital-cli-results' ng-show='filterstring'>
       <ul class='feeds'>
