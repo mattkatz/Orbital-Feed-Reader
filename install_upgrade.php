@@ -345,7 +345,6 @@ function orbital_add_sample_feeds_to_user($user_id){
     'tags'=>'orbital,mutants',
     'owner'=>$user_id,
     'feed_name' =>'More Light! More Light!'));
-    
 
     OrbitalFeeds::save(
     array(

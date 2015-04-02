@@ -46,9 +46,10 @@ function orbital_update_db_check(){
 add_action('plugins_loaded', 'orbital_sample_data_check');
 function orbital_sample_data_check(){
   global $orbital_samples_version ;
-  //_log('check for sampledata');
+  global $orbital_sample_data_opt_string;
+  _log("check for sampledata $orbital_samples_version");
   $samples_loaded = get_site_option($orbital_sample_data_opt_string);
-  //_log("Are the samples loaded: $samples_loaded ");
+  _log("Are the samples loaded: $samples_loaded ");
   if( $samples_loaded !== $orbital_samples_version)
   {
     _log("orbital: Installing Sample Data");
@@ -58,7 +59,7 @@ function orbital_sample_data_check(){
     update_option($orbital_sample_data_opt_string, $orbital_samples_version);
   }
   else{
-    //_log('Sample Data already in there, never mind');
+    _log('Sample Data already in there, never mind');
 
   }
 }
