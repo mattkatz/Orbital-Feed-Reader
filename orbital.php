@@ -34,6 +34,7 @@ add_action('plugins_loaded', 'orbital_update_db_check');
 function orbital_update_db_check(){
   global $orbital_db_version;
   global $orbital_db_version_opt_string;
+  load_plugin_textdomain( 'orbital-reader', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
   if(get_site_option($orbital_db_version_opt_string) != $orbital_db_version){
     //upgrayedd the db
     //_log("orbital: Installing or Upgrayedding Database");
@@ -106,6 +107,9 @@ function orbital_icon_style(){
       width:16px;
     }
     </style>';
+}
+add_action('init', 'orbital_overall_init');
+function orbital_overall_init(){
 }
 
 
@@ -194,52 +198,52 @@ function orbital_add_toolbar_items(){
   if(null == $cur_scr || $orbital_main != $cur_scr->id){return;}
   $wp_admin_bar->add_node(array(
     'id' => 'orbital-mark-as-read',
-    'title' => '<span class="ab-icon"></span><span class="ab-label">Mark All as Read</span>',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">'. __('Mark All as Read','orbital-reader') . '</span>',
     'href' => '#',
     'meta' => array('onclick' => 'markFeedRead();',
-                    'title' => 'Mark All as Read',
+                    'title' => __(  'Mark All as Read', 'orbital-reader '),
                     'class' => 'orbital-entries-command',),
   ));
   $wp_admin_bar->add_node(array(
     'id' => 'orbital-update-feed',
-    'title' => '<span class="ab-icon"></span><span class="ab-label">Update Feed</span>',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">'. __('Update Feed','orbital-reader') . '</span>',
     'href' => '#',
     'meta' => array('onclick' => 'updateFeed();',
-                    'title' => 'Update Current Feed',
+                    'title' =>__(  'Update Current Feed' , 'orbital-reader'),
                     'class' => 'orbital-entries-command',),
   ));
   $wp_admin_bar->add_node(array(
     'id' => 'orbital-show-read-items',
-    'title' => '<span class="ab-icon"></span><span class="ab-label">Toggle Read Items</span>',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">' . __('Toggle Read Items', 'orbital-reader').'</span>',
     'href' => '#',
     'meta' => array('onclick' => 'showRead();',
-                    'title' => 'Toggle Showing Read Items',
+                    'title' => __('Toggle Read Items', 'orbital-reader'),
                     'class' => 'orbital-entries-command',),
   ));
 
   $wp_admin_bar->add_node(array(
     'id' => 'orbital-sort',
-    'title' => '<span class="ab-icon"></span><span class="ab-label">Sort</span>',
+    'title' => '<span class="ab-icon"></span><span class="ab-label">'. __('Sort', 'orbital-reader') . '</span>',
     'href' => '#',
     'meta' => array('onclick' => 'changeSortOrder();',
-                    'title' => 'Toggle Entries Sort Order',
+                    'title' => __('Toggle Entries Sort Order', 'orbital-reader'),
                     'class' => 'orbital-entries-command',),
   ));
   $wp_admin_bar->add_node(array(
     'id' => 'orbital-newest-first',
-    'title' => 'Newest First',
+    'title' => __('Newest First', 'orbital-reader'),
     'href' => '#',
     'parent' => 'orbital-sort',
     'meta' => array('onclick' => 'changeSortOrder(-1);',
-                    'title' => 'Sort Entries Newest First',),
+                    'title' => __('Sort Entries Newest First', 'orbital-reader'),),
   ));
   $wp_admin_bar->add_node(array(
     'id' => 'orbital-oldest-first',
-    'title' => 'Oldest First',
+    'title' => __('Oldest First','orbital-reader'),
     'href' => '#',
     'parent' => 'orbital-sort',
     'meta' => array('onclick' => 'changeSortOrder(1);',
-                    'title' => 'Sort Entries Oldest First',),
+                    'title' => __('Sort Entries Oldest First','orbital-reader'),),
   ));
 }
 
