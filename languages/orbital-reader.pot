@@ -1,0 +1,203 @@
+# Loco Gettext template
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: orbital-reader\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-01 23:25-0500\n"
+"POT-Revision-Date: Wed Apr 15 2015 21:04:48 GMT-0400 (EDT)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Matt Katz <orbital-reader@morelightmorelight.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Poedit-SearchPath-0: .."
+
+#: ../mainwindow.php:4
+msgid "The Feeds"
+msgstr ""
+
+#: ../mainwindow.php:14
+msgid "You are in edit mode, click here to exit."
+msgstr ""
+
+#: ../mainwindow.php:37
+msgid ""
+"Start typing the name of a feed. ⬇ ⬆  select a feed from the list. Enter "
+"goes to whatever you've selected. Esc closes the window."
+msgstr ""
+
+#: ../mainwindow.php:49
+msgid "Feed Details for: "
+msgstr ""
+
+#: ../mainwindow.php:49
+msgid "Example Feed Name"
+msgstr ""
+
+#: ../mainwindow.php:50
+msgid "Feed Url"
+msgstr ""
+
+#: ../mainwindow.php:53
+msgid "Site Url"
+msgstr ""
+
+#: ../mainwindow.php:66
+msgid "This Feed is Private! Do not show it to other people."
+msgstr ""
+
+#: ../mainwindow.php:78
+msgid "Put a website or a feed URL here:"
+msgstr ""
+
+#: ../mainwindow.php:82
+msgid "Check a URL"
+msgstr ""
+
+#: ../mainwindow.php:90
+msgid "Select an OPML file to import"
+msgstr ""
+
+#: ../mainwindow.php:92
+msgid "Select an OPML file"
+msgstr ""
+
+#: ../mainwindow.php:97
+msgid ""
+"You can edit those feeds before saving them to your feedlist. When you are "
+"ready click to"
+msgstr ""
+
+#: ../mainwindow.php:100
+msgid "Save these feeds to my feedlist"
+msgstr ""
+
+#: ../mainwindow.php:110
+msgid "Remove this feed"
+msgstr ""
+
+# Make sure to keep the code in between double braces the same: {{possibleFeeds.length}} should stay that way and never change or the code will break.
+#: ../mainwindow.php:121
+msgid "We found {{possibleFeeds.length}} feeds:"
+msgstr ""
+
+#: ../mainwindow.php:133
+msgid "Get rid of this feed! Seriously!"
+msgstr ""
+
+#: ../mainwindow.php:135
+msgid "Unsubscribe"
+msgstr ""
+
+#: ../mainwindow.php:141
+msgid "Save"
+msgstr ""
+
+#: ../mainwindow.php:144
+msgid "Cancel"
+msgstr ""
+
+#: ../mainwindow.php:159
+msgid "Click to just see posts from this feed"
+msgstr ""
+
+#: ../mainwindow.php:161
+msgid "Click here to edit the feed details"
+msgstr ""
+
+#: ../mainwindow.php:169
+msgid "type 'u' or click here to mark unread"
+msgstr ""
+
+#: ../mainwindow.php:171
+msgid "Read"
+msgstr ""
+
+#: ../mainwindow.php:187
+msgid "That's all we've got so far!"
+msgstr ""
+
+# This doesn’t need to be a direct translation. We’re just trying to reassure the user that we are querying our DB to find more information.
+#: ../mainwindow.php:188
+msgid "We're going to the server mines for more delicious content!"
+msgstr ""
+
+#: ../orbital-widget.php:9
+msgid "Orbital Blogroll"
+msgstr ""
+
+#: ../orbital-widget.php:30
+msgid "Widget Title"
+msgstr ""
+
+#: ../orbital-widget.php:34
+msgid "Whose feeds should this widget display?"
+msgstr ""
+
+#: ../orbital-widget.php:47
+msgid "Show an OPML Download Link?"
+msgstr ""
+
+#: ../orbital-widget.php:53
+msgid "Show a link to Orbital Feed Reader at the bottom?"
+msgstr ""
+
+#: ../orbital.php:198 ../orbital.php:201
+msgid "Mark All as Read"
+msgstr ""
+
+#: ../orbital.php:206
+msgid "Update Feed"
+msgstr ""
+
+#: ../orbital.php:209
+msgid "Update Current Feed"
+msgstr ""
+
+#: ../orbital.php:214 ../orbital.php:217
+msgid "Toggle Read Items"
+msgstr ""
+
+#: ../orbital.php:223
+msgid "Sort"
+msgstr ""
+
+#: ../orbital.php:226
+msgid "Toggle Entries Sort Order"
+msgstr ""
+
+#: ../orbital.php:231
+msgid "Newest First"
+msgstr ""
+
+#: ../orbital.php:235
+msgid "Sort Entries Newest First"
+msgstr ""
+
+#: ../orbital.php:239
+msgid "Oldest First"
+msgstr ""
+
+#: ../orbital.php:243
+msgid "Sort Entries Oldest First"
+msgstr ""
+
+#: ../orbital.php:280
+msgid "5 minutes"
+msgstr ""
+
+#: ../orbital.php:388
+msgid "Settings"
+msgstr ""

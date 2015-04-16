@@ -6,6 +6,7 @@
 * Version: 0.2
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
+* Text Domain: orbital-reader
 * License: GPL2
 * */
 global $orbital_slug;
