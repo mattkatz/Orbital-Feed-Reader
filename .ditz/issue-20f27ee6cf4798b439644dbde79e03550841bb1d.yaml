@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: WP_cron no longer updating feeds
+desc: ""
+type: :bugfix
+component: Orbital
+release: 0.2.1
+reporter: Matt Katz <ditz@morelightmorelight.com>
+status: :closed
+disposition: :fixed
+creation_time: 2015-04-16 01:15:10.739710 Z
+references: []
+
+id: 20f27ee6cf4798b439644dbde79e03550841bb1d
+log_events: 
+- - 2015-04-16 01:15:11.732258 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - created
+  - ""
+- - 2015-04-16 01:16:13.700930 Z
+  - Matt Katz <ditz@morelightmorelight.com>
+  - closed with disposition fixed
+  - ""

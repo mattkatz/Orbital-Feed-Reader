@@ -211,7 +211,7 @@ add_action('wp_ajax_orbital_get_entries','orbital_get_feed_entries');
 
 //update multiple feeds
 function orbital_update_feeds(){
-  nonce_dance();
+  //nonce_dance(); //can't do a nonce dance here because this gets called from wp-cron
   //get the list of feeds to update that haven't been updated recently
   $feeds = OrbitalFeeds::get_stale_feeds();
   //TODO Limit it to a reasonable number of feeds in a batch
