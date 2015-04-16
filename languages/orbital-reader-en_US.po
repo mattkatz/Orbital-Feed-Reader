@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../mainwindow.php:4
 msgid "The Feeds"
-msgstr "The DAMN Feeds"
+msgstr "The Feeds"
 
 #: ../mainwindow.php:14
 msgid "You are in edit mode, click here to exit."
