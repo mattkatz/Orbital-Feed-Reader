@@ -39,6 +39,13 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 == Changelog ==
 
+
+= 0.2.1 - Polyglot =
+* Supports translations
+* bugfix: WP_cron no longer updating feeds
+* bugfix: Installations with a non-edit user may crash
+* bugfix: Uninstall doesn't clean up.
+
 = 0.2 Wordpress integration =
 * Display Blogroll as a widget
 * centralize all $http in service
