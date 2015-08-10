@@ -6,7 +6,7 @@ if ( !function_exists( 'add_action' ) ) {
 class orbital_blogroll_widget extends WP_Widget {
   // constructor
   function orbital_blogroll_widget() {
-    parent::WP_Widget(false, $name = __('Orbital Blogroll', 'orbital_blogroll_widget') );
+    parent::__construct(false, $name = __('Orbital Blogroll', 'orbital_blogroll_widget') );
   }
 
   // widget form creation
