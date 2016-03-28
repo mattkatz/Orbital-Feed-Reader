@@ -258,38 +258,54 @@ function EntriesCtrl($scope, $log,feedService){
     feedService.getFeedEntries(feed,showRead);
   }
 
-  $scope.pressThis = function(entry,pressThisUrl) {
-    //Get the selected text
+  $scope.pressThis = function(entry,pt_url) {
     //This is ripped from the pressthisbookmarklet
-    var d=document,
-    w=window,
-    e=w.getSelection,
-    k=d.getSelection,
-    x=d.selection,
-    s=(e?e():(k)?k():(x?x.createRange().text:0)),
-    f=pressThisUrl;
-    e=encodeURIComponent;
-    url = e(entry.link);
-    title = e(entry.title);
-    content = e(s);
-    //console.log(opts.settings['quote-text']);
-    if(opts.settings[ 'quote-text' ] && ! content ){
-      var div = document.createElement("div");
-      div.innerHTML = entry.content;
-      content = e(div.textContent || div.innerText || "");
+    var encURI = window.encodeURIComponent,
+      target = '_press_this_app',
+      windowWidth, windowHeight, selection;
+    var href = entry.link;
+    if ( ! pt_url ) {
+      return;
     }
-    g=f+'?u='+url+'&t='+title+'&s='+content+'&v=2';
-    function a(){
-      if(!w.open(g,'t','toolbar=0,resizable=0,scrollbars=1,status=1,width=720,height=570'))
-        {l.href=g;}
+    pt_url+= '?v=8'
+
+    if ( href.match( /^https?:/ ) ) {
+      pt_url += '&u=' + encURI( href );
+      if ( href.match( /^https:/ ) && pt_url.match( /^http:/ ) ) {
+      }
+    } else {
+      top.location.href = pt_url; //TODO should this change to a window.open with settimeout?
+      return;
     }
-    setTimeout(a,0);
-    void(0);
 
-    //Use the entry details to construct a pressthis URL
-    //Reveal a pressthis iframe window.
+    //if the user has selected any text, let's grab that
+    if ( window.getSelection ) {
+      selection = window.getSelection() + '';
+    } else if ( document.getSelection ) {
+      selection = document.getSelection() + '';
+    } else if ( document.selection ) {
+      selection = document.selection.createRange().text || '';
+    }
 
-    //console.log(entry);
+    pt_url += '&buster=' + ( new Date().getTime() );
+
+      if ( entry.title ) {
+        pt_url += '&t=' + encURI( entry.title.substr( 0, 256 ) );
+      }
+
+      if ( selection ) {
+        pt_url += '&s=' + encURI( selection.substr( 0, 512 ) );
+      }
+
+    windowWidth  = window.outerWidth || document.documentElement.clientWidth || 600;
+    windowHeight = window.outerHeight || document.documentElement.clientHeight || 700;
+
+    windowWidth = ( windowWidth < 800 || windowWidth > 5000 ) ? 600 : ( windowWidth * 0.7 );
+    windowHeight = ( windowHeight < 800 || windowHeight > 3000 ) ? 700 : ( windowHeight * 0.9 );
+
+    window.open( pt_url, target, 'location,resizable,scrollbars,width=' + windowWidth + ',height=' + windowHeight );
+    return;
+
   }
 
   /*
