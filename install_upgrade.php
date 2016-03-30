@@ -166,17 +166,17 @@ function orbital_install_db()
 #  - each user that can write a post should get a set of sample feeds
 function orbital_install_data(){
   get_currentuserinfo();
-  global $wpdb;
-  global $tbl_prefix;
-  global $current_user;
+  global $orbital_samples_version ;
+  global $orbital_sample_data_opt_string;
   //$user_id = $current_user->ID;
   $users = get_users();
   foreach( $users as $user){
     orbital_add_sample_feeds_to_user($user->ID);
   }
-
-
+  //TODO only update if no error
+  update_option($orbital_sample_data_opt_string, $orbital_samples_version);
 }
+
 function orbital_install_instructional_entries($orbitalfeed){
   $i = 0;
   //Insert a sample entry

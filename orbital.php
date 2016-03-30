@@ -38,7 +38,6 @@ function orbital_update_db_check(){
   load_plugin_textdomain( 'orbital-reader', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
   if(get_site_option($orbital_db_version_opt_string) != $orbital_db_version){
     //upgrayedd the db
-    //_log("orbital: Installing or Upgrayedding Database");
     //Two D's for a double dose of that primping.
     require_once 'install_upgrade.php';
     orbital_install_db();
@@ -54,11 +53,9 @@ function orbital_sample_data_check(){
   _log("Are the samples loaded: $samples_loaded ");
   if( $samples_loaded !== $orbital_samples_version)
   {
-    _log("orbital: Installing Sample Data");
+    _log("Installing Sample Data");
     require_once 'install_upgrade.php';
     orbital_install_data();
-    //TODO: should this be inside the install data function?
-    update_option($orbital_sample_data_opt_string, $orbital_samples_version);
   }
   else{
     _log('Sample Data already in there, never mind');
@@ -299,7 +296,7 @@ function orbital_update_job(){
 
 function orbital_activate(){
   orbital_set_up_cron();
-  _log('orbital activate end');
+  _log('Activate end');
 }
 
 add_filter('query_vars','plugin_add_trigger');
