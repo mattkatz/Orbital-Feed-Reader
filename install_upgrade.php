@@ -62,6 +62,7 @@ function orbital_install_db()
   orbital_migrate_db();
   //feeds
   $table_name = $wpdb->prefix.$tbl_prefix."feeds";
+  _log("Checking $table_name");
 
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
@@ -74,11 +75,12 @@ function orbital_install_db()
     UNIQUE KEY id (id)
   ) $charset_collate;";
   dbDelta($sql);
-  _log("Added $table_name");
+
   //User_feeds
   //This is the users view of a feed. 
   //Any value here overrides the feeds value.
   $table_name = $wpdb->prefix.$tbl_prefix."user_feeds";
+  _log("Checking $table_name");
 
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
@@ -91,13 +93,32 @@ function orbital_install_db()
     UNIQUE KEY id (id)
   ) $charset_collate;";
   dbDelta($sql);
-  _log("Added $table_name");
-  
 
+  //entries
+  // These are the entries we insert for any feed subscribed to
+  $table_name = $wpdb->prefix.$tbl_prefix."entries";
+  _log("Checking $table_name");
+
+  $sql = "CREATE TABLE " . $table_name ." (
+    id integer NOT NULL AUTO_INCREMENT,
+    feed_id integer,
+    title text NOT NULL,
+    guid varchar(255) NOT NULL,
+    link text NOT NULL,
+    published datetime NOT NULL,
+    content longtext NOT NULL,
+    content_hash varchar(250) NOT NULL,
+    author varchar(250) NOT NULL DEFAULT '',
+    UNIQUE KEY id (id)
+  ) $charset_collate;";
+  dbDelta($sql);
+  
   //user entries
+  //These are the state of a feed entry for a user.
   //TODO add the foreign key refs from ref id to entries id and feed id
   //TODO add starred
   $table_name = $wpdb->prefix.$tbl_prefix."user_entries";
+  _log("Checking $table_name");
 
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
@@ -110,49 +131,32 @@ function orbital_install_db()
     UNIQUE KEY id (id)
   ) $charset_collate;";
   dbDelta($sql);
-  _log("Added $table_name");
 
-  //entries
-  $table_name = $wpdb->prefix.$tbl_prefix."entries";
-  _log("Adding $table_name");
-
-  $sql = "CREATE TABLE " . $table_name ." (
-    id integer NOT NULL AUTO_INCREMENT,
-    feed_id integer,
-    title text NOT NULL,
-    guid varchar(255) NOT NULL UNIQUE,
-    link text NOT NULL,
-    published datetime NOT NULL,
-    content longtext NOT NULL,
-    content_hash varchar(250) NOT NULL,
-    author varchar(250) NOT NULL DEFAULT '',
-    UNIQUE KEY id (id)
-  ) $charset_collate;";
-  dbDelta($sql);
-  _log("Added $table_name");
 
   //Tags
   $table_name = $wpdb->prefix.$tbl_prefix."tags";
+  _log("Checking $table_name");
   $sql = "CREATE TABLE " . $table_name ." (
     id integer NOT NULL AUTO_INCREMENT,
     name varchar(200)  NOT NULL,
     UNIQUE KEY id (id)
   ) $charset_collate;";
   dbDelta($sql);
-  _log("Added $table_name");
 
   /* map tags to users feeds
    * Users assign tags to feeds and they are a way for users to organize feeds
    */
   
   $table_name = $wpdb->prefix.$tbl_prefix."user_feed_tags";
+  _log("Checking $table_name");
   $sql = "CREATE TABLE " . $table_name ." (
     tag_id integer NOT NULL DEFAULT '0',
     user_feed_id integer NOT NULL DEFAULT '0',
-    PRIMARY KEY (tag_id,user_feed_id)
+    PRIMARY KEY  (tag_id,user_feed_id)
   ) $charset_collate;";
   dbDelta($sql);
-  _log("Added $table_name");
+
+  //TODO how do we gracefully handle errors? Don't have a way to catch dbdelta issues yet
   update_option($orbital_db_version_opt_string,$orbital_db_version);
 }
 
