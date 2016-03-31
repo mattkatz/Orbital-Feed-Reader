@@ -3,7 +3,7 @@
 * Plugin Name: Orbital Feed Reader
 * Plugin URI: http://mattkatz.github.com/Orbital-Feed-Reader/
 * Description:A voracious feed reader
-* Version: 0.2.1.1
+* Version: 0.2.2
 * Author: Matt Katz
 * Author URI: http://www.morelightmorelight.com
 * Text Domain: orbital-reader
@@ -14,7 +14,7 @@ $orbital_slug = 'orbital.php';
 global $orbital_settings_slug;
 $orbital_settings_slug = 'orbital_plugin_settings';
 global $orbital_db_version ;
-$orbital_db_version = '0.1.6';
+$orbital_db_version = '0.2.2';
 global $orbital_sample_data_opt_string;
 $orbital_sample_data_opt_string = 'orbital_sample_data_loaded';
 global $orbital_samples_version ;
