@@ -350,18 +350,25 @@ function EntriesCtrl($scope, $log,feedService){
   $scope.nextEntry = function(currentEntry){
     //$log.info('next entry finds the entry after the current entry, selects it');
     var index =0;//by default we select the first entry
+    var isLastEntry = false;
     if( $scope.entries.length == 0){
       return;//can't select anything
     }
     if(null != currentEntry){ //if there is a current entry, get the index after it
       var index = $scope.entries.indexOf(currentEntry);
-      //If we are at the last entry just go to the first
-      index = (index +1) % $scope.entries.length;
+      //If we are at the last entry just go to the bottom of it
+      isLastEntry = (index+1 == $scope.entries.length );
+      index = Math.min((index +1) , $scope.entries.length -1);
     }
     var next = $scope.entries[index];
     $scope.selectEntry(next);
+    //if we are at the next to last entry, let's try to get more entries first
+    if((index + 2 ) >= $scope.entries.length){
+      //get more entries
+      $scope.addMoreEntries();
+    }
     //scroll to the entry
-    scrollToEntry(next);
+    scrollToEntry(next, isLastEntry);
   };
   $scope.previousEntry = function (currentEntry) {
     //$log.info('prev entry finds the entry before the current entry, selects it');
