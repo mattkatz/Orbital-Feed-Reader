@@ -3,7 +3,7 @@ Contributors: mttktz
 Donate link: https://www.gittip.com/mattkatz/
 Tags: feed reader, google reader, rss, atom, 
 Requires at least: 3.9.1
-Tested up to: 4.3
+Tested up to: 4.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,10 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 
 
 == Changelog ==
+= 0.2.2 - Clean up =
+* bugfix: installs all the tables on utf8mb4 collation
+* bugfix: infinite scrolling now works much better
+* bugfix: Use the new PressThis api for better BlogThis button.
 
 
 = 0.2.1 - Polyglot =
@@ -46,7 +50,7 @@ Please let me know asap! The [Orbital issue tracker is over on github](http://gi
 * bugfix: Installations with a non-edit user may crash
 * bugfix: Uninstall doesn't clean up.
 
-= 0.2 Wordpress integration =
+= 0.2 - Wordpress integration =
 * Display Blogroll as a widget
 * centralize all $http in service
 * new keyboard shortcut feed switcher
