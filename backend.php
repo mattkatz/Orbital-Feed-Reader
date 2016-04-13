@@ -61,6 +61,7 @@ add_action('wp_ajax_orbital_unsubscribe_feed','orbital_unsubscribe_feed');
 //find the details of the feed.
 function orbital_find_feed(){
   nonce_dance();
+  $resp;
   $orig_url = filter_input(INPUT_POST, 'url',FILTER_SANITIZE_URL);
   $contents = "";
   $resp->orig_url = $orig_url;
@@ -69,6 +70,11 @@ function orbital_find_feed(){
 
   $request = new WP_Http;
   $result = $request->request( $orig_url);
+  if(is_wp_error($result)){
+    //handle and return the result;
+    echo(json_encode($result));
+    exit;
+  }
   $contents= $result['body'];
 
 

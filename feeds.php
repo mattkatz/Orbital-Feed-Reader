@@ -375,6 +375,7 @@ class OrbitalFeeds {
     global $wpdb;
     global $tbl_prefix;
     global $current_user;
+    $resp;
     $feeds = $wpdb->prefix.$tbl_prefix. "feeds";
     $user_feeds = $wpdb->prefix.$tbl_prefix. "user_feeds";
     $user_entries = $wpdb->prefix.$tbl_prefix. "user_entries ";
@@ -438,6 +439,7 @@ class OrbitalFeeds {
     //lets go back 1 hour
     // this won't work on php 5.2
     //$then = date_sub($now,new DateInterval('PT1H'))->format('Y-m-d H:i:sP');
+    //TODO: change this to read - since last of the feed interval
     $now->modify('-1 hours');
     $then = $now->format('Y-m-d H:i:sP');
 
@@ -445,6 +447,7 @@ class OrbitalFeeds {
       SELECT feeds.id,feeds.feed_name
       FROM $feeds as feeds
       WHERE feeds.last_updated < %s
+      ORDER BY feeds.last_updated ASC
       ";
     $sql = $wpdb->prepare($sql,$then);
     $myrows = $wpdb->get_results($sql);
@@ -512,6 +515,7 @@ class OrbitalFeeds {
     include_once(ABSPATH . WPINC . '/class-feed.php');
     $resp = array();
     $feedrow = OrbitalFeeds::get_feed($feed_id);
+    _log("Refreshing feed: $feedrow->feed_name, last updated $feedrow->last_updated");
 
     $feed = new SimplePie();
     //If your cache isn't writable, this is a big deal
@@ -531,6 +535,8 @@ class OrbitalFeeds {
     //Here is where the feed parsing/fetching/etc. happens
     $feed->init();
     $items = $feed->get_items();
+    $num_items = count($items);
+    _log("Got $num_items entries");
     foreach($items as $item)
     {
       $name = "";
@@ -562,7 +568,7 @@ class OrbitalFeeds {
       );
     //echo $feedrow->feed_url;
     $resp['feed_id'] = $feed_id;
-    $resp['updated'] = count($items);
+    $resp['updated'] = $num_items;
     return $resp;
   }
 }
