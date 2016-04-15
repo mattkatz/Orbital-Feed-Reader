@@ -551,6 +551,7 @@ class OrbitalFeeds {
         'link'=>$item->get_permalink(),
         'published'=>$item->get_date("Y-m-d H:i:s"), // this is really updated or entered
         'content'=>$item->get_content(),
+        'enclosure'=>OrbitalEntries::get_enclosures($item),
         'author' => $name
       ));
     }

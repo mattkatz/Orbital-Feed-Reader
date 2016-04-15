@@ -26,7 +26,7 @@ function orbital_migrate_db(){
       ";
     $res = $wpdb->query($sql);
     if(false === $res){
-      _log('something went wrong migrating from 0.1.3. Here is the error');
+      _log("something went wrong migrating from $current_version. Here is the error");
       _log($wpdb->print_error());
       exit;
     }
@@ -40,6 +40,23 @@ function orbital_migrate_db(){
       _log($wpdb->print_error());
       exit;
     }
+  }
+  if ( version_compare($current_version, '0.2.3', '<')){
+    _log("migrating from 0.2.3 or less");
+    _log("changing the author column to be nullable");
+    $entries = $wpdb->prefix.$tbl_prefix."entries";
+    $sql = "
+      ALTER TABLE $entries
+        MODIFY COLUMN author varchar(250) DEFAULT '';
+      ";
+    $res = $wpdb->query($sql);
+    if(false === $res){
+      _log("something went wrong migrating from $current_version. Here is the error");
+      _log($wpdb->print_error());
+      exit;
+    }
+
+
   }
 }
 
@@ -106,9 +123,10 @@ function orbital_install_db()
     guid varchar(255) NOT NULL,
     link text NOT NULL,
     published datetime NOT NULL,
-    content longtext NOT NULL,
+    content longtext,
     content_hash varchar(250) NOT NULL,
-    author varchar(250) NOT NULL DEFAULT '',
+    author varchar(250) DEFAULT '',
+    enclosure varchar(250) ,
     UNIQUE KEY id (id)
   ) $charset_collate;";
   dbDelta($sql);

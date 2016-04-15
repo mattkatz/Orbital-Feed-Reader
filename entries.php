@@ -121,6 +121,16 @@ class OrbitalEntries{
 
   }
 
+  //OrbitalEntries::get_enclosure
+  //if we've got enclosures, pick the best
+  static function get_enclosures($item){
+    
+    if($enclosure = $item->get_enclosure()){
+      return $enclosure->get_link();
+    }
+    return "";
+  }
+
   //OrbitalEntries::insert
   //assumes you have already checked that the entry isn't in there.
   //probably best if you just use save, it does the checking
