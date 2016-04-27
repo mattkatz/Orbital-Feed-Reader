@@ -11,7 +11,7 @@
 class OrbitalEntries{
 /* OrbitalEntries::save
  * Insert an entry for a feed
- *    - TODO check to see if entry exists, using entry hash?
+ *    - check to see if entry exists, using entry hash?
  *    - insert entry, then link for each user subscribed to the feed.
  *    - alternately, update the stored entry - this should be used to mark feeds updated or to update their content when the feed is updated.
  *    - TODO compare the content_hash on old and new before resetting isread
@@ -263,14 +263,26 @@ class OrbitalEntries{
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
     //TODO allow like queries
-    $filter_whitelist = array('tag'=>'name','entry_id'=>'entry_id','title'=>'title','guid'=>'guid', 'link'=> 'link','content'=>'content','author'=>'author','isRead'=>'isRead','marked'=>'marked','id'=>'id','entry_id'=>'entry_id','feed_id'=>'ue.feed_id');
+    $filter_whitelist = array('tag'=>'name',
+                              'entry_id'=>'entry_id',
+                              'title'=>'title',
+                              'guid'=>'guid',
+                               'link'=> 'link',
+                              'content'=>'content',
+                              'author'=>'author',
+                              'isRead'=>'isRead',
+                              'marked'=>'marked',
+                              'id'=>'id',
+                              'entry_id'=>'entry_id',
+                              'enclosure'=>'enclosure',
+                              'feed_id'=>'ue.feed_id');
     $filter = "";
 
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
 
-        if(null == $value || 'null' == $value){
-          $filter= $filter. " AND $filter_whitelist[$filter_name] IS NULL ";
+        if(null == $value || 'null' == $value ||  'not null' == $value){
+          $filter= $filter. " AND $filter_whitelist[$filter_name] IS $value ";
         }
         else if ( -1 == $value){
           //I'm interpreting -1 as a "skip this" value mainly for the "all feeds"
