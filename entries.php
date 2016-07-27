@@ -1,4 +1,20 @@
 <?php
+if ( !function_exists( 'add_action' ) ) {
+  echo "Hi there!  I'm just a plugin, not much I can do when called directly.";
+  exit;
+}
+if(!function_exists('_log')){
+  function _log( $message ) {
+    if( WP_DEBUG === true ){
+      if( is_array( $message ) || is_object( $message ) ){
+        error_log("Orbital:");
+        error_log( print_r( $message, true ) );
+      } else {
+        error_log( "Orbital: $message");
+      }
+    }
+  }
+}
 /*
  * Entries Class
  * Methods 
@@ -9,6 +25,19 @@
  *
  * */
 class OrbitalEntries{
+    public static $filter_fields = array('tag'=>'name',
+                              'entry_id'=>'entry_id',
+                              'title'=>'title',
+                              'guid'=>'guid',
+                               'link'=> 'link',
+                              'content'=>'content',
+                              'author'=>'author',
+                              'isRead'=>'isRead',
+                              'marked'=>'marked',
+                              'id'=>'id',
+                              'entry_id'=>'entry_id',
+                              'enclosure'=>'enclosure',
+                              'feed_id'=>'ue.feed_id');
 /* OrbitalEntries::save
  * Insert an entry for a feed
  *    - check to see if entry exists, using entry hash?
@@ -85,7 +114,7 @@ class OrbitalEntries{
     //we should iterate over the keys and put them in the update
     //TODO sep out content and content_hash to update the underlying entry
     //TODO we should have a method that updates entries and one that updates user_entries
-    $update_whitelist = array('marked'=>'marked','isRead'=>'isRead');
+    $update_whitelist = array('marked'=>'marked','isRead'=>'isRead', 'enclosure'=>'enclosure');
     $filter_whitelist = array('feed_id'=>'feed_id','entry_id'=>'entry_id','id'=>'id');
     $update_fields = array();
     $filter_fields = array(
@@ -124,11 +153,10 @@ class OrbitalEntries{
   //OrbitalEntries::get_enclosure
   //if we've got enclosures, pick the best
   static function get_enclosures($item){
-    
     if($enclosure = $item->get_enclosure()){
       return $enclosure->get_link();
     }
-    return "";
+    return NULL;//we return null because we want to be able to filter for null enclosures
   }
 
   //OrbitalEntries::insert
@@ -153,7 +181,8 @@ class OrbitalEntries{
       'link'=>$entry['link'],
       'published'=>$entry['published'],
       'content'=>$entry['content'],
-      'author' => $entry['author']
+      'author' => $entry['author'],
+      'enclosure' => $entry['enclosure']
     ));
     $entry_id = $wpdb->insert_id;
     $resp->insert_id = $entry_id;
@@ -260,28 +289,18 @@ class OrbitalEntries{
     else{
       $sort = $sort ."ASC";
     }
+    _log("starting entries get");
     //We can't let people just put random filters in
     //could be a sql injection vulnerability.
     //TODO allow like queries
-    $filter_whitelist = array('tag'=>'name',
-                              'entry_id'=>'entry_id',
-                              'title'=>'title',
-                              'guid'=>'guid',
-                               'link'=> 'link',
-                              'content'=>'content',
-                              'author'=>'author',
-                              'isRead'=>'isRead',
-                              'marked'=>'marked',
-                              'id'=>'id',
-                              'entry_id'=>'entry_id',
-                              'enclosure'=>'enclosure',
-                              'feed_id'=>'ue.feed_id');
+    $filter_whitelist = self::$filter_fields;
+
     $filter = "";
 
     foreach ($filters as $filter_name => $value){
       if(array_key_exists($filter_name,$filter_whitelist)){
 
-        if(null == $value || 'null' == $value ||  'not null' == $value){
+        if(null == $value || 'null' == $value ||  'not%20null' == $value || 'not null' == $value){
           $filter= $filter. " AND $filter_whitelist[$filter_name] IS $value ";
         }
         else if ( -1 == $value){
@@ -302,6 +321,7 @@ class OrbitalEntries{
         entries.link AS link,
         entries.content AS content,
         entries.author AS author,
+        entries.enclosure AS enclosure,
         ue.isRead AS isRead,
         ue.marked AS marked,
         ue.id AS id,
@@ -322,6 +342,7 @@ class OrbitalEntries{
         ". $sort . "
         LIMIT 30
     ;";
+    _log($sql);
     $myrows = $wpdb->get_results($sql);
     return $myrows;
   }

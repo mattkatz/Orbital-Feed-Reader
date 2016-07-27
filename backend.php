@@ -190,24 +190,11 @@ add_action('wp_ajax_orbital_save_feed','orbital_save_feed');
 function orbital_get_feed_entries(){
   nonce_dance();
   $filters = array();
-  $feed_id = filter_input(INPUT_GET, 'feed_id', FILTER_SANITIZE_NUMBER_INT);
-  $show_read =filter_input(INPUT_GET, 'show_read', FILTER_SANITIZE_NUMBER_INT);
-  $tag = filter_input(INPUT_GET, 'tag',FILTER_SANITIZE_STRING);
-  $sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_NUMBER_INT);
-  if($tag !=""){
-    $filters['tag'] = $tag;
-  }
-  if($feed_id == ""){
-    //TODO "" should mean return latest entries
-   }else{
-     $filters['feed_id'] = $feed_id;
-   }
-  if($show_read=="1"){
-    //do nothing
-  }
-  else{
-    //only show unread entries
-    $filters['isRead']=$show_read;
+  foreach( OrbitalEntries::$filter_fields as $field_name => $value){
+    $filter_value = filter_input(INPUT_GET, $field_name, FILTER_SANITIZE_STRING);
+    if( $filter_value != "" ){
+      $filters[$field_name] = $filter_value;
+    }
   }
 
   $myrows = OrbitalEntries::get($filters);

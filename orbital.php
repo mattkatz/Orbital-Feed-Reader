@@ -13,6 +13,8 @@ global $orbital_slug;
 $orbital_slug = 'orbital.php';
 global $orbital_settings_slug;
 $orbital_settings_slug = 'orbital_plugin_settings';
+global $orbital_radio_slug;
+$orbital_radio_slug = 'orbital_radio';
 global $orbital_db_version ;
 $orbital_db_version = '0.2.3';
 global $orbital_sample_data_opt_string;
@@ -83,7 +85,9 @@ function orbital_plugin_menu(){
   //TODO should this be global? Probably not.
   global $orbital_slug;
   global $orbital_settings_slug;
+  global $orbital_radio_slug;
   global $orbital_main;
+  global $orbital_radio;
 
   require_once 'backend.php';
   $unread_count = OrbitalFeeds::get_unread_count();
@@ -93,6 +97,8 @@ function orbital_plugin_menu(){
   $capability = 'edit_posts';
   //We add the hook for our menu item on the main menu
   $orbital_main = add_menu_page( $page_title, $menu_title, $capability, $orbital_slug, 'generate_main_page',plugins_url('img/satellite.svg',__FILE__));
+  //Radio
+  $orbital_radio = add_submenu_page ($orbital_slug, 'Radio','Radio', $capability, $orbital_radio_slug, 'orbital_radio');
   //Settings page
   $settings = add_submenu_page( $orbital_slug, 'Settings', 'Settings', $capability, $orbital_settings_slug, 'orbital_settings');
   /* Using registered $page handle to hook script load */
@@ -137,8 +143,13 @@ function field_one_callback() {
 function orbital_enqueue_scripts()
 {
   global $orbital_main;
+  global $orbital_radio;
+  $curscreen = get_current_screen()->id;
   //Is this our main page or not?
-  if($orbital_main != get_current_screen()->id){return;}
+  _log("before screen check");
+  _log("Curscreen = $curscreen");
+  _log("orbital_radio = $orbital_radio");
+  if($orbital_main != $curscreen && $orbital_radio != $curscreen ){return;}
 
   //Register the js that we need
   wp_register_script( 'handlebars_script', plugins_url('/js/handlebars-1.0.rc.1.js', __FILE__) ,array('jquery'));
@@ -251,6 +262,11 @@ function orbital_add_toolbar_items(){
 function orbital_settings()
 {
   require_once 'settings.php';
+}
+
+/* this is the radio page */
+function orbital_radio(){
+  require_once 'radio.php';
 }
 
 function feed_management(){
