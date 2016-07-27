@@ -425,7 +425,7 @@ function orbital_add_sample_feeds_to_user($user_id){
       'tags'=>'mutants',
       'owner'=>$user_id,
       'feed_name' => 'Bruce Sterling'));
-    if( $orbitalfeed->feed_inserted){
+    if( property_exists( $orbitalfeed, 'feed_inserted')){
       orbital_install_instructional_entries($orbitalfeed);
     }
     else{
